@@ -1,3 +1,3 @@
-/**
- * Created by maxie on 28/12/16.
- */
+export let handleError = (msg, url, line) => {
+    alert("[Essence] An error has occurred at l.${line} of ${url}.\n\nMessage: ${msg}");
+};
