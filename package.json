@@ -1,0 +1,34 @@
+{
+  "name": "essence",
+  "version": "2.0.0",
+  "description": "A framework providing all the essential tools to the JS coder.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Berkmann18/Essence.git"
+  },
+  "keywords": [
+    "EssenceJS",
+    "Essence",
+    "essence",
+    "essential",
+    "All-in-One"
+  ],
+  "author": "Berkmann18",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Berkmann18/Essence/issues"
+  },
+  "homepage": "https://github.com/Berkmann18/Essence#readme",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "http-server": "^0.9.0",
+    "webpack": "^1.14.0"
+  }
+}
