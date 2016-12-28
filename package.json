@@ -2,16 +2,24 @@
   "name": "essence",
   "version": "2.0.0",
   "description": "A framework providing all the essential tools to the JS coder.",
-  "main": "index.js",
+  "main": "./src/essence.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "babel": "babel --presets es2015 js/essence.js -o build/essence.bundle.js",
+    "start": "http-server",
+    "webpack": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint --color src",
+    "csslint": "csslint src",
+    "minify": "minify --output dist src --no-comments",
+    "doc": "jsdoc -c ./conf.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Berkmann18/Essence.git"
+    "url": "https://github.com/Berkmann18/Essence.git"
   },
   "keywords": [
     "EssenceJS",
+    "EssenceJS 2",
     "Essence",
     "essence",
     "essential",
@@ -28,7 +36,15 @@
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.18.0",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.8.0",
     "http-server": "^0.9.0",
     "webpack": "^1.14.0"
+  },
+  "engines": {
+    "node": ">= 6.9"
   }
 }
