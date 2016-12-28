@@ -65,6 +65,6 @@ If you want to contribute (I welcome any contributions), please read  [CONTRIBUT
 
 ## License
 
-ISC license; see [LICENSE](./LICENSE).
+MIT license; see [LICENSE](./LICENSE).
 
 (c) 2016 by Maximilian Berkmann
