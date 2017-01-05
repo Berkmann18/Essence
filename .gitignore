@@ -161,4 +161,5 @@ $RECYCLE.BIN/
 
 ### Project
 /test/
-/build/
+/dist/
+/.idea/

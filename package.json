@@ -2,49 +2,48 @@
   "name": "essence",
   "version": "2.0.0",
   "description": "A framework providing all the essential tools to the JS coder.",
-  "main": "./src/essence.js",
-  "scripts": {
-    "babel": "babel --presets es2015 js/essence.js -o build/essence.bundle.js",
-    "start": "http-server",
-    "webpack": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint --color src",
-    "csslint": "csslint src",
-    "minify": "minify --output dist src --no-comments",
-    "doc": "jsdoc -c ./conf.json"
+  "main": "src/essence.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Berkmann18/Essence.git"
-  },
-  "keywords": [
-    "EssenceJS",
-    "EssenceJS 2",
-    "Essence",
-    "essence",
-    "essential",
-    "All-in-One"
-  ],
-  "author": "Berkmann18",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Berkmann18/Essence/issues"
-  },
-  "homepage": "https://github.com/Berkmann18/Essence#readme",
+  "dependencies": {},
   "devDependencies": {
+    "babel": "^6.5.2",
     "babel-cli": "^6.18.0",
-    "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.18.0",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
     "http-server": "^0.9.0",
     "webpack": "^1.14.0"
   },
-  "engines": {
-    "node": ">= 6.9"
-  }
+  "scripts": {
+    "babel": "babel --presets es2015 src/essence.js -o build/essence.bundle.js",
+    "csslint": "csslint src",
+    "eslint": "eslint src",
+    "start": "http-server",
+    "test": "eslint src & csslint src",
+    "webpack": "webpack",
+    "doc": "jsdoc -c ./conf.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Berkmann18/Essence.git"
+  },
+  "keywords": [
+    "Essence",
+    "EssenceJS",
+    "Essence 2",
+    "EssenceJS 2"
+  ],
+  "author": "Maximilian Berkman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Berkmann18/Essence/issues"
+  },
+  "homepage": "https://github.com/Berkmann18/Essence#readme"
 }
