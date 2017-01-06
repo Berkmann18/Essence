@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", {
  * @typedef {(Array|object)} dict
  * @typedef {(XML|string)} code
  * @typedef {(Node|TreeNode|NTreeNode|Vertex)} Node
- * @since 2.0
+ * @since 1.0
  */
 
 //AirBnB suggestion
@@ -36,7 +36,7 @@ Object.defineProperty(exports, "__esModule", {
 /**
  * @description Essence's console logger.
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 var say = exports.say = function say(message, type) {

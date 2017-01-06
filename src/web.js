@@ -2,7 +2,7 @@
  * @module web
  * @description Web related module.
  * @requires module:essence
- * @since 2.0
+ * @since 1.0
  */
 import * as essence from './essence'
 
@@ -10,7 +10,7 @@ import * as essence from './essence'
  * @description Turn the current webpage into an in-browser editor
  * @param {code} [content=''] Content to be added to the code of the page
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let PageEditor = (content='') => {
@@ -20,7 +20,7 @@ export let PageEditor = (content='') => {
 /**
  * @description Server centre/manager.
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @property {Server[]} ServerBase.list List of servers
  * @property {number} ServerBase.size Total size of all the servers
@@ -96,7 +96,7 @@ export const Sys = {
        * @description Start the keystroke recording
        * @param {*} keyStroke Keystroke
        * @returns {undefined}
-       * @since 2.0
+       * @since 1.0
        * @func
        * @listens window.onkeypress
        */

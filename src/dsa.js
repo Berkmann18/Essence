@@ -2,7 +2,7 @@
  * @module dsa
  * @description Data Structure & Algorithms.
  * @requires module:essence
- * @since 2.0
+ * @since 1.0
  */
 import * as data from './data';
 import * as essence from './essence';
@@ -14,7 +14,7 @@ import * as essence from './essence';
  * @param {number} [start=0] Starting number
  * @returns {number[]} Numerical array
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let numArr = (n, start=0) => {
@@ -35,7 +35,7 @@ export let numArr = (n, start=0) => {
  * @returns {(function(...[*])|GeneratorFunction)} Ready generator
  * @constructor
  * @public
- * @since 2.0
+ * @since 1.0
  * @example
  * const wrapped = Coroutine(function* () {
  *      console.log(`First input: ${yield}`);
@@ -60,7 +60,7 @@ export let Coroutine = (generatorFunction) => {
  * @param {number} [right=list.length-1] Right position
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let QuickSort = (list, left=0, right=list.length-1) => {
@@ -90,7 +90,7 @@ export let QuickSort = (list, left=0, right=list.length-1) => {
  * @param {number} [right=list.length-1] Right position
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let RevSort = (list, left=0, right=list.length-1) => {
@@ -119,7 +119,7 @@ export let RevSort = (list, left=0, right=list.length-1) => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let bubbleSort = (list) => {
@@ -143,7 +143,7 @@ export let bubbleSort = (list) => {
  * @param {string} [order='asc'] Sorting order (asc/des)
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let bubbleSort2 = (list, order='asc') => {
@@ -207,7 +207,7 @@ export let bubbleSort2 = (list, order='asc') => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let bruteForceSort = (list) => {
@@ -232,7 +232,7 @@ export let bruteForceSort = (list) => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let maxSort = (list) => {
@@ -277,7 +277,7 @@ export let maxSort = (list) => {
  * @param {number} [right=Math.ceil(list.length / 2)] Right position
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let cenSort = (list, left=Math.floor(list.length / 2), right=Math.ceil(list.length / 2)) => {
@@ -304,7 +304,7 @@ export let cenSort = (list, left=Math.floor(list.length / 2), right=Math.ceil(li
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let setSort = (list) => {
@@ -323,7 +323,7 @@ export let setSort = (list) => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let setSort2 = (list) => {
@@ -343,7 +343,7 @@ export let setSort2 = (list) => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let insertionSort = (list) => {
@@ -365,7 +365,7 @@ export let insertionSort = (list) => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let selectionSort = (list) => {
@@ -382,7 +382,7 @@ export let selectionSort = (list) => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let shellSort = (list) => {
@@ -407,7 +407,7 @@ export let shellSort = (list) => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let mergeSort = (list) => {
@@ -423,7 +423,7 @@ export let mergeSort = (list) => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @todo complete
  */
@@ -439,7 +439,7 @@ export let spreadSort = (list) => {
  * @param {List} list List
  * @returns {List} Heapified list
  * @private
- * @since 2.0
+ * @since 1.0
  * @function
  */
 let heapify = (list) => {
@@ -462,7 +462,7 @@ let heapify = (list) => {
  * @param {number} [end=list.length-1] Ending position
  * @returns {List} Down-sifted list
  * @private
- * @since 2.0
+ * @since 1.0
  * @function
  */
 let siftDown = (list, start, end=list.length-1) => {
@@ -490,7 +490,7 @@ let siftDown = (list, start, end=list.length-1) => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @todo complete
  */
@@ -517,7 +517,7 @@ export let heapSort = (list) => {
  * @param {List} list List to sort
  * @returns {List} Sorted list
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @todo complete
  */
@@ -534,7 +534,7 @@ export let radixSort = (list) => {
  * @param {number} [end] Ending position
  * @returns {List} Portion of the list
  * @protected
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let get = (list, start=0, end) => {
@@ -565,7 +565,7 @@ export let sort = (list, order='asc') => {
  * @param {Iterator} iterator Iterator
  * @returns {Symbol} Item
  * @protected
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let getNextItem = (iterator) => {
@@ -579,7 +579,7 @@ export let getNextItem = (iterator) => {
  * Inspired by {@link http://www.2ality.com/2015/03/es6-generators.html}
  * @type {GeneratorFunction} Co-routine
  * @public
- * @since 2.0
+ * @since 1.0
  */
 export const logItems = Coroutine(function* () {
   try {

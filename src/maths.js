@@ -2,7 +2,7 @@
  * @module maths
  * @description Mathematics related module.
  * @requires module:essence
- * @since 2.0
+ * @since 1.0
  */
 import * as essence from './essence';
 import * as qtest from './qtest';
@@ -14,7 +14,7 @@ import * as misc from './misc';
  * @const {number} EPS Epsilon
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  */
 export const EPS = Math.pow(2, -52); //Might already exist in ES6
 
@@ -22,7 +22,7 @@ export const EPS = Math.pow(2, -52); //Might already exist in ES6
  * @const {string[]} Numerical/bit operator signs
  * @type {string[]}
  * @public
- * @since 2.0
+ * @since 1.0
  */
 export const SIGNS = ['+', '-', '*', '/', '%', '>>', '<<', '>>>', '&', '|', '^'];
 
@@ -30,7 +30,7 @@ export const SIGNS = ['+', '-', '*', '/', '%', '>>', '<<', '>>>', '&', '|', '^']
  * @const {number} Lowest 8-bit character (-2<sup>7</sup>)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MAX_CHAR8
  */
 export const MIN_CHAR8 = -128;
@@ -39,7 +39,7 @@ export const MIN_CHAR8 = -128;
  * @const {number} Highest 8-bit integer (2<sup>7</sup>-1)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MIN_CHAR8
  * @see module:maths~MAX_UCHAR8
  */
@@ -49,7 +49,7 @@ export const MAX_CHAR8 = 127;
  * @const {number} Highest unsigned 8-bit integer (2<sup>8</sup>-1)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MAX_CHAR8
  */
 export const MAX_UCHAR8 = 127;
@@ -58,7 +58,7 @@ export const MAX_UCHAR8 = 127;
  * @const {number} Lowest 16-bit integer (-2<sup>15</sup>)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MAX_INT16
  */
 export const MIN_INT16 = -32768;
@@ -67,7 +67,7 @@ export const MIN_INT16 = -32768;
  * @const {number} Highest 16-bit integer (2<sup>15</sup>-1)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MIN_INT16
  */
 export const MAX_INT16 = 32767;
@@ -76,7 +76,7 @@ export const MAX_INT16 = 32767;
  * @const {number} Lowest 32-bit integer (-2<sup>31</sup>)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MAX_INT32
  */
 export const MIN_INT32 = -2147483648;
@@ -85,7 +85,7 @@ export const MIN_INT32 = -2147483648;
  * @const {number} Highest 32-bit integer (2<sup>31</sup>-1)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MIN_INT32
  * @see module:maths~MAX_UINT16
  */
@@ -95,7 +95,7 @@ export const MAX_INT32 = 2147483647;
  * @const {number} Highest unsigned 16-bit integer (2<sup>16</sup>-1)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MAX_INT16
  */
 export const MAX_UINT16 = 65535;
@@ -104,7 +104,7 @@ export const MAX_UINT16 = 65535;
  * @const {number} Lowest float (32-bit)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MAX_FLOAT
  */
 export const MIN_FLOAT = -3.4e38;
@@ -113,7 +113,7 @@ export const MIN_FLOAT = -3.4e38;
  * @const {number} Highest float (32-bit)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MIN_FLOAT
  */
 export const MAX_FLOAT = 3.4e38;
@@ -122,7 +122,7 @@ export const MAX_FLOAT = 3.4e38;
  * @const {number} Lowest double (64-bit)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MAX_DOUBLE
  */
 export const MIN_DOUBLE = -1.7e308;
@@ -131,7 +131,7 @@ export const MIN_DOUBLE = -1.7e308;
  * @const {number} Highest double (64-bit)
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~MIN_DOUBLE
  */
 export const MAX_DOUBLE = 1.7e308;
@@ -140,7 +140,7 @@ export const MAX_DOUBLE = 1.7e308;
  * @const {number} Number of decimals a 16-bit number's mantissa have.
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~DECIMALS32
  * @see module:maths~DECIMALS64
  * @see module:maths~DECIMALS128
@@ -151,7 +151,7 @@ export const DECIMALS16 = 9;
  * @const {number} Number of decimals a 32-bit number's mantissa have.
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~DECIMALS16
  * @see module:maths~DECIMALS64
  * @see module:maths~DECIMALS128
@@ -162,7 +162,7 @@ export const DECIMALS32 = 23;
  * @const {number} Number of decimals a 64-bit number's mantissa have.
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~DECIMALS16
  * @see module:maths~DECIMALS32
  * @see module:maths~DECIMALS128
@@ -173,7 +173,7 @@ export const DECIMALS64 = 52;
  * @const {number} Number of decimals a 128-bit number's mantissa have.
  * @type {number}
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:maths~DECIMALS16
  * @see module:maths~DECIMALS32
  * @see module:maths~DECIMALS64
@@ -185,7 +185,7 @@ export const DECIMALS128 = 112;
  * @description Natural numbers generator.
  * @constructor
  * @protected
- * @since 2.0
+ * @since 1.0
  * @const {GeneratorFunction} &natural; generator
  */
 export const NaturalNum = function*() {
@@ -198,7 +198,7 @@ export const NaturalNum = function*() {
  * @type {{next, value}}
  * @module
  * @public
- * @since 2.0
+ * @since 1.0
  * @todo Find a way to get N.value to be correctly updated when calling N.next() and make a Number set factory
  */
 export const N = (function () {
@@ -227,7 +227,7 @@ export const N = (function () {
  * @description Integer generator which start counting from the smallest 32-bit integer.
  * @constructor
  * @protected
- * @since 2.0
+ * @since 1.0
  * @const {GeneratorFunction} &integers; generator
  * @see module:maths~MIN_INT32
  */
@@ -241,7 +241,7 @@ export const IntegerNum = function*() {
  * @type {{next, value}}
  * @module
  * @public
- * @since 2.0
+ * @since 1.0
  */
 export const Z = (function () {
   let gen = IntegerNum();
@@ -272,7 +272,7 @@ export const Z = (function () {
  * of iterations at the current stage.
  * @constructor
  * @protected
- * @since 2.0
+ * @since 1.0
  * @const {GeneratorFunction} &#8474; generator
  * @see module:maths~MIN_DOUBLE
  * @see module:maths~DECIMALS64
@@ -287,7 +287,7 @@ export const RationalNum = function*() {
  * @type {{next, value}}
  * @module
  * @public
- * @since 2.0
+ * @since 1.0
  */
 export const Q = (function () {
   let gen = RationalNum();
@@ -328,7 +328,7 @@ export let xor = (a, b) => (a && !b) || (!a && b);
  * @param {number} n Number
  * @returns {string} Literal
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let timesLiteral = (n) => {
@@ -345,7 +345,7 @@ export let timesLiteral = (n) => {
  * @param {number} max Maximum (inclusive)
  * @param {boolean} [integer=false] Integer or float/double
  * @returns {number} Random number rad&in;[<code>min</code>, <code>max</code>]
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let rand = (min, max, integer=false) => {
@@ -359,7 +359,7 @@ export let rand = (min, max, integer=false) => {
  * @param {boolean} [integer=false] Integer or float/double
  * @see module:maths~rand
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let randTo = (max, integer=false) => rand(0, max, integer);
@@ -373,7 +373,7 @@ export let randTo = (max, integer=false) => rand(0, max, integer);
  * @returns {NumberLike} Random number rad<sub><code>base</code></sub>&in;[<code>min</code><sub>10</sub>, <code>max</code><sub>10</sub>]
  * @see module:maths~rand
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let baseRand = (min, max, base=10, integer=false) => parseFloat(rand(min, max, integer)).toString(base);
@@ -386,7 +386,7 @@ export let baseRand = (min, max, base=10, integer=false) => parseFloat(rand(min,
  * @returns {number} Random number rad&in;[min(<code>var0</code>, <code>var1</code>), max(<code>var0</code>, <code>var1</code>)]
  * @see module:maths~rand
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let randVar = (var0, var1, integer=false) => rand(Math.min(var0, var1), Math.max(var0, var1), integer);
@@ -397,7 +397,7 @@ export let randVar = (var0, var1, integer=false) => rand(Math.min(var0, var1), M
  * @param {boolean} [if0=false] If 0 is in the range or not (as in 0 being the first element)
  * @returns {number} Random number rad&in;[0||1, <code>len</code>(-1)]
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let lenRand = (len, if0=false) => Math.floor(Math.random() * (if0 ? len + 1 : len));
@@ -407,7 +407,7 @@ export let lenRand = (len, if0=false) => Math.floor(Math.random() * (if0 ? len +
  * @param {number} [bits=32] Number of bits used in the randomness
  * @return {number} Random double
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let random = (bits=32) => ((Math.pow(2, bits) - Math.pow(2, bits / 2)) * Math.random() + (Math.pow(2, bits / 2 - 1)) * Math.random()) / (Math.pow(2, bits) - 1);
@@ -432,7 +432,7 @@ export let randFloatSpread = (range) => range * (.5 - Math.random());
  * @param {Bool} [base=false] Base
  * @returns {Array} Random number array where &forall;i&in;rad, i&in;[<code>min</code>, <code>max</code>]<sub>(base)</sub>
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let randNum = (n=10, min=0, max=100, float=true, base=false) => {
@@ -448,7 +448,7 @@ export let randNum = (n=10, min=0, max=100, float=true, base=false) => {
  * @param {number} [max=100] Maximum
  * @returns {Array} Nearly sorted array
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let genNearlySortedArr = (n=10, min=0, max=100) => {
@@ -468,7 +468,7 @@ export let genNearlySortedArr = (n=10, min=0, max=100) => {
  * @param {number} [nbDec=2] Number of decimals
  * @returns {*} Sum squared
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @throws {TypeError} Not an array
  */
@@ -495,7 +495,7 @@ export let conv = (n, from=2, to=10, float=false) => float ? parseFloat(n, from)
  * @param {boolean} [toArr=false] To array
  * @returns {NumberLike[]|NumberLike} Negated binary number
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let negateBin = (bin, toArr=false) => {
@@ -510,7 +510,7 @@ export let negateBin = (bin, toArr=false) => {
  * @param {string} bin Binary number
  * @returns {number} Decimal number
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @throws {Error} Invalid binary number
  */
@@ -593,7 +593,7 @@ export let dec2min = (dec) => (30 * dec) / 50;
  * @returns {number} Seconds
  * @see module:maths~sec2time
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let toSec = (i) => {
@@ -624,7 +624,7 @@ export let toSec = (i) => {
  * @returns {string} Time
  * @see module:maths~toSec
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let sec2time = (i, withH=false) => {
@@ -648,7 +648,7 @@ export let sec2time = (i, withH=false) => {
  * @param {String} [start=getTime(true)] Starting time
  * @param {String} end Ending time
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @returns {string}
  */
@@ -666,7 +666,7 @@ export let timeDiff = (start=essence.getTime(true), end) => {
  * @param {number} [nbDec=2] Number of decimals
  * @returns {number} Converted mark: <code>mark</code>/<code>initTotal</code> &rArr; rad/<code>endTotal</code>
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let markConv = (mark, initTotal, endTotal=100, nbDec=2) => (mark / initTotal * endTotal).toNDec(nbDec);
@@ -693,7 +693,7 @@ export let nthroot = (x, n, nbDec=20) => {
  * @param {number} [y=10] Base
  * @returns {number} Result
  * @see module:maths~ln
- * @since 2.0
+ * @since 1.0
  * @public
  * @function
  */
@@ -716,7 +716,7 @@ export let ln = (x) => log(x, Math.E);
  * @param {number} b Number b
  * @returns {number} GCD
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let gcd = (a, b) => b ? gcd(b, a % b): Math.abs(a);
@@ -727,7 +727,7 @@ export let gcd = (a, b) => b ? gcd(b, a % b): Math.abs(a);
 * @param {number} b Number b
 * @returns {number} LCM
 * @public
-* @since 2.0
+* @since 1.0
 * @function
 */
 export let lcm = (a, b) => {
@@ -743,7 +743,7 @@ export let lcm = (a, b) => {
  * @param {number} r Number of attempts
  * @returns {number} Binomial distribution P(x=<code>r</code>)
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let Bin = (n, p, r) => C(n, r) * Math.pow(p, r) * Math.pow(1 - p, n - r);
@@ -821,7 +821,7 @@ export let StdNorm = (m, sd, x) => Norm((x - m) / sd);
  * @return {number} result of <code>x</code>=Norm(rad)
  * @function
  * @public
- * @since 2.0
+ * @since 1.0
  */
 export let InvNorm = (x) => {
   //To be honest, I don't wth those numbers means
@@ -892,7 +892,7 @@ export let C = (n, r) => factorial(n) / (factorial(r) * factorial(n - r));
  * @returns {?number} Normal distribution
  * @see module:maths~Bin
  * @see module:maths~Norm
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let Bin2Norm = (n, p, r, sign) => {
@@ -911,7 +911,7 @@ export let Bin2Norm = (n, p, r, sign) => {
  * @see module:maths~Bin
  * @see module:maths~Po
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let Bin2Po = (n, p, r) => (n > 50 && p < .1) ? Po(n * p, r) : null;
@@ -924,7 +924,7 @@ export let Bin2Po = (n, p, r) => (n > 50 && p < .1) ? Po(n * p, r) : null;
  * @see module:maths~Po
  * @see module:maths~Norm
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let Po2Norm = (l, x) => (l > 10) ? StdNorm(l, Math.sqrt(x), x) : null;
@@ -935,7 +935,7 @@ export let Po2Norm = (l, x) => (l > 10) ? StdNorm(l, Math.sqrt(x), x) : null;
  * @param {number} z Number
  * @returns {number} Gaussian error
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let erf = (z) => {
@@ -1065,7 +1065,7 @@ export let rad2deg = (rad) => rad * 180 / Math.PI;
  * @param {number} x Number
  * @return {boolean} Primeness
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:maths~primeN
  */
@@ -1109,7 +1109,7 @@ export let primeCheck = (a, b) => (a > 1 && b > 1 && b % a === 0 && b != a);
  * @param {number} [n=2] Nth-root
  * @returns {number} Closest root
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let getClosestRoot = (x, n=2) => {
@@ -1142,7 +1142,7 @@ export let getClosestRoot = (x, n=2) => {
  * @returns {number} Resulting balance
  * @see module:maths~compoundInterest
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let simpleInterest = (po, i, t=1) => po * (1 + i * t);
@@ -1156,7 +1156,7 @@ export let simpleInterest = (po, i, t=1) => po * (1 + i * t);
  * @returns {number} Resulting balance
  * @see module:maths~simpleInterest
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let compoundInterest = (po, i, t=1, n) => n > 1 ? po * Math.pow(1 + i / n, t * n): po * Math.pow(1 + i, t);
@@ -1168,7 +1168,7 @@ export let compoundInterest = (po, i, t=1, n) => n > 1 ? po * Math.pow(1 + i / n
  * @returns {!number} Non-null number
  * @see module:maths~EPS
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let non0 = (x) => (x === 0)? EPS: x;
@@ -1181,7 +1181,7 @@ export let non0 = (x) => (x === 0)? EPS: x;
  * @param {boolean} [roundUp=false] Round up
  * @returns {string} Fraction
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let toFrac = (n, prec, roundUp=false) => {
@@ -1205,7 +1205,7 @@ export let toFrac = (n, prec, roundUp=false) => {
  * @param {boolean} [frFormat=false] French format
  * @returns {string} Clear number
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let clearNum = (n, nDec, frFormat=false) => frFormat ? new Intl.NumberFormat('fr-FR').format(n) : new Intl.NumberFormat().format(number);
@@ -1218,7 +1218,7 @@ export let clearNum = (n, nDec, frFormat=false) => frFormat ? new Intl.NumberFor
  * @returns {number} Step
  * @see external:Array.getIncrement
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let getStep = (a, b, nbDec=2) => [a, b].getIncrement(nbDec);
@@ -1231,7 +1231,7 @@ export let getStep = (a, b, nbDec=2) => [a, b].getIncrement(nbDec);
  * @param {number} [nDec=2] Number of decimals
  * @returns {number|NumberLike[]} Solutions
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let quadraticSolver = (a, b, c, nDec) => {
@@ -1294,7 +1294,7 @@ export let eqSolver = (formula, res, low=-100, high=200) => {
  * @param {number} r Result of one of the sides
  * @returns {Array} Result(start)
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let manuEqSolver = (eq, max, dim, r) => {
@@ -1325,7 +1325,7 @@ export let manuEqSolver = (eq, max, dim, r) => {
  * @param {string} x String
  * @returns {number} Number
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let getNumFromStr = (x) => essence.isNon(x) ? NaN : parseFloat(x.replace(/[A-Za-z_ ]+/g, ''));
@@ -1335,7 +1335,7 @@ export let getNumFromStr = (x) => essence.isNon(x) ? NaN : parseFloat(x.replace(
  * Source: {@link http://www.2ality.com/2015/03/es6-generators.html}
  * @param {string|Array} words String/array
  * @public
- * @since 2.0
+ * @since 1.0
  * @type {GeneratorFunction}
  * @example
  * [...extractNumbers(tokenize('Are you 5"9 ?'))]; //[5, 9]
@@ -1503,7 +1503,7 @@ export let convLength = (x, unit) => fromPixel(toPixel(x), unit);
  * @returns {number} Bits
  * @see module:maths~fromBit
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let toBit = (x) => {
@@ -1620,7 +1620,7 @@ export let toBit = (x) => {
  * @returns {string} Conversion
  * @see module:maths~toBit
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let fromBit = (x, unit) => {
@@ -1800,7 +1800,7 @@ export let toSqMetre = (x) => {
  * @returns {string} Conversion
  * @see module:maths~toSqMetre
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let fromSqMetre = (x, unit) => {
@@ -1852,7 +1852,7 @@ export let fromSqMetre = (x, unit) => {
  * @see module:maths~fromSqMetre
  * @see module:maths~toSqMetre
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let convArea = (x, unit) => fromPixel(toPixel(x), unit);
@@ -1889,7 +1889,7 @@ export let toLpkm = (x) => {
  * @param {string} unit Unit
  * @returns {string} Conversion
  * @see module:maths~toLpkm
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let fromLpkm = (x, unit) => {
@@ -1917,7 +1917,7 @@ export let fromLpkm = (x, unit) => {
  * @see module:maths~fromLpkm
  * @see module:maths~toLpkm
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let convFuel = (x, unit) => fromLpkm(toLpkm(x), unit);
@@ -1928,7 +1928,7 @@ export let convFuel = (x, unit) => fromLpkm(toLpkm(x), unit);
  * @returns {number} W
  * @see module:maths~fromW
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let toW = (x) => {
@@ -1958,7 +1958,7 @@ export let toW = (x) => {
  * @returns {string} Conversion
  * @see module:maths~toW
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let fromW = (x, unit) => {
@@ -1989,7 +1989,7 @@ export let fromW = (x, unit) => {
  * @see module:maths~fromW
  * @see module:maths~toW
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let convPower = (x, unit) => fromW(toW(x), unit);
@@ -2000,7 +2000,7 @@ export let convPower = (x, unit) => fromW(toW(x), unit);
  * @returns {number} bar
  * @see module:maths~fromBar
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let toBar = (x) => {
@@ -2045,7 +2045,7 @@ export let toBar = (x) => {
  * @returns {string} Conversion
  * @see module:maths~toBar
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let fromBar = (x, unit) => {
@@ -2091,7 +2091,7 @@ export let fromBar = (x, unit) => {
  * @see module:maths~fromBar
  * @see module:maths~toBar
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let convPressure = (x, unit) => fromBar(toBar(x), unit);
@@ -2102,7 +2102,7 @@ export let convPressure = (x, unit) => fromBar(toBar(x), unit);
  * @returns {number} M/s
  * @see module:maths~fromMps
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let toMps = (x) => {
@@ -2144,7 +2144,7 @@ export let toMps = (x) => {
  * @returns {string} Conversion
  * @see module:maths~toMps
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let fromMps = (x, unit) => {
@@ -2187,7 +2187,7 @@ export let fromMps = (x, unit) => {
  * @see module:maths~fromMps
  * @see module:maths~toMps
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let convSpeed = (x, unit) => fromMps(toMps(x), unit);
@@ -2198,7 +2198,7 @@ export let convSpeed = (x, unit) => fromMps(toMps(x), unit);
  * @returns {number} °C
  * @see module:maths~fromCelsius
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export toCelsius = (x) => {
@@ -2225,7 +2225,7 @@ export toCelsius = (x) => {
  * @returns {string} Conversion
  * @see module:maths~toCelsius
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let fromCelsius = (x, unit) => {
@@ -2253,7 +2253,7 @@ export let fromCelsius = (x, unit) => {
  * @see module:maths~fromCelsius
  * @see module:maths~toCelsius
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let convTemperature = (x, unit) => romCelsius(toCelsius(x), unit);
@@ -2264,7 +2264,7 @@ export let convTemperature = (x, unit) => romCelsius(toCelsius(x), unit);
  * @returns {number} m<sup>3</sup>3
  * @see module:Maths~fromCbMetre
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let toCbMetre = (x) => {
@@ -2339,7 +2339,7 @@ export let toCbMetre = (x) => {
  * @returns {string} Conversion
  * @see module:maths~toCbMetre
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let fromCbMetre = (x, unit) => {
@@ -2415,7 +2415,7 @@ export let fromCbMetre = (x, unit) => {
  * @see module:maths~fromCbMetre
  * @see module:maths~toCbMetre
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let convVolume = (x, unit) => fromCbMetre(toCbMetre(x), unit);
@@ -2426,7 +2426,7 @@ export let convVolume = (x, unit) => fromCbMetre(toCbMetre(x), unit);
  * @returns {number} g
  * @see module:maths~fromGram
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let toGram = (x) => {
@@ -2462,7 +2462,7 @@ export let toGram = (x) => {
  * @returns {string} Conversion
  * @see module:maths~toGram
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let fromGram = (x, unit) => {
@@ -2499,7 +2499,7 @@ export let fromGram = (x, unit) => {
  * @see module:maths~fromGram
  * @see module:maths~toGram
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let convWeight = (x, unit) => fromGram(toGram(x), unit);
@@ -2513,7 +2513,7 @@ export let convWeight = (x, unit) => fromGram(toGram(x), unit);
  * @returns {number[]} Range
  * @see module:maths~range2base
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let range = (min=0, inc=1, max, nbDec=2) => {
@@ -2537,7 +2537,7 @@ export let range = (min=0, inc=1, max, nbDec=2) => {
  * @returns {Array} Range
  * @see module:maths~range
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let range2base = (min=0, inc=1, max, base=2) => {
@@ -2572,7 +2572,7 @@ export let mixedRange = (min=0, inc=1, max, noRepeat=false) => {
  * @param {(string|array)} list List to shuffle
  * @returns {(string|array)} Shuffled array
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let fisherYatesShuffle = (list) => {
@@ -2591,7 +2591,7 @@ export let fisherYatesShuffle = (list) => {
  * @returns {string} Vector product
  * @see module:math~scalarProd
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let vectorProd = (v1, v2) => {
@@ -2618,7 +2618,7 @@ export let scalarProd = (v1, v2) => v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
  * @returns {Pt} Point
  * @see module:ui~Pt
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let vector2Point = (v) => new dsa.Pt(v.x, v.y, v.z);
@@ -2629,7 +2629,7 @@ export let vector2Point = (v) => new dsa.Pt(v.x, v.y, v.z);
  * @returns {string} Point form
  * @see module:maths~vector2Point
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let vector2PointForm = (r) => {
@@ -2644,7 +2644,7 @@ export let vector2PointForm = (r) => {
  * @param {boolean} [toSort=false] Sort the elements
  * @returns {Array} a<sub>0</sub> &Union; a<sub>1</sub> ... &Union; a<sub>n</sub>
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let union = (arrays, toSort=false) => toSort ? misc.rmDuplicates(arrays[0].concat(...arrays.get(1))).sort(): misc.rmDuplicates(arrays[0].concat(...arrays.get(1)));
@@ -2656,7 +2656,7 @@ export let union = (arrays, toSort=false) => toSort ? misc.rmDuplicates(arrays[0
  * @param {boolean} [toSort=false] Sort the elements
  * @returns {Array} a<sub>0</sub> &Intersection; a<sub>1</sub> ... &Intersection; a<sub>n</sub>
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let intersection = (arrays, toSort=false) => {
@@ -2671,7 +2671,7 @@ export let intersection = (arrays, toSort=false) => {
  * @param {boolean} [toSort=false] Sort the elements
  * @returns {Array} a<sub>0</sub> \ a<sub>1</sub> ... \ a<sub>n</sub>
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let complement = (arrays, toSort=false) => {
@@ -2686,7 +2686,7 @@ export let complement = (arrays, toSort=false) => {
  * @param {boolean} [toSort=false] Sort the elements
  * @returns {Array} a &Union; b - a &Intersection; b &rArr; a only & b only
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let symDif = (arrays, toSort=false) => {
@@ -2700,7 +2700,7 @@ export let symDif = (arrays, toSort=false) => {
  * @param {Array} b Array b
  * @returns {Array} Bit string B<sub>a</sub> of <i>b</i>
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let bitStr = (a, b) => {
@@ -2719,7 +2719,7 @@ export let bitStr = (a, b) => {
  * @param {boolean} [toArr=false] To array
  * @returns {Array|boolean} Result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let And = (a, b, cr=null, toArr=false) => {
@@ -2741,7 +2741,7 @@ export let And = (a, b, cr=null, toArr=false) => {
  * @param {boolean} [toArr=false] To array
  * @returns {Array|boolean} Result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let Or = (a, b, cr=null, toArr=false) => {
@@ -2763,7 +2763,7 @@ export let Or = (a, b, cr=null, toArr=false) => {
  * @param {boolean} [toArr=false] To array
  * @returns {Array|boolean} Result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let Xor = (a, b, cr=null, toArr=false) => {
@@ -2839,7 +2839,7 @@ export diagDist = (a, b) => Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]
  * @returns {number} Result
  * @see module:maths~euclidianDist
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let h = (mtx, solvedMtx, hrt=euclidianDist) => {
@@ -2858,7 +2858,7 @@ export let h = (mtx, solvedMtx, hrt=euclidianDist) => {
  * @param {number} b Number b
  * @return {boolean} Equivalence
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let equivalent = (a, b) => Math.round(a) === Math.round(b) || (a | 0) === (b | 0) || (a | 1) === (a | 1) || (a | 0) === (b | 1) || (a | 1) === (b | 0);
@@ -2870,7 +2870,7 @@ export let equivalent = (a, b) => Math.round(a) === Math.round(b) || (a | 0) ===
  * @param {number} [precision=EPS] Precision
  * @return {boolean} Approximative equality
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let approxEqual = (a, b, precision=EPS) => a >= b - precision && a <= b + precision || b >= a - precision && b <= a + precision;
@@ -2882,7 +2882,7 @@ export let approxEqual = (a, b, precision=EPS) => a >= b - precision && a <= b +
  * @param {string} prop Proposition
  * @return {boolean[]} P(arr)
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @example
  * let arr = [0, 0, 1, 6, -3, -8, 4, -2];
@@ -2897,7 +2897,7 @@ export let P = (arr, prop) => arr.map(x => eval(prop.replace(/x/g, x + '')));
  * @param {string} prop Proposition
  * @return {boolean} Quantification result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:maths~forSome
  */
@@ -2910,7 +2910,7 @@ export let forAll = (arr, prop) => arr.every(x => eval(prop.replace(/x/g, x + ''
  * @param {string} prop Proposition
  * @return {boolean} Quantification result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:maths~forAll
  */
@@ -2924,7 +2924,7 @@ export let forSome = (arr, prop) => arr.some(x => eval(prop.replace(/x/g, x + ''
  * @return {boolean} Quantification result
  * @see module:maths~P
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let forOne = (arr, prop) => P(arr, prop).count(true) === 1;
@@ -2935,7 +2935,7 @@ export let forOne = (arr, prop) => P(arr, prop).count(true) === 1;
  * @param {boolean} isInt=false Convert the cells into integers
  * @returns {NumberLike[]} Coordinates
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let readCoord = (str, isInt) => {
@@ -2978,7 +2978,7 @@ export let abcModulus = (code) => {
  * @param {number} n Number of items to take from the iterable object
  * @param {Iterable} iterable Iterable object
  * @public
- * @since 2.0
+ * @since 1.0
  * @type {GeneratorFunction}
  * @returns {GeneratorFunction|undefined} Taken bits
  */
@@ -2997,7 +2997,7 @@ export let take = function* (n, iterable) {
  * @param {number} [max={@link #MAX_INT32|MAX_INT32}] Maximum
  * @returns {Bool} x or false
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:maths~MIN_INT32
  * @see module:maths~MAX_INT32
@@ -3017,7 +3017,7 @@ export let bruteForceNum = (cond, min=MIN_INT32, max=MAX_INT32) => {
  * @param {number} [precision={@link #DECIMALS32|DECIMALS32}] Precision.
  * @returns {Bool} x or false
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:maths~MIN_FLOAT
  * @see module:maths~MAX_FLOAT
@@ -3036,7 +3036,7 @@ export let bruteForceFloat = (cond, min=MIN_FLOAT, max=MAX_FLOAT, precision=DECI
  * @param {string} cond Condition
  * @returns {Bool} x or false
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:maths~MIN_DOUBLE
  * @see module:maths~MAX_DOUBLE
@@ -3053,7 +3053,7 @@ export let bruteForceDouble = (cond) => teForceFloat(cond, MIN_DOUBLE, MAX_DOUBL
  * @param {number} [max={@link #MAX_INT32|MAX_INT32}] Maximum
  * @returns {boolean|number[]} [x, y] or false
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:maths~MIN_INT32
  * @see module:maths~MAX_INT32
@@ -3076,7 +3076,7 @@ export let doubleBruteForceNum = (cond, min=MIN_INT32, max=MAX_INT32) => {
  * @param {number} [precision={@link #DECIMALS32|DECIMALS32}] Precision.
  * @returns {boolean|number[]} [x, y] or false
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:maths~MIN_FLOAT
  * @see module:maths~MAX_FLOAT
@@ -3098,7 +3098,7 @@ export let doubleBruteForceFloat = (cond, min=MIN_FLOAT, max=MAX_FLOAT, precisio
  * @param {string} cond Condition
  * @returns {boolean|number[]} [x, y] or false
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:maths~MIN_DOUBLE
  * @see module:maths~MAX_DOUBLE
@@ -3189,7 +3189,7 @@ export let binaryCases = (x) => {
  * @param {string} exp Expression
  * @returns {Array} Truth table
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let truthTable = (exp) => { //Get the truth table of an expression
@@ -3246,7 +3246,7 @@ export let getCNF = (exp) => {
  * @param {number} sd Standard Deviation
  * @return {number[]} Confidence interval
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let timeCI = (avg, n, sd) => [avg + InvNorm(n / 200) * sd / Math.sqrt(n), avg - InvNorm(n / 200) * sd / Math.sqrt(n)];
@@ -3256,7 +3256,7 @@ export let timeCI = (avg, n, sd) => [avg + InvNorm(n / 200) * sd / Math.sqrt(n),
  * @param {number[]} arr Population
  * @return {number} Sample mean <span style='text-decoration: overline'>x</span>
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let sampleMean = (arr) => Math.sqrt(sumPow2(arr) / arr.length - arr.mean());
@@ -3270,7 +3270,7 @@ export let sampleMean = (arr) => Math.sqrt(sumPow2(arr) / arr.length - arr.mean(
  * @return {number[]} Confidence interval
  * @todo Make <code>sd</code> optional after having a t-Distribution table calculator
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  * @example
  * //If the first paraMetre is a number (hence the sample mean), than the rest of the paraMetres are necessary
@@ -3294,7 +3294,7 @@ export let confidenceInterval = (avg, c=.95, n, sd) => {
  * @return {*} Fibonacci sequence to <code>x</code>
  * @public
  * @function
- * @since 1.1
+ * @since 1.0
  */
 export let Fibonacci = (x) => (x <= 1) ? x : Fibonacci(x - 1) + Fibonacci(x - 2);
 
@@ -3303,7 +3303,7 @@ export let Fibonacci = (x) => (x <= 1) ? x : Fibonacci(x - 1) + Fibonacci(x - 2)
  * @param {string} exp Expression
  * @return {number} Result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @example
  * revPolishCalc('1 4 + 2 *'); //equivalent to (1 + 4) * 2 = 10

@@ -2,7 +2,7 @@
  * @module misc
  * @description Miscellaneous things that didn't had a whole module of their own.
  * @requires module:essence
- * @since 2.0
+ * @since 1.0
  */
 import * as essence from "./essence";
 
@@ -10,7 +10,7 @@ import * as essence from "./essence";
  * @description Process centre/manager.
  * @type {{list: Array, size: number, getDetails: (()), add: ((process?)), remove: ((process?)), removeById: ((id))}}
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @property {Process[]} Processes.list List of processes
  * @property {number} Processes.size Total size of all the processes
@@ -69,7 +69,7 @@ export let Processes = {
  * @param {Iterable} sender Sender
  * @param {Iterable} receiver Receiver
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let send = (sender, receiver) => {

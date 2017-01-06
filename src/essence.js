@@ -10,7 +10,7 @@
  * @typedef {(XML|string)} code
  * @typedef {(Node|TreeNode|NTreeNode|Vertex)} Node
  * @requires data
- * @since 2.0
+ * @since 1.0
  */
 import * as data from './data';
 import * as ui from './ui';
@@ -33,7 +33,7 @@ import * as dom from './dom';
 /**
  * @description Essence's console logger.
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let say = (message, type, ...style) => {
@@ -79,7 +79,7 @@ export let say = (message, type, ...style) => {
 /**
  * @description Start the first mark of the page-loading timer.
  * @protected
- * @since 2.0
+ * @since 1.0
  * @function
  */
 window.onload = () => data.loadTime = new Date().getTime();
@@ -87,7 +87,7 @@ window.onload = () => data.loadTime = new Date().getTime();
 /**
  * @description Start the second mark of the page-loading timer.
  * @protected
- * @since 2.0
+ * @since 1.0
  * @function
  */
 window.onpageshow = () => data.displayTime = new Date().getTime();
@@ -98,7 +98,7 @@ window.onpageshow = () => data.displayTime = new Date().getTime();
  * @param {boolean} [toLowerCase=false] To lower case
  * @returns {Array} Keystroke information
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let getKey = (keyStroke, toLowerCase) => {
@@ -112,7 +112,7 @@ export let getKey = (keyStroke, toLowerCase) => {
  * @global
  * @type {Function}
  * @public
- * @since 2.0
+ * @since 1.0
  */
 export const $f = () => {};
 
@@ -123,7 +123,7 @@ export const $f = () => {};
  * (end.g: a particular selector used by a JS object/function which may not be in the page yet).
  * @returns {?Element} Element
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let $e = (selector, silence) => {
@@ -144,7 +144,7 @@ export let $e = (selector, silence) => {
  * (e.g.: a particular selector used by a JS object/function which may not be in the page yet).
  * @returns {HTMLElement} Element node
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let $n = (selector, silence) => {
@@ -156,7 +156,7 @@ export let $n = (selector, silence) => {
  * @param {*} obj Object
  * @returns {Array} Keys
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let keys = (obj) => Object.keys(obj);
@@ -166,7 +166,7 @@ export let keys = (obj) => Object.keys(obj);
  * @param {*} obj Object
  * @returns {Array} Values
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let values = (obj) => Object.values(obj);
@@ -176,7 +176,7 @@ export let values = (obj) => Object.values(obj);
  * @param {*} obj Object
  * @returns {Array} Entries
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let entries = (obj) => Object.entries(obj);
@@ -188,7 +188,7 @@ export let entries = (obj) => Object.entries(obj);
  * @returns {Element} Element object
  * @constructor
  * @public
- * @since 2.0
+ * @since 1.0
  * @throws {InvalidParamError} Invalid parameter
  * @property {HTMLElement} Element.node Node
  * @property {string} Element.selector Selector
@@ -555,7 +555,7 @@ export class Element  {
  * @param {string} file Filename
  * @param {string} [type='link'] Type of the file
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @example
  * include('script.js'); //It will include the script.js just like include('script.js', 'script');
@@ -579,7 +579,7 @@ function include (file, type='link') {
  * @param {string} [parentPath=''] Parent path
  * @returns {undefined|boolean} False flag or nothing
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:essence~include
  */
@@ -613,7 +613,7 @@ function exclude (file, type='link') {
  * @this Object
  * @returns {number} Number of occurrences of <code>c</code> in the object
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @example
  * 'Hello world'.count('o'); //2
@@ -629,7 +629,7 @@ Object.prototype.count = (character) => Array.from(this).filter(x => x === chara
  * @this Object
  * @returns {number[]} Array of positions
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @example
  * 'AbcdAbc'.positions('A'); //[0, 4]
@@ -649,7 +649,7 @@ Object.prototype.positions = (character) => {
  * @this Object
  * @returns {boolean} Iterability check result
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Object.prototype
  * @external Object
@@ -668,7 +668,7 @@ Object.prototype.isIterable = () => isNativeType(this, 'String') || isNativeType
  * Source: {@link https://Google.github.io/styleguide/javascriptguide.xml?showone=delete#delete}
  * @this Object
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Object.prototype
  * @external Object
@@ -685,7 +685,7 @@ Object.prototype.delete = () => {
  * @this Object
  * @returns {boolean} Equality check result
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Object.prototype
  * @external Object
@@ -748,7 +748,7 @@ Object.prototype.compareTo = (obj) => {
  * @memberof Object.prototype
  * @external Object
  * @public
- * @since 2.0
+ * @since 1.0
  * @this Object
  * @method
  * @example
@@ -768,7 +768,7 @@ Object.prototype.has = (prop) => Object.prototype.hasOwnProperty.call(this, prop
  * @external Object
  * @this Object
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @example
  * let a = {}, b = new Object(), c = {x: 5}, d = '';
@@ -786,7 +786,7 @@ Object.prototype.isEmpty = () => !(this).length;
  * @external Object
  * @this Object
  * @public
- * @since 1.1
+ * @since 1.0
  * @method
  */
 Object.prototype.inherits = (parent) => {
@@ -803,7 +803,7 @@ Object.prototype.inherits = (parent) => {
  * @external Function
  * @this Function
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @deprecated
  * @todo Find a stable way to use it without having this=window (note: the ES5 way on {@link https://stackoverflow.com/questions/6868883/augmenting-types-in-javascript} works)
@@ -844,7 +844,7 @@ Function.prototype.inheritsFrom = (parentClassOrObj) => {
  * @return {boolean} Containment check result
  * @this Array
  * @method
- * @since 2.0
+ * @since 1.0
  * @memberof Array.prototype
  * @external Array
  * @see module:essence~Array.prototype.miss
@@ -857,7 +857,7 @@ Array.prototype.contains = (value) => this.indexOf(value) > -1;
  * @return {boolean} Non-containment check result
  * @this Array
  * @method
- * @since 2.0
+ * @since 1.0
  * @memberof Array.prototype
  * @external Array
  * @see module:essence~Array.prototype.contains
@@ -870,7 +870,7 @@ Array.prototype.miss = (value) => this.indexOf(value) === -1;
  * @this Array
  * @returns {*} First element
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -895,7 +895,7 @@ Array.prototype.last = (value) => isNon(value) ? this[this.length - 1]: this[thi
  * @param {number} [n=0] Index
  * @returns {Array} Line
  * @public
- * @since 2.0
+ * @since 1.0
  * @this Array
  * @method
  * @memberof Array.prototype
@@ -915,7 +915,7 @@ Array.prototype.line = (n=0) => {
  * @returns {Array} Block
  * @this Array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -927,7 +927,7 @@ Array.prototype.block = (start=0, end=this.length-1) => this.map((i) => i.get(st
  * @this Array
  * @returns {number} Last index
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -952,7 +952,7 @@ Array.prototype.midIndex = (under) => under ? Math.floor(this.length / 2) - 1 : 
  * @this Array
  * @returns {Array} Array of elements
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -964,7 +964,7 @@ Array.prototype.even = () => this.filter((item, i) => i % 2 === 0);
  * @this Array
  * @returns {Array} Array of elements
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -978,7 +978,7 @@ Array.prototype.odd = () => this.filter((item, i) => i % 2 != 0);
  * @this Array
  * @returns {*} Maximum value
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1015,7 +1015,7 @@ Array.prototype.maxOf = (start=0, n=this.length-1) => {
  * @this Array
  * @returns {*} Median
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1033,7 +1033,7 @@ Array.prototype.median = (value) => {
  * @this Array
  * @returns {*} Minimum value
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1053,7 +1053,7 @@ Array.prototype.min = (start=0, end=this.length-1) => {
  * @this Array
  * @returns {*} Minimum value
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1070,7 +1070,7 @@ Array.prototype.minOf = (start=0, n=this.length-1) => {
  * @this Array
  * @returns {Array} Shuffled array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1085,7 +1085,7 @@ Array.prototype.shuffle = (n=this.length) => {
  * @this Array
  * @returns {number} Max length
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1101,7 +1101,7 @@ Array.prototype.maxLength = () => {
  * @this Array
  * @returns {number} Min length
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1133,7 +1133,7 @@ Array.prototype.Fill2D = (character) => this.fill(new Array(this.length).fill(ch
  * @this Array
  * @returns {Array} Array after the operation
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1153,7 +1153,7 @@ Array.prototype.remove = (character, preserveInitial) => {
  * @this Array
  * @returns {undefined}
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1170,7 +1170,7 @@ Array.prototype.debug = () => {
  * @this Array
  * @returns {Array} Result
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1210,7 +1210,7 @@ Array.prototype.replace = function (Ci, Cf, toStr=false) {
  * @this Array
  * @returns {number} Sum
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1230,7 +1230,7 @@ Array.prototype.sum = (start=0, end=this.length-1) => {
  * @this Array
  * @returns {number} Product
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1249,7 +1249,7 @@ Array.prototype.prod = (start=0, end=this.length-1) => {
  * @param {number[]} [end=[this.length-1, this[this.length-1].length-1]] Ending positions
  * @returns {number} Sum
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1279,7 +1279,7 @@ Array.prototype.sum2d = (start=[0, 0], end=[this.length-1, this.last().length-1]
  * @param {number} [end=this.length-1] Ending position
  * @returns {number} Mean
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1296,7 +1296,7 @@ Array.prototype.mean = (nbDec=2, start=0, end=this.length-1) => {
  * @param {number} [n=this.length-start-1] Number of values to take into account
  * @returns {number} Mean of N
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1313,7 +1313,7 @@ Array.prototype.meanOf = (nbDec=2, start=0, n=this.length-start-1) => {
  * @param {number} [nbDec=2] Number of decimals
  * @returns {*} Minimum Mean of N
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @throws {Error} n should be less than or equal to this.length
  * @memberof Array.prototype
@@ -1332,7 +1332,7 @@ Array.prototype.minMean = (n=this.length-1, nbDec=2) => {
  * @param {number} [nbDec=2] Number of decimals
  * @returns {*} Maximum Mean of N
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @throws {Error} n should be less than or equal to this.length
  * @memberof Array.prototype
@@ -1352,7 +1352,7 @@ Array.prototype.maxMean = (n=this.length-1, nbDec) => {
  * @param {number} [end=this.length-1] Ending positions
  * @returns {number} Average
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1368,7 +1368,7 @@ Array.prototype.avg = (nbDec=2, start=0, end=this.length-1) => {
  * @param {number} [start=0] Starting positions
  * @param {number} [n=this.length-start-1] Ending positions
  * @returns {number} Average Of N
- * @since 1.1
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1387,7 +1387,7 @@ Array.prototype.avgOf = (nbDec=2, start=0, n=this.length-start-1) => {
  * @param {number} [nbDec=2] Number of decimals
  * @returns {*} Minimum Average of N
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @throws {Error} n should be less than or equal to this.length
  * @memberof Array.prototype
@@ -1406,7 +1406,7 @@ Array.prototype.minAvg = (n=this.length-1, nbDec=2) => {
  * @param {number} [nbDec=2] Number of decimals
  * @returns {*} Maximum Average of N
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @throws {Error} n should be less than or equal to this.length
  * @memberof Array.prototype
@@ -1425,7 +1425,7 @@ Array.prototype.maxAvg = (n=this.length-1, nbDec=2) => {
  * @param {number} [nbDec=2] Number of decimals
  * @returns {number} Variance
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1438,7 +1438,7 @@ Array.prototype.letiance = (nbDec=2) => (maths.sumPow2(this, nbDec) / this.lengt
  * @param {number} [nbDec=2] Number of decimals
  * @returns {number} Standard deviation
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1451,7 +1451,7 @@ Array.prototype.stddev = (nbDec=2) => Math.sqrt(this.letiance(nbDec)).toNDec(nbD
  * @this Array
  * @returns {*} Random element(s)
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1471,7 +1471,7 @@ Array.prototype.rand = (n) => {
  * @this Array
  * @returns {*} Nth quartile
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1485,7 +1485,7 @@ Array.prototype.quartile = (n, nbDec=2) => this.length % 2 === 0? ((this[Math.fl
  * @this Array
  * @returns {*} Nth quintile
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1499,7 +1499,7 @@ Array.prototype.quintile =  (n, nbDec=2) => this.length % 2 === 0? ((this[Math.f
  * @this Array
  * @returns {*} Nth decile
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1513,7 +1513,7 @@ Array.prototype.decile = (n, nbDec=2) => this.length % 2 === 0? ((this[Math.floo
  * @this Array
  * @returns {*} Nth percentile
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1526,7 +1526,7 @@ Array.prototype.percentile = (n, nbDec=2) => this.length % 2 === 0 ? ((this[Math
  * @this Array
  * @returns {Number} Increment
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1538,7 +1538,7 @@ Array.prototype.getIncrement = (nbDec=2) => nbDec == 0 ? parseInt(((this.max() -
  * @param {number} [n=1] Increment value
  * @returns {undefined}
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1553,7 +1553,7 @@ Array.prototype.increment = (n=1) => {
  * @this Array
  * @returns {number} IQR
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1567,7 +1567,7 @@ Array.prototype.iqr = (nbDec=2) => this.quartile(3, nbDec) - this.quartile(1, nb
  * @this Array
  * @returns {Array} Resulting sub-array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1581,7 +1581,7 @@ Array.prototype.get = (start=0, end) => dsa.get(this, start, end);
  * @this Array
  * @returns {Array} Cleaned array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1601,7 +1601,7 @@ Array.prototype.clean = (noDuplic=false) => {
  * @this Array
  * @returns {Array} Modified array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1618,7 +1618,7 @@ Array.prototype.chg = (arr, start=0, end=this.length-1) => {
  * @this Array
  * @returns {Array} Rotated array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @throws {Error} deg isn't a multiple of 90°
  * @memberof Array.prototype
@@ -1691,7 +1691,7 @@ Array.prototype.rot = (deg) => {
  * @this Array
  * @returns {number} Number of elements
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1706,7 +1706,7 @@ Array.prototype.numElm = () => this.linearise().length;
  * @this Array
  * @returns {string|number[]} Size
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1718,7 +1718,7 @@ Array.prototype.size = (str) => str ? this.length + 'x' + this.maxLength(): [thi
  * @this Array
  * @returns {number} Determinant
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1737,7 +1737,7 @@ Array.prototype.det = () => {
  * @this Array
  * @returns {Array} Translated array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1763,7 +1763,7 @@ Array.prototype.translate = function () {
  * @param {*} x Element looked for
  * @returns {number} Position of the element
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1781,7 +1781,7 @@ Array.prototype.lookFor = (x) => {
  * @param {number} n Size of each chunks
  * @returns {Array} Resulting array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1799,7 +1799,7 @@ Array.prototype.divide = (n) => {
  * @this Array
  * @returns {Array} Adjoint matrix
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1826,7 +1826,7 @@ Array.prototype.getAdjoint = () => {
  * @this Array
  * @returns {boolean} Is it invertible ?
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1839,7 +1839,7 @@ Array.prototype.isInvertible = () => this.det() != 0;
  * @this Array
  * @returns {Array} Resulting array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1859,7 +1859,7 @@ Array.prototype.dotProd = (scalar)  => {
  * @this Array
  * @returns {Array} Resulting array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1880,7 +1880,7 @@ Array.prototype.dotAdd = (scalar)  => {
  * @this Array
  * @returns {Array} Resulting array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1901,7 +1901,7 @@ Array.prototype.dotSub = (scalar, order='a-b') => {
  * @this Array
  * @returns {Array} Resulting array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1922,7 +1922,7 @@ Array.prototype.dotFrac = (scalar, order='a/b') => {
  * @this Array
  * @returns {string} String representation
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1942,7 +1942,7 @@ Array.prototype.toStr = (clean=false) => {
  * @description Number[] to Number.
  * @returns {number} Integer representation
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1972,7 +1972,7 @@ Array.prototype.inv = () => this.isInvertible() ? this.dotProd(1 / this.det() * 
  * @this Array
  * @returns {Array} Mixed array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -1988,7 +1988,7 @@ Array.prototype.mix = () => {
  * @this Array
  * @returns {Array} Mixed array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2016,7 +2016,7 @@ Array.prototype.littleMix = () => {
  * @param {Array} arr Array used to prepend
  * @returns {Array} New array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2032,7 +2032,7 @@ Array.prototype.prepend = (arr) => {
  * @this Array
  * @returns {Array} Array of unique elements
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2044,7 +2044,7 @@ Array.prototype.unique = () => this.filter(x => this.count(x) === 1);
  * @param {boolean} [jointer=false] Jointer
  * @returns {Array} res Resulting 1D array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2062,7 +2062,7 @@ Array.prototype.to1d = (jointer) => {
  * @this Array
  * @returns {Array} Resulting N-D array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2082,7 +2082,7 @@ Array.prototype.toNd = (n=2) => {
  * @this Array
  * @returns {Array} Resulting array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2120,7 +2120,7 @@ Array.prototype.toNrow = (n=2) => {
  * @this Array
  * @returns {Array} Linearised array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2192,7 +2192,7 @@ Array.prototype.unzip = (noPairs=false) => {
  * @this Array
  * @returns {Array} res Trimed array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2209,7 +2209,7 @@ Array.prototype.trimAll = (side) => {
  * @this Array
  * @returns {boolean} Sorted or not
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2227,7 +2227,7 @@ Array.prototype.isSorted = () => {
  * @this Array
  * @param {*} obj Object
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2246,7 +2246,7 @@ Array.prototype.uniquePush = (obj) => {
  * @param {Nums} x Column number
  * @returns {Array} Neighbours
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @throws {RangeError} y|x is too big
  * @memberof Array.prototype
@@ -2287,7 +2287,7 @@ Array.prototype.neighbour = function (y, x) {
  * @this Array
  * @returns {Array} Sanitised array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2305,7 +2305,7 @@ Array.prototype.sanitise = (type) => {
  * @param {number} [numerator=1] Position of the part (1st half by default)
  * @returns {Array} Portion of the array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2321,7 +2321,7 @@ Array.prototype.portion = (denominator=2, numerator=1) => {
  * @returns {Array.<*>} Array without that first element n
  * @see external:Array.remove
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2337,7 +2337,7 @@ Array.prototype.removeFirst = (n, preserveInitial) => {
  * @return {Array.<*>} Array without that last element n
  * @see external:Array.remove
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2352,7 +2352,7 @@ Array.prototype.removeLast = (n, preserveInitial) => {
  * @param {*} searchElement The item to search for within the array.
  * @return {number} The index of the element which defaults to -1 when not found.
  * @public
- * @since 1.1
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2381,7 +2381,7 @@ Array.prototype.binaryIndexOf = (searchElement) => {
  * @returns {Array} Modified array
  * @this Array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2397,7 +2397,7 @@ Array.prototype.place = (n) => this.splice(Math.abs(this.binaryIndexOf(n)), 0, n
  * @returns {Array} Modified array
  * @this Array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Array.prototype
  * @external Array
@@ -2418,7 +2418,7 @@ Array.prototype.multiPlace = (arr) => {
  * @this String
  * @public
  * @method
- * @since 2.0
+ * @since 1.0
  * @memberof String.prototype
  * @external String
  */
@@ -2432,7 +2432,7 @@ String.prototype.contains = Array.prototype.contains;
  * @this String
  * @public
  * @method
- * @since 2.0
+ * @since 1.0
  * @memberof String.prototype
  * @external String
  */
@@ -2445,7 +2445,7 @@ String.prototype.miss = Array.prototype.miss;
  * @this String
  * @returns {*} Last element
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2460,7 +2460,7 @@ String.prototype.last = (nval) => this.split('').last(nval);
  * @returns {string} Spliced string
  * @this String
  * @public
- * @since 2.0
+ * @since 1.0
  * @public
  * @memberof String.prototype
  * @external String
@@ -2479,7 +2479,7 @@ String.prototype.splice = (index, count, add='') => {
  * @this String
  * @returns {string} Resulting string
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2501,7 +2501,7 @@ String.prototype.remove = (character) => {
  * @this String
  * @returns {string} Floating point number
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2514,7 +2514,7 @@ String.prototype.toNDec = (n=2) => Number(this).toFixed(n);
  * @this String
  * @returns {String} Resulting string
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2536,7 +2536,7 @@ String.prototype.toNDigits = (n=2) => {
  * @memberof String.prototype
  * @external String
  * @public
- * @since 2.0
+ * @since 1.0
  */
 String.prototype.mix = (separator='', jointer=separator) => {
   let randPos = mixedRange(0, 1, this.length - 1), iStr = this.split(separator), fStr = [];
@@ -2550,7 +2550,7 @@ String.prototype.mix = (separator='', jointer=separator) => {
  * @param {number} n Number of chunks
  * @returns {string[]} Divided string
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2569,7 +2569,7 @@ String.prototype.divide = (n) => {
  * @this String
  * @returns {string} String
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2589,7 +2589,7 @@ String.prototype.capitalize = (whole=false) => {
  * @this String
  * @returns {number} Ascii sum
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2605,7 +2605,7 @@ String.prototype.sum = () => {
  * @this String
  * @returns {number} Ascii product
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2621,7 +2621,7 @@ String.prototype.prod = () => {
  * @this String
  * @returns {number} Mean
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2633,7 +2633,7 @@ String.prototype.mean = () => this.map(character => character.charCodeAt(0)).mea
  * @this String
  * @returns {string} Normalised string
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2720,7 +2720,7 @@ String.prototype.unzip = (noPairs) => {
  * @this String
  * @returns {string} Chunked string
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof String.prototype
  * @external String
@@ -2734,7 +2734,7 @@ String.prototype.chunk = (start=0, end) => this.split(' ').get(start, end).join(
  * @returns {string} Same string
  * @method
  * @public
- * @since 2.0
+ * @since 1.0
  * @memberof String.prototype
  * @external String
  */
@@ -2755,7 +2755,7 @@ String.prototype.sameFirst = (str) => {
  * @returns {string} Same string
  * @method
  * @public
- * @since 2.0
+ * @since 1.0
  * @memberof String.prototype
  * @external String
  */
@@ -2776,7 +2776,7 @@ String.prototype.sameLast = (str) => {
  * @return {string} Mapped string
  * @memberof String.prototype
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @external String
  * @this String
@@ -2790,7 +2790,7 @@ String.prototype.map = (cb, sep='') => this.split(sep).map(cb).join(sep);
  * @return {string} Reversed string
  * @method
  * @public
- * @since 2.0
+ * @since 1.0
  * @external String
  * @this String
  */
@@ -2802,7 +2802,7 @@ String.prototype.reverse = (splitter='') => this.split(splitter).reverse().join(
  * @param {boolean} [noSpace=false] Remove spaces
  * @method
  * @public
- * @since 2.0
+ * @since 1.0
  * @external String
  * @return {string} Minified version of the string/code
  */
@@ -2820,7 +2820,7 @@ String.prototype.minify = (noComment=false, noSpace=false) => {
  * @this String
  * @method
  * @public
- * @since 2.0
+ * @since 1.0
  * @memberof String.prototype
  * @external String
  */
@@ -2833,7 +2833,7 @@ String.prototype.portion = (denominator=2, numerator=1) => this.split('').portio
  * @this String
  * @returns {number} Number of occurrences of the word in the string
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @inheritdoc
  * @memberof String.prototype
@@ -2846,7 +2846,7 @@ String.prototype.countWord = (word, separation=' ') => this.split(separation).co
  * @this String
  * @returns {boolean} Is it a character ?
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @inheritdoc
  * @memberof String.prototype
@@ -2860,7 +2860,7 @@ String.prototype.isChar = () => typeof this === 'string' && /^[A-Za-z0-9]$/.test
  * @this String
  * @returns {string[]} Tokens
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @inheritdoc
  * @memberof String.prototype
@@ -2891,7 +2891,7 @@ String.prototype.tokenize = () => {
  * @this Number
  * @returns {Nums} Length
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Number.prototype
  * @external Number
@@ -2914,7 +2914,7 @@ Number.prototype.length = () => {
  * @this Number
  * @returns {number} Floating point number
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Number.prototype
  * @external Number
@@ -2930,7 +2930,7 @@ Number.prototype.toNDec = (n=2) => {
  * @returns {string} New number
  * @protected
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Number.prototype
  * @external Number
@@ -2943,7 +2943,7 @@ Number.prototype.toNDigits = (n=2) => this.toString().toNDigits(n); //It won't w
  * @param {boolean} str Symbols string representation ?
  * @returns {NumberLike} Sign
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Number.prototype
  * @external Number
@@ -2956,7 +2956,7 @@ Number.prototype.sign = (str) => str ? (this < 0 ? '-' : (this > 0 ? '+': '')) :
  * @param {number} n Number to check in relation
  * @returns {boolean} Prime check result
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Number.prototype
  * @external Number
@@ -2973,7 +2973,7 @@ Number.prototype.isPrime = (n) => {
  * @param {number} [nbDec=2] Number of decimals
  * @returns {*} Cleaned number
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Number.prototype
  * @external Number
@@ -2989,7 +2989,7 @@ Number.prototype.clean = (nbDec=2) => {
  * @description Number to Number[].
  * @returns {number[]} Number array
  * @public
- * @since 2.0
+ * @since 1.0
  * @method
  * @memberof Number.prototype
  * @external Number
@@ -3010,7 +3010,7 @@ Number.prototype.toArr = () => {
  * @param {string} type Type
  * @returns {boolean} Type check result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:essence~isCustomType
  * @see module:essence~getNativeType
@@ -3023,7 +3023,7 @@ export let isNativeType = (obj, type) => getNativeType(obj, true) === `[object $
  * @param {string} type Type
  * @returns {boolean} Type check result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:essence~isCustomType
  * @see module:essence~isNativeType
@@ -3037,7 +3037,7 @@ export let isType = (obj, type) => getType(obj) === type;
  * @param {string} type Type
  * @returns {boolean} Custom type check result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:essence~isNativeType
  * @see module:essence~getCustomType
@@ -3050,7 +3050,7 @@ export let isCustomType = (obj, type) => getCustomType(obj) === type;
  * @param {boolean} [preserve=false] Preserve the [object type] format
  * @returns {string} Type
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:essence~isNativeType
  * @see module:essence~getCustomType
@@ -3066,7 +3066,7 @@ export let getNativeType = (obj, preserve=false) => {
  * @param {boolean} [preserve=false] Preserve the format of strings like [object Element]
  * @returns {string} Custom type
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:essence~isCustomType
  * @see module:essence~getNativeType
@@ -3082,7 +3082,7 @@ export let getCustomType = (obj, preserve=false) => { //Same as getNativeType bu
  * @param {*} obj Object
  * @returns {string} Custom type
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @see module:essence~getCustomType
  * @see module:essence~getType
@@ -3101,7 +3101,7 @@ export let getType = (obj) => {
  * @param {Array} arr Object
  * @returns {boolean} 2D array check result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let is2dArray = (arr) => {
@@ -3118,7 +3118,7 @@ export let is2dArray = (arr) => {
  * @param {string} type Native/custom type
  * @returns {boolean} Single-type check result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let isTypedArray = (arr, type) => arr.every(item => isType(item, type));
@@ -3128,7 +3128,7 @@ export let isTypedArray = (arr, type) => arr.every(item => isType(item, type));
  * @param {array} arr Array
  * @returns {string} Array type
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let getArrayType = (arr) => {
@@ -3141,7 +3141,7 @@ export let getArrayType = (arr) => {
  * @param {*} val Value
  * @returns {boolean} Voidness/emptyness result
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let isNon = (val) => (val === false || val === undefined || val === null || val === '' || val.equals([]) || val.equals({}));
@@ -3152,7 +3152,7 @@ export let isNon = (val) => (val === false || val === undefined || val === null 
  * @param {*} obj Object/variable to check
  * @return {boolean} Existence result
  * @public
- * @since 1.1
+ * @since 1.0
  * @func
  * @example
  * let a = undefined, b, c = null;
@@ -3179,7 +3179,7 @@ export let exist = (obj) => {
  * @param {*} obj Element
  * @returns {*} Copy of <code>el</code>
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let Copy = (obj) => {
@@ -3199,7 +3199,7 @@ export let Copy = (obj) => {
  * @param {boolean} [ms=false] Include milliseconds
  * @returns {string} Time
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let getTime = (ms=false) => {
@@ -3214,7 +3214,7 @@ export let getTime = (ms=false) => {
  * @param {boolean} [short=false] Shortness (end.g: 26May2016 instead of 26/05/2016
  * @returns {string} Date
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let getDate = (short=false) => {
@@ -3227,7 +3227,7 @@ export let getDate = (short=false) => {
  * @param {boolean} [readable=false] Readable (dd/MM/yyyy hh:mm:ss.xxx) or not (ddMMM-hh-mm-ss)
  * @returns {string} Timestamp
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:essence~getDate
  * @see module:essence~getTime
  * @function
@@ -3243,7 +3243,7 @@ export let getTimestamp = (readable=false) => {
  * @see module:essence~txt2date
  * @function
  * @public
- * @since 2.0
+ * @since 1.0
  * @throws {Error} d isn't a Date
  */
 export let date2txt = (d) => {
@@ -3258,7 +3258,7 @@ export let date2txt = (d) => {
  * @see module:essence~date2txt
  * @function
  * @public
- * @since 1.1
+ * @since 1.0
  */
 export let txt2date = (txt) => {
   let p = txt.split('/');
@@ -3269,7 +3269,7 @@ export let txt2date = (txt) => {
  * @description Display the date and at time at a particular place
  * @param {string} [id] ID of the element to be used
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let dateTime = (id) => {
@@ -3319,7 +3319,7 @@ export let dayOfWeek = (d) => {
  * @returns {number} Number
  * @see module:essence~num2date
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let date2num = (d=getDate()) => {
@@ -3333,7 +3333,7 @@ export let date2num = (d=getDate()) => {
  * @returns {string} Date
  * @see module:essence~date2num
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let num2date = (n) => {
@@ -3351,7 +3351,7 @@ export let num2date = (n) => {
  * @returns {number} Difference
  * @function
  * @public
- * @since 2.0
+ * @since 1.0
  */
 export let dateDiff = (from=new Date(), to, part='d', round=false) => {
   let divideBy = { //In ms
@@ -3376,7 +3376,7 @@ export let dateDiff = (from=new Date(), to, part='d', round=false) => {
  * @returns {number} Seconds
  * @function
  * @public
- * @since 2.0
+ * @since 1.0
  * @see module:essence~s2date
  * @see module:data~DAY_IN_SEC
  * @see module:data~MONTH_IN_DAY
@@ -3392,7 +3392,7 @@ export let date2s = (d=0, w=0, m=0, y=0) => {
  * @returns {number} Result
  * @function
  * @public
- * @since 1.1
+ * @since 1.0
  * @see module:essence~date2s
  * @see module:data~DAY_IN_SEC
  * @see module:data~MONTH_IN_DAY
@@ -3528,7 +3528,7 @@ export let mkArray = (len, dim, fill=false) => {
  * @param {string} [cr=' '] Filling character
  * @returns {Array} Resized elements
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  * @throws {Error} a and b must be iterable
  */
@@ -3552,7 +3552,7 @@ export let toSameLength = (a, b, cr=' ') => {
  * @param {boolean} [toCoord=false] Coordinate representation
  * @returns {Nums} Position
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let lookfor = (x, mtx, toCoord=false) => {
@@ -3571,7 +3571,7 @@ export let lookfor = (x, mtx, toCoord=false) => {
  * @param {boolean} [propOnly=false] Properties only
  * @returns {string} HTML table
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let keyTable = (map, propOnly=false) => { //Same as above but in the form of the HTML table
@@ -3588,7 +3588,7 @@ export let keyTable = (map, propOnly=false) => { //Same as above but in the form
  * @param {string} c Character
  * @returns {string} Hexadecimal code
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let char2hex = (c) => maths.conv(c.charCodeAt(0), 10, 16);
@@ -3598,7 +3598,7 @@ export let char2hex = (c) => maths.conv(c.charCodeAt(0), 10, 16);
  * @param {NumberLike} h Hexadecimal code
  * @returns {string} Character
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let hex2char = (h) => String.fromCharCode(maths.conv(h, 16));
@@ -3608,7 +3608,7 @@ export let hex2char = (h) => String.fromCharCode(maths.conv(h, 16));
  * @param {string} c Character
  * @returns {string} Binary code
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let char2bin = (c) => maths.conv(c.charCodeAt(0), 10, 2);
@@ -3619,7 +3619,7 @@ export let char2bin = (c) => maths.conv(c.charCodeAt(0), 10, 2);
  * @param {NumberLike} b Binary code
  * @returns {string} Character
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let bin2char = (b) => String.fromCharCode(maths.conv(b, 2));
@@ -3661,7 +3661,7 @@ export let num2txt = (num, base=10) => {
  * @param {string} [format='ms'] Format of the result (ms/s/min/d/...)
  * @returns {number} Time
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let time = (cb, format, ...params) => {
@@ -3676,7 +3676,7 @@ export let time = (cb, format, ...params) => {
  * A neat wait of keeping the code passed in the parameter to be executed in order of execution (instead of being pushed at the end of the execution queue), is to pass a command/instruction instead of a function (with that command/instructions).
  * @param {Function} [cb=$f] Callback
  * @public
- * @since 2.0
+ * @since 1.0
  * @function
  */
 export let wait = (cb=$f) => setTimeout(cb, 0);
@@ -3688,7 +3688,7 @@ export let wait = (cb=$f) => setTimeout(cb, 0);
  * @param {string} [format='ms'] Format of the result (ms/s/min/d/...)
  * @returns {number} Time
  * @public
- * @since 1.1
+ * @since 1.0
  * @function
  */
 export let asyncTime = (cb, params, format) => {
