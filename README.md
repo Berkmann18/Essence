@@ -1,8 +1,8 @@
-# Essence
-[![Build Status](https://travis-ci.org/anvk/essence.svg?branch=master)](https://travis-ci.org/anvk/essence)
-[![Issue Stats](http://issuestats.com/github/Berkmann18/Essence/badge/pr?style=flat)]
-[![Issue Stats](http://issuestats.com/github/Berkmann18/Essence/badge/issue?style=flat)](http://issuestats.com/github/Berkmann18/Essence)]
-[![npm version](https://badge.fury.io/js/%essence.svg)](https://badge.fury.io/js/essence)
+# Exence
+[![Build Status](https://travis-ci.org/anvk/exence.svg?branch=master)](https://travis-ci.org/anvk/exence)
+[![Issue Stats](http://issuestats.com/github/Berkmann18/Exence/badge/pr?style=flat)]
+[![Issue Stats](http://issuestats.com/github/Berkmann18/Exence/badge/issue?style=flat)](http://issuestats.com/github/Berkmann18/Exence)]
+[![npm version](https://badge.fury.io/js/%exence.svg)](https://badge.fury.io/js/exence)
 
 
 > An All-in-One stack of essential tools and features for HTML/CSS/JS coding.
@@ -16,12 +16,12 @@ In order to use this framework, you would need the following:
 ## Install
 ### Using NPM
 ```bash
-$ npm install essence --save
+$ npm install exence --save
 ```
 
 ### Using Git
 ```
-$ git clone https://github.com/Berkmann18/Essence.git
+$ git clone https://github.com/Berkmann18/Exence.git
 ```
 
 ## How to use
@@ -33,7 +33,7 @@ Copy the repository from:
 
 ### Online usage
 ```html
-<script src="https://berkmann18.github.com/rsc/Essence/essence.js"></script>
+<script src="https://berkmann18.github.com/rsc/Exence/essence.js"></script>
 ```
 
 ### Local usage

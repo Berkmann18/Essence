@@ -1058,7 +1058,7 @@ export let deg2rad = (deg) => deg * Math.PI / 180;
  * @since 1.0
  * @function
  */
-export let rad2deg = (rad) => rad * 180 / Math.PI
+export let rad2deg = (rad) => rad * 180 / Math.PI;
 
 /**
  * @description Check if <code>x</code> is a prime number.

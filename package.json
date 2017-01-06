@@ -1,5 +1,5 @@
 {
-  "name": "essence",
+  "name": "exence",
   "version": "2.0.0",
   "description": "A framework providing all the essential tools to the JS coder.",
   "main": "src/essence.js",
@@ -33,6 +33,7 @@
     "url": "git+https://github.com/Berkmann18/Essence.git"
   },
   "keywords": [
+    "exence",
     "Essence",
     "EssenceJS",
     "Essence 2",

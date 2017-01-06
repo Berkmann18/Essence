@@ -163,3 +163,4 @@ $RECYCLE.BIN/
 /test/
 /dist/
 /.idea/
+.idea/*
