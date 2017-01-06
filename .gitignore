@@ -162,4 +162,9 @@ $RECYCLE.BIN/
 ### Project
 /test/
 /dist/
+<<<<<<< HEAD
 .idea/*.*
+=======
+/.idea/
+.idea/*
+>>>>>>> develop

@@ -83,7 +83,10 @@ tr:hover td {
 .block {
     -moz-border-radius: 7px;
     -moz-box-sizing: border-box;
+<<<<<<< HEAD
     -moz-appearance: none;
+=======
+>>>>>>> develop
     -webkit-appearance: none;
     -webkit-border-radius: 7px;
     -webkit-box-sizing: border-box;
@@ -98,16 +101,23 @@ tr:hover td {
     line-height: 200%;
     margin: 2px;
     min-height: 16px;
+<<<<<<< HEAD
+=======
+    outline: 0;
+>>>>>>> develop
     padding: .3em 2px;
     position: relative;
     white-space: nowrap;
     width: 100%;
 }
 
+<<<<<<< HEAD
 .block:focus {
     outline: 0;
 }
 
+=======
+>>>>>>> develop
 .icon {
     border: none;
     height: 64px;
@@ -187,8 +197,13 @@ h3 {
     box-shadow: none;
     clear: none;
     color: inherit;
+<<<<<<< HEAD
     content: normal;
     float: none;
+=======
+    float: none;
+    content: normal;
+>>>>>>> develop
     height: auto;
     letter-spacing: normal;
     line-height: normal;
