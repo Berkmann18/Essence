@@ -4,12 +4,8 @@
  * @requires module:essence
  * @since 1.0
  */
-<<<<<<< HEAD
 import * as essence from './essence';
 import * as data from './data';
-=======
-import * as essence from './essence'
->>>>>>> develop
 
 /**
  * @description Turn the current webpage into an in-browser editor
@@ -18,9 +14,7 @@ import * as essence from './essence'
  * @since 1.0
  * @function
  */
-export let PageEditor = (content='') => {
-  location.href = `data:text/html, <html contenteditable>${content}</html>`;
-};
+export let PageEditor = (content='') => location.href = `data:text/html, <html contenteditable>${content}</html>`;
 
 /**
  * @description Server centre/manager.
@@ -60,23 +54,14 @@ export let ServerBase = {
     serverFound.then(server => {
       this.list.remove(server);
       //noinspection JSAnnotator
-<<<<<<< HEAD
       server.delete();
     }).catch(err => essence.say(err, 'error'));
-=======
-      delete server;
-    }).catch(err => essence.say(err, "error"));
->>>>>>> develop
   }
 };
 
 /**
  * @description System (a bit like in Java)
-<<<<<<< HEAD
  * type {{ready: boolean, in: {recording: boolean, data: Array, record: ((KeyStroke?)), startRecording: (()), stopRecording: (())}, log: ((data)), debug: ((cb, ...args)), out: (()), toString: (()), reset: (())}}
-=======
- * @type {{ready: boolean, in: {recording: boolean, data: Array, record: ((keyStroke?)), startRecording: ((keyStroke?)), stopRecording: Sys.in.stopRecording}, log: ((data)), debug: ((cb, ...args)), out: (()), toString: (())}}
->>>>>>> develop
  * @global
  * @since 1.0
  * @property {boolean} Sys.ready Ready to transmit inputted data
@@ -90,11 +75,7 @@ export let ServerBase = {
  * @property {function(Function)} Sys.debug Debugger
  * @property {function(): string} Sys.out Output
  * @property {function(): string} Sys.toString() String representation
-<<<<<<< HEAD
  * @property {function()} Sys.rest()c Reset the Sys's internals
-=======
- * @property {function()} Sys.rest() Reset the Sys's internals
->>>>>>> develop
  */
 export const Sys = {
   ready: false,
@@ -122,10 +103,6 @@ export const Sys = {
         this.record(keyStroke);
         data.lastKeyPair = essence.getKey(keyStroke);
       };
-<<<<<<< HEAD
-=======
-      this.record(keyStroke);
->>>>>>> develop
     },
     stopRecording() {
       this.recording = false;
@@ -139,15 +116,9 @@ export const Sys = {
   debug(cb, ...args) {
     this.log(`Debugging: ${cb.name}`);
     console.group();
-<<<<<<< HEAD
     console.time('debug');
     cb(...args);
     console.timeEnd('Time');
-=======
-    console.time("debug");
-    cb(...args);
-    console.timeEnd("Time");
->>>>>>> develop
     console.trace();
     console.groupEnd();
   },
@@ -156,11 +127,7 @@ export const Sys = {
     return this.in.data;
   },
   toString() {
-<<<<<<< HEAD
     return '[object System]';
-=======
-    return "[object System]";
->>>>>>> develop
   },
   reset() {
     this.data = [];

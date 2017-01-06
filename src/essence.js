@@ -18,22 +18,8 @@ import * as misc from './misc';
 import * as maths from './maths';
 import * as dsa from './dsa';
 import * as dom from './dom';
-<<<<<<< HEAD
 import * as qtest from './qtest';
-=======
->>>>>>> develop
 
-/*
- Array.linearise:
- const flat = {};
- [[0, 1], [2, 3], [4, 5]].reduce((memo, item, index) => {
- const flatten = memo.concat(item);
- flat[index] = flatten;
- return flatten;
- });
- */
-
-//NodeJS suggestion !a.length instead of a.isEmpty()
 /**
  * @description Essence's console logger.
  * @public
@@ -81,7 +67,6 @@ export let say = (message, type, ...style) => {
 };
 
 /**
-<<<<<<< HEAD
  * @description Time taken by the DOM to load via the time taken to window.onload to happen.
  * @type {number}
  * @public
@@ -99,34 +84,22 @@ export let loadTime = 0;
 export let displayTime = 0;
 
 /**
-=======
->>>>>>> develop
  * @description Start the first mark of the page-loading timer.
  * @protected
  * @since 1.0
  * @function
-<<<<<<< HEAD
  * @see module:essence~loadTime
  */
 window.onload = () => loadTime = new Date().getTime();
-=======
- */
-window.onload = () => data.loadTime = new Date().getTime();
->>>>>>> develop
 
 /**
  * @description Start the second mark of the page-loading timer.
  * @protected
  * @since 1.0
  * @function
-<<<<<<< HEAD
  * @see module:essence~displayTime
  */
 window.onpageshow = () => displayTime = new Date().getTime();
-=======
- */
-window.onpageshow = () => data.displayTime = new Date().getTime();
->>>>>>> develop
 
 /**
  * @description Get the information about the key pressed
@@ -150,12 +123,8 @@ export let getKey = (keyStroke, toLowerCase) => {
  * @public
  * @since 1.0
  */
-<<<<<<< HEAD
 export const $f = () => {
 };
-=======
-export const $f = () => {};
->>>>>>> develop
 
 /**
  * @description Element selector
@@ -274,15 +243,9 @@ export let entries = (obj) => Object.entries(obj);
  * Maybe do something with $n(...).scrollIntoView()
  * @property {function()} Element.moveCSS Move the inline-CSS into the current stylesheet
  */
-<<<<<<< HEAD
 export class Element {
   constructor(selector) {
     if (/^([#.*_-`~&]\W*|\S|undefined|null|)$/.test(selector)) throw new qtest.InvalidParamError(`Element cannot accept the selector '${selector}' as its invalid.`); //Reject invalid selectors
-=======
-export class Element  {
-  constructor(selector) {
-    if (/^([#.*_-`~&]\W*|\S|undefined|null|)$/.test(selector)) throw new InvalidParamError(`Element cannot accept the selector '${selector}' as its invalid.`); //Reject invalid selectors
->>>>>>> develop
     if (selector[0] === '#') this.node = document.querySelector(selector) || document.getElementById(selector.slice(1, selector.length)); //Id
     else if (selector[0] === '.') this.node = document.querySelector(selector) || document.getElementByClassName(selector.slice(1, selector.length)); //Class
     else if (selector[0] === '*') this.node = document.querySelectorAll(selector.slice(1, selector.length)) || document.getElementsByTagName(selector.slice(1, selector.length)); //Node list
@@ -327,15 +290,9 @@ export class Element  {
     if (this.isNodeList()) {
       for (let i in this.node) {
         if (this.node.has(i)) {
-<<<<<<< HEAD
           if (this.node[i].value && !parseToHTML && !incTags) this.node[i].value = isNativeType(value, 'Array') ? value[i] : value;
           else if (this.node[i].innerHTML && parseToHTML && !incTags) this.node[i].innerHTML = isNativeType(value, 'Array') ? value[i] : value;
           else if (this.node[i].innerText && !parseToHTML && !incTags) this.node[i].innerText = isNativeType(value, 'Array') ? value[i] : value;
-=======
-          if (this.node[i].value && !parseToHTML && !incTags) this.node[i].value = isNativeType(value, 'Array') ?  value[i] : value;
-          else if (this.node[i].innerHTML && parseToHTML && !incTags) this.node[i].innerHTML = isNativeType(value, 'Array') ? value[i] : value;
-          else if (this.node[i].innerText && !parseToHTML && !incTags)this.node[i].innerText = isNativeType(value, 'Array') ? value[i] : value;
->>>>>>> develop
           else if (this.node[i].outerHTML && !parseToHTML && incTags) this.node[i].outerHTML = isNativeType(value, 'Array') ? value[i] : value;
           else this.node[i].value ? (this.node[i].value = isNativeType(value, 'Array') ? value[i] : value) : (this.node[i].innerText = isNativeType(value, 'Array') ? value[i] : value);
         }
@@ -355,11 +312,7 @@ export class Element  {
       for (let i in this.node) {
         if (this.node.has(i)) {
           if (this.node[i].value && !parseToHTML && !incTags) this.node[i].value = isNativeType(value, 'Array') ? value[i] + this.node[i].value : value + this.node[i].value;
-<<<<<<< HEAD
           else if (this.node[i].innerHTML && parseToHTML && !incTags) this.node[i].innerHTML = isNativeType(value, 'Array') ? value[i] + this.node[i].innerHTML : value + this.node[i].innerHTML;
-=======
-          else if (this.node[i].innerHTML && parseToHTML && !incTags) this.node[i].innerHTML = isNativeType(value, 'Array') ? value[i] + this.node[i].innerHTML : value+ this.node[i].innerHTML;
->>>>>>> develop
           else if (this.node[i].innerText && !parseToHTML && !incTags) this.node[i].innerText = isNativeType(value, 'Array') ? value[i] + this.node[i].innerText : value + this.node[i].innerText;
           else if (this.node[i].outerHTML && !parseToHTML && incTags) this.node[i].outerHTML = isNativeType(value, 'Array') ? value[i] + this.node[i].outerHTML : value + this.node[i].outerHTML;
           else this.node[i].value
@@ -383,11 +336,7 @@ export class Element  {
         if (this.node.has(i)) {
           if (this.node[i].value && !parseToHTML && !incTags) this.node[i].value += isNativeType(value, 'Array') ? value[i] : value;
           else if (this.node[i].innerHTML && parseToHTML && !incTags) this.node[i].innerHTML += isNativeType(value, 'Array') ? value[i] : value;
-<<<<<<< HEAD
           else if (this.node[i].innerText && !parseToHTML && !incTags) this.node[i].innerText += isNativeType(value, 'Array') ? value[i] : value;
-=======
-          else if (this.node[i].innerText && !parseToHTML && !incTags)this.node[i].innerText += isNativeType(value, 'Array') ? value[i] : value;
->>>>>>> develop
           else if (this.node[i].outerHTML && !parseToHTML && incTags) this.node[i].outerHTML += isNativeType(value, 'Array') ? value[i] : value;
           else this.node[i].value ? (this.node[i].value += isNativeType(value, 'Array') ? value[i] : value) : (this.node[i].innerText += isNativeType(value, 'Array') ? value[i] : value);
         }
@@ -401,15 +350,9 @@ export class Element  {
     else this.node.value ? this.node.value += value : this.innerText += value;
   };
 
-<<<<<<< HEAD
   remove(character, replacement = '') {
     if (this.isNodeList()) {
       for (let i = 0; i < this.size(); i++) {
-=======
-  remove(character, replacement='') {
-    if (this.isNodeList()) {
-      for (let i = 0; i< this.size(); i++) {
->>>>>>> develop
         if (this.val()[i] === character) this.write(this.val().slice(0, i).concat(this.val().slice(i + 1, this.size())));
       }
     }
@@ -422,19 +365,11 @@ export class Element  {
   };
 
   setInlineCSS(prop, vals) {
-<<<<<<< HEAD
     for (let i = 0; i < this.node.length; i++) this.node[i].style[prop] = isNativeType(vals, 'Array') ? vals[i] : vals;
   };
 
   set styles(sAndV) { //Style and vals: [style0, val0, style1, val1, ...]
     for (let i = 0; i < sAndV.length - 1; i += 2) this.setCSS(sAndV[i], sAndV[i + 1]);
-=======
-    for(let i = 0; i < this.node.length; i++) this.node[i].style[prop] = isNativeType(vals, 'Array') ? vals[i] : vals;
-  };
-
-  set styles(sAndV) { //Style and vals: [style0, val0, style1, val1, ...]
-    for(let i = 0; i < sAndV.length - 1; i += 2) this.setCSS(sAndV[i], sAndV[i + 1]);
->>>>>>> develop
   };
 
   get styles() {
@@ -442,11 +377,7 @@ export class Element  {
   };
 
   css(prop) {
-<<<<<<< HEAD
     return this.isNodeList() ? Array.from(this.node).map(node => node.style[prop]) : this.node.style[prop];
-=======
-    return this.isNodeList() ? Array.from(this.node).map(node => node.style[prop]): this.node.style[prop];
->>>>>>> develop
   };
 
   hasClass(className) {
@@ -471,39 +402,22 @@ export class Element  {
       this.node.map(node => {
         newClass = ' ' + node.className.replace(/[\t\r\n]/g, ' ') + ' ';
         if (node.hasClass(className)) {
-<<<<<<< HEAD
           while (newClass.indexOf(' ' + className + ' ') >= 0) newClass = newClass.replace(' ' + className + ' ', ' ');
-=======
-          while(newClass.indexOf(' ' + className + ' ') >= 0) newClass = newClass.replace(' ' + className + ' ', ' ');
->>>>>>> develop
           node.className = newClass.replace(/^\s+|\s+$/g, '');
         }
       });
     } else if (this.hasClass(className)) {
-<<<<<<< HEAD
       while (newClass.indexOf(' ' + className + ' ') >= 0) newClass = newClass.replace(' ' + className + ' ', ' ');
-=======
-      while(newClass.indexOf(' ' + className + ' ') >= 0) newClass = newClass.replace(' ' + className + ' ', ' ');
->>>>>>> develop
       this.node.className = newClass.replace(/^\s+|\s+$/g, '');
     }
   };
 
-<<<<<<< HEAD
   toggleCSS(prop, params, stackLayer = 0) {
     if (this.css(prop) === '' && stackLayer < 1) this.toggleCSS(prop, params, stackLayer + 1);
     if (prop === 'visibility') {
       (this.css('visibility') === 'visible') ? this.setCSS('visibility', 'hidden') : this.setCSS('visibility', 'visible');
     } else if (prop === 'enabled') {
       (this.css('enabled') === 'enabled') ? this.setCSS('enabled', 'disabled') : this.setCSS('enabled', 'enabled');
-=======
-  toggleCSS(prop, params, stackLayer=0) {
-    if (this.css(prop) === '' && stackLayer < 1) this.toggleCSS(prop, params, stackLayer + 1);
-    if (prop === 'visibility') {
-      (this.css('visibility') === 'visible')? this.setCSS('visibility', 'hidden'): this.setCSS('visibility', 'visible');
-    } else if (prop === 'enabled') {
-      (this.css('enabled') === 'enabled')? this.setCSS('enabled', 'disabled'): this.setCSS('enabled', 'enabled');
->>>>>>> develop
     } else if (prop === 'display') {
       (this.css('display') === 'block' || this.css('display') === params) ? this.setCSS('display', 'none') : this.setCSS('display', params || 'block');
     } else if (!isNon(prop) && !isNon(params)) { //For color, bgcolor, opacity, font-size, ...
@@ -527,11 +441,7 @@ export class Element  {
     this.setCSS('display', 'none');
   };
 
-<<<<<<< HEAD
   on(event, handler = $f) {
-=======
-  on(event, handler=$f) {
->>>>>>> develop
     let events = ['abort', 'autocomplete', 'autocompleteerror', 'beforeunload', 'blur', 'cancel', 'canplay', 'canplaythrough', 'change', 'click', 'close', 'contextmenu', 'cuechange',
       'dblclick', 'devicemotion', 'deviceorientation', 'drag', 'dragend', 'dragenter', 'dragleave', 'dragover', 'dragstart', 'drop', 'durationchange', 'emptied', 'ended', 'error',
       'focus', 'hashchange', 'input', 'invalid', 'keydown', 'keypress', 'keyup', 'languagechange', 'load', 'loadeddata', 'loadedmetadata', 'loadstart', 'message', 'mousedown',
@@ -539,11 +449,7 @@ export class Element  {
       'progress', 'ratechange', 'reset', 'resize', 'scroll', 'search', 'seeked', 'seeking', 'select', 'show', 'stalled', 'storage', 'submit', 'suspend', 'timeupdate', 'toggle',
       'transitionend', 'unload', 'volumechange', 'waiting', 'webkitanimationend', 'webkitanimationiteration', 'webkitanimationstart', 'webkittransitionend', 'wheel'];
     if (events.contains(event.normal())) {
-<<<<<<< HEAD
       this.isNodeList() ? Array.from(this.node).map(node => node.addEventListener(event.normal(), handler)) : this.node.addEventListener(event.normal(), handler);
-=======
-      this.isNodeList() ? Array.from(this.node).map(node => node.addEventListener(event.normal(), handler)): this.node.addEventListener(event.normal(), handler);
->>>>>>> develop
     }
   };
 
@@ -573,22 +479,14 @@ export class Element  {
     this.node.scrollLeft = this.node.offsetWidth - this.node.offsetLeft;
   };
 
-<<<<<<< HEAD
   scroll(x = 0, y = 0) {
-=======
-  scroll(x=0, y=0) {
->>>>>>> develop
     //noinspection JSAnnotator
     this.node.scrollLeft += x;
     this.node.scrollTop += y;
   };
 
   //noinspection JSUnusedGlobalSymbols
-<<<<<<< HEAD
   autoScroll(direction = 'd', speed) {
-=======
-  autoScroll(direction='d', speed) {
->>>>>>> develop
     let interval = setInterval(() => {
       switch (direction.toLowerCase()[0]) {
         case 'l':
@@ -673,22 +571,14 @@ export class Element  {
  * include('script.js'); //It will include the script.js just like include('script.js', 'script');
  * include('style.css'); //same as include('style.css', 'link') and include('style.css', 'stylesheet');
  */
-<<<<<<< HEAD
 function include(file, type = 'link') {
-=======
-function include (file, type='link') {
->>>>>>> develop
   let elm = document.createElement(type);
   if (type === 'script') elm.src = file;
   else {
     elm.href = file;
     elm.rel = 'stylesheet';
   }
-<<<<<<< HEAD
   elm.type = (type === 'script') ? 'text/javascript' : 'text/css';
-=======
-  elm.type = (type === 'script') ? 'text/javascript': 'text/css';
->>>>>>> develop
   document.head.appendChild(elm)
 }
 
@@ -703,13 +593,8 @@ function include (file, type='link') {
  * @function
  * @see module:essence~include
  */
-<<<<<<< HEAD
 export let includeOnce = (file, type = 'link', parentPath = '') => {
   let rsc = type === 'script' ? dom.gatherScripts(true) : dom.gatherStylesheets(true);
-=======
-export let includeOnce = (file, type='link', parentPath='') => {
-  let rsc = type === 'script' ? dom.gatherScripts(true): dom.gatherStylesheets(true);
->>>>>>> develop
   if ((parentPath && (rsc.has(parentPath + file) || rsc.contains(parentPath + file)))
     || rsc.has(file) || rsc.contains(file)) return false;
   else include(file, type)
@@ -725,21 +610,12 @@ export let includeOnce = (file, type='link', parentPath='') => {
  * @example
  * exclude('script.js'); //will remove the reference to the script.js script.
  */
-<<<<<<< HEAD
 export let exclude = (file, type = 'link') => {
   let elm = document.createElement(type);
   type === 'script' ? elm.src = file : elm.href = file;
   elm.type = (type === 'script') ? 'text/javascript' : 'text/css';
   document.head.removeChild(elm)
 };
-=======
-function exclude (file, type='link') {
-  let elm = document.createElement(type);
-  type === 'script' ? elm.src = file : elm.href = file;
-  elm.type = (type === 'script') ? 'text/javascript': 'text/css';
-  document.head.removeChild(elm)
-}
->>>>>>> develop
 
 /**
  * @description Counts how many times a character/property/number <code>c</code> is present in the object
@@ -1009,11 +885,7 @@ Array.prototype.miss = (value) => this.indexOf(value) === -1;
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.first = (value) => isNon(value) ? this[0] : this[0] = value;
-=======
-Array.prototype.first = (value) => isNon(value) ? this[0]: this[0] = value;
->>>>>>> develop
 
 /**
  * @description Get the last element of the array.
@@ -1026,11 +898,7 @@ Array.prototype.first = (value) => isNon(value) ? this[0]: this[0] = value;
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.last = (value) => isNon(value) ? this[this.length - 1] : this[this.length - 1] = value;
-=======
-Array.prototype.last = (value) => isNon(value) ? this[this.length - 1]: this[this.length - 1] = value;
->>>>>>> develop
 
 /**
  * @description Line of a 2D array.
@@ -1043,11 +911,7 @@ Array.prototype.last = (value) => isNon(value) ? this[this.length - 1]: this[thi
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.line = (n = 0) => {
-=======
-Array.prototype.line = (n=0) => {
->>>>>>> develop
   return this.map((i) => {
     if (n < 0) n = this[i].length - n;
     return i[n];
@@ -1066,11 +930,7 @@ Array.prototype.line = (n=0) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.block = (start = 0, end = this.length - 1) => this.map((i) => i.get(start, end));
-=======
-Array.prototype.block = (start=0, end=this.length-1) => this.map((i) => i.get(start, end));
->>>>>>> develop
 
 /**
  * @description Returns the last index of the array.
@@ -1133,19 +993,11 @@ Array.prototype.odd = () => this.filter((item, i) => i % 2 != 0);
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.max = (start = 0, end = this.length - 1) => {
   let max = this[start];
   if ((!start && !end) || (start === 0 && end >= this.length - 1)) for (let i = 1; i < this.length; i++) max = Math.max(max, this[i]);
   else if (start && !end) for (let i = start + 1; i < this.length; i++) max = Math.max(max, this[i]);
   else for (let i = start + 1; i <= end; i++) max = Math.max(max, this[i]);
-=======
-Array.prototype.max = (start=0, end=this.length-1) => {
-  let max = this[start];
-  if ((!start && !end) || (start === 0 && end >= this.length - 1)) for(let i = 1; i < this.length; i++) max = Math.max(max, this[i]);
-  else if (start && !end) for(let i = start + 1; i < this.length; i++) max = Math.max(max, this[i]);
-  else for(let i = start + 1; i <= end; i++) max = Math.max(max, this[i]);
->>>>>>> develop
   return max
 };
 
@@ -1161,15 +1013,9 @@ Array.prototype.max = (start=0, end=this.length-1) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.maxOf = (start = 0, n = this.length - 1) => {
   let max = this[start];
   for (let i = start + 1; i <= n; i++) max = Math.max(max, this[i]);
-=======
-Array.prototype.maxOf = (start=0, n=this.length-1) => {
-  let max = this[start];
-  for(let i = start + 1; i <= n; i++) max = Math.max(max, this[i]);
->>>>>>> develop
   return max
 };
 
@@ -1202,19 +1048,11 @@ Array.prototype.median = (value) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.min = (start = 0, end = this.length - 1) => {
   let min = this[start];
   if ((!start && !end) || (start === 0 && end >= this.length - 1)) for (let i = 1; i < this.length; i++) min = Math.min(min, this[i]);
   else if (start && !end) for (let i = start + 1; i < this.length; i++) min = Math.min(min, this[i]);
   else for (let i = start + 1; i <= end; i++) min = Math.min(min, this[i]);
-=======
-Array.prototype.min = (start=0, end=this.length-1) => {
-  let min = this[start];
-  if ((!start && !end) || (start === 0 && end >= this.length-1)) for(let i = 1; i < this.length; i++) min = Math.min(min, this[i]);
-  else if (start && !end) for(let i = start + 1; i < this.length; i++) min = Math.min(min, this[i]);
-  else for(let i = start + 1; i <= end; i++) min = Math.min(min, this[i]);
->>>>>>> develop
   return min
 };
 
@@ -1230,15 +1068,9 @@ Array.prototype.min = (start=0, end=this.length-1) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.minOf = (start = 0, n = this.length - 1) => {
   let min = this[start];
   for (let i = start + 1; i <= n; i++) min = Math.min(min, this[i]);
-=======
-Array.prototype.minOf = (start=0, n=this.length-1) => {
-  let min = this[start];
-  for(let i = start + 1; i <= n; i++) min = Math.min(min, this[i]);
->>>>>>> develop
   return min
 };
 
@@ -1253,15 +1085,10 @@ Array.prototype.minOf = (start=0, n=this.length-1) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.shuffle = (n = this.length) => {
   /* eslint no-unused-vars: "off" */
   for (let i of n) [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]] = [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]];
   /* eslint no-unused-vars: "error" */
-=======
-Array.prototype.shuffle = (n=this.length) => {
-  for(let i of n) [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]] = [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]];
->>>>>>> develop
   return this;
 };
 
@@ -1277,11 +1104,7 @@ Array.prototype.shuffle = (n=this.length) => {
  */
 Array.prototype.maxLength = () => {
   let ml = 0;
-<<<<<<< HEAD
   for (let row of this) ml = Math.max(ml, row.length);
-=======
-  for(let row of this) ml = Math.max(ml, row.length);
->>>>>>> develop
   return ml
 };
 
@@ -1297,11 +1120,7 @@ Array.prototype.maxLength = () => {
  */
 Array.prototype.minLength = () => {
   let ml = this[0].length;
-<<<<<<< HEAD
   for (let row of this) ml = Math.min(ml, row.length);
-=======
-  for(let row of this) ml = Math.min(ml, row.length);
->>>>>>> develop
   return ml
 };
 
@@ -1333,11 +1152,7 @@ Array.prototype.Fill2D = (character) => this.fill(new Array(this.length).fill(ch
  */
 Array.prototype.remove = (character, preserveInitial) => {
   if (preserveInitial) {
-<<<<<<< HEAD
     return isNativeType(character, 'Array') ? character.map(c => this.filter(x => x != c || x != undefined)) : this.filter(x => x != character || x != undefined);
-=======
-    return isNativeType(character, 'Array') ? character.map(c => this.filter(x => x != c || x != undefined)): this.filter(x => x != character || x != undefined);
->>>>>>> develop
   } else {
     let pos = Copy(this.positions(character));
     for (let i of pos) this.splice(i, 1);
@@ -1372,11 +1187,7 @@ Array.prototype.debug = () => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.getOccurrences = (simplified = false) => {
-=======
-Array.prototype.getOccurrences = (simplified=false) => {
->>>>>>> develop
   let arr = misc.rmDuplicates(this), res = [];
   for (let cell of arr) res.push(`${cell}: ${this.count(cell)} {${this.positions(cell).toStr(true)}}`);
   if (simplified) {
@@ -1397,13 +1208,8 @@ Array.prototype.getOccurrences = (simplified=false) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.replace = function (Ci, Cf, toStr = false) {
   for (let item of this) {
-=======
-Array.prototype.replace = function (Ci, Cf, toStr=false) {
-  for(let item of this) {
->>>>>>> develop
     if (item === Ci || (isNativeType(Ci, 'RegExp') && Ci.test(item))) item = Cf;
   }
   return toStr ? this.toString() : this;
@@ -1421,19 +1227,11 @@ Array.prototype.replace = function (Ci, Cf, toStr=false) {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.sum = (start = 0, end = this.length - 1) => {
   let s = 0;
   if ((!start && !end) || (start === 0 && end >= this.length - 1)) for (let num of this) s += num;
   else if (start && !end) for (let i = start; i < this.length; i++) s += this[i];
   else for (let i = start; i <= end; i++) s += this[i];
-=======
-Array.prototype.sum = (start=0, end=this.length-1) => {
-  let s = 0;
-  if ((!start && !end) || (start === 0 && end >= this.length - 1)) for(let num of this) s += num;
-  else if (start && !end) for(let i = start; i < this.length; i++) s += this[i];
-  else for(let i = start; i <= end; i++) s += this[i];
->>>>>>> develop
   return s
 };
 
@@ -1449,19 +1247,11 @@ Array.prototype.sum = (start=0, end=this.length-1) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.prod = (start = 0, end = this.length - 1) => {
   let p = 0;
   if ((!start && !end) || (start === 0 && end >= this.length - 1)) for (let num of this) p *= num;
   else if (start && !end) for (let i = start; i < this.length; i++) p *= this[i];
   else for (let i = start; i <= end; i++) p *= this[i];
-=======
-Array.prototype.prod = (start=0, end=this.length-1) => {
-  let p = 0;
-  if ((!start && !end) || (start === 0 && end >= this.length - 1)) for(let num of this) p *= i;
-  else if (start && !end) for(let i = start; i < this.length; i++) p *= this[i];
-  else for(let i = start; i <= end; i++) p *= this[i];
->>>>>>> develop
   return p
 };
 
@@ -1476,7 +1266,6 @@ Array.prototype.prod = (start=0, end=this.length-1) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.sum2d = (start = [0, 0], end = [this.length - 1, this.last().length - 1]) => {
   let s = 0;
   if ((!start && !end) || (start.equals([0, 0]) && end >= this.length - 1)) {
@@ -1490,21 +1279,6 @@ Array.prototype.sum2d = (start = [0, 0], end = [this.length - 1, this.last().len
   } else {
     for (let i = start[0]; i < end[0]; i++) {
       for (let j = start[1]; j < end[1]; j++) s += this[i][j];
-=======
-Array.prototype.sum2d = (start=[0, 0], end=[this.length-1, this.last().length-1]) => {
-  let s = 0;
-  if ((!start && !end) || (start.equals([0, 0]) && end >= this.length - 1)) {
-    for(let i of this) {
-      for(let j of this[i]) s += this[i][j];
-    }
-  } else if (start && !end) {
-    for(let i = start[0]; i < this.length; i++) {
-      for(let j = start[1]; j < this[i].length; j++) s += this[i][j];
-    }
-  } else {
-    for(let i = start[0]; i < end[0]; i++) {
-      for(let j = start[1]; j < end[1]; j++) s += this[i][j];
->>>>>>> develop
     }
   }
   return s
@@ -1522,11 +1296,7 @@ Array.prototype.sum2d = (start=[0, 0], end=[this.length-1, this.last().length-1]
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.mean = (nbDec = 2, start = 0, end = this.length - 1) => {
-=======
-Array.prototype.mean = (nbDec=2, start=0, end=this.length-1) => {
->>>>>>> develop
   let sum = this.sum(start, end);
   return (sum / (this.get(start, end).length)).toNDec(nbDec);
 };
@@ -1543,11 +1313,7 @@ Array.prototype.mean = (nbDec=2, start=0, end=this.length-1) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.meanOf = (nbDec = 2, start = 0, n = this.length - start - 1) => {
-=======
-Array.prototype.meanOf = (nbDec=2, start=0, n=this.length-start-1) => {
->>>>>>> develop
   let sum = 0;
   for (let i = 0; i < n; i++) sum += this[start + i];
   return (sum / n).toNDec(nbDec);
@@ -1565,11 +1331,7 @@ Array.prototype.meanOf = (nbDec=2, start=0, n=this.length-start-1) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.minMean = (n = this.length - 1, nbDec = 2) => {
-=======
-Array.prototype.minMean = (n=this.length-1, nbDec=2) => {
->>>>>>> develop
   if (this.length - (n - 1) < 0) throw new Error('You\'re expecting a minimum mean with more values than the are.');
   let means = [];
   for (let i = 0; i < n; i++) means.push(this.mean(nbDec, i, i + n - 1));
@@ -1588,11 +1350,7 @@ Array.prototype.minMean = (n=this.length-1, nbDec=2) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.maxMean = (n = this.length - 1, nbDec) => {
-=======
-Array.prototype.maxMean = (n=this.length-1, nbDec) => {
->>>>>>> develop
   if (this.length - (n - 1) < 0) throw new Error('You\'re expecting a maximum mean with more values than the are.');
   let means = [];
   for (let i = 0; i < n; i++) means.push(this.mean(nbDec, i, n + i - 1));
@@ -1611,11 +1369,7 @@ Array.prototype.maxMean = (n=this.length-1, nbDec) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.avg = (nbDec = 2, start = 0, end = this.length - 1) => {
-=======
-Array.prototype.avg = (nbDec=2, start=0, end=this.length-1) => {
->>>>>>> develop
   let sum = this.sum(start, end) - this.max(start, end) - this.min(start, end);
   return (sum / (this.get(start, end).length - 2)).toNDec(nbDec)
 };
@@ -1631,15 +1385,9 @@ Array.prototype.avg = (nbDec=2, start=0, end=this.length-1) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.avgOf = (nbDec = 2, start = 0, n = this.length - start - 1) => {
   let sum = 0;
   for (let i = 0; i < n; i++) {
-=======
-Array.prototype.avgOf = (nbDec=2, start=0, n=this.length-start-1) => {
-  let sum = 0;
-  for(let i = 0; i < n; i++) {
->>>>>>> develop
     if (this[start + i] != this.maxOf(start, n) || this[start + i] != this.minOf(start, n + 1)) sum += this[start + i];
   }
   return (sum / (n - 2)).toNDec(nbDec)
@@ -1657,11 +1405,7 @@ Array.prototype.avgOf = (nbDec=2, start=0, n=this.length-start-1) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.minAvg = (n = this.length - 1, nbDec = 2) => {
-=======
-Array.prototype.minAvg = (n=this.length-1, nbDec=2) => {
->>>>>>> develop
   if (this.length - (n - 1) < 0) throw new Error('You\'re expecting a minimum average with more values than the are.');
   let avgs = [];
   for (let i = 0; i < n; i++) avgs.push(this.avg(nbDec, i, i + n - 1));
@@ -1680,11 +1424,7 @@ Array.prototype.minAvg = (n=this.length-1, nbDec=2) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.maxAvg = (n = this.length - 1, nbDec = 2) => {
-=======
-Array.prototype.maxAvg = (n=this.length-1, nbDec=2) => {
->>>>>>> develop
   if (this.length - (n - 1) < 0) throw new Error('You\'re expecting a maximum average with more values than the are.');
   let avgs = [];
   for (let i = 0; i < n; i++) avgs.push(this.avg(nbDec, i, n + i - 1));
@@ -1702,11 +1442,7 @@ Array.prototype.maxAvg = (n=this.length-1, nbDec=2) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.letiance = (nbDec = 2) => (maths.sumPow2(this, nbDec) / this.length - Math.pow(this.mean(nbDec), 2)).toNDec(nbDec);
-=======
-Array.prototype.letiance = (nbDec=2) => (maths.sumPow2(this, nbDec) / this.length - Math.pow(this.mean(nbDec), 2)).toNDec(nbDec);
->>>>>>> develop
 
 /**
  * @description Standard deviation.
@@ -1719,11 +1455,7 @@ Array.prototype.letiance = (nbDec=2) => (maths.sumPow2(this, nbDec) / this.lengt
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.stddev = (nbDec = 2) => Math.sqrt(this.letiance(nbDec)).toNDec(nbDec);
-=======
-Array.prototype.stddev = (nbDec=2) => Math.sqrt(this.letiance(nbDec)).toNDec(nbDec);
->>>>>>> develop
 
 /**
  * @description Get a random cell of the array.
@@ -1739,11 +1471,7 @@ Array.prototype.stddev = (nbDec=2) => Math.sqrt(this.letiance(nbDec)).toNDec(nbD
 Array.prototype.rand = (n) => {
   if (n && n > 0) {
     let res = [];
-<<<<<<< HEAD
     for (let i = 0; i < n; i++) res.push(this.rand());
-=======
-    for(let i = 0; i < n; i++) res.push(this.rand());
->>>>>>> develop
     return res
   } else return this[maths.lenRand(this.length)]
 };
@@ -1760,11 +1488,7 @@ Array.prototype.rand = (n) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.quartile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 4) - 1] + this[Math.floor(n * this.length / 4)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 4)]).toNDec(nbDec);
-=======
-Array.prototype.quartile = (n, nbDec=2) => this.length % 2 === 0? ((this[Math.floor(n * this.length / 4) - 1] + this[Math.floor(n * this.length / 4)]) / 2).toNDec(nbDec): (this[Math.floor(n * this.length / 4)]).toNDec(nbDec);
->>>>>>> develop
 
 /**
  * @description Quintile (Q<sub>1</sub>, ..., Q<sub>4</sub>)
@@ -1778,11 +1502,7 @@ Array.prototype.quartile = (n, nbDec=2) => this.length % 2 === 0? ((this[Math.fl
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.quintile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 5) - 1] + this[Math.floor(n * this.length / 5)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 5)]).toNDec(nbDec);
-=======
-Array.prototype.quintile =  (n, nbDec=2) => this.length % 2 === 0? ((this[Math.floor(n * this.length / 5) - 1] + this[Math.floor(n * this.length / 5)]) / 2).toNDec(nbDec): (this[Math.floor(n * this.length / 5)]).toNDec(nbDec);
->>>>>>> develop
 
 /**
  * @description Decile (D<sub>1</sub>, ..., D<sub>9</sub>).
@@ -1796,11 +1516,7 @@ Array.prototype.quintile =  (n, nbDec=2) => this.length % 2 === 0? ((this[Math.f
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.decile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 10) - 1] + this[Math.floor(n * this.length / 10)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 10)]).toNDec(nbDec);
-=======
-Array.prototype.decile = (n, nbDec=2) => this.length % 2 === 0? ((this[Math.floor(n * this.length / 10) - 1] + this[Math.floor(n * this.length / 10)]) / 2).toNDec(nbDec): (this[Math.floor(n * this.length / 10)]).toNDec(nbDec);
->>>>>>> develop
 
 /**
  * @description Percentile (P<sub>1</sub>, ..., P<sub>99</sub>).
@@ -1814,11 +1530,7 @@ Array.prototype.decile = (n, nbDec=2) => this.length % 2 === 0? ((this[Math.floo
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.percentile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 100) - 1] + this[Math.floor(n * this.length / 100)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 100)]).toNDec(nbDec);
-=======
-Array.prototype.percentile = (n, nbDec=2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 100) - 1] + this[Math.floor(n * this.length / 100)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 100)]).toNDec(nbDec);
->>>>>>> develop
 
 /**
  * @description Get the average increment between the values of the array.
@@ -1831,11 +1543,7 @@ Array.prototype.percentile = (n, nbDec=2) => this.length % 2 === 0 ? ((this[Math
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.getIncrement = (nbDec = 2) => nbDec == 0 ? parseInt(((this.max() - this.min()) / (this.length - 1))) : ((this.max() - this.min()) / (this.length - 1)).toNDec(nbDec);
-=======
-Array.prototype.getIncrement = (nbDec=2) => nbDec == 0 ? parseInt(((this.max() - this.min()) / (this.length - 1))): ((this.max() - this.min()) / (this.length - 1)).toNDec(nbDec);
->>>>>>> develop
 
 /**
  * @description Increment every elements by n.
@@ -1847,13 +1555,8 @@ Array.prototype.getIncrement = (nbDec=2) => nbDec == 0 ? parseInt(((this.max() -
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.increment = (n = 1) => {
   for (let num of this) num += n;
-=======
-Array.prototype.increment = (n=1) => {
-  for(let num of this) num += n;
->>>>>>> develop
 };
 
 /**
@@ -1867,11 +1570,7 @@ Array.prototype.increment = (n=1) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.iqr = (nbDec = 2) => this.quartile(3, nbDec) - this.quartile(1, nbDec).toNDec(nbDec);
-=======
-Array.prototype.iqr = (nbDec=2) => this.quartile(3, nbDec) - this.quartile(1, nbDec).toNDec(nbDec);
->>>>>>> develop
 
 /**
  * @description Get the sub/full-array.
@@ -1886,11 +1585,7 @@ Array.prototype.iqr = (nbDec=2) => this.quartile(3, nbDec) - this.quartile(1, nb
  * @external Array
  * @see module:dsa~get
  */
-<<<<<<< HEAD
 Array.prototype.get = (start = 0, end) => dsa.get(this, start, end);
-=======
-Array.prototype.get = (start=0, end) => dsa.get(this, start, end);
->>>>>>> develop
 
 /**
  * @description Clean the array by removing undesirable items.
@@ -1903,15 +1598,9 @@ Array.prototype.get = (start=0, end) => dsa.get(this, start, end);
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.clean = (noDuplic = false) => {
   let arr = this.filter(x => !isNon(x));
   return noDuplic ? misc.rmDuplicates(arr).remove() : arr; //Take off (or not) duplicates of actual values and double clean it
-=======
-Array.prototype.clean = (noDuplic=false) => {
-  let arr = this.filter(x => !isNon(x));
-  return noDuplic ? misc.rmDuplicates(arr).remove(): arr; //Take off (or not) duplicates of actual values and double clean it
->>>>>>> develop
 };
 
 
@@ -1929,11 +1618,7 @@ Array.prototype.clean = (noDuplic=false) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.chg = (arr, start = 0, end = this.length - 1) => {
-=======
-Array.prototype.chg = (arr, start=0, end=this.length-1) => {
->>>>>>> develop
   let thisArr = this.get(start, end), otherArr = arr.get(start, end);
   return thisArr.map((item, i) => otherArr[i])
 };
@@ -1955,21 +1640,13 @@ Array.prototype.rot = (deg) => {
   if (deg % 90 != 0) throw new Error('The absolute degree of rotation must be either 90° or 180°');
   if (this.numElm() === 4 && this.length === 2) { //2x2 matrix
     if (deg === 90) [this[0][0], this[1][0], this[1][1], this[0][1]] = [this[1][0], this[1][1], this[0][1], this[0][0]];
-<<<<<<< HEAD
     else if (deg === -90) [this[0][0], this[0][1], this[1][1], this[1][0]] = [this[0][1], this[1][1], this[1][0], this[0][0]];
-=======
-    else if (deg === -90)  [this[0][0], this[0][1], this[1][1], this[1][0]] = [this[0][1], this[1][1], this[1][0], this[0][0]];
->>>>>>> develop
     else if (Math.abs(deg) === 180) [this[0][0], this[1][1], this[0][1], this[1][0]] = [this[1][1], this[0][0], this[1][0], this[0][1]];
   } else if (this.numElm() === 9 && this.length === 3) { //3x3 matrix
     if (deg === 90) {
       [this[0][0], this[2][0], this[2][2], this[0][2]] = [this[2][0], this[2][2], this[0][2], this[0][0]];
       [this[0][1], this[1][0], this[2][1], this[1][2]] = [this[1][0], this[2][1], this[1][2], this[0][1]];
-<<<<<<< HEAD
     } else if (deg == -90) {
-=======
-    } else if (deg ==-90) {
->>>>>>> develop
       [this[0][0], this[0][2], this[2][2], this[2][0]] = [this[0][2], this[2][2], this[2][0], this[0][0]];
       [this[0][1], this[1][2], this[2][1], this[1][0]] = [this[1][2], this[2][1], this[1][0], this[0][1]];
     } else if (Math.abs(deg) === 180) {
@@ -1982,15 +1659,9 @@ Array.prototype.rot = (deg) => {
       /**
        * @todo fix the weird error here and replace 1 by this.length/2 or whatever suits better
        */
-<<<<<<< HEAD
       for (let j = 0; j < 1/*this.length / 2*/; j++) { //Weird error
         tmp = this[j].get(-1);
         for (let i = 0; i < this.maxLength() - 1; i++) {
-=======
-      for(let j = 0; j < 1/*this.length / 2*/; j++) { //Weird error
-        tmp = this[j].get(-1);
-        for(let i = 0; i < this.maxLength() - 1; i++) {
->>>>>>> develop
           //if (j > 0) Essence.say('#' + i);
           //if (j > 0) Essence.say(this[j][i] + '<-' +  this[this.length - 1 - i][j]);
           this[j][i] = this[this.length - 1 - i][j];
@@ -2038,7 +1709,13 @@ Array.prototype.rot = (deg) => {
  * @external Array
  */
 Array.prototype.numElm = () => this.linearise().length;
-
+/* Or
+ this.reduce((memo, item, index) => {
+ const flatten = memo.concat(item);
+ flat[index] = flatten;
+ return flatten;
+ });
+ */
 
 /**
  * @description Size of the array.
@@ -2052,11 +1729,7 @@ Array.prototype.numElm = () => this.linearise().length;
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.size = (str) => str ? this.length + 'x' + this.maxLength() : [this.length, this.maxLength()];
-=======
-Array.prototype.size = (str) => str ? this.length + 'x' + this.maxLength(): [this.length, this.maxLength()];
->>>>>>> develop
 
 /**
  * @description Determinant of the matrix.
@@ -2070,17 +1743,10 @@ Array.prototype.size = (str) => str ? this.length + 'x' + this.maxLength(): [thi
  */
 Array.prototype.det = () => {
   let d = 0;
-<<<<<<< HEAD
   if (this.numElm() === 4 && this.length === 2) d = this[0][0] * this[1][1] - this[0][1] * this[1][0];
   else if (this.numElm() === 9 && this.length === 3) {
     d = this[0][0] * (this[1][1] * this.last().last() - this[1].last() * this.last()[1]) - this[0][1] * (this[1][0] * this.last().last() - this[1].last() * this.last()[0]) + this[0].last() * (this[1][0] * this.last()[1] - this[1][1] * this.last()[0]);
   } else throw new Error('Unsupported matrix format');
-=======
-  if (this.numElm() === 4 && this.length === 2) d = this[0][0] * this[1][1 ] -this[0][1] * this[1][0];
-  else if (this.numElm() === 9 && this.length === 3) {
-    d = this[0][0] * (this[1][1] * this.last().last() - this[1].last() * this.last()[1]) - this[0][1] * (this[1][0] * this.last().last() - this[1].last() * this.last()[0]) + this[0].last() * (this[1][0] * this.last()[1] - this[1][1] * this.last()[0]);
-  }else throw new Error('Unsupported matrix format');
->>>>>>> develop
   return d
 };
 
@@ -2101,14 +1767,10 @@ Array.prototype.translate = function () {
         if (!(1 === i && 0 === j && this[0].length > 2)) [this[i][j], this[j][i]] = [this[j][i], this[i][j]];
       }
     }
-<<<<<<< HEAD
     if (this.size(true) === '4x4') {
       let elA = this.last()[2], elB = this[2].last();
       [elB, elA] = [elA, elB];
     }
-=======
-    if (this.size(true) === '4x4') [this[2].last(), this.last()[2]] = [this.last()[2], this.last()];
->>>>>>> develop
   } else { //NxM
     let arr = new Array(this.maxLength()).fill([]);
     for (let i = 0; i < this.maxLength(); i++) arr[i] = this.line(i)
@@ -2148,11 +1810,7 @@ Array.prototype.lookFor = (x) => {
 Array.prototype.divide = (n) => {
   let res = new Array(Math.round(this.length / n)).fill(''), k = 0;
   for (let num of res) {
-<<<<<<< HEAD
     for (let j = 0; j < n; j++) num += this[k++];
-=======
-    for(let j = 0; j < n; j++) num += this[k++];
->>>>>>> develop
   }
   return res
 };
@@ -2207,19 +1865,11 @@ Array.prototype.isInvertible = () => this.det() != 0;
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.dotProd = (scalar) => {
   let res = [];
   for (let i = 0; i < this.length; i++) {
     res[i] = [];
     for (let j = 0; j < this[i].length; j++) res[i][j] = this[i][j] * scalar;
-=======
-Array.prototype.dotProd = (scalar)  => {
-  let res = [];
-  for(let i = 0; i < this.length; i++) {
-    res[i] = [];
-    for(let j = 0; j < this[i].length; j++) res[i][j] = this[i][j] * scalar;
->>>>>>> develop
   }
   return res
 };
@@ -2235,19 +1885,11 @@ Array.prototype.dotProd = (scalar)  => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.dotAdd = (scalar) => {
   let res = [];
   for (let i = 0; i < this.length; i++) {
     res[i] = [];
     for (let j = 0; j < this[i].length; j++) res[i][j] = scalar + this[i][j];
-=======
-Array.prototype.dotAdd = (scalar)  => {
-  let res = [];
-  for(let i = 0; i < this.length; i++) {
-    res[i] = [];
-    for(let j = 0; j < this[i].length; j++) res[i][j] = scalar + this[i][j];
->>>>>>> develop
   }
   return res
 };
@@ -2264,19 +1906,11 @@ Array.prototype.dotAdd = (scalar)  => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.dotSub = (scalar, order = 'a-b') => {
   let res = [];
   for (let i = 0; i < this.length; i++) {
     res[i] = [];
     for (let j = 0; i < this[i].length; j++) res[i][j] = order === 'a-b' ? scalar - this[i][j] : this[i][j] - scalar;
-=======
-Array.prototype.dotSub = (scalar, order='a-b') => {
-  let res = [];
-  for(let i = 0; i < this.length; i++) {
-    res[i] = [];
-    for(let j = 0; i < this[i].length; j++) res[i][j] = order === 'a-b' ? scalar - this[i][j] : this[i][j] - scalar;
->>>>>>> develop
   }
   return res
 };
@@ -2293,19 +1927,11 @@ Array.prototype.dotSub = (scalar, order='a-b') => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.dotFrac = (scalar, order = 'a/b') => {
   let res = [];
   for (let i = 0; i < this.length; i++) {
     res[i] = [];
     for (let j = 0; i < this[j].length; j++) res[i][j] = order === 'a/b' ? scalar / this[i][j] : this[i][j] / scalar;
-=======
-Array.prototype.dotFrac = (scalar, order='a/b') => {
-  let res = [];
-  for(let i = 0; i < this.length; i++) {
-    res[i] = [];
-    for(let j = 0; i < this[j].length; j++) res[i][j] = order === 'a/b' ? scalar / this[i][j] : this[i][j] / scalar;
->>>>>>> develop
   }
   return res
 };
@@ -2322,17 +1948,10 @@ Array.prototype.dotFrac = (scalar, order='a/b') => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.toStr = (clean = false) => {
   if (is2dArray(this)) {
     let str = '';
     for (let i of this) {
-=======
-Array.prototype.toStr = (clean=false) => {
-  if (is2dArray(this)) {
-    let str = '';
-    for(let i of this) {
->>>>>>> develop
       str += clean ? this[i].join(', ') : this[i].join('');
     }
     return str
@@ -2351,11 +1970,7 @@ Array.prototype.toStr = (clean=false) => {
  */
 Array.prototype.toInt = () => {
   let n = 0;
-<<<<<<< HEAD
   for (let i of this) {
-=======
-  for(let i of this) {
->>>>>>> develop
     n += this[i] * Math.pow(10, this.length - i - 1);
   }
   return n
@@ -2385,11 +2000,7 @@ Array.prototype.inv = () => this.isInvertible() ? this.dotProd(1 / this.det() * 
  */
 Array.prototype.mix = () => {
   let randPos = maths.mixedRange(0, 1, this.length - 1, true), res = [];
-<<<<<<< HEAD
   for (let i of this) res[i] = this[randPos[i]];
-=======
-  for(let i of this) res[i] = this[randPos[i]];
->>>>>>> develop
   return res
 };
 
@@ -2410,13 +2021,8 @@ Array.prototype.littleMix = () => {
     res = res.littleMix().toNcol(this.size()[1]).sanitise(getNativeType(this[0][0])); //Assuming all cells are of the same type
   } else {
     inc = this.getIncrement(0);
-<<<<<<< HEAD
     for (let i of this) {
       let rd = maths.randTo(inc);
-=======
-    for(let i of this) {
-      let rd = randTo(inc);
->>>>>>> develop
       res.push(this[i]);
       if (i > 0 && rd === 0) [res[i], res[i - 1]] = [res[i - 1], res[i]];
       else if (i > 1 && rd === inc) [res[i], res[i - 2]] = [res[i - 2], res[i]];
@@ -2437,11 +2043,7 @@ Array.prototype.littleMix = () => {
  * @external Array
  */
 Array.prototype.prepend = (arr) => {
-<<<<<<< HEAD
   for (let i of arr) this.unshift(arr[i]);
-=======
-  for(let i of arr) this.unshift(arr[i]);
->>>>>>> develop
   return this;
 };
 
@@ -2470,11 +2072,7 @@ Array.prototype.unique = () => this.filter(x => this.count(x) === 1);
  */
 Array.prototype.to1d = (jointer) => {
   let res = Copy(this);
-<<<<<<< HEAD
   for (let i of res) res[i] = res[i].join(jointer || '');
-=======
-  for(let i of res) res[i] = res[i].join(jointer || '');
->>>>>>> develop
   return res
 };
 
@@ -2490,19 +2088,11 @@ Array.prototype.to1d = (jointer) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.toNd = (n = 2) => {
   let size = maths.nthroot(this.length, n, 0), res = [], k = 0; //Size of the size^n
   for (let i = 0; i < size; i++) {
     res[i] = [];
     for (let j = 0; j < size; j++) res[i][j] = this[k++];
-=======
-Array.prototype.toNd = (n=2) => {
-  let size = maths.nthroot(this.length, n, 0), res = [], k = 0; //Size of the size^n
-  for (let i = 0; i < size; i++) {
-    res[i] = [];
-    for(let j = 0; j < size; j++) res[i][j] = this[k++];
->>>>>>> develop
   }
   return res;
 };
@@ -2518,19 +2108,11 @@ Array.prototype.toNd = (n=2) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.toNcol = (n = 2) => {
   let res = [], k = 0;
   for (let i = 0; i < this.length / n; i++) {
     res[i] = [];
     for (let j = 0; j < n; j++) res[i][j] = this[k++];
-=======
-Array.prototype.toNcol = (n=2) => {
-  let res = [], k = 0;
-  for(let i = 0; i < this.length / n; i++) {
-    res[i] = [];
-    for(let j = 0; j < n; j++) res[i][j] = this[k++];
->>>>>>> develop
   }
   return res;
 };
@@ -2545,19 +2127,11 @@ Array.prototype.toNcol = (n=2) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.toNrow = (n = 2) => {
   let res = [], k = 0;
   for (let i = 0; i < n; i++) {
     res[i] = [];
     for (let j = 0; j < this.length / n; j++) res[i][j] = this[k++];
-=======
-Array.prototype.toNrow = (n=2) => {
-  let res = [], k = 0;
-  for(let i = 0; i < n; i++) {
-    res[i] = [];
-    for(let j = 0; j < this.length / n; j++) res[i][j] = this[k++];
->>>>>>> develop
   }
   return res;
 };
@@ -2583,17 +2157,10 @@ Array.prototype.linearise = () => this.toString().split(',');
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.uniform = (cr = ' ') => {
   let res = this, ml = res.maxLength();
   for (let i of res) {
     while (res[i].length < ml) isNativeType(res[i], 'Array') ? res[i].push(cr) : res[i] += cr;
-=======
-Array.prototype.uniform = (cr=' ') => {
-  let res = this, ml = res.maxLength();
-  for(let i of res) {
-    while(res[i].length < ml) isNativeType(res[i], 'Array')? res[i].push(cr): res[i] += cr;
->>>>>>> develop
   }
   return res
 };
@@ -2609,17 +2176,10 @@ Array.prototype.uniform = (cr=' ') => {
  */
 Array.prototype.zip = () => {
   let res = [], j;
-<<<<<<< HEAD
   for (let i of this) {
     if (this[i] === this[i + 1]) {
       j = 1;
       while (this[i] === this[i + j]) j++;
-=======
-  for(let i of this) {
-    if (this[i] === this[i + 1]) {
-      j = 1;
-      while(this[i] === this[i + j]) j++;
->>>>>>> develop
       res.push(this[i] + '@' + j);
       i += j - 1;
     } else res.push(this[i]);
@@ -2637,15 +2197,9 @@ Array.prototype.zip = () => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.unzip = (noPairs = false) => {
   let res = [];
   for (let i of this) {
-=======
-Array.prototype.unzip = (noPairs=false) => {
-  let res = [];
-  for(let i of this) {
->>>>>>> develop
     if (/[\S\s](@)(\d+)/g.test(this[i])) res.push(this[i][0].repeat(this[i][this[i].indexOf('@') + 1]));
     else res.push(this[i]);
   }
@@ -2666,13 +2220,8 @@ Array.prototype.unzip = (noPairs=false) => {
  */
 Array.prototype.trimAll = (side) => {
   let res = [];
-<<<<<<< HEAD
   side = side ? side[0].toLowerCase() : '';
   for (let i of this) res[i] = (side === 'l') ? this[i].trimLeft() : ((side === 'r') ? this[i].trimRight() : this[i].trim());
-=======
-  side = side? side[0].toLowerCase(): '';
-  for(let i of this) res[i] = (side === 'l') ? this[i].trimLeft(): ((side === 'r') ? this[i].trimRight() : this[i].trim());
->>>>>>> develop
   return res
 };
 
@@ -2688,11 +2237,7 @@ Array.prototype.trimAll = (side) => {
  */
 Array.prototype.isSorted = () => {
   if (this[0] > this[1]) return false;
-<<<<<<< HEAD
   for (let i = 1; i < this.length; i++) {
-=======
-  for(let i = 1; i < this.length; i++) {
->>>>>>> develop
     if (this[i] > this[i + 1]) return false
   }
   return true
@@ -2710,11 +2255,7 @@ Array.prototype.isSorted = () => {
  */
 Array.prototype.uniquePush = (obj) => {
   if (isNativeType(obj, 'Array')) {
-<<<<<<< HEAD
     for (let i of obj) {
-=======
-    for(let i of obj) {
->>>>>>> develop
       if (this.miss(obj[i])) this.push(obj[i]);
     }
   } else this.push(obj);
@@ -2745,24 +2286,16 @@ Array.prototype.neighbour = function (y, x) {
   if (x >= this.maxLength()) throw new RangeError('The x-coord is out of bounds');
   if (is2dArray(this)) {
     seq = [[-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1]];
-<<<<<<< HEAD
     for (let i of seq) {
       try {
         if (!isNon(this[y + seq[i][0]][x + seq[i][1]])) n.push(this[y + seq[i][0]][x + seq[i][1]]);
       } catch (err) {
         say(`Neighbour check: ${err.message}`, 'error');
       }
-=======
-    for(let i of seq) {
-      try {
-        if (!isNon(this[y + seq[i][0]][x + seq[i][1]])) n.push(this[y + seq[i][0]][x + seq[i][1]]);
-      } catch (e) {}
->>>>>>> develop
     }
   } else {
     try {
       n.push(this[y - 1]);
-<<<<<<< HEAD
     } catch (err) {
       say(`Neighbour check: ${err.message}`, 'error');
     }
@@ -2771,12 +2304,6 @@ Array.prototype.neighbour = function (y, x) {
     } catch (err) {
       say(`Neighbour check: ${err.message}`, 'error');
     }
-=======
-    } catch (e) {}
-    try {
-      n.push(this[y + 1]);
-    } catch (e) {}
->>>>>>> develop
   }
   return n;
 };
@@ -2793,13 +2320,8 @@ Array.prototype.neighbour = function (y, x) {
  * @external Array
  */
 Array.prototype.sanitise = (type) => {
-<<<<<<< HEAD
   for (let row of this) {
     for (let cell of row) cell = misc.name2Type(type, cell);
-=======
-  for(let row of this) {
-    for(let cell of row) cell = misc.name2Type(type, cell);
->>>>>>> develop
   }
   return this;
 };
@@ -2815,13 +2337,8 @@ Array.prototype.sanitise = (type) => {
  * @memberof Array.prototype
  * @external Array
  */
-<<<<<<< HEAD
 Array.prototype.portion = (denominator = 2, numerator = 1) => {
   return (this.length % 2 === 0) ? this.get(numerator * Math.round(this.length) / denominator) : this.get(Math.floor(numerator * Math.floor(this.length) / denominator));
-=======
-Array.prototype.portion = (denominator=2, numerator=1) => {
-  return (this.length % 2 === 0) ? this.get(numerator * Math.round(this.length) / denominator): this.get(Math.floor(numerator * Math.floor(this.length) / denominator));
->>>>>>> develop
 };
 
 /**
@@ -2837,11 +2354,7 @@ Array.prototype.portion = (denominator=2, numerator=1) => {
  * @external Array
  */
 Array.prototype.removeFirst = (n, preserveInitial) => {
-<<<<<<< HEAD
   return preserveInitial ? this.filter((x, i) => x != n || i != this.indexOf(n)) : this.splice(this.indexOf(n), 1);
-=======
-  return preserveInitial ? this.filter((x, i) => x != n || i != this.indexOf(n)): this.splice(this.indexOf(n), 1);
->>>>>>> develop
 };
 
 /**
@@ -2857,11 +2370,7 @@ Array.prototype.removeFirst = (n, preserveInitial) => {
  * @external Array
  */
 Array.prototype.removeLast = (n, preserveInitial) => {
-<<<<<<< HEAD
   return preserveInitial ? this.filter((x, i) => x != n || i != this.lastIndexOf(n)) : this.splice(this.lastIndexOf(n), 1);
-=======
-  return preserveInitial ? this.filter((x, i) => x != n || i != this.lastIndexOf(n)): this.splice(this.lastIndexOf(n), 1);
->>>>>>> develop
 };
 
 /**
@@ -2880,19 +2389,11 @@ Array.prototype.removeLast = (n, preserveInitial) => {
 Array.prototype.binaryIndexOf = (searchElement) => {
   let minIndex = 0, maxIndex = this.length - 1, currentIndex, currentElement, resultIndex;
 
-<<<<<<< HEAD
   while (minIndex <= maxIndex) {
     resultIndex = currentIndex = (minIndex + maxIndex) >> 1;
     currentElement = this[currentIndex];
 
     if (currentElement < searchElement) minIndex = currentIndex + 1;
-=======
-  while(minIndex <= maxIndex) {
-    resultIndex = currentIndex = (minIndex + maxIndex) >> 1;
-    currentElement = this[currentIndex];
-
-    if (currentElement < searchElement)  minIndex = currentIndex + 1;
->>>>>>> develop
     else if (currentElement > searchElement) maxIndex = currentIndex - 1;
     else return currentIndex;
   }
@@ -2991,11 +2492,7 @@ String.prototype.last = (nval) => this.split('').last(nval);
  * @memberof String.prototype
  * @external String
  */
-<<<<<<< HEAD
 String.prototype.splice = (index, count, add = '') => {
-=======
-String.prototype.splice = (index, count, add='') => {
->>>>>>> develop
   if (index < 0) {
     index = this.length + index;
     if (index < 0) index = 0;
@@ -3020,13 +2517,8 @@ String.prototype.remove = (character) => {
     for (let i of character) str = str.remove(i);
     return str;
   } else {
-<<<<<<< HEAD
     let v = str.split(character).map((x) => x === character ? undefined : x).join('');
     return v.has(undefined) ? str.remove() : v
-=======
-    let v = str.split(character).map((x) => x === character ? undefined: x).join('');
-    return v.has(undefined) ? str.remove(): v
->>>>>>> develop
   }
 };
 
@@ -3041,11 +2533,7 @@ String.prototype.remove = (character) => {
  * @memberof String.prototype
  * @external String
  */
-<<<<<<< HEAD
 String.prototype.toNDec = (n = 2) => Number(this).toFixed(n);
-=======
-String.prototype.toNDec = (n=2) => Number(this).toFixed(n);
->>>>>>> develop
 
 /**
  * @description to N digits.
@@ -3058,17 +2546,10 @@ String.prototype.toNDec = (n=2) => Number(this).toFixed(n);
  * @memberof String.prototype
  * @external String
  */
-<<<<<<< HEAD
 String.prototype.toNDigits = (n = 2) => {
   let i = this;
   if (parseFloat(i) < Math.pow(10, n - 1)) {
     while (i.split('.')[0].length < n) i = '0' + i;
-=======
-String.prototype.toNDigits = (n=2) => {
-  let i = this;
-  if (parseFloat(i) < Math.pow(10, n - 1)) {
-    while(i.split('.')[0].length < n) i = '0' + i;
->>>>>>> develop
   }
   return i
 };
@@ -3084,13 +2565,8 @@ String.prototype.toNDigits = (n=2) => {
  * @public
  * @since 1.0
  */
-<<<<<<< HEAD
 String.prototype.mix = (separator = '', jointer = separator) => {
   let randPos = maths.mixedRange(0, 1, this.length - 1), iStr = this.split(separator), fStr = [];
-=======
-String.prototype.mix = (separator='', jointer=separator) => {
-  let randPos = mixedRange(0, 1, this.length - 1), iStr = this.split(separator), fStr = [];
->>>>>>> develop
   for (let i = 0; i < this.length; i++) fStr[i] = iStr[randPos[i]];
   return fStr.join(jointer)
 };
@@ -3125,19 +2601,11 @@ String.prototype.divide = (n) => {
  * @memberof String.prototype
  * @external String
  */
-<<<<<<< HEAD
 String.prototype.capitalize = (whole = false) => {
   let res = this.toString(); //Because it will return the String object rather than the actual string
   if (whole) {
     let str = res.split(' ');
     for (let character of str) character = character.capitalize();
-=======
-String.prototype.capitalize = (whole=false) => {
-  let res = this.toString(); //Because it will return the String object rather than the actual string
-  if (whole) {
-    let str = res.split(' ');
-    for(let character of str) character = character.capitalize();
->>>>>>> develop
     return str.join(' ')
   } else return this.charAt(0).toUpperCase() + this.slice(1);
 };
@@ -3155,11 +2623,7 @@ String.prototype.capitalize = (whole=false) => {
  */
 String.prototype.sum = () => {
   let sum = 0;
-<<<<<<< HEAD
   for (let i = 0; i < this.length; i++) sum += this.charCodeAt(i);
-=======
-  for(let i = 0; i < this.length; i++) sum += this.charCodeAt(i);
->>>>>>> develop
   return sum
 };
 
@@ -3175,11 +2639,7 @@ String.prototype.sum = () => {
  */
 String.prototype.prod = () => {
   let prod = 1;
-<<<<<<< HEAD
   for (let i = 0; i < this.length; i++) prod *= this.charCodeAt(i);
-=======
-  for(let i = 0; i < this.length; i++) prod *= this.charCodeAt(i);
->>>>>>> develop
   return prod
 };
 
@@ -3234,11 +2694,7 @@ String.prototype.getOccurrences = Array.prototype.getOccurrences;
  * @external String
  * @see module:dsa~get
  */
-<<<<<<< HEAD
 String.prototype.get = (start = 0, end) => dsa.get(this, start, end);
-=======
-String.prototype.get = (start=0, end) => dsa.get(this, start, end);
->>>>>>> develop
 
 /**
  * @description Zip/compress the string.
@@ -3252,17 +2708,10 @@ String.prototype.get = (start=0, end) => dsa.get(this, start, end);
  */
 String.prototype.zip = () => {
   let res = '', j;
-<<<<<<< HEAD
   for (let i = 0; i < this.length; i++) {
     if (this[i] === this[i + 1]) {
       j = 1;
       while (this[i] === this[i + j]) j++;
-=======
-  for(let i = 0; i < this.length; i++) {
-    if (this[i] === this[i + 1]) {
-      j = 1;
-      while(this[i] === this[i + j]) j++;
->>>>>>> develop
       res += this[i] + '@' + j;
       i += j - 1;
     } else res += this[i];
@@ -3284,11 +2733,7 @@ String.prototype.zip = () => {
  */
 String.prototype.unzip = (noPairs) => {
   let res = '';
-<<<<<<< HEAD
   for (let i = 0; i < this.length; i++) {
-=======
-  for(let i = 0; i < this.length; i++) {
->>>>>>> develop
     if (/[\S\s](\@)(\d+)/g.test(this[i])) res += this[i][0].repeat(this[i][this[i].indexOf('@') + 1]);
     else res += this[i];
   }
@@ -3307,11 +2752,7 @@ String.prototype.unzip = (noPairs) => {
  * @memberof String.prototype
  * @external String
  */
-<<<<<<< HEAD
 String.prototype.chunk = (start = 0, end) => this.split(' ').get(start, end).join(' ');
-=======
-String.prototype.chunk = (start=0, end) => this.split(' ').get(start, end).join(' ');
->>>>>>> develop
 
 /**
  * @description Return the chunk that is the same at the beginning of both string.
@@ -3326,11 +2767,7 @@ String.prototype.chunk = (start=0, end) => this.split(' ').get(start, end).join(
  */
 String.prototype.sameFirst = (str) => {
   let sf = '', pos = -1;
-<<<<<<< HEAD
   while (pos <= Math.min(this.length, str.length)) {
-=======
-  while(pos <= Math.min(this.length, str.length)) {
->>>>>>> develop
     pos++;
     if (this[pos] === str[pos]) sf += this[pos];
     else break;
@@ -3351,11 +2788,7 @@ String.prototype.sameFirst = (str) => {
  */
 String.prototype.sameLast = (str) => {
   let sl = '', pos = 1, minLen = Math.min(this.length, str.length);
-<<<<<<< HEAD
   while (pos <= minLen) {
-=======
-  while(pos <= minLen) {
->>>>>>> develop
     if (this[this.length - pos] === str[str.length - pos]) sl = this[this.length - pos] + sl;
     else break;
     pos++;
@@ -3375,11 +2808,7 @@ String.prototype.sameLast = (str) => {
  * @external String
  * @this String
  */
-<<<<<<< HEAD
 String.prototype.map = (cb, sep = '') => this.split(sep).map(cb).join(sep);
-=======
-String.prototype.map = (cb, sep='') => this.split(sep).map(cb).join(sep);
->>>>>>> develop
 
 /**
  * @description Reverse a string/
@@ -3392,11 +2821,7 @@ String.prototype.map = (cb, sep='') => this.split(sep).map(cb).join(sep);
  * @external String
  * @this String
  */
-<<<<<<< HEAD
 String.prototype.reverse = (splitter = '') => this.split(splitter).reverse().join(splitter);
-=======
-String.prototype.reverse = (splitter='') => this.split(splitter).reverse().join(splitter);
->>>>>>> develop
 
 /**
  * @description Minify a string/code.
@@ -3408,11 +2833,7 @@ String.prototype.reverse = (splitter='') => this.split(splitter).reverse().join(
  * @external String
  * @return {string} Minified version of the string/code
  */
-<<<<<<< HEAD
 String.prototype.minify = (noComment = false, noSpace = false) => {
-=======
-String.prototype.minify = (noComment=false, noSpace=false) => {
->>>>>>> develop
   let min = noSpace ? this.trim().replace(/(\t|\n|\s)/gm, '') : this.trim().replace(/(\t|\n|\s{2,})/gm, '');
   return noComment ? min.replace(/(<!--(.*?)-->|\/\*+(.*?)\*+\/)/gm, '') : min;
 };
@@ -3430,11 +2851,7 @@ String.prototype.minify = (noComment=false, noSpace=false) => {
  * @memberof String.prototype
  * @external String
  */
-<<<<<<< HEAD
 String.prototype.portion = (denominator = 2, numerator = 1) => this.split('').portion(denominator, numerator).join('');
-=======
-String.prototype.portion = (denominator=2, numerator=1) => this.split('').portion(denominator, numerator).join('');
->>>>>>> develop
 
 /**
  * @description Counts how many times a word is present in the string.
@@ -3449,11 +2866,7 @@ String.prototype.portion = (denominator=2, numerator=1) => this.split('').portio
  * @memberof String.prototype
  * @external String
  */
-<<<<<<< HEAD
 String.prototype.countWord = (word, separation = ' ') => this.split(separation).count(word);
-=======
-String.prototype.countWord = (word, separation=' ') => this.split(separation).count(word);
->>>>>>> develop
 
 /**
  * @description Check if the word is a character.
@@ -3481,11 +2894,7 @@ String.prototype.isChar = () => typeof this === 'string' && /^[A-Za-z0-9]$/.test
  * @external String
  */
 String.prototype.tokenize = () => {
-<<<<<<< HEAD
   let tokenizer = function*() {
-=======
-  let tokenizer = function* () {
->>>>>>> develop
     let iterator = this[Symbol.iterator]();
     let ch;
     do {
@@ -3517,11 +2926,7 @@ String.prototype.tokenize = () => {
 Number.prototype.length = () => {
   if (String(this).has('.')) return [parseInt(String(this).split('.')[0].length), parseInt(String(this).split('.')[1].length)];
   let len = 0, x = this;
-<<<<<<< HEAD
   while (Math.floor(x) != 0) {
-=======
-  while(Math.floor(x) != 0) {
->>>>>>> develop
     x /= 10;
     len++;
     console.log(x);
@@ -3541,11 +2946,7 @@ Number.prototype.length = () => {
  * @memberof Number.prototype
  * @external Number
  */
-<<<<<<< HEAD
 Number.prototype.toNDec = (n = 2) => {
-=======
-Number.prototype.toNDec = (n=2) => {
->>>>>>> develop
   let pow10s = Math.pow(10, n);
   return Math.round(pow10s * this) / pow10s
 };
@@ -3561,11 +2962,7 @@ Number.prototype.toNDec = (n=2) => {
  * @memberof Number.prototype
  * @external Number
  */
-<<<<<<< HEAD
 Number.prototype.toNDigits = (n = 2) => this.toString().toNDigits(n); //It won't work on other types than strings.
-=======
-Number.prototype.toNDigits = (n=2) => this.toString().toNDigits(n); //It won't work on other types than strings.
->>>>>>> develop
 
 
 /**
@@ -3578,11 +2975,7 @@ Number.prototype.toNDigits = (n=2) => this.toString().toNDigits(n); //It won't w
  * @memberof Number.prototype
  * @external Number
  */
-<<<<<<< HEAD
 Number.prototype.sign = (str) => str ? (this < 0 ? '-' : (this > 0 ? '+' : '')) : (this < 0 ? -1 : (this > 0 ? 1 : 0));
-=======
-Number.prototype.sign = (str) => str ? (this < 0 ? '-' : (this > 0 ? '+': '')) : (this < 0 ? -1 : (this > 0 ? 1 : 0));
->>>>>>> develop
 
 
 /**
@@ -3596,11 +2989,7 @@ Number.prototype.sign = (str) => str ? (this < 0 ? '-' : (this > 0 ? '+': '')) :
  * @external Number
  */
 Number.prototype.isPrime = (n) => {
-<<<<<<< HEAD
   for (let i = 2; i < n; i++) {
-=======
-  for(let i = 2; i < n; i++) {
->>>>>>> develop
     if (maths.primeCheck(i, n)) return false
   }
   return true
@@ -3616,11 +3005,7 @@ Number.prototype.isPrime = (n) => {
  * @memberof Number.prototype
  * @external Number
  */
-<<<<<<< HEAD
 Number.prototype.clean = (nbDec = 2) => {
-=======
-Number.prototype.clean = (nbDec=2) => {
->>>>>>> develop
   if (this > 0 && this[0] == '+') return nbDec ? this.slice(1, this.length).toNDec(nbDec) : this.slice(1, this.length);
   else if (this == '-') return this + 1;
   else if (this == '+') return 1;
@@ -3638,11 +3023,7 @@ Number.prototype.clean = (nbDec=2) => {
  */
 Number.prototype.toArr = () => {
   let arr = new Array(this.length()), i = 0, n = this;
-<<<<<<< HEAD
   while (n > 0) {
-=======
-  while(n > 0) {
->>>>>>> develop
     arr[i] = n % 10;
     i++;
     n /= 10;
@@ -3701,11 +3082,7 @@ export let isCustomType = (obj, type) => getCustomType(obj) === type;
  * @see module:essence~isNativeType
  * @see module:essence~getCustomType
  */
-<<<<<<< HEAD
 export let getNativeType = (obj, preserve = false) => {
-=======
-export let getNativeType = (obj, preserve=false) => {
->>>>>>> develop
   let type = Object.prototype.toString.call(obj);
   return preserve ? type : type.split(' ')[1].slice(0, type.split(' ')[1].length - 1)
 };
@@ -3721,11 +3098,7 @@ export let getNativeType = (obj, preserve=false) => {
  * @see module:essence~isCustomType
  * @see module:essence~getNativeType
  */
-<<<<<<< HEAD
 export let getCustomType = (obj, preserve = false) => { //Same as getNativeType but for custom types which won't work for native types
-=======
-export let getCustomType = (obj, preserve=false) => { //Same as getNativeType but for custom types which won't work for native types
->>>>>>> develop
   let type = obj.toLocaleString();
   if (type.indexOf('[') === 0) return preserve ? type : type.split(' ')[1].slice(0, type.split(' ')[1].length - 1); //[object Type]
   else return type.split('(')[0].trim()
@@ -3816,20 +3189,12 @@ export let isNon = (val) => (val === false || val === undefined || val === null 
  * exist(d); //false
  */
 export let exist = (obj) => {
-<<<<<<< HEAD
   /* eslint no-shadow-restricted-names: "off" */
-=======
-  /* eslint no-shadow-restricted-names: 0 */
->>>>>>> develop
   let undefined, t;
   try {
     //noinspection JSUnusedAssignment
     t = typeof obj !== 'undefined' || obj !== undefined || obj in window;
-<<<<<<< HEAD
     /* eslint no-shadow-restricted-names: "error" */
-=======
-    /* eslint no-shadow-restricted-names: 2 */
->>>>>>> develop
   } catch (e) {
     t = false;
   }
@@ -3864,11 +3229,7 @@ export let Copy = (obj) => {
  * @since 1.0
  * @function
  */
-<<<<<<< HEAD
 export let getTime = (ms = false) => {
-=======
-export let getTime = (ms=false) => {
->>>>>>> develop
   let d = new Date();
   return ms
     ? d.getHours().toNDigits() + ':' + d.getMinutes().toNDigits() + ':' + d.getSeconds().toNDigits() + '.' + d.getMilliseconds().toNDigits()
@@ -3883,11 +3244,7 @@ export let getTime = (ms=false) => {
  * @since 1.0
  * @function
  */
-<<<<<<< HEAD
 export let getDate = (short = false) => {
-=======
-export let getDate = (short=false) => {
->>>>>>> develop
   let m = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], d = new Date();
   return short ? d.getDate().toNDigits() + m[d.getMonth()] + d.getUTCFullYear() : d.toLocaleDateString();
 };
@@ -3902,11 +3259,7 @@ export let getDate = (short=false) => {
  * @see module:essence~getTime
  * @function
  */
-<<<<<<< HEAD
 export let getTimestamp = (readable = false) => {
-=======
-export let getTimestamp = (readable=false) => {
->>>>>>> develop
   return readable ? getDate() + ' ' + getTime(true) : getDate(true) + '-' + getTime().replace(/:/g, '-')
 };
 
@@ -3996,11 +3349,7 @@ export let dayOfWeek = (d) => {
  * @since 1.0
  * @function
  */
-<<<<<<< HEAD
 export let date2num = (d = getDate()) => {
-=======
-export let date2num = (d=getDate()) => {
->>>>>>> develop
   let p = d.split('/');
   return parseFloat(parseFloat(`${p[2]}.${p[1]}`).toNDec() + '0' + p[0]);
 };
@@ -4031,11 +3380,7 @@ export let num2date = (n) => {
  * @public
  * @since 1.0
  */
-<<<<<<< HEAD
 export let dateDiff = (from = new Date(), to, part = 'd', round = false) => {
-=======
-export let dateDiff = (from=new Date(), to, part='d', round=false) => {
->>>>>>> develop
   let divideBy = { //In ms
     y: 959230512e3, //Years
     m: 2628028800.0000005, //Months
@@ -4063,11 +3408,7 @@ export let dateDiff = (from=new Date(), to, part='d', round=false) => {
  * @see module:data~DAY_IN_SEC
  * @see module:data~MONTH_IN_DAY
  */
-<<<<<<< HEAD
 export let date2s = (d = 0, w = 0, m = 0, y = 0) => {
-=======
-export let date2s = (d=0, w=0, m=0, y=0) => {
->>>>>>> develop
   return d * data.DAY_IN_SEC + w * 7 * data.DAY_IN_SEC + m * data.MONTH_IN_DAY * data.DAY_IN_SEC + y * 365 * data.MONTH_IN_DAY * data.DAY_IN_SEC;
 };
 
@@ -4083,7 +3424,6 @@ export let date2s = (d=0, w=0, m=0, y=0) => {
  * @see module:data~DAY_IN_SEC
  * @see module:data~MONTH_IN_DAY
  */
-<<<<<<< HEAD
 export let s2date = (s, what = 'd') => {
   switch (what.toLowerCase()[0]) {
     case 'w':
@@ -4094,14 +3434,6 @@ export let s2date = (s, what = 'd') => {
       return s / (365 * data.MONTH_IN_DAY * data.DAY_IN_SEC); //Years
     default:
       return s / data.DAY_IN_SEC; //Days
-=======
-export let s2date = (s, what='d') => {
-  switch(what.toLowerCase()[0]) {
-    case 'w': return s / (7 * data.DAY_IN_SEC); //Weeks
-    case 'm': return s / (data.MONTH_IN_DAY * data.DAY_IN_SEC); //Months
-    case 'y': return s / (365 * data.MONTH_IN_DAY * data.DAY_IN_SEC); //Years
-    default: return s / data.DAY_IN_SEC; //Days
->>>>>>> develop
   }
 };
 
@@ -4118,42 +3450,24 @@ export let s2date = (s, what='d') => {
  * @since 1.0
  * @func
  */
-<<<<<<< HEAD
 export let genStr = (len, filter, stackLayer = 0) => {
-=======
-export let genStr = (len, filter, stackLayer=0) => {
->>>>>>> develop
   let str = '', az = misc.asciiTable('a-z'), AZ = misc.asciiTable('A-Z'), zero9 = maths.range(9), commonChar = ['&', '~', '"', '#', '\'', '{', '[', '(', '-', '|', '`', '_', '\\', '^', '@', ')', ']', '+', '=', '}', '%', '*', '?', ',', ';', '.', '/', ':', '!', ' '],
     charlist;
   charlist = az.concat(AZ, zero9, commonChar);
   let c = '', i = 0;
-<<<<<<< HEAD
   while (str.length < len) {
     c = charlist.rand();
     if (filter.name === 'specificChar') {
       //noinspection JSUnresolvedVariable
       while (c === filter.character) c = charlist.rand();
-=======
-  while(str.length < len) {
-    c = charlist.rand();
-    if (filter.name === 'specificChar') {
-      //noinspection JSUnresolvedVariable
-      while(c === filter.character) c = charlist.rand();
->>>>>>> develop
     } else if (filter.name === 'noUpperCase') {
       c = c.toLowerCase();
     } else if (filter.name === 'noLowerCase') {
       c = c.toUpperCase();
     } else if (filter.name === 'cumulativeRepeat') {
-<<<<<<< HEAD
       while (c == str[i - 1]) c = charlist.rand();
     } else if (filter.name === 'cumulativeSensitiveRepeat') {
       while (c === str[i - 1]) c = charlist.rand();
-=======
-      while(c == str[i-1]) c = charlist.rand();
-    } else if (filter.name === 'cumulativeSensitiveRepeat') {
-      while(c === str[i-1]) c = charlist.rand();
->>>>>>> develop
     } else if (filter.name === 'noRepeat') {
       charlist.remove();
       c = charlist.rand();
@@ -4178,43 +3492,26 @@ export let genStr = (len, filter, stackLayer=0) => {
  * @func
  * @throws {Error} Invalid/unsupported dimension
  */
-<<<<<<< HEAD
 export let mkArray = (len, dim, fill = false) => {
-=======
-export let mkArray = (len, dim, fill=false) => {
->>>>>>> develop
   let arr = [];
   if (dim === 1) {
     if (!fill) arr = new Array(len);
     else {
-<<<<<<< HEAD
       for (let i = 0; i < len; i++) arr[i] = fill;
-=======
-      for(let i = 0; i < len; i++) arr[i] = fill;
->>>>>>> develop
     }
   } else if (dim === 2) {
     if (!fill) {
       arr = new Array(len);
-<<<<<<< HEAD
       for (let i = 0; i < len; i++) arr[i] = new Array(len);
     } else {
       for (let i = 0; i < len; i++) {
         arr[i] = new Array(len);
         for (let j = 0; j < len; j++) arr[i][j] = fill;
-=======
-      for(let i = 0; i < len; i++) arr[i] = new Array(len);
-    } else {
-      for(let i = 0; i < len; i++) {
-        arr[i] = new Array(len);
-        for(let j = 0; j < len; j++) arr[i][j] = fill;
->>>>>>> develop
       }
     }
   } else if (dim === 3) {
     if (!fill) {
       arr = new Array(len);
-<<<<<<< HEAD
       for (let i = 0; i < len; i++) {
         arr[i] = new Array(len);
         for (let j = 0; j < len; j++) arr[i][j] = new Array(len);
@@ -4225,25 +3522,12 @@ export let mkArray = (len, dim, fill=false) => {
         for (let j = 0; j < len; j++) {
           arr[i][j] = new Array(len);
           for (let k = 0; k < len; k++) arr[i][j][k] = fill;
-=======
-      for(let i = 0; i < len; i++) {
-        arr[i] = new Array(len);
-        for(let j = 0; j < len; j++) arr[i][j] = new Array(len);
-      }
-    } else {
-      for(let i = 0; i < len; i++) {
-        arr[i] = new Array(len);
-        for(let j = 0; j < len; j++) {
-          arr[i][j] = new Array(len);
-          for(let k = 0; k < len; k++) arr[i][j][k] = fill;
->>>>>>> develop
         }
       }
     }
   } else if (dim === 4) {
     if (!fill) {
       arr = new Array(len);
-<<<<<<< HEAD
       for (let i = 0; i < len; i++) {
         arr[i] = new Array(len);
         for (let j = 0; j < len; j++) {
@@ -4259,23 +3543,6 @@ export let mkArray = (len, dim, fill=false) => {
           for (let k = 0; k < len; k++) {
             arr[i][j][k] = new Array(len);
             for (let l = 0; l < len; l++) arr[i][j][k][l] = fill;
-=======
-      for(let i = 0; i < len; i++) {
-        arr[i] = new Array(len);
-        for(let j = 0; j < len; j++) {
-          arr[i][j] = new Array(len);
-          for(let k = 0; k < len; k++) arr[i][j][k] = new Array(len);
-        }
-      }
-    } else {
-      for(let i = 0; i < len; i++) {
-        arr[i] = new Array(len);
-        for(let j = 0; j < len; j++) {
-          arr[i][j] = new Array(len);
-          for(let k = 0; k < len; k++) {
-            arr[i][j][k] = new Array(len);
-            for(let l = 0; l < len; l++) arr[i][j][k][l] = fill;
->>>>>>> develop
           }
         }
       }
@@ -4296,7 +3563,6 @@ export let mkArray = (len, dim, fill=false) => {
  * @function
  * @throws {Error} a and b must be iterable
  */
-<<<<<<< HEAD
 export let toSameLength = (a, b, cr = ' ') => {
   if (!a.isIterable() || !b.isIterable()) throw new Error('invalid length equality operation on non-iterable objects');
   if (a.length > b.length) {
@@ -4308,17 +3574,6 @@ export let toSameLength = (a, b, cr = ' ') => {
     for (let i = a.length; i < b.length; i++) typeA ? a += cr : a.push(cr);
   }
   /* eslint no-undef: "error" */
-=======
-export let toSameLength = (a, b, cr=' ') => {
-  if (!a.isIterable() || !b.isIterable()) throw new Error('invalid length equality operation on non-iterable objects');
-  if (a.length > b.length) {
-    let typeB = isNativeType(b, 'String');
-    for(let i = b.length; i < a.length; i++) typeB ? b += cr : b.push(cr);
-  } else if (a.length < b.length) {
-    let typeA = isNativeType(a[i], 'String');
-    for(let i = a.length; i < b.length; i++) typeA ? a += cr : a.push(cr);
-  }
->>>>>>> develop
   return [a, b]
 };
 
@@ -4333,15 +3588,9 @@ export let toSameLength = (a, b, cr=' ') => {
  * @since 1.0
  * @function
  */
-<<<<<<< HEAD
 export let lookfor = (x, mtx, toCoord = false) => {
   for (let i = 0; i < mtx.length; i++) {
     for (let j = 0; j < mtx[i].length; j++) {
-=======
-export let lookfor = (x, mtx, toCoord=false) => {
-  for(let i = 0; i < mtx.length; i++) {
-    for(let j = 0; j < mtx[i].length; j++) {
->>>>>>> develop
       if (mtx[i][j] === x || mtx[i][j].equals(x)) return toCoord ? [j, i] : [i, j]; //i is the row number and j the column which oppose j being the x-coord and i the y-coord
     }
   }
@@ -4358,17 +3607,10 @@ export let lookfor = (x, mtx, toCoord=false) => {
  * @since 1.0
  * @function
  */
-<<<<<<< HEAD
 export let keyTable = (map, propOnly = false) => { //Same as above but in the form of the HTML table
   let header = map.has('name') ? map.name : (map.has('title') ? map.title : '');
   let table = `<table cellspacing=0><caption>KeyTable <i>${header}</i></caption><tr><th>Key</th><th>Value</th></tr>`;
   for (let key in map) {
-=======
-export let keyTable = (map, propOnly=false) => { //Same as above but in the form of the HTML table
-  let header = map.has('name') ? map.name : (map.has('title') ? map.title : '');
-  let table = `<table cellspacing=0><caption>KeyTable <i>${header}</i></caption><tr><th>Key</th><th>Value</th></tr>`;
-  for(let key in map) {
->>>>>>> develop
     if (((propOnly && map.has(key)) || !propOnly)) table += `<tr><td>${key}</td><td>${map[key]}</td></tr>`;
   }
   return table + '</table>'
@@ -4424,15 +3666,9 @@ export let bin2char = (b) => String.fromCharCode(maths.conv(b, 2));
  * @since 1.0
  * @function
  */
-<<<<<<< HEAD
 export let txt2num = (txt, base = 10) => {
   let res = '';
   for (let i = 0; i < txt.length; i++) res += maths.conv(txt.charCodeAt(i), 10, base) + ' ';
-=======
-export let txt2num = (txt, base=10) => {
-  let res = '';
-  for(let i = 0; i < txt.length; i++) res += maths.conv(txt.charCodeAt(i), 10, base) + " ";
->>>>>>> develop
   return res.trimRight();
 };
 
@@ -4444,11 +3680,7 @@ export let txt2num = (txt, base=10) => {
  * @since 1.0
  * @func
  */
-<<<<<<< HEAD
 export let num2txt = (num, base = 10) => {
-=======
-export let num2txt = (num, base=10) => {
->>>>>>> develop
   let res = '';
   for (let i = 0; i < num.split(' ').length; i++) res += String.fromCharCode(maths.conv(num.split(' ')[i], base));
   return res;
@@ -4480,11 +3712,7 @@ export let time = (cb, format, ...params) => {
  * @since 1.0
  * @function
  */
-<<<<<<< HEAD
 export let wait = (cb = $f) => setTimeout(cb, 0);
-=======
-export let wait = (cb=$f) => setTimeout(cb, 0);
->>>>>>> develop
 
 /**
  * @description Time how long an asynchronous callback took.
