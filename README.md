@@ -1,10 +1,10 @@
-# Exence ![Exjs](rsc/exence-64low.png "Exence")
+# Exence
 [![Build Status](https://travis-ci.org/anvk/exence.svg?branch=master)](https://travis-ci.org/anvk/exence)
 ![Issue Stats](http://issuestats.com/github/Berkmann18/Exence/badge/pr?style=flat)
 [![Issue Stats](http://issuestats.com/github/Berkmann18/Exence/badge/issue?style=flat)](http://issuestats.com/github/Berkmann18/Exence)
 [![npm version](https://badge.fury.io/js/%exence.svg)](https://badge.fury.io/js/exence)
 
-
+<img align="left" src="rsc/exence-low.png" alt="Exjs" />
 > An All-in-One stack of essential tools and features for HTML/CSS/JS coding.
 
 ## Prerequisites
