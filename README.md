@@ -51,7 +51,7 @@ Build
 $ npm run build
 ```
 
-Run:
+Run
 ```bash
 $ npm start
 ```
@@ -63,6 +63,9 @@ $ npm test
 
 ## Contributing
 If you want to contribute (I welcome any contributions), please read  [CONTRIBUTING](wiki/CONTRIBUTING.md).
+
+## Changes
+Have a look at the [CHANGELOG](wiki/CHANGELOG.md).
 
 ## License
 

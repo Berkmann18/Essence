@@ -26,38 +26,22 @@
     "start": "http-server",
     "test": "eslint src & csslint src",
     "webpack": "webpack",
-    "doc": "jsdoc -c ./conf.json"
+    "doc": "jsdoc -c ./conf.json",
+    "build": "npm run babel; npm run webpack"
   },
   "repository": {
     "type": "git",
-<<<<<<< HEAD
     "url": "git+https://github.com/Berkmann18/Exence.git"
   },
   "keywords": [
     "exence",
     "Exence",
-    "EssenceJS",
-=======
-    "url": "git+https://github.com/Berkmann18/Essence.git"
-  },
-  "keywords": [
-    "exence",
-    "Essence",
-    "EssenceJS",
-    "Essence 2",
->>>>>>> develop
-    "EssenceJS 2"
+    "EssenceJS"
   ],
   "author": "Maximilian Berkman",
   "license": "MIT",
   "bugs": {
-<<<<<<< HEAD
     "url": "https://github.com/Berkmann18/Exence/issues"
   },
   "homepage": "https://github.com/Berkmann18/Exence#readme"
-=======
-    "url": "https://github.com/Berkmann18/Essence/issues"
-  },
-  "homepage": "https://github.com/Berkmann18/Essence#readme"
->>>>>>> develop
 }
