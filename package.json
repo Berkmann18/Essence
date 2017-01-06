@@ -30,19 +30,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Berkmann18/Essence.git"
+    "url": "git+https://github.com/Berkmann18/Exence.git"
   },
   "keywords": [
     "exence",
-    "Essence",
+    "Exence",
     "EssenceJS",
-    "Essence 2",
     "EssenceJS 2"
   ],
   "author": "Maximilian Berkman",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Berkmann18/Essence/issues"
+    "url": "https://github.com/Berkmann18/Exence/issues"
   },
-  "homepage": "https://github.com/Berkmann18/Essence#readme"
+  "homepage": "https://github.com/Berkmann18/Exence#readme"
 }

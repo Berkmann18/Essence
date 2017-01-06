@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: maths.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: maths.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @module maths
  * @description Mathematics related module.
  * @requires module:essence
@@ -24,10 +52,10 @@ export const EPS = Math.pow(2, -52); //Might already exist in ES6
  * @public
  * @since 1.0
  */
-export const SIGNS = ['+', '-', '*', '/', '%', '>>', '<<', '>>>', '&', '|', '^'];
+export const SIGNS = ['+', '-', '*', '/', '%', '>>', '&lt;&lt;', '>>>', '&amp;', '|', '^'];
 
 /**
- * @const {number} Lowest 8-bit character (-2<sup>7</sup>)
+ * @const {number} Lowest 8-bit character (-2&lt;sup>7&lt;/sup>)
  * @type {number}
  * @public
  * @since 1.0
@@ -36,7 +64,7 @@ export const SIGNS = ['+', '-', '*', '/', '%', '>>', '<<', '>>>', '&', '|', '^']
 export const MIN_CHAR8 = -128;
 
 /**
- * @const {number} Highest 8-bit integer (2<sup>7</sup>-1)
+ * @const {number} Highest 8-bit integer (2&lt;sup>7&lt;/sup>-1)
  * @type {number}
  * @public
  * @since 1.0
@@ -46,7 +74,7 @@ export const MIN_CHAR8 = -128;
 export const MAX_CHAR8 = 127;
 
 /**
- * @const {number} Highest unsigned 8-bit integer (2<sup>8</sup>-1)
+ * @const {number} Highest unsigned 8-bit integer (2&lt;sup>8&lt;/sup>-1)
  * @type {number}
  * @public
  * @since 1.0
@@ -55,7 +83,7 @@ export const MAX_CHAR8 = 127;
 export const MAX_UCHAR8 = 127;
 
 /**
- * @const {number} Lowest 16-bit integer (-2<sup>15</sup>)
+ * @const {number} Lowest 16-bit integer (-2&lt;sup>15&lt;/sup>)
  * @type {number}
  * @public
  * @since 1.0
@@ -64,7 +92,7 @@ export const MAX_UCHAR8 = 127;
 export const MIN_INT16 = -32768;
 
 /**
- * @const {number} Highest 16-bit integer (2<sup>15</sup>-1)
+ * @const {number} Highest 16-bit integer (2&lt;sup>15&lt;/sup>-1)
  * @type {number}
  * @public
  * @since 1.0
@@ -73,7 +101,7 @@ export const MIN_INT16 = -32768;
 export const MAX_INT16 = 32767;
 
 /**
- * @const {number} Lowest 32-bit integer (-2<sup>31</sup>)
+ * @const {number} Lowest 32-bit integer (-2&lt;sup>31&lt;/sup>)
  * @type {number}
  * @public
  * @since 1.0
@@ -82,7 +110,7 @@ export const MAX_INT16 = 32767;
 export const MIN_INT32 = -2147483648;
 
 /**
- * @const {number} Highest 32-bit integer (2<sup>31</sup>-1)
+ * @const {number} Highest 32-bit integer (2&lt;sup>31&lt;/sup>-1)
  * @type {number}
  * @public
  * @since 1.0
@@ -92,7 +120,7 @@ export const MIN_INT32 = -2147483648;
 export const MAX_INT32 = 2147483647;
 
 /**
- * @const {number} Highest unsigned 16-bit integer (2<sup>16</sup>-1)
+ * @const {number} Highest unsigned 16-bit integer (2&lt;sup>16&lt;/sup>-1)
  * @type {number}
  * @public
  * @since 1.0
@@ -186,7 +214,7 @@ export const DECIMALS128 = 112;
  * @constructor
  * @protected
  * @since 1.0
- * @const {GeneratorFunction} &natural; generator
+ * @const {GeneratorFunction} &amp;natural; generator
  */
 export const NaturalNum = function*() {
   //noinspection InfiniteLoopJS
@@ -194,7 +222,7 @@ export const NaturalNum = function*() {
 };
 
 /**
- * @description Natural numbers (&natural; = {0, 1, 2, ..., +&infin;})
+ * @description Natural numbers (&amp;natural; = {0, 1, 2, ..., +&amp;infin;})
  * @type {{next, value}}
  * @module
  * @public
@@ -228,7 +256,7 @@ export const N = (function () {
  * @constructor
  * @protected
  * @since 1.0
- * @const {GeneratorFunction} &integers; generator
+ * @const {GeneratorFunction} &amp;integers; generator
  * @see module:maths~MIN_INT32
  */
 export const IntegerNum = function*() {
@@ -237,7 +265,7 @@ export const IntegerNum = function*() {
 };
 
 /**
- * @description Integers (&integers; = {-&infin;, ..., -2, -1, 0, 1, 2, ..., +&infin;})
+ * @description Integers (&amp;integers; = {-&amp;infin;, ..., -2, -1, 0, 1, 2, ..., +&amp;infin;})
  * @type {{next, value}}
  * @module
  * @public
@@ -268,12 +296,12 @@ export const Z = (function () {
 
 /**
  * @description Rational number generator which start counting from the smallest double possible and goes through every
- * <i>n</i> such that n = {@link #MIN_DOUBLE|MIN_DOUBLE} + k * {@link #DECIMALS64|DECIMALS64} where <i>k</i> is the number
+ * &lt;i>n&lt;/i> such that n = {@link #MIN_DOUBLE|MIN_DOUBLE} + k * {@link #DECIMALS64|DECIMALS64} where &lt;i>k&lt;/i> is the number
  * of iterations at the current stage.
  * @constructor
  * @protected
  * @since 1.0
- * @const {GeneratorFunction} &#8474; generator
+ * @const {GeneratorFunction} &amp;#8474; generator
  * @see module:maths~MIN_DOUBLE
  * @see module:maths~DECIMALS64
  */
@@ -283,7 +311,7 @@ export const RationalNum = function*() {
 };
 
 /**
- * @description Rational numbers (&#8474; = {-&infin;, ..., -1.0[...]01, -1, 0, 1, 1.0[...]01, ..., +&infin;})
+ * @description Rational numbers (&amp;#8474; = {-&amp;infin;, ..., -1.0[...]01, -1, 0, 1, 1.0[...]01, ..., +&amp;infin;})
  * @type {{next, value}}
  * @module
  * @public
@@ -313,7 +341,7 @@ export const Q = (function () {
 
 //Functions
 /**
- * @description E<u>x</u>clusive <u>or</u>.
+ * @description E&lt;u>x&lt;/u>clusive &lt;u>or&lt;/u>.
  * @param {*} a Expression a
  * @param {*} b Expression b
  * @returns {boolean} a xor b
@@ -321,10 +349,10 @@ export const Q = (function () {
  * @since 1.0
  * @function
  */
-export let xor = (a, b) => (a && !b) || (!a && b);
+export let xor = (a, b) => (a &amp;&amp; !b) || (!a &amp;&amp; b);
 
 /**
- * @description Converts <code>n</code> "times" to an appropriate formulation (if necessary).
+ * @description Converts &lt;code>n&lt;/code> "times" to an appropriate formulation (if necessary).
  * @param {number} n Number
  * @returns {string} Literal
  * @public
@@ -347,7 +375,7 @@ export let timesLiteral = (n) => {
  * @param {number} min Minimum (inclusive)
  * @param {number} max Maximum (inclusive)
  * @param {boolean} [integer=false] Integer or float/double
- * @returns {number} Random number rad&in;[<code>min</code>, <code>max</code>]
+ * @returns {number} Random number rad&amp;in;[&lt;code>min&lt;/code>, &lt;code>max&lt;/code>]
  * @since 1.0
  * @function
  */
@@ -358,7 +386,7 @@ export let rand = (min, max, integer = false) => {
 /**
  * @description Random number generator with 0 as the minimum.
  * @param {number} max Maximum (inclusive)
- * @returns {number} Random number rad&in;[0, <code>max</code>]
+ * @returns {number} Random number rad&amp;in;[0, &lt;code>max&lt;/code>]
  * @param {boolean} [integer=false] Integer or float/double
  * @see module:maths~rand
  * @public
@@ -373,7 +401,7 @@ export let randTo = (max, integer = false) => rand(0, max, integer);
  * @param {number} max Maximum (inclusive)
  * @param {number} [base=10] Base
  * @param {boolean} [integer=false] Integer or float/double
- * @returns {NumberLike} Random number rad<sub><code>base</code></sub>&in;[<code>min</code><sub>10</sub>, <code>max</code><sub>10</sub>]
+ * @returns {NumberLike} Random number rad&lt;sub>&lt;code>base&lt;/code>&lt;/sub>&amp;in;[&lt;code>min&lt;/code>&lt;sub>10&lt;/sub>, &lt;code>max&lt;/code>&lt;sub>10&lt;/sub>]
  * @see module:maths~rand
  * @public
  * @since 1.0
@@ -386,7 +414,7 @@ export let baseRand = (min, max, base = 10, integer = false) => parseFloat(rand(
  * @param {number} var0 Variable #0
  * @param {number} var1 Variable #1
  * @param {boolean} [integer=false] Integer or float/double
- * @returns {number} Random number rad&in;[min(<code>var0</code>, <code>var1</code>), max(<code>var0</code>, <code>var1</code>)]
+ * @returns {number} Random number rad&amp;in;[min(&lt;code>var0&lt;/code>, &lt;code>var1&lt;/code>), max(&lt;code>var0&lt;/code>, &lt;code>var1&lt;/code>)]
  * @see module:maths~rand
  * @public
  * @since 1.0
@@ -398,7 +426,7 @@ export let randVar = (var0, var1, integer = false) => rand(Math.min(var0, var1),
  * @description Range random number generator.
  * @param {number} len Length of the range
  * @param {boolean} [if0=false] If 0 is in the range or not (as in 0 being the first element)
- * @returns {number} Random number rad&in;[0||1, <code>len</code>(-1)]
+ * @returns {number} Random number rad&amp;in;[0||1, &lt;code>len&lt;/code>(-1)]
  * @public
  * @since 1.0
  * @function
@@ -406,7 +434,7 @@ export let randVar = (var0, var1, integer = false) => rand(Math.min(var0, var1),
 export let lenRand = (len, if0 = false) => Math.floor(Math.random() * (if0 ? len + 1 : len));
 
 /**
- * @description Generate a random double in [0, 1] with <code>bits</code>-bits of randomness to avoid repetitive patterns when using Math.random() on a large spaces.
+ * @description Generate a random double in [0, 1] with &lt;code>bits&lt;/code>-bits of randomness to avoid repetitive patterns when using Math.random() on a large spaces.
  * @param {number} [bits=32] Number of bits used in the randomness
  * @return {number} Random double
  * @public
@@ -416,7 +444,7 @@ export let lenRand = (len, if0 = false) => Math.floor(Math.random() * (if0 ? len
 export let random = (bits = 32) => ((Math.pow(2, bits) - Math.pow(2, bits / 2)) * Math.random() + (Math.pow(2, bits / 2 - 1)) * Math.random()) / (Math.pow(2, bits) - 1);
 
 /**
- * @description Random float in [-<code>range</code>/2, <code>range</code>/2].<br />
+ * @description Random float in [-&lt;code>range&lt;/code>/2, &lt;code>range&lt;/code>/2].&lt;br />
  * Source: Three.js
  * @param {number} range Range length
  * @returns {number} Random float
@@ -433,14 +461,14 @@ export let randFloatSpread = (range) => range * (.5 - Math.random());
  * @param {number} [max=100] Maximum
  * @param {boolean} [float=true] Floating point
  * @param {Bool} [base=false] Base
- * @returns {Array} Random number array where &forall;i&in;rad, i&in;[<code>min</code>, <code>max</code>]<sub>(base)</sub>
+ * @returns {Array} Random number array where &amp;forall;i&amp;in;rad, i&amp;in;[&lt;code>min&lt;/code>, &lt;code>max&lt;/code>]&lt;sub>(base)&lt;/sub>
  * @public
  * @since 1.0
  * @function
  */
 export let randNum = (n = 10, min = 0, max = 100, float = true, base = false) => {
   let r = [];
-  for (let i = 0; i < n; i++) r[i] = base ? conv(rand(min, max, !float), 10, base) : rand(min, max, !float);
+  for (let i = 0; i &lt; n; i++) r[i] = base ? conv(rand(min, max, !float), 10, base) : rand(min, max, !float);
   return r
 };
 
@@ -456,17 +484,17 @@ export let randNum = (n = 10, min = 0, max = 100, float = true, base = false) =>
  */
 export let genNearlySortedArr = (n = 10, min = 0, max = 100) => {
   let dict = range(min, 1, max).slice(0, n), res = [], inc = dict.getIncrement(0);
-  for (let i = 0; i < dict.length; i++) {
+  for (let i = 0; i &lt; dict.length; i++) {
     let r = randTo(inc);
     res.push(dict[i]);
-    if (i > 0 && r === 0) [res[i], res[i - 1]] = [res[i - 1], res[i]];
-    else if (i > 1 && r === inc) [res[i], res[i - 2]] = [res[i - 2], res[i]];
+    if (i > 0 &amp;&amp; r === 0) [res[i], res[i - 1]] = [res[i - 1], res[i]];
+    else if (i > 1 &amp;&amp; r === inc) [res[i], res[i - 2]] = [res[i - 2], res[i]];
   }
   return res
 };
 
 /**
- * @description Sum squared (<strong>&Sigma;<sup>2</sup></strong>).
+ * @description Sum squared (&lt;strong>&amp;Sigma;&lt;sup>2&lt;/sup>&lt;/strong>).
  * @param {number[]} arr Array of numbers
  * @param {number} [nbDec=2] Number of decimals
  * @returns {*} Sum squared
@@ -476,7 +504,7 @@ export let genNearlySortedArr = (n = 10, min = 0, max = 100) => {
  * @throws {TypeError} Not an array
  */
 export let sumPow2 = (arr, nbDec = 2) => {
-  if (!essence.isNativeType(arr, 'Array')) throw TypeError('sumPow2 only accept arrays!');
+  if (!isNativeType(arr, 'Array')) throw TypeError('sumPow2 only accept arrays!');
   return arr.map((x) => x * x).sum().toNDec(nbDec)
 };
 
@@ -486,7 +514,7 @@ export let sumPow2 = (arr, nbDec = 2) => {
  * @param {number} [from=2] Initial base
  * @param {number} [to=10] Final base
  * @param {boolean} [float=false] FPR or not
- * @returns {NumberLike} Conversion: n<sub>from</sub>&rArr;rad<sub>to</sub>
+ * @returns {NumberLike} Conversion: n&lt;sub>from&lt;/sub>&amp;rArr;rad&lt;sub>to&lt;/sub>
  * @since 1.0
  * @func
  */
@@ -538,7 +566,7 @@ export let floatingPtBin = (bin) => {
    */
   let sign = (bin[0] === 1) ? -1 : 1, exponent = (bin[1] === 1) ? 1 : -1, mantissa, getMantissa = (x, M) => {
     let res = 0;
-    for (let i = 0; i < M; i++) res += parseInt(x[i]) * Math.pow(2, -i - 1);
+    for (let i = 0; i &lt; M; i++) res += parseInt(x[i]) * Math.pow(2, -i - 1);
     return res;
   };
   switch (bin.length) {
@@ -602,8 +630,8 @@ export let dec2min = (dec) => (30 * dec) / 50;
 export let toSec = (i) => {
   if (i == parseFloat(i)) return parseFloat(i); //Seconds stay seconds
   let withH = i.count(':') === 2;
-  if (!essence.isNativeType(i, 'String')) i += '';
-  if (i.length >= 4 && i.indexOf(':') === 1) return toSec('0' + i); //So times without the leading 0 or simply with a 1-digit first section could be read properly
+  if (!isNativeType(i, 'String')) i += '';
+  if (i.length >= 4 &amp;&amp; i.indexOf(':') === 1) return toSec('0' + i); //So times without the leading 0 or simply with a 1-digit first section could be read properly
 
   let time = i.split(':'), m, s;
 
@@ -636,13 +664,13 @@ export let sec2time = (i, withH = false) => {
     s = (i % 60).toNDigits();
     h = (i >= 3600) ? Math.floor(i / 3600) : 0;
     m = Math.floor((i - s - 3600 * h) / 60);
-    m = (m <= 0) ? '00' : m.toNDigits();
-    h = (h <= 0) ? '00' : h.toNDigits();
+    m = (m &lt;= 0) ? '00' : m.toNDigits();
+    h = (h &lt;= 0) ? '00' : h.toNDigits();
     return h + ':' + m + ':' + s.toNDec().toNDigits(); //Return the result as height:min:start.ms
   } else {
     s = (i % 60).toNDigits();
     m = Math.floor(i / 60).toNDigits();
-    return (m <= 0) ? s : m + ':' + s.toNDec().toNDigits(); //Return the result as min:start.ms
+    return (m &lt;= 0) ? s : m + ':' + s.toNDec().toNDigits(); //Return the result as min:start.ms
   }
 };
 
@@ -662,12 +690,12 @@ export let timeDiff = (start = essence.getTime(true), end) => {
 };
 
 /**
- * @description Convert a mark (out of <code>initTotal</code>) to an other (out of <code>endTotal</code>).
+ * @description Convert a mark (out of &lt;code>initTotal&lt;/code>) to an other (out of &lt;code>endTotal&lt;/code>).
  * @param {number} mark Mark
  * @param {number} initTotal Initial total
  * @param {number} [endTotal=100] Final total
  * @param {number} [nbDec=2] Number of decimals
- * @returns {number} Converted mark: <code>mark</code>/<code>initTotal</code> &rArr; rad/<code>endTotal</code>
+ * @returns {number} Converted mark: &lt;code>mark&lt;/code>/&lt;code>initTotal&lt;/code> &amp;rArr; rad/&lt;code>endTotal&lt;/code>
  * @public
  * @since 1.0
  * @function
@@ -686,12 +714,12 @@ export let markConv = (mark, initTotal, endTotal = 100, nbDec = 2) => (mark / in
  */
 export let nthroot = (x, n, nbDec = 20) => {
   let r = getClosestRoot(x, n), accuracySteps = 60;
-  for (let i = 0; i < accuracySteps; i++) r += (x - Math.pow(r, n)) / (Math.pow(r + 1, n) - Math.pow(r, n));
+  for (let i = 0; i &lt; accuracySteps; i++) r += (x - Math.pow(r, n)) / (Math.pow(r + 1, n) - Math.pow(r, n));
   return r.toNDec(nbDec)
 };
 
 /**
- * @description Logarithm (log<sub><code>y</code></sub>(<code>x</code>)).
+ * @description Logarithm (log&lt;sub>&lt;code>y&lt;/code>&lt;/sub>(&lt;code>x&lt;/code>)).
  * @param {number} x Number
  * @param {number} [y=10] Base
  * @returns {number} Result
@@ -740,11 +768,11 @@ export let lcm = (a, b) => {
 };
 
 /**
- * @description Binomial distribution X~Bin(<code>n</code>, <code>p</code>).
+ * @description Binomial distribution X~Bin(&lt;code>n&lt;/code>, &lt;code>p&lt;/code>).
  * @param {number} n Total number of attempts
  * @param {number} p Success probability
  * @param {number} r Number of attempts
- * @returns {number} Binomial distribution P(x=<code>r</code>)
+ * @returns {number} Binomial distribution P(x=&lt;code>r&lt;/code>)
  * @public
  * @since 1.0
  * @function
@@ -752,7 +780,7 @@ export let lcm = (a, b) => {
 export let Bin = (n, p, r) => C(n, r) * Math.pow(p, r) * Math.pow(1 - p, n - r);
 
 /**
- * @description Cumulative binomial distribution (P(X<r)?).
+ * @description Cumulative binomial distribution (P(X&lt;r)?).
  * @param {number} n Total number of attempts
  * @param {number} p Success probability
  * @param {number} r Number of attempts
@@ -764,12 +792,12 @@ export let Bin = (n, p, r) => C(n, r) * Math.pow(p, r) * Math.pow(1 - p, n - r);
  */
 export let BinCumul = (n, p, r) => {
   let res = [];
-  for (let i = 0; i < r; i++) res.push(Bin(n, p, r));
+  for (let i = 0; i &lt; r; i++) res.push(Bin(n, p, r));
   return res.sum();
 };
 
 /**
- * @description Cumulative binomial distribution (P(X&le;rad)).<br />
+ * @description Cumulative binomial distribution (P(X&amp;le;rad)).&lt;br />
  * Adapted from {@link http://stackoverflow.com/questions/1095650/how-can-i-efficiently-calculate-the-binomial-cumulative-distribution-function|this thread}
  * @param {number} n Total number of attempts
  * @param {number} p Success probability
@@ -782,17 +810,17 @@ export let BinCumul = (n, p, r) => {
  */
 export let BinCumulLT = (n, p, r) => {
   let x = 1 - p, a = n - r, b = r + 1, c = a + b - 1, res = 0;
-  for (let i = a; i < c + 1; i++) res += factorial(c) / (factorial(i) * factorial(c - i)) * Math.pow(x, i) * Math.pow((1 - x), c - i);
+  for (let i = a; i &lt; c + 1; i++) res += factorial(c) / (factorial(i) * factorial(c - i)) * Math.pow(x, i) * Math.pow((1 - x), c - i);
   return res;
 };
 
 /**
- * @description Normal distribution Z~N(0, 1).<br />
- * P(z < x) where Z~N(0, 1) (or P(z>-x) if x is positive) === normalcdf(x)<br />
+ * @description Normal distribution Z~N(0, 1).&lt;br />
+ * P(z &lt; x) where Z~N(0, 1) (or P(z>-x) if x is positive) === normalcdf(x)&lt;br />
  * Source: somewhere
  * @summary normalcdf(x)
  * @param {number} x Number
- * @returns {number} Normal distribution P(z<-abs(<code>x</code>))
+ * @returns {number} Normal distribution P(z&lt;-abs(&lt;code>x&lt;/code>))
  * @see module:maths~StdNorm
  * @public
  * @since 1.0
@@ -806,11 +834,11 @@ export let Norm = (x) => {
 };
 
 /**
- * @description Standard normal distribution Z~N(<code>m</code>, <code>sd</code>).
+ * @description Standard normal distribution Z~N(&lt;code>m&lt;/code>, &lt;code>sd&lt;/code>).
  * @param {number} m Mean
  * @param {number} sd Standard deviation
  * @param {number} x Number
- * @returns {number} Standard normal distribution P(Z<(x-m)/sd)
+ * @returns {number} Standard normal distribution P(Z&lt;(x-m)/sd)
  * @see module:maths~Norm
  * @public
  * @since 1.0
@@ -819,9 +847,9 @@ export let Norm = (x) => {
 export let StdNorm = (m, sd, x) => Norm((x - m) / sd);
 
 /**
- * @description Inverse of Norm(rad)=<code>x</code> (Inverse Normal CDF).
+ * @description Inverse of Norm(rad)=&lt;code>x&lt;/code> (Inverse Normal CDF).
  * @param {number} x Normal distribution
- * @return {number} result of <code>x</code>=Norm(rad)
+ * @return {number} result of &lt;code>x&lt;/code>=Norm(rad)
  * @function
  * @public
  * @since 1.0
@@ -831,17 +859,17 @@ export let InvNorm = (x) => {
   let a = [2.50662823884, -18.61500062529, 41.39119773534, -25.44106049637], b = [-8.47351093090, 23.08336743743, -21.06224101826, 3.13082909833], c = [.3374754822726147, .9761690190917186, .1607979714918209, .0276438810333863, .0038405729373609, .0003951896511919, .0000321767881768, .0000002888167364, .0000003960315187], y = x - .5, absY = Math.abs(y), sqY = y * y, res;
 
   //Beasley-Springer function
-  if (absY < .42) res = y * (((a[3] * sqY + a[2]) * sqY + a[1]) * sqY + a[0]) / ((((b[3] * sqY + b[2]) * sqY + b[1]) * sqY + b[0]) * sqY + 1);
+  if (absY &lt; .42) res = y * (((a[3] * sqY + a[2]) * sqY + a[1]) * sqY + a[0]) / ((((b[3] * sqY + b[2]) * sqY + b[1]) * sqY + b[0]) * sqY + 1);
   else { //Moro function
     res = Math.log(-Math.log(y > 0 ? 1 - x : x));
     res = c[0] + res * (c[1] + res * (c[2] + res * (c[3] + res * (c[4] + res * (c[5] + res * (c[6] + res * (c[7] + res * c[8])))))));
-    if (y < 0) res = -res;
+    if (y &lt; 0) res = -res;
   }
   return res;
 };
 
 /**
- * @description Poisson distribution X~Po(<code>l</code>, <code>x</code>).
+ * @description Poisson distribution X~Po(&lt;code>l&lt;/code>, &lt;code>x&lt;/code>).
  * @param {number} l Lambda
  * @param {number} x Number
  * @returns {number} Poisson distribution
@@ -872,13 +900,13 @@ export let PoCumul = (l, x) => Po(l, x) * l;
  * @since 1.0
  * @function
  */
-export let factorial = (x) => (x <= 1) ? x : x * factorial(x - 1);
+export let factorial = (x) => (x &lt;= 1) ? x : x * factorial(x - 1);
 
 /**
- * @description Combination/choose (&complement;).
+ * @description Combination/choose (&amp;complement;).
  * @param {number} n Total
  * @param {number} r Number
- * @returns {number} n&complement;rad
+ * @returns {number} n&amp;complement;rad
  * @see module:maths~factorial
  * @public
  * @since 1.0
@@ -899,7 +927,7 @@ export let C = (n, r) => factorial(n) / (factorial(r) * factorial(n - r));
  * @function
  */
 export let Bin2Norm = (n, p, r, sign) => {
-  if (n * p > 5 && n * (1 - p) > 5) {
+  if (n * p > 5 &amp;&amp; n * (1 - p) > 5) {
     r += (sign === '>=' || sign === 'hte') ? -.5 : .5; //Continuity correction
     return StdNorm(n * p, Math.sqrt(n * p * (1 - p)), r)
   } else return null;
@@ -917,7 +945,7 @@ export let Bin2Norm = (n, p, r, sign) => {
  * @since 1.0
  * @function
  */
-export let Bin2Po = (n, p, r) => (n > 50 && p < .1) ? Po(n * p, r) : null;
+export let Bin2Po = (n, p, r) => (n > 50 &amp;&amp; p &lt; .1) ? Po(n * p, r) : null;
 
 /**.
  * @description Poisson to Normal distribution
@@ -933,7 +961,7 @@ export let Bin2Po = (n, p, r) => (n > 50 && p < .1) ? Po(n * p, r) : null;
 export let Po2Norm = (l, x) => (l > 10) ? StdNorm(l, Math.sqrt(x), x) : null;
 
 /**
- * @description Gaussian Error.<br />
+ * @description Gaussian Error.&lt;br />
  * Source: {@link http://stackoverflow.com/questions/1095650/how-can-i-efficiently-calculate-the-binomial-cumulative-distribution-function}
  * @param {number} z Number
  * @returns {number} Gaussian error
@@ -949,7 +977,7 @@ export let erf = (z) => {
 };
 
 /**
- * @description Normal estimate.<br />
+ * @description Normal estimate.&lt;br />
  * Source: {@link http://stackoverflow.com/questions/1095650/how-can-i-efficiently-calculate-the-binomial-cumulative-distribution-function}
  * @param {number} n Total number of attempts
  * @param {number} p Success probability
@@ -967,7 +995,7 @@ export let NormEstimate = (n, p, r) => {
 };
 
 /**
- * @description Clamp values to keep them within a range [<code>a</code>; <code>b</code>].
+ * @description Clamp values to keep them within a range [&lt;code>a&lt;/code>; &lt;code>b&lt;/code>].
  * @param {number} x Number
  * @param {number} a Lowest bound
  * @param {number} b Highest bound
@@ -977,10 +1005,10 @@ export let NormEstimate = (n, p, r) => {
  * @see module:maths~revClamp
  * @function
  */
-export let clamp = (x, a, b) => (x < a) ? a : ((x > b) ? b : x);
+export let clamp = (x, a, b) => (x &lt; a) ? a : ((x > b) ? b : x);
 
 /**
- * @description Clamp values to keep them within a range ]-Inf; a]&Union;[b; Inf[.
+ * @description Clamp values to keep them within a range ]-Inf; a]&amp;Union;[b; Inf[.
  * @param {number} x Number
  * @param {number} a Lowest inner bound
  * @param {number} b Highest inner bound
@@ -990,7 +1018,7 @@ export let clamp = (x, a, b) => (x < a) ? a : ((x > b) ? b : x);
  * @see module:maths~clamp
  * @function
  */
-export let revClamp = (x, a, b) => (a <= x && x <= b) ? getClosest(x, [a, b]) : x;
+export let revClamp = (x, a, b) => (a &lt;= x &amp;&amp; x &lt;= b) ? getClosest(x, [a, b]) : x;
 
 /**
  * @description Clamp values to keep them within the range [a; Inf[.
@@ -1003,7 +1031,7 @@ export let revClamp = (x, a, b) => (a <= x && x <= b) ? getClosest(x, [a, b]) : 
  * @since 1.0
  * @function
  */
-export let clampBottom = (x, a) => (x < a) ? a : x;
+export let clampBottom = (x, a) => (x &lt; a) ? a : x;
 
 /**
  * @description Clamped values to keep them within the range ]-Inf; b].
@@ -1028,7 +1056,7 @@ export let clampTop = (x, b) => (x > b) ? b : x;
 export let abcClamp = (code) => code === 32 ? 32 : revClamp(clamp(code, 65, 122), 90, 97);
 
 /**
- * @description Linear mapping from range [<code>a1</code>; <code>a2</code>] to range [<code>b1</code>; <code>b2</code>].
+ * @description Linear mapping from range [&lt;code>a1&lt;/code>; &lt;code>a2&lt;/code>] to range [&lt;code>b1&lt;/code>; &lt;code>b2&lt;/code>].
  * @param {number} x Number
  * @param {number} a1 Lowest initial bound
  * @param {number} a2 Highest initial bound
@@ -1064,7 +1092,7 @@ export let deg2rad = (deg) => deg * Math.PI / 180;
 export let rad2deg = (rad) => rad * 180 / Math.PI;
 
 /**
- * @description Check if <code>x</code> is a prime number.
+ * @description Check if &lt;code>x&lt;/code> is a prime number.
  * @param {number} x Number
  * @return {boolean} Primeness
  * @public
@@ -1075,7 +1103,7 @@ export let rad2deg = (rad) => rad * 180 / Math.PI;
 export let isPrime = (x) => primeN(range(1, 1, x)).contains(x);
 
 /**
- * @description Return the prime numbers of <code>arr</code> where non prime numbers that doesn't have divisors in the array are considered prime numbers.
+ * @description Return the prime numbers of &lt;code>arr&lt;/code> where non prime numbers that doesn't have divisors in the array are considered prime numbers.
  * @param {number[]} arr Array
  * @returns {Array} Prime numbers
  * @see module:maths~primeCheck
@@ -1085,9 +1113,9 @@ export let isPrime = (x) => primeN(range(1, 1, x)).contains(x);
  */
 export let primeN = (arr) => {
   let res = dsa.QuickSort(arr);
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] % 2 === 0 && arr[i] != 2) res[i] = 'x';
-    for (let j = 0; j < i; j++) {
+  for (let i = 0; i &lt; arr.length; i++) {
+    if (arr[i] % 2 === 0 &amp;&amp; arr[i] != 2) res[i] = 'x';
+    for (let j = 0; j &lt; i; j++) {
       if (primeCheck(res[j], res[i])) res[i] = 'x';
     }
   }
@@ -1095,7 +1123,7 @@ export let primeN = (arr) => {
 };
 
 /**
- * @description Primeness check of <code>a</code> toward <code>b</code>.
+ * @description Primeness check of &lt;code>a&lt;/code> toward &lt;code>b&lt;/code>.
  * @param {number} a Number a
  * @param {number} b Number b
  * @returns {boolean} Primeness
@@ -1104,10 +1132,10 @@ export let primeN = (arr) => {
  * @since 1.0
  * @function
  */
-export let primeCheck = (a, b) => (a > 1 && b > 1 && b % a === 0 && b != a);
+export let primeCheck = (a, b) => (a > 1 &amp;&amp; b > 1 &amp;&amp; b % a === 0 &amp;&amp; b != a);
 
 /**
- * @description Get the closest whole <code>n</code>th-root of <code>x</code>.
+ * @description Get the closest whole &lt;code>n&lt;/code>th-root of &lt;code>x&lt;/code>.
  * @param {number} x Number
  * @param {number} [n=2] Nth-root
  * @returns {number} Closest root
@@ -1118,18 +1146,18 @@ export let primeCheck = (a, b) => (a > 1 && b > 1 && b % a === 0 && b != a);
 export let getClosestRoot = (x, n = 2) => {
   let estimate = 0, err = 0;
 
-  if ((x / 2 * x / 2) / 2 - 2 <= x) estimate = x / 2;
-  else if (x / 3 * x / 3 <= x) estimate = x / 3;
+  if ((x / 2 * x / 2) / 2 - 2 &lt;= x) estimate = x / 2;
+  else if (x / 3 * x / 3 &lt;= x) estimate = x / 3;
   else estimate = x / 4;
   if (Math.pow(estimate, n) === x) return estimate;
 
-  for (let p = 1; p <= n; p++) {
-    for (let i = 1; i < x; i++) {
+  for (let p = 1; p &lt;= n; p++) {
+    for (let i = 1; i &lt; x; i++) {
       if (Math.pow(i, p) === x || Math.pow(i, p - 1) * i === x) err = i;
       else if (Math.pow(i, p) > x || Math.pow(i, p - 1) * i > x) err = i - .5;
     }
   }
-  if (Math.pow(err, n) <= x) return err;
+  if (Math.pow(err, n) &lt;= x) return err;
   else err = (Math.pow(n, -2) + x / Math.pow(n, 4) - x / Math.pow(n, 5) + Math.pow(x, n) / (Math.pow(n, Math.pow(n, 3) + 3)) + x / Math.pow(n, 2)) / 2;
   if (Math.pow(err, n) > x) err = (err + estimate) / 2;
   let res = [estimate, err, (x / err + err) / 2, (err + estimate) / 2];
@@ -1177,7 +1205,7 @@ export let compoundInterest = (po, i, t = 1, n) => n > 1 ? po * Math.pow(1 + i /
 export let non0 = (x) => (x === 0) ? EPS : x;
 
 /**
- * @description Fraction form of n.<br />
+ * @description Fraction form of n.&lt;br />
  * Source: somewhere
  * @param {number} n Number
  * @param {number} prec Precision
@@ -1211,10 +1239,10 @@ export let toFrac = (n, prec, roundUp = false) => {
  * @since 1.0
  * @function
  */
-export let clearNum = (n, nDec, frFormat = false) => frFormat ? new Intl.NumberFormat('fr-FR').format(n) : new Intl.NumberFormat().format(n);
+export let clearNum = (n, nDec, frFormat = false) => frFormat ? new Intl.NumberFormat('fr-FR').format(n) : new Intl.NumberFormat().format(number);
 
 /**
- * @description Get the increment value from <code>a</code> to <code>b</code>.
+ * @description Get the increment value from &lt;code>a&lt;/code> to &lt;code>b&lt;/code>.
  * @param {number} a Minimum
  * @param {number} b Maximum
  * @param {number} [nbDec=2] Number of decimals
@@ -1239,11 +1267,11 @@ export let getStep = (a, b, nbDec = 2) => [a, b].getIncrement(nbDec);
  */
 export let quadraticSolver = (a, b, c, nDec) => {
   let d = Math.sqrt(b) - 4 * a * c;
-  return d === 0 ? (-b / (2 * a)).toNDec(nDec) : [((-b - Math.sqrt(Math.abs(d))) / (2 * a) + (d < 0 ? 'i' : 0)).toNDec(nDec), (-b + Math.sqrt(Math.abs(d))) / (2 * a) + (d < 0 ? 'i' : 0).toNDec(nDec)]
+  return d === 0 ? (-b / (2 * a)).toNDec(nDec) : [((-b - Math.sqrt(Math.abs(d))) / (2 * a) + (d &lt; 0 ? 'i' : 0)).toNDec(nDec), (-b + Math.sqrt(Math.abs(d))) / (2 * a) + (d &lt; 0 ? 'i' : 0).toNDec(nDec)]
 };
 
 /**
- * @description Solve equations with a given formula and the result (end.g: x + y + x = res) and the range [<code>a</code>, <code>b</code>]
+ * @description Solve equations with a given formula and the result (end.g: x + y + x = res) and the range [&lt;code>a&lt;/code>, &lt;code>b&lt;/code>]
  * @param {string} formula Formula
  * @param {Array} res Result(start)
  * @param {number} low=-100 Lowest bound
@@ -1281,8 +1309,8 @@ export let eqSolver = (formula, res, low = -100, high = 200) => {
   }
   essence.say(`Formula now converted to %c${formula}`, 'info', 'color: #00f');
   //Brute force using any values within [a, b]
-  for (let x = low; x <= high; x++) {
-    for (let y = low; y <= high; y++) results[x][y] = `(${x}, ${y}) ${eval(formula)}`;
+  for (let x = low; x &lt;= high; x++) {
+    for (let y = low; y &lt;= high; y++) results[x][y] = `(${x}, ${y}) ${eval(formula)}`;
   }
   return results.filter((n) => {
     if (n.split(') ')[1] === res) return n.split(') ')[0] + ')'
@@ -1302,15 +1330,15 @@ export let eqSolver = (formula, res, low = -100, high = 200) => {
  */
 export let manuEqSolver = (eq, max, dim, r) => {
   let res = essence.mkArray(max + 1, dim, 1), p = [];
-  for (let x = 0; x < res.length; x++) {
+  for (let x = 0; x &lt; res.length; x++) {
     if (dim === 2) {
-      for (let y = 0; y < res.length; y++) {
+      for (let y = 0; y &lt; res.length; y++) {
         res[x][y] = eval(eq);
         if (res[x][y] === r) p.push(`x=${x}`, `y=${y}`);
       }
     } else if (dim === 3) {
-      for (let y = 0; y < res.length; y++) {
-        for (let z = 0; z < res.length; z++) {
+      for (let y = 0; y &lt; res.length; y++) {
+        for (let z = 0; z &lt; res.length; z++) {
           res[x][y][z] = eval(eq);
           if (res[x][y][z] === r) p.push(`x=${x}`, `y=${y}`, `z=${z}`);
         }
@@ -1334,7 +1362,7 @@ export let manuEqSolver = (eq, max, dim, r) => {
 export let getNumFromStr = (x) => essence.isNon(x) ? NaN : parseFloat(x.replace(/[A-Za-z_ ]+/g, ''));
 
 /**
- * @description Get the numbers from a string or an array.<br />
+ * @description Get the numbers from a string or an array.&lt;br />
  * Source: {@link http://www.2ality.com/2015/03/es6-generators.html}
  * @param {string|Array} words String/array
  * @public
@@ -1350,7 +1378,7 @@ export let extractNum = function*(words) {
 };
 
 /**
- * @description <code>x</code> unit to <code>y</code> px.<br />
+ * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> px.&lt;br />
  * Reference/help: {@link http://www.endmemo.com/sconvert/centiMetrepixel.php}
  * @param {string} x Number with a unit
  * @returns {number} Pixels
@@ -1493,7 +1521,7 @@ export let fromPixel = (x, unit) => {
  * @description Length converter.
  * @param {string} x Number with unit
  * @param {string} unit Final unit
- * @returns {string} <code>x</code> &rArr; <code>y</code> <code>unit</code>
+ * @returns {string} &lt;code>x&lt;/code> &amp;rArr; &lt;code>y&lt;/code> &lt;code>unit&lt;/code>
  * @see module:maths~fromPixel
  * @see module:maths~toPixel
  * @public
@@ -1741,7 +1769,7 @@ export let fromBit = (x, unit) => {
  * @description Size converter.
  * @param {string} x Size with unit
  * @param {string} unit Final unit
- * @returns {string} <code>x</code> &rArr; <code>y</code> <code>unit</code>
+ * @returns {string} &lt;code>x&lt;/code> &amp;rArr; &lt;code>y&lt;/code> &lt;code>unit&lt;/code>
  * @see module:maths~fromBit
  * @see module:maths~toBit
  * @public
@@ -1751,9 +1779,9 @@ export let fromBit = (x, unit) => {
 export let convSize = (x, unit) => fromBit(toBit(x), unit);
 
 /**
- * @description <code>x</code> unit to <code>y</code> m<sup>2</sup>.
+ * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> m&lt;sup>2&lt;/sup>.
  * @param {string} x Number with a unit
- * @returns {number} m<sup>2</sup>
+ * @returns {number} m&lt;sup>2&lt;/sup>
  * @see module:maths~fromSqMetre
  * @public
  * @since 1.0
@@ -1802,8 +1830,8 @@ export let toSqMetre = (x) => {
 };
 
 /**
- * @description X m<sup>2</sup> to y unit.
- * @param {number} x m<sup>2</sup>
+ * @description X m&lt;sup>2&lt;/sup> to y unit.
+ * @param {number} x m&lt;sup>2&lt;/sup>
  * @param {string} unit Unit
  * @returns {string} Conversion
  * @see module:maths~toSqMetre
@@ -1857,7 +1885,7 @@ export let fromSqMetre = (x, unit) => {
  * @description Area converter.
  * @param {string} x Number with unit
  * @param {string} unit Final unit
- * @returns {string} <code>x</code> &rArr; <code>y</code> <code>unit</code>
+ * @returns {string} &lt;code>x&lt;/code> &amp;rArr; &lt;code>y&lt;/code> &lt;code>unit&lt;/code>
  * @see module:maths~fromSqMetre
  * @see module:maths~toSqMetre
  * @public
@@ -1867,7 +1895,7 @@ export let fromSqMetre = (x, unit) => {
 export let convArea = (x, unit) => fromPixel(toPixel(x), unit);
 
 /**
- * @description <code>x</code> unit to <code>y</code> px.
+ * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> px.
  * @param {string} x Number with a unit
  * @returns {number} L/km
  * @see module:maths~fromLpkm
@@ -1924,7 +1952,7 @@ export let fromLpkm = (x, unit) => {
  * @description Fuel/mileage converter.
  * @param {string} x Number with unit
  * @param {string} unit Final unit
- * @returns {string} <code>x</code> &rArr; <code>y</code> <code>unit</code>
+ * @returns {string} &lt;code>x&lt;/code> &amp;rArr; &lt;code>y&lt;/code> &lt;code>unit&lt;/code>
  * @see module:maths~fromLpkm
  * @see module:maths~toLpkm
  * @public
@@ -1934,7 +1962,7 @@ export let fromLpkm = (x, unit) => {
 export let convFuel = (x, unit) => fromLpkm(toLpkm(x), unit);
 
 /**
- * @description <code>x</code> unit to <code>y</code> px.
+ * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> px.
  * @param {string} x Number with a unit
  * @returns {number} W
  * @see module:maths~fromW
@@ -1998,7 +2026,7 @@ export let fromW = (x, unit) => {
  * @description Power converter.
  * @param {string} x Number with unit
  * @param {string} unit Final unit
- * @returns {string} <code>x</code> &rArr; <code>y</code> <code>unit</code>
+ * @returns {string} &lt;code>x&lt;/code> &amp;rArr; &lt;code>y&lt;/code> &lt;code>unit&lt;/code>
  * @see module:maths~fromW
  * @see module:maths~toW
  * @public
@@ -2008,7 +2036,7 @@ export let fromW = (x, unit) => {
 export let convPower = (x, unit) => fromW(toW(x), unit);
 
 /**
- * @description <code>x</code> unit to <code>y</code> bar.
+ * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> bar.
  * @param {string} x Number with a unit
  * @returns {number} bar
  * @see module:maths~fromBar
@@ -2102,7 +2130,7 @@ export let fromBar = (x, unit) => {
  * @description Pressure converter.
  * @param {string} x Number with unit
  * @param {string} unit Final unit
- * @returns {string} <code>x</code> &rArr; <code>y</code> <code>unit</code>
+ * @returns {string} &lt;code>x&lt;/code> &amp;rArr; &lt;code>y&lt;/code> &lt;code>unit&lt;/code>
  * @see module:maths~fromBar
  * @see module:maths~toBar
  * @public
@@ -2112,7 +2140,7 @@ export let fromBar = (x, unit) => {
 export let convPressure = (x, unit) => fromBar(toBar(x), unit);
 
 /**
- * @description <code>x</code> unit to <code>y</code> mps.
+ * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> mps.
  * @param {string} x Number with a unit
  * @returns {number} M/s
  * @see module:maths~fromMps
@@ -2200,7 +2228,7 @@ export let fromMps = (x, unit) => {
  * @description Speed converter.
  * @param {string} x Number with unit
  * @param {string} unit Final unit
- * @returns {string} <code>x</code> &rArr; <code>y</code> <code>unit</code>
+ * @returns {string} &lt;code>x&lt;/code> &amp;rArr; &lt;code>y&lt;/code> &lt;code>unit&lt;/code>
  * @see module:maths~fromMps
  * @see module:maths~toMps
  * @public
@@ -2210,7 +2238,7 @@ export let fromMps = (x, unit) => {
 export let convSpeed = (x, unit) => fromMps(toMps(x), unit);
 
 /**
- * @description <code>x</code> unit to <code>y</code> °C.
+ * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> °C.
  * @param {string} x Number with a unit
  * @returns {number} °C
  * @see module:maths~fromCelsius
@@ -2268,19 +2296,19 @@ export let fromCelsius = (x, unit) => {
  * @description Temperature converter.
  * @param {string} x Number with unit
  * @param {string} unit Final unit
- * @returns {string} <code>x</code> &rArr; <code>y</code> <code>unit</code>
+ * @returns {string} &lt;code>x&lt;/code> &amp;rArr; &lt;code>y&lt;/code> &lt;code>unit&lt;/code>
  * @see module:maths~fromCelsius
  * @see module:maths~toCelsius
  * @public
  * @since 1.0
  * @function
  */
-export let convTemperature = (x, unit) => fromCelsius(toCelsius(x), unit);
+export let convTemperature = (x, unit) => romCelsius(toCelsius(x), unit);
 
 /**
- * @description <code>x</code> unit to <code>y</code> m<sup>3</sup>.
+ * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> m&lt;sup>3&lt;/sup>.
  * @param {string} x Number with a unit
- * @returns {number} m<sup>3</sup>3
+ * @returns {number} m&lt;sup>3&lt;/sup>3
  * @see module:Maths~fromCbMetre
  * @public
  * @since 1.0
@@ -2353,8 +2381,8 @@ export let toCbMetre = (x) => {
 };
 
 /**
- * @description X m<sup>3</sup> to y unit
- * @param {number} x m<sup>3</sup>
+ * @description X m&lt;sup>3&lt;/sup> to y unit
+ * @param {number} x m&lt;sup>3&lt;/sup>
  * @param {string} unit Unit
  * @returns {string} Conversion
  * @see module:maths~toCbMetre
@@ -2432,7 +2460,7 @@ export let fromCbMetre = (x, unit) => {
  * @description Volume converter.
  * @param {string} x Number with unit
  * @param {string} unit Final unit
- * @returns {string} <code>x</code> &rArr; <code>y</code> <code>unit</code>
+ * @returns {string} &lt;code>x&lt;/code> &amp;rArr; &lt;code>y&lt;/code> &lt;code>unit&lt;/code>
  * @see module:maths~fromCbMetre
  * @see module:maths~toCbMetre
  * @public
@@ -2442,7 +2470,7 @@ export let fromCbMetre = (x, unit) => {
 export let convVolume = (x, unit) => fromCbMetre(toCbMetre(x), unit);
 
 /**
- * @description <code>x</code> unit to <code>y</code> g.
+ * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> g.
  * @param {string} x Number with a unit
  * @returns {number} g
  * @see module:maths~fromGram
@@ -2478,7 +2506,7 @@ export let toGram = (x) => {
 };
 
 /**
- * @description X g to y unit<;
+ * @description X g to y unit&lt;;
  * @param {number} x g
  * @param {string} unit Unit
  * @returns {string} Conversion
@@ -2518,7 +2546,7 @@ export let fromGram = (x, unit) => {
  * @description Weight converter.
  * @param {string} x Number with unit
  * @param {string} unit Final unit
- * @returns {string} <code>x</code> &rArr; <code>y</code> <code>unit</code>
+ * @returns {string} &lt;code>x&lt;/code> &amp;rArr; &lt;code>y&lt;/code> &lt;code>unit&lt;/code>
  * @see module:maths~fromGram
  * @see module:maths~toGram
  * @public
@@ -2529,8 +2557,8 @@ export let convWeight = (x, unit) => fromGram(toGram(x), unit);
 
 /**
  * @description Matlab min:inc:max range.
- * @param {number} [min=0] Minimum/increment (if <code>max</code> isn't specified)/maximum (if <code>inc</code> is also not specified)
- * @param {number} [inc=1] Increment/maximum (if <code>max</code> isn't specified)
+ * @param {number} [min=0] Minimum/increment (if &lt;code>max&lt;/code> isn't specified)/maximum (if &lt;code>inc&lt;/code> is also not specified)
+ * @param {number} [inc=1] Increment/maximum (if &lt;code>max&lt;/code> isn't specified)
  * @param {number} [max] Maximum
  * @param {Bool} [nbDec=2] Number of decimals
  * @returns {number[]} Range
@@ -2541,10 +2569,10 @@ export let convWeight = (x, unit) => fromGram(toGram(x), unit);
  */
 export let range = (min = 0, inc = 1, max, nbDec = 2) => {
   let val = [];
-  if (!inc && !max && max != 0) [max, min] = [min, 0];
-  if (inc && !max && max != 0) [max, inc, min] = [inc, min, 0];
+  if (!inc &amp;&amp; !max &amp;&amp; max != 0) [max, min] = [min, 0];
+  if (inc &amp;&amp; !max &amp;&amp; max != 0) [max, inc, min] = [inc, min, 0];
   if (inc > 0) { //Ascending order
-    for (let i = min; i <= max; i += inc) val.push(Number(i).toNDec(nbDec));
+    for (let i = min; i &lt;= max; i += inc) val.push(Number(i).toNDec(nbDec));
   } else { //Descending order
     for (let i = min; i >= max; i -= inc) val.push(Number(i).toNDec(nbDec));
   }
@@ -2552,7 +2580,7 @@ export let range = (min = 0, inc = 1, max, nbDec = 2) => {
 };
 
 /**
- * @description Same as range() but to the base <code>b</code>.
+ * @description Same as range() but to the base &lt;code>b&lt;/code>.
  * @param {number} [min=0] Minimum
  * @param {number} [inc=1] Increment
  * @param {number} [max] Maximum
@@ -2566,7 +2594,7 @@ export let range = (min = 0, inc = 1, max, nbDec = 2) => {
 export let range2base = (min = 0, inc = 1, max, base = 2) => {
   let val = [];
   if (inc > 0) {
-    for (let i = min; i <= max; i += inc) val.push(conv(i, 10, base));
+    for (let i = min; i &lt;= max; i += inc) val.push(conv(i, 10, base));
   } else {
     for (let i = min; i >= max; i += inc) val.push(conv(i, 10, base));
   }
@@ -2590,7 +2618,7 @@ export let mixedRange = (min = 0, inc = 1, max, noRepeat = false) => {
 };
 
 /**
- * @description Fisher-Yates shuffle.<br />
+ * @description Fisher-Yates shuffle.&lt;br />
  * Inspired by {@link https://Github.com/duereg/js-algorithms/blob/master/lib/algorithms/1-strings/shuffle.js}
  * @param {(string|array)} list List to shuffle
  * @returns {(string|array)} Shuffled array
@@ -2647,7 +2675,7 @@ export let scalarProd = (v1, v2) => v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 export let vector2Point = (v) => new dsa.Pt(v.x, v.y, v.z);
 
 /**
- * @description Convert a vector to a point form (R = xi + yj + zk&rarr;(x, y, z)).
+ * @description Convert a vector to a point form (R = xi + yj + zk&amp;rarr;(x, y, z)).
  * @param {object} r Vector
  * @returns {string} Point form
  * @see module:maths~vector2Point
@@ -2657,15 +2685,15 @@ export let vector2Point = (v) => new dsa.Pt(v.x, v.y, v.z);
  */
 export let vector2PointForm = (r) => {
   let i = r.split('i'), j = i[1].split('j');
-  return `(${i[0].clean()}, ${(j[0].slice(1, j[0].length)).clean()}, ${(j[1].split('k')[0]).clean()})`;
+  return `(${i[0].clean()}, ${(j[0].slice(1, j[0].length)).clean()}, ${(j[1].split("k")[0]).clean()})`;
 };
 
 /**
- * @description Union (&Union;).<br />
+ * @description Union (&amp;Union;).&lt;br />
  * It will give a single array with unique values of all the elemenets of all arrays.
  * @param {Array[]} arrays Array of arrays to unit
  * @param {boolean} [toSort=false] Sort the elements
- * @returns {Array} a<sub>0</sub> &Union; a<sub>1</sub> ... &Union; a<sub>n</sub>
+ * @returns {Array} a&lt;sub>0&lt;/sub> &amp;Union; a&lt;sub>1&lt;/sub> ... &amp;Union; a&lt;sub>n&lt;/sub>
  * @public
  * @since 1.0
  * @function
@@ -2673,58 +2701,55 @@ export let vector2PointForm = (r) => {
 export let union = (arrays, toSort = false) => toSort ? misc.rmDuplicates(arrays[0].concat(...arrays.get(1))).sort() : misc.rmDuplicates(arrays[0].concat(...arrays.get(1)));
 
 /**
- * @description Intersection (&Intersection;).<br />
+ * @description Intersection (&amp;Intersection;).&lt;br />
  * It will give all the common elements among the arrays.
  * @param {Array[]} arrays Array of arrays to intersect together
  * @param {boolean} [toSort=false] Sort the elements
- * @returns {Array} a<sub>0</sub> &Intersection; a<sub>1</sub> ... &Intersection; a<sub>n</sub>
+ * @returns {Array} a&lt;sub>0&lt;/sub> &amp;Intersection; a&lt;sub>1&lt;/sub> ... &amp;Intersection; a&lt;sub>n&lt;/sub>
  * @public
  * @since 1.0
  * @function
  */
 export let intersection = (arrays, toSort = false) => {
   let first = misc.rmDuplicates(arrays[0]), rest = arrays.get(1).map(arr => misc.rmDuplicates(arr));
-  let inter = first.filter(item => rest.some(arr => arr.contains(item)));
-  return toSort ? inter.sort() : inter;
+  return first.filter(item => rest.some(arr => arr.contains(item)))
 };
 
 /**
- * @description Complement (\) also known as set xor.<br />
+ * @description Complement (\) also known as set xor.&lt;br />
  * It will give all the elements of the first array which isn't in any of the other arrays.
  * @param {Array[]} arrays Array of arrays to union complement
  * @param {boolean} [toSort=false] Sort the elements
- * @returns {Array} a<sub>0</sub> \ a<sub>1</sub> ... \ a<sub>n</sub>
+ * @returns {Array} a&lt;sub>0&lt;/sub> \ a&lt;sub>1&lt;/sub> ... \ a&lt;sub>n&lt;/sub>
  * @public
  * @since 1.0
  * @function
  */
 export let complement = (arrays, toSort = false) => {
   let first = misc.rmDuplicates(arrays[0]), rest = misc.rmDuplicates(arrays.get(1).linearise());
-  let compl = first.filter(item => rest.miss(item));
-  return toSort ? compl.sort() : compl;
+  return first.filter(item => rest.miss(item));
 };
 
 /**
- * @description Symmetric difference.<br />
+ * @description Symmetric difference.&lt;br />
  * It will give all the elements that aren't shared by all arrays i.e. unique to each arrays.
  * @param {Array[]} arrays Array of arrays to intersect together
  * @param {boolean} [toSort=false] Sort the elements
- * @returns {Array} a &Union; b - a &Intersection; b &rArr; a only & b only
+ * @returns {Array} a &amp;Union; b - a &amp;Intersection; b &amp;rArr; a only &amp; b only
  * @public
  * @since 1.0
  * @function
  */
 export let symDif = (arrays, toSort = false) => {
   let array = arrays.linearise();
-  let sd = essence.isTypedArray(array, 'Number') ? array.unique().sanitise('Number') : array.unique();
-  return toSort ? sd.sort() : sd;
+  return essence.isTypedArray(array, 'Number') ? array.unique().sanitise('Number') : array.unique();
 };
 
 /**
  * @description Bit string of a set in relation to another.
  * @param {Array} a Array a
  * @param {Array} b Array b
- * @returns {Array} Bit string B<sub>a</sub> of <i>b</i>
+ * @returns {Array} Bit string B&lt;sub>a&lt;/sub> of &lt;i>b&lt;/i>
  * @public
  * @since 1.0
  * @function
@@ -2750,10 +2775,10 @@ export let bitStr = (a, b) => {
  */
 export let And = (a, b, cr = null, toArr = false) => {
   essence.toSameLength(a, b, cr);
-  let res = toArr ? [] : (a[0] && b[0]);
+  let res = toArr ? [] : (a[0] &amp;&amp; b[0]);
   for (let i in a) {
     if (a.has(i)) {
-      toArr ? res.push(a[i] && b[i]) : res = res && a[i] && b[i];
+      toArr ? res.push(a[i] &amp;&amp; b[i]) : res = res &amp;&amp; a[i] &amp;&amp; b[i];
     }
   }
   return res
@@ -2870,16 +2895,16 @@ export let diagDist = (a, b) => Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - 
  */
 export let h = (mtx, solvedMtx, hrt = euclidianDist) => {
   let res = [];
-  for (let i = 0; i < mtx.length; i++) {
+  for (let i = 0; i &lt; mtx.length; i++) {
     res.push([]);
-    for (let j = 0; j < mtx[i].length; j++) res[i][j] = hrt([i, j], essence.lookfor(mtx[i][j], solvedMtx));
+    for (let j = 0; j &lt; mtx[i].length; j++) res[i][j] = hrt([i, j], essence.lookfor(mtx[i][j], solvedMtx));
   }
   //essence.say(console.table(res));
   return res.sum2d()
 };
 
 /**
- * @description Is a equivalent to b, a &hArr; b.
+ * @description Is a equivalent to b, a &amp;hArr; b.
  * @param {number} a Number a
  * @param {number} b Number b
  * @return {boolean} Equivalence
@@ -2890,7 +2915,7 @@ export let h = (mtx, solvedMtx, hrt = euclidianDist) => {
 export let equivalent = (a, b) => Math.round(a) === Math.round(b) || (a | 0) === (b | 0) || (a | 1) === (a | 1) || (a | 0) === (b | 1) || (a | 1) === (b | 0);
 
 /**
- * @description Is a approximately equal to b, a &approx; b.
+ * @description Is a approximately equal to b, a &amp;approx; b.
  * @param {number} a Number a
  * @param {number} b Number b
  * @param {number} [precision=EPS] Precision
@@ -2899,7 +2924,7 @@ export let equivalent = (a, b) => Math.round(a) === Math.round(b) || (a | 0) ===
  * @since 1.0
  * @function
  */
-export let approxEqual = (a, b, precision = EPS) => a >= b - precision && a <= b + precision || b >= a - precision && b <= a + precision;
+export let approxEqual = (a, b, precision = EPS) => a >= b - precision &amp;&amp; a &lt;= b + precision || b >= a - precision &amp;&amp; b &lt;= a + precision;
 
 /**
  * @description Truthness of the proposition among all elements of the array.
@@ -2918,7 +2943,7 @@ export let P = (arr, prop) => arr.map(x => eval(prop.replace(/x/g, x + '')));
 
 /**
  * @description Check if the proposition holds for all elements of the array.
- * @summary Universal quantification of P(arr): &forall;P(arr)
+ * @summary Universal quantification of P(arr): &amp;forall;P(arr)
  * @param {NumberLike[]} arr Array
  * @param {string} prop Proposition
  * @return {boolean} Quantification result
@@ -2931,7 +2956,7 @@ export let forAll = (arr, prop) => arr.every(x => eval(prop.replace(/x/g, x + ''
 
 /**
  * @description Check if the proposition holds for some elements of the array.
- * @summary Existential quantification of P(arr): &exist;P(arr)
+ * @summary Existential quantification of P(arr): &amp;exist;P(arr)
  * @param {NumberLike[]} arr Array
  * @param {string} prop Proposition
  * @return {boolean} Quantification result
@@ -2970,7 +2995,7 @@ export let readCoord = (str, isInt) => {
 };
 
 /**
- * @description <code>x</code> % <code>b</code> where <code>x</code> < <code>a</code> isn't allowed.
+ * @description &lt;code>x&lt;/code> % &lt;code>b&lt;/code> where &lt;code>x&lt;/code> &lt; &lt;code>a&lt;/code> isn't allowed.
  * @param {number} x Number
  * @param {number} a Lowest bound
  * @param {number} b Divisor
@@ -2981,7 +3006,7 @@ export let readCoord = (str, isInt) => {
  */
 export let modRange = (x, a, b) => {
   let r = x % (b + 1);
-  return r + (r < a) ? a + r : 0;
+  return r + (r &lt; a) ? a + r : 0;
 };
 
 /**
@@ -2994,13 +3019,13 @@ export let modRange = (x, a, b) => {
  */
 export let abcModulus = (code) => {
   let m = code % 123;
-  if (90 < m && m < 97) return m + abcModulus(Math.abs(getClosest(m, [90, 97]) - m));
-  return m + ((m < 65 && m != 32) ? 65 + m : 0);
+  if (90 &lt; m &amp;&amp; m &lt; 97) return m + abcModulus(Math.abs(getClosest(m, [90, 97]) - m));
+  return m + ((m &lt; 65 &amp;&amp; m != 32) ? 65 + m : 0);
 };
 
 /**
- * @description Convert a (possibly infinite) sequence of iterated values into a sequence of length <code>n</code>.
- * <br />Source: {@link http://www.2ality.com/2015/03/es6-generators.html}
+ * @description Convert a (possibly infinite) sequence of iterated values into a sequence of length &lt;code>n&lt;/code>.
+ * &lt;br />Source: {@link http://www.2ality.com/2015/03/es6-generators.html}
  * @param {number} n Number of items to take from the iterable object
  * @param {Iterable} iterable Iterable object
  * @public
@@ -3010,14 +3035,14 @@ export let abcModulus = (code) => {
  */
 export let take = function*(n, iterable) {
   for (let x of iterable) {
-    if (n <= 0) return;
+    if (n &lt;= 0) return;
     n--;
     yield x;
   }
 };
 
 /**
- * @description Brute force through &integers; to find an x such that <code>min</code> &le; x &le; <code>max</code> and the condition is true for x.
+ * @description Brute force through &amp;integers; to find an x such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code> and the condition is true for x.
  * @param {string} cond Condition
  * @param {number} [min={@link #MIN_INT32|MIN_INT32}] Minimum
  * @param {number} [max={@link #MAX_INT32|MAX_INT32}] Maximum
@@ -3029,14 +3054,14 @@ export let take = function*(n, iterable) {
  * @see module:maths~MAX_INT32
  */
 export let bruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
-  for (let x = min; x <= max; x++) {
+  for (let x = min; x &lt;= max; x++) {
     if (eval(cond.replace(misc.RegExpify('x'), x + ''))) return x;
   }
   return false;
 };
 
 /**
- * @description Brute force through &#8474; to find an x such that <code>min</code> &le; x &le; <code>max</code> and the condition is true for x.
+ * @description Brute force through &amp;#8474; to find an x such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code> and the condition is true for x.
  * @param {string} cond Condition
  * @param {number} [min={@link #MIN_FLOAT|MIN_FLOAT}] Minimum
  * @param {number} [max={@link #MAX_FLOAT|MAX_FLOAT}] Maximum
@@ -3051,14 +3076,14 @@ export let bruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
  * @see module:maths~bruteForceDouble
  */
 export let bruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, precision = DECIMALS32) => {
-  for (let x = min; x <= max; x += precision) {
+  for (let x = min; x &lt;= max; x += precision) {
     if (eval(cond.replace(misc.RegExpify('x'), x + ''))) return x;
   }
   return false;
 };
 
 /**
- * @description Brute force through &#8474; to find an x such that <code>min</code> &le; x &le; <code>max</code> and the condition is true for x.
+ * @description Brute force through &amp;#8474; to find an x such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code> and the condition is true for x.
  * @param {string} cond Condition
  * @returns {Bool} x or false
  * @public
@@ -3069,11 +3094,11 @@ export let bruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, precision 
  * @see module:maths~DECIMALS64
  * @see module:maths~bruteForceFloat
  */
-export let bruteForceDouble = (cond) => bruteForceFloat(cond, MIN_DOUBLE, MAX_DOUBLE, DECIMALS64);
+export let bruteForceDouble = (cond) => teForceFloat(cond, MIN_DOUBLE, MAX_DOUBLE, DECIMALS64);
 
 /**
- * @description Brute force through &integers; to find x and y such that <code>min</code> &le; x &le; <code>max</code>,
- * <code>min</code> &le; y &le; <code>max</code> and the condition is true for x and y
+ * @description Brute force through &amp;integers; to find x and y such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code>,
+ * &lt;code>min&lt;/code> &amp;le; y &amp;le; &lt;code>max&lt;/code> and the condition is true for x and y
  * @param {string} cond Condition
  * @param {number} [min={@link #MIN_INT32|MIN_INT32}] Minimum
  * @param {number} [max={@link #MAX_INT32|MAX_INT32}] Maximum
@@ -3085,8 +3110,8 @@ export let bruteForceDouble = (cond) => bruteForceFloat(cond, MIN_DOUBLE, MAX_DO
  * @see module:maths~MAX_INT32
  */
 export let doubleBruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
-  for (let x = min; x <= max; x++) {
-    for (let y = min; y <= max; y++) {
+  for (let x = min; x &lt;= max; x++) {
+    for (let y = min; y &lt;= max; y++) {
       if (eval(cond.replace(misc.RegExpify('x'), x + '').replace(misc.RegExpify('y'), y + ''))) return [x, y];
     }
   }
@@ -3094,8 +3119,8 @@ export let doubleBruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
 };
 
 /**
- * @description Brute force through &#8474; to find x and y such that <code>min</code> &le; x &le; <code>max</code>,
- * <code>min</code> &le; y &le; <code>max</code> and the condition is true for x and y
+ * @description Brute force through &amp;#8474; to find x and y such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code>,
+ * &lt;code>min&lt;/code> &amp;le; y &amp;le; &lt;code>max&lt;/code> and the condition is true for x and y
  * @param {string} cond Condition
  * @param {number} [min={@link #MIN_FLOAT|MIN_FLOAT}] Minimum
  * @param {number} [max={@link #MAX_FLOAT|MAX_FLOAT}] Maximum
@@ -3110,8 +3135,8 @@ export let doubleBruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
  * @see module:maths~doubleBruteForceDouble
  */
 export let doubleBruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, precision = DECIMALS32) => {
-  for (let x = min; x <= max; x += precision) {
-    for (let y = min; y <= max; y += precision) {
+  for (let x = min; x &lt;= max; x += precision) {
+    for (let y = min; y &lt;= max; y += precision) {
       if (eval(cond.replace(misc.RegExpify('x'), x + '').replace(misc.RegExpify('y'), y + ''))) return [x, y];
     }
   }
@@ -3119,8 +3144,8 @@ export let doubleBruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, prec
 };
 
 /**
- * @description Brute force through &#8474; to find x and y such that <code>min</code> &le; x &le; <code>max</code>,
- * <code>min</code> &le; y &le; <code>max</code> and the condition is true for x and y
+ * @description Brute force through &amp;#8474; to find x and y such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code>,
+ * &lt;code>min&lt;/code> &amp;le; y &amp;le; &lt;code>max&lt;/code> and the condition is true for x and y
  * @param {string} cond Condition
  * @returns {boolean|number[]} [x, y] or false
  * @public
@@ -3134,7 +3159,7 @@ export let doubleBruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, prec
 export let doubleBruteForceDouble = (cond) => doubleBruteForceFloat(cond, MIN_DOUBLE, MAX_DOUBLE, DECIMALS64);
 
 /**
- * @description Is <code>a</code> closer to <code>x</code> than <code>b</code>.
+ * @description Is &lt;code>a&lt;/code> closer to &lt;code>x&lt;/code> than &lt;code>b&lt;/code>.
  * @param {number} x Number x
  * @param {number} a Number a
  * @param {number} b Number b
@@ -3143,10 +3168,10 @@ export let doubleBruteForceDouble = (cond) => doubleBruteForceFloat(cond, MIN_DO
  * @since 1.0
  * @function
  */
-export let isCloser = (x, a, b) => Math.abs(x - a) < Math.abs(x - b);
+export let isCloser = (x, a, b) => Math.abs(x - a) &lt; Math.abs(x - b);
 
 /**
- * @description Get the closest option from the options to <code>x</code>.
+ * @description Get the closest option from the options to &lt;code>x&lt;/code>.
  * @param {number} x Number
  * @param {number[]} opt Options
  * @returns {number} Closest number
@@ -3156,7 +3181,7 @@ export let isCloser = (x, a, b) => Math.abs(x - a) < Math.abs(x - b);
  */
 export let getClosest = (x, opt) => {
   let closest = opt[0];
-  for (let i = 1; i < opt.length; i++) closest = isCloser(x, closest, opt[i]) ? closest : opt[i];
+  for (let i = 1; i &lt; opt.length; i++) closest = isCloser(x, closest, opt[i]) ? closest : opt[i];
   return closest;
 };
 
@@ -3195,7 +3220,7 @@ class Equation {
 }
 
 /**
- * @description Generate an array of all possible binary numbers with <code>x</code> digits or less.
+ * @description Generate an array of all possible binary numbers with &lt;code>x&lt;/code> digits or less.
  * @param {number} x Number of digits
  * @returns {Array} Array of possible binary numbers
  * @public
@@ -3206,7 +3231,7 @@ export let binaryCases = (x) => {
   let end = parseInt('1'.repeat(x)), res = [], i = 0;
   do {
     res.push(conv(i++, 10, 2));
-  } while (i <= conv(end));
+  } while (i &lt;= conv(end));
   return res;
 };
 
@@ -3220,15 +3245,15 @@ export let binaryCases = (x) => {
  */
 export let truthTable = (exp) => { //Get the truth table of an expression
   // /(([a-z])(\+|\x2a))+/g
-  let ascii = misc.asciiTable('a-z'), vars = [], rows, res = [];
+  let ascii = misc.asciiTable("a-z"), vars = [], rows, res = [];
   for (let character of ascii) {
-    if (exp.contains(character)) vars.push(character);
+    if (exp.contains(characters)) vars.push(character);
   }
   //essence.say(`variables: ${vars.toStr(true)}`, 'info');
   rows = binaryCases(vars.length);
   for (let row of rows) {
     let cexp = exp;
-    for (let j = 0; j < vars.length; j++) cexp = cexp.multiReplace([[vars[j], row[j]]]);
+    for (let j = 0; j &lt; vars.length; j++) cexp = cexp.multiReplace([[vars[j], row[j]]]);
     //essence.say(`current exp: ${cexp}`, 'info');
     res.push(eval(cexp));
   }
@@ -3278,9 +3303,9 @@ export let getCNF = (exp) => {
 export let timeCI = (avg, n, sd) => [avg + InvNorm(n / 200) * sd / Math.sqrt(n), avg - InvNorm(n / 200) * sd / Math.sqrt(n)];
 
 /**
- * @description Sample mean of a population/array (<span style="text-decoration: overline">x</span>).
+ * @description Sample mean of a population/array (&lt;span style="text-decoration: overline">x&lt;/span>).
  * @param {number[]} arr Population
- * @return {number} Sample mean <span style='text-decoration: overline'>x</span>
+ * @return {number} Sample mean &lt;span style='text-decoration: overline'>x&lt;/span>
  * @public
  * @since 1.0
  * @function
@@ -3294,7 +3319,7 @@ export let sampleMean = (arr) => Math.sqrt(sumPow2(arr) / arr.length - arr.mean(
  * @param {number} [n] Number of data
  * @param {number} [sd] Standard Deviation
  * @return {number[]} Confidence interval
- * @todo Make <code>sd</code> optional after having a t-Distribution table calculator
+ * @todo Make &lt;code>sd&lt;/code> optional after having a t-Distribution table calculator
  * @public
  * @since 1.0
  * @function
@@ -3317,12 +3342,12 @@ export let confidenceInterval = (avg, c = .95, n, sd) => {
 /**
  * @description Fibonacci sequence.
  * @param {number} x Number
- * @return {*} Fibonacci sequence to <code>x</code>
+ * @return {*} Fibonacci sequence to &lt;code>x&lt;/code>
  * @public
  * @function
  * @since 1.0
  */
-export let Fibonacci = (x) => (x <= 1) ? x : Fibonacci(x - 1) + Fibonacci(x - 2);
+export let Fibonacci = (x) => (x &lt;= 1) ? x : Fibonacci(x - 1) + Fibonacci(x - 2);
 
 /**
  * @description Calculate expressions in RPN (Reverse Polish Notation).
@@ -3350,9 +3375,31 @@ export let revPolishCalc = (exp) => {
       } else throw new qtest.InvalidExpressionError(`WTF is the ${char} character doing here?`);
     } else { //Number
       values.push(parseFloat(char));
-      if (nbOfNums <= 2) nbOfNums++;
+      if (nbOfNums &lt;= 2) nbOfNums++;
       else throw new qtest.InvalidExpressionError('Too many numbers without operations!');
     }
   }
   return res;
-};
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 06 2017 15:08:33 GMT+0000 (GMT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

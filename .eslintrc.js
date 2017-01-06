@@ -10,14 +10,15 @@ module.exports = {
   ],
   "rules": {
     "indent": [
-      "error",
+      "warn",
       2
     ],
     "linebreak-style": [
       "error"
     ],
     "no-console": "off",
-    "prefer-const": "warn",
+    "no-extra-semi": "off",
+    "prefer-const": "off",
     "quotes": [
       "error",
       "single"

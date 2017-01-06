@@ -6,22 +6,7 @@
  */
 
 /* eslint prefer-const: 0 */
-/**
- * @description Time taken by the DOM to load via the time taken to window.onload to happen.
- * @type {number}
- * @public
- * @since 1.0
- */
-let loadTime = 0;
-
-/**
- * @description Time taken by the browser to draw the UI via the time taken to window.onpageshow to
- * happen.
- * @type {number}
- * @public
- * @since 1.0
- */
-let displayTime = 0;
+/* eslint prefer-const: "off" */
 
 /**
  * @description Character/code key pair.
@@ -31,6 +16,7 @@ let displayTime = 0;
  */
 let lastKeyPair = [];
 /* eslint prefer-const: 2 */
+/* eslint prefer-const: "error" */
 
 /**
  * @description Lorem ipsum dummy text.
@@ -44,7 +30,7 @@ const lorem = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean 
 /* eslint symbol-description: 0 */
 /**
  * @description End of sequence of stream.
- * @type {Symbol} Empty symbol
+ * @type {Symbol}
  * @public
  * @since 1.0
  * @const
@@ -89,8 +75,6 @@ const DAY_IN_SEC = 86400;
 const MONTH_IN_DAY = 30.417;
 
 export {
-  loadTime,
-  displayTime,
   lastKeyPair,
   lorem,
   END_OF_SEQUENCE,
