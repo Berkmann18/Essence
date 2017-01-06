@@ -12,6 +12,7 @@
 In order to use this framework, you would need the following:
 - Git which you can get [here](https://git-scm.com/downloads)
 - NPM + Node.js
+- A fairly good understanding of HTML 4.1+/CSS 2+ and JavaScript ES6+.
 
 ## Install
 ### Using NPM
@@ -26,7 +27,7 @@ $ git clone https://github.com/Berkmann18/Exence.git
 
 ## How to use
 
-Copy the repository from:
+Copy the repository from 
 [here](https://github.com/Berkmann18/Essence)
 
 ## Installation
@@ -41,8 +42,8 @@ Copy the repository from:
 <script src="path/to/essence.js"></script>
 ```
 Or alternatively, if you added Essence as Node module, you could simply have in your main script file or in ``<script>...</script>``:
-```ecmascript 6
-    import * as essence from './essence';
+```javascript
+import * as essence from './essence';
 ```
 ## Build and runs
 Build
