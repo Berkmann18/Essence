@@ -4,7 +4,7 @@
 [![Issue Stats](http://issuestats.com/github/Berkmann18/Exence/badge/issue?style=flat)](http://issuestats.com/github/Berkmann18/Exence)
 [![npm version](https://badge.fury.io/js/%exence.svg)](https://badge.fury.io/js/exence)
 
-<img align="left" src="rsc/exence-64.png" alt="Exjs" />
+<img align="left" src="rsc/exence.png" alt="Exjs" />
 > An All-in-One stack of essential tools and features for HTML 4.1+/CSS 2+/JS ES6+ coding.
 
 <br />
