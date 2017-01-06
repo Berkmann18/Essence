@@ -162,5 +162,4 @@ $RECYCLE.BIN/
 ### Project
 /test/
 /dist/
-/.idea/
-.idea/*
+.idea/*.*
