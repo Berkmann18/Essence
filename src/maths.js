@@ -1069,7 +1069,7 @@ export let rad2deg = (rad) => rad * 180 / Math.PI
  * @function
  * @see module:maths~primeN
  */
-export isPrime = (x) => primeN(range(1, 1, x)).contains(x);
+export let isPrime = (x) => primeN(range(1, 1, x)).contains(x);
 
 /**
  * @description Return the prime numbers of <code>arr</code> where non prime numbers that doesn't have divisors in the array are considered prime numbers.

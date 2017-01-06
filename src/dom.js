@@ -4,7 +4,7 @@
  * @requires module:essence
  * @since 2.0
  */
-import { $n, $e } from './essence';
+import {$n, $e} from './essence';
 
 /**
  * @description Add CSS code into the page.
@@ -42,8 +42,7 @@ export const addJS = (js) => {
  * @param {string} [title=document.title] Title of the document
  * @param {string} [author='anonymous'] Author of the document
  */
-export const emptyDoc = (title=document.title,
-                         author='anonymous') => {
+export const emptyDoc = (title = document.title, author = 'anonymous') => {
   $e('html').write(`<html>
     <head>
       <title>${title}</title>

@@ -1076,7 +1076,7 @@ Array.prototype.minOf = (start=0, n=this.length-1) => {
  * @external Array
  */
 Array.prototype.shuffle = (n=this.length) => {
-  for(let i of n) [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)] = [this[maths.randTo(this.length - 1), this[maths.randTo(this.length - 1)]];
+  for(let i of n) [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]] = [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]];
   return this;
 };
 
