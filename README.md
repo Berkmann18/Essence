@@ -1,11 +1,15 @@
 # Exence
 [![Build Status](https://travis-ci.org/anvk/exence.svg?branch=master)](https://travis-ci.org/anvk/exence)
-[![Issue Stats](http://issuestats.com/github/Berkmann18/Exence/badge/pr?style=flat)]
-[![Issue Stats](http://issuestats.com/github/Berkmann18/Exence/badge/issue?style=flat)](http://issuestats.com/github/Berkmann18/Exence)]
+![Issue Stats](http://issuestats.com/github/Berkmann18/Exence/badge/pr?style=flat)
+[![Issue Stats](http://issuestats.com/github/Berkmann18/Exence/badge/issue?style=flat)](http://issuestats.com/github/Berkmann18/Exence)
 [![npm version](https://badge.fury.io/js/%exence.svg)](https://badge.fury.io/js/exence)
 
+<img align="left" src="rsc/exence-64.png" alt="Exjs" />
+> An All-in-One stack of essential tools and features for HTML 4.1+/CSS 2+/JS ES6+ coding.
 
-> An All-in-One stack of essential tools and features for HTML/CSS/JS coding.
+<br />
+<br />
+<br />
 
 ## Prerequisites
 
@@ -51,7 +55,7 @@ Build
 $ npm run build
 ```
 
-Run:
+Run
 ```bash
 $ npm start
 ```
@@ -63,6 +67,9 @@ $ npm test
 
 ## Contributing
 If you want to contribute (I welcome any contributions), please read  [CONTRIBUTING](wiki/CONTRIBUTING.md).
+
+## Changes
+Have a look at the [CHANGELOG](wiki/CHANGELOG.md).
 
 ## License
 
