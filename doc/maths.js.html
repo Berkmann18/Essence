@@ -39,14 +39,6 @@ import * as misc from './misc';
 
 //Constants
 /**
- * @const {number} EPS Epsilon
- * @type {number}
- * @public
- * @since 1.0
- */
-export const EPS = Math.pow(2, -52); //Might already exist in ES6
-
-/**
  * @const {string[]} Numerical/bit operator signs
  * @type {string[]}
  * @public
@@ -504,7 +496,7 @@ export let genNearlySortedArr = (n = 10, min = 0, max = 100) => {
  * @throws {TypeError} Not an array
  */
 export let sumPow2 = (arr, nbDec = 2) => {
-  if (!isNativeType(arr, 'Array')) throw TypeError('sumPow2 only accept arrays!');
+  if (!essence.isNativeType(arr, 'Array')) throw TypeError('sumPow2 only accept arrays!');
   return arr.map((x) => x * x).sum().toNDec(nbDec)
 };
 
@@ -630,7 +622,7 @@ export let dec2min = (dec) => (30 * dec) / 50;
 export let toSec = (i) => {
   if (i == parseFloat(i)) return parseFloat(i); //Seconds stay seconds
   let withH = i.count(':') === 2;
-  if (!isNativeType(i, 'String')) i += '';
+  if (!essence.isNativeType(i, 'String')) i += '';
   if (i.length >= 4 &amp;&amp; i.indexOf(':') === 1) return toSec('0' + i); //So times without the leading 0 or simply with a 1-digit first section could be read properly
 
   let time = i.split(':'), m, s;
@@ -761,6 +753,17 @@ export let gcd = (a, b) => b ? gcd(b, a % b) : Math.abs(a);
  * @since 1.0
  * @function
  */
+export let gcd = (a, b) => b ? gcd(b, a % b): Math.abs(a);
+
+/**
+* @description Least Common Multiplier
+* @param {number} a Number a
+* @param {number} b Number b
+* @returns {number} LCM
+* @public
+* @since 1.0
+* @function
+*/
 export let lcm = (a, b) => {
   let multiple = a;
   range(a, 1, b).forEach((n) => multiple = (multiple * n) / gcd(multiple, n));
@@ -1192,7 +1195,6 @@ export let simpleInterest = (po, i, t = 1) => po * (1 + i * t);
  */
 export let compoundInterest = (po, i, t = 1, n) => n > 1 ? po * Math.pow(1 + i / n, t * n) : po * Math.pow(1 + i, t);
 
-
 /**
  * @description Everything but not 0.
  * @param {number} x Number
@@ -1202,7 +1204,7 @@ export let compoundInterest = (po, i, t = 1, n) => n > 1 ? po * Math.pow(1 + i /
  * @since 1.0
  * @function
  */
-export let non0 = (x) => (x === 0) ? EPS : x;
+export let non0 = (x) => (x === 0) ? Number.EPSILON : x;
 
 /**
  * @description Fraction form of n.&lt;br />
@@ -1221,8 +1223,7 @@ export let toFrac = (n, prec, roundUp = false) => {
 
   let i = n | 0 || '', dps = s.substring(s.indexOf('.'));
   if (!prec) prec = Math.pow(10, dps.length - 1);
-  let num = roundUp ? (dps * prec) | 1 : Math.round(dps * prec), den = prec,
-    g = gcd(num, den);
+  let num = roundUp ? (dps * prec) | 1 : Math.round(dps * prec), den = prec, g = gcd(num, den);
 
   if (den / g === 1) return String(i + (num / g));
   if (i) i += ' and ';
@@ -1239,7 +1240,7 @@ export let toFrac = (n, prec, roundUp = false) => {
  * @since 1.0
  * @function
  */
-export let clearNum = (n, nDec, frFormat = false) => frFormat ? new Intl.NumberFormat('fr-FR').format(n) : new Intl.NumberFormat().format(number);
+export let clearNum = (n, nDec, frFormat = false) => frFormat ? new Intl.NumberFormat('fr-FR').format(n) : new Intl.NumberFormat().format(n);
 
 /**
  * @description Get the increment value from &lt;code>a&lt;/code> to &lt;code>b&lt;/code>.
@@ -2303,7 +2304,7 @@ export let fromCelsius = (x, unit) => {
  * @since 1.0
  * @function
  */
-export let convTemperature = (x, unit) => romCelsius(toCelsius(x), unit);
+export let convTemperature = (x, unit) => fromCelsius(toCelsius(x), unit);
 
 /**
  * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> m&lt;sup>3&lt;/sup>.
@@ -2685,7 +2686,7 @@ export let vector2Point = (v) => new dsa.Pt(v.x, v.y, v.z);
  */
 export let vector2PointForm = (r) => {
   let i = r.split('i'), j = i[1].split('j');
-  return `(${i[0].clean()}, ${(j[0].slice(1, j[0].length)).clean()}, ${(j[1].split("k")[0]).clean()})`;
+  return `(${i[0].clean()}, ${(j[0].slice(1, j[0].length)).clean()}, ${(j[1].split('k')[0]).clean()})`;
 };
 
 /**
@@ -2712,543 +2713,8 @@ export let union = (arrays, toSort = false) => toSort ? misc.rmDuplicates(arrays
  */
 export let intersection = (arrays, toSort = false) => {
   let first = misc.rmDuplicates(arrays[0]), rest = arrays.get(1).map(arr => misc.rmDuplicates(arr));
-  return first.filter(item => rest.some(arr => arr.contains(item)))
-};
-
-/**
- * @description Complement (\) also known as set xor.&lt;br />
- * It will give all the elements of the first array which isn't in any of the other arrays.
- * @param {Array[]} arrays Array of arrays to union complement
- * @param {boolean} [toSort=false] Sort the elements
- * @returns {Array} a&lt;sub>0&lt;/sub> \ a&lt;sub>1&lt;/sub> ... \ a&lt;sub>n&lt;/sub>
- * @public
- * @since 1.0
- * @function
- */
-export let complement = (arrays, toSort = false) => {
-  let first = misc.rmDuplicates(arrays[0]), rest = misc.rmDuplicates(arrays.get(1).linearise());
-  return first.filter(item => rest.miss(item));
-};
-
-/**
- * @description Symmetric difference.&lt;br />
- * It will give all the elements that aren't shared by all arrays i.e. unique to each arrays.
- * @param {Array[]} arrays Array of arrays to intersect together
- * @param {boolean} [toSort=false] Sort the elements
- * @returns {Array} a &amp;Union; b - a &amp;Intersection; b &amp;rArr; a only &amp; b only
- * @public
- * @since 1.0
- * @function
- */
-export let symDif = (arrays, toSort = false) => {
-  let array = arrays.linearise();
-  return essence.isTypedArray(array, 'Number') ? array.unique().sanitise('Number') : array.unique();
-};
-
-/**
- * @description Bit string of a set in relation to another.
- * @param {Array} a Array a
- * @param {Array} b Array b
- * @returns {Array} Bit string B&lt;sub>a&lt;/sub> of &lt;i>b&lt;/i>
- * @public
- * @since 1.0
- * @function
- */
-export let bitStr = (a, b) => {
-  let ba = []; //Ba in b
-  for (let i in a) {
-    if (a.has(i)) ba[i] = (a[i] === b[i]) | 0;
-  }
-  return ba
-};
-
-/**
- * @description Logical AND for arrays.
- * @param {Array} a Array a
- * @param {Array} b Array b
- * @param {?string} [cr=null] Filling character
- * @param {boolean} [toArr=false] To array
- * @returns {Array|boolean} Result
- * @public
- * @since 1.0
- * @function
- */
-export let And = (a, b, cr = null, toArr = false) => {
-  essence.toSameLength(a, b, cr);
-  let res = toArr ? [] : (a[0] &amp;&amp; b[0]);
-  for (let i in a) {
-    if (a.has(i)) {
-      toArr ? res.push(a[i] &amp;&amp; b[i]) : res = res &amp;&amp; a[i] &amp;&amp; b[i];
-    }
-  }
-  return res
-};
-
-/**
- * @description Logical OR for arrays.
- * @param {Array} a Array a
- * @param {Array} b Array b
- * @param {?string} [cr=null] Filling character
- * @param {boolean} [toArr=false] To array
- * @returns {Array|boolean} Result
- * @public
- * @since 1.0
- * @function
- */
-export let Or = (a, b, cr = null, toArr = false) => {
-  essence.toSameLength(a, b, cr);
-  let res = toArr ? [] : (a[0] || b[0]);
-  for (let i in a) {
-    if (a.has(i)) {
-      toArr ? res.push(a[i] || b[i]) : res = res || a[i] || b[i];
-    }
-  }
-  return res
-};
-
-/**
- * @description Logical XOR for arrays.
- * @param {Array} a Array a
- * @param {Array} b Array b
- * @param {?string} [cr=null] Filling character
- * @param {boolean} [toArr=false] To array
- * @returns {Array|boolean} Result
- * @public
- * @since 1.0
- * @function
- */
-export let Xor = (a, b, cr = null, toArr = false) => {
-  essence.toSameLength(a, b, cr || null);
-  let res = toArr ? [] : xor(a[0], b[0]);
-  for (let i in a) {
-    if (a.has(i)) {
-      toArr ? res.push(xor(a[i], b[i])) : res = xor(res, xor(a[i], b[i]));
-    }
-  }
-  return res
-};
-
-/**
- * @description Logical imply for arrays.
- * @param {Array} a Array a
- * @param {Array} b Array b
- * @param {string|null} [cr=null] Filling character
- * @param {boolean} [toArr=false] To array
- * @returns {Array|boolean} Result
- * @since 1.0
- * @func
- */
-export let Imply = (a, b, cr = null, toArr = false) => {
-  essence.toSameLength(a, b, cr);
-  let res = toArr ? [] : (!a[0] || b[0]);
-  for (let i in a) {
-    if (a.has(i)) {
-      toArr ? res.push(!a[i] || b[i]) : res = (!res || (!a[i] || b[i]));
-    }
-  }
-  return res
-};
-
-/**
- * @description Manhattan distance between two points.
- * @param {number[]} a Initial point
- * @param {number[]} b Final point
- * @returns {number} Distance
- * @public
- * @since 1.0
- * @function
- */
-export let manhattanDist = (a, b) => Math.abs(Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]));
-
-/**
- * @description Euclidian distance between two points.
- * @param {number[]} a Initial point
- * @param {number[]} b Final point
- * @returns {number} Distance
- * @public
- * @since 1.0
- * @function
- */
-export let euclidianDist = (a, b) => Math.sqrt(Math.pow(a[0] - b[0], 2) + Math.pow(a[1] - b[1], 2));
-
-/**
- * @description Diagonal distance between two points.
- * @param {number[]} a Initial point
- * @param {number[]} b Final point
- * @returns {number} Distance
- * @public
- * @since 1.0
- * @function
- */
-export let diagDist = (a, b) => Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]));
-
-/**
- * @description Heuristic of a matrix.
- * @param {Array} mtx Matrix
- * @param {Array} solvedMtx Solved matrix (goal)
- * @param {Function} [hrt=euclidianDist] Heuristic method
- * @returns {number} Result
- * @see module:maths~euclidianDist
- * @public
- * @since 1.0
- * @function
- */
-export let h = (mtx, solvedMtx, hrt = euclidianDist) => {
-  let res = [];
-  for (let i = 0; i &lt; mtx.length; i++) {
-    res.push([]);
-    for (let j = 0; j &lt; mtx[i].length; j++) res[i][j] = hrt([i, j], essence.lookfor(mtx[i][j], solvedMtx));
-  }
-  //essence.say(console.table(res));
-  return res.sum2d()
-};
-
-/**
- * @description Is a equivalent to b, a &amp;hArr; b.
- * @param {number} a Number a
- * @param {number} b Number b
- * @return {boolean} Equivalence
- * @public
- * @since 1.0
- * @function
- */
-export let equivalent = (a, b) => Math.round(a) === Math.round(b) || (a | 0) === (b | 0) || (a | 1) === (a | 1) || (a | 0) === (b | 1) || (a | 1) === (b | 0);
-
-/**
- * @description Is a approximately equal to b, a &amp;approx; b.
- * @param {number} a Number a
- * @param {number} b Number b
- * @param {number} [precision=EPS] Precision
- * @return {boolean} Approximative equality
- * @public
- * @since 1.0
- * @function
- */
-export let approxEqual = (a, b, precision = EPS) => a >= b - precision &amp;&amp; a &lt;= b + precision || b >= a - precision &amp;&amp; b &lt;= a + precision;
-
-/**
- * @description Truthness of the proposition among all elements of the array.
- * @summary Propositional function P(arr)
- * @param {NumberLike[]} arr Array
- * @param {string} prop Proposition
- * @return {boolean[]} P(arr)
- * @public
- * @since 1.0
- * @function
- * @example
- * let arr = [0, 0, 1, 6, -3, -8, 4, -2];
- * P(arr,
- */
-export let P = (arr, prop) => arr.map(x => eval(prop.replace(/x/g, x + '')));
-
-/**
- * @description Check if the proposition holds for all elements of the array.
- * @summary Universal quantification of P(arr): &amp;forall;P(arr)
- * @param {NumberLike[]} arr Array
- * @param {string} prop Proposition
- * @return {boolean} Quantification result
- * @public
- * @since 1.0
- * @function
- * @see module:maths~forSome
- */
-export let forAll = (arr, prop) => arr.every(x => eval(prop.replace(/x/g, x + '')));
-
-/**
- * @description Check if the proposition holds for some elements of the array.
- * @summary Existential quantification of P(arr): &amp;exist;P(arr)
- * @param {NumberLike[]} arr Array
- * @param {string} prop Proposition
- * @return {boolean} Quantification result
- * @public
- * @since 1.0
- * @function
- * @see module:maths~forAll
- */
-export let forSome = (arr, prop) => arr.some(x => eval(prop.replace(/x/g, x + '')));
-
-/**
- * @description Check if the proposition holds for only one element of the array.
- * @summary Uniqueness quantification of P(arr)
- * @param {NumberLike[]} arr Array
- * @param {string} prop Proposition
- * @return {boolean} Quantification result
- * @see module:maths~P
- * @public
- * @since 1.0
- * @function
- */
-export let forOne = (arr, prop) => P(arr, prop).count(true) === 1;
-
-/**
- * @description Read and convert coordinates to code readable data.
- * @param {string} str Coordinates
- * @param {boolean} isInt=false Convert the cells into integers
- * @returns {NumberLike[]} Coordinates
- * @public
- * @since 1.0
- * @function
- */
-export let readCoord = (str, isInt) => {
-  let c = str.slice(1, str.length - 1).split(', ');
-  return isInt ? [c[0] | 0, c[1] | 0] : c
-};
-
-/**
- * @description &lt;code>x&lt;/code> % &lt;code>b&lt;/code> where &lt;code>x&lt;/code> &lt; &lt;code>a&lt;/code> isn't allowed.
- * @param {number} x Number
- * @param {number} a Lowest bound
- * @param {number} b Divisor
- * @returns {number} Result
- * @public
- * @since 1.0
- * @function
- */
-export let modRange = (x, a, b) => {
-  let r = x % (b + 1);
-  return r + (r &lt; a) ? a + r : 0;
-};
-
-/**
- * @description Alphabetical modulus.
- * @param {number} code Ascii code
- * @returns {number} Moded ascii code
- * @public
- * @since 1.0
- * @function
- */
-export let abcModulus = (code) => {
-  let m = code % 123;
-  if (90 &lt; m &amp;&amp; m &lt; 97) return m + abcModulus(Math.abs(getClosest(m, [90, 97]) - m));
-  return m + ((m &lt; 65 &amp;&amp; m != 32) ? 65 + m : 0);
-};
-
-/**
- * @description Convert a (possibly infinite) sequence of iterated values into a sequence of length &lt;code>n&lt;/code>.
- * &lt;br />Source: {@link http://www.2ality.com/2015/03/es6-generators.html}
- * @param {number} n Number of items to take from the iterable object
- * @param {Iterable} iterable Iterable object
- * @public
- * @since 1.0
- * @type {GeneratorFunction}
- * @returns {GeneratorFunction|undefined} Taken bits
- */
-export let take = function*(n, iterable) {
-  for (let x of iterable) {
-    if (n &lt;= 0) return;
-    n--;
-    yield x;
-  }
-};
-
-/**
- * @description Brute force through &amp;integers; to find an x such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code> and the condition is true for x.
- * @param {string} cond Condition
- * @param {number} [min={@link #MIN_INT32|MIN_INT32}] Minimum
- * @param {number} [max={@link #MAX_INT32|MAX_INT32}] Maximum
- * @returns {Bool} x or false
- * @public
- * @since 1.0
- * @function
- * @see module:maths~MIN_INT32
- * @see module:maths~MAX_INT32
- */
-export let bruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
-  for (let x = min; x &lt;= max; x++) {
-    if (eval(cond.replace(misc.RegExpify('x'), x + ''))) return x;
-  }
-  return false;
-};
-
-/**
- * @description Brute force through &amp;#8474; to find an x such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code> and the condition is true for x.
- * @param {string} cond Condition
- * @param {number} [min={@link #MIN_FLOAT|MIN_FLOAT}] Minimum
- * @param {number} [max={@link #MAX_FLOAT|MAX_FLOAT}] Maximum
- * @param {number} [precision={@link #DECIMALS32|DECIMALS32}] Precision.
- * @returns {Bool} x or false
- * @public
- * @since 1.0
- * @function
- * @see module:maths~MIN_FLOAT
- * @see module:maths~MAX_FLOAT
- * @see module:maths~DECIMALS32
- * @see module:maths~bruteForceDouble
- */
-export let bruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, precision = DECIMALS32) => {
-  for (let x = min; x &lt;= max; x += precision) {
-    if (eval(cond.replace(misc.RegExpify('x'), x + ''))) return x;
-  }
-  return false;
-};
-
-/**
- * @description Brute force through &amp;#8474; to find an x such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code> and the condition is true for x.
- * @param {string} cond Condition
- * @returns {Bool} x or false
- * @public
- * @since 1.0
- * @function
- * @see module:maths~MIN_DOUBLE
- * @see module:maths~MAX_DOUBLE
- * @see module:maths~DECIMALS64
- * @see module:maths~bruteForceFloat
- */
-export let bruteForceDouble = (cond) => teForceFloat(cond, MIN_DOUBLE, MAX_DOUBLE, DECIMALS64);
-
-/**
- * @description Brute force through &amp;integers; to find x and y such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code>,
- * &lt;code>min&lt;/code> &amp;le; y &amp;le; &lt;code>max&lt;/code> and the condition is true for x and y
- * @param {string} cond Condition
- * @param {number} [min={@link #MIN_INT32|MIN_INT32}] Minimum
- * @param {number} [max={@link #MAX_INT32|MAX_INT32}] Maximum
- * @returns {boolean|number[]} [x, y] or false
- * @public
- * @since 1.0
- * @function
- * @see module:maths~MIN_INT32
- * @see module:maths~MAX_INT32
- */
-export let doubleBruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
-  for (let x = min; x &lt;= max; x++) {
-    for (let y = min; y &lt;= max; y++) {
-      if (eval(cond.replace(misc.RegExpify('x'), x + '').replace(misc.RegExpify('y'), y + ''))) return [x, y];
-    }
-  }
-  return false;
-};
-
-/**
- * @description Brute force through &amp;#8474; to find x and y such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code>,
- * &lt;code>min&lt;/code> &amp;le; y &amp;le; &lt;code>max&lt;/code> and the condition is true for x and y
- * @param {string} cond Condition
- * @param {number} [min={@link #MIN_FLOAT|MIN_FLOAT}] Minimum
- * @param {number} [max={@link #MAX_FLOAT|MAX_FLOAT}] Maximum
- * @param {number} [precision={@link #DECIMALS32|DECIMALS32}] Precision.
- * @returns {boolean|number[]} [x, y] or false
- * @public
- * @since 1.0
- * @function
- * @see module:maths~MIN_FLOAT
- * @see module:maths~MAX_FLOAT
- * @see module:maths~DECIMALS32
- * @see module:maths~doubleBruteForceDouble
- */
-export let doubleBruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, precision = DECIMALS32) => {
-  for (let x = min; x &lt;= max; x += precision) {
-    for (let y = min; y &lt;= max; y += precision) {
-      if (eval(cond.replace(misc.RegExpify('x'), x + '').replace(misc.RegExpify('y'), y + ''))) return [x, y];
-    }
-  }
-  return false;
-};
-
-/**
- * @description Brute force through &amp;#8474; to find x and y such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code>,
- * &lt;code>min&lt;/code> &amp;le; y &amp;le; &lt;code>max&lt;/code> and the condition is true for x and y
- * @param {string} cond Condition
- * @returns {boolean|number[]} [x, y] or false
- * @public
- * @since 1.0
- * @function
- * @see module:maths~MIN_DOUBLE
- * @see module:maths~MAX_DOUBLE
- * @see module:maths~DECIMALS64
- * @see module:maths~doubleBruteForceFloat
- */
-export let doubleBruteForceDouble = (cond) => doubleBruteForceFloat(cond, MIN_DOUBLE, MAX_DOUBLE, DECIMALS64);
-
-/**
- * @description Is &lt;code>a&lt;/code> closer to &lt;code>x&lt;/code> than &lt;code>b&lt;/code>.
- * @param {number} x Number x
- * @param {number} a Number a
- * @param {number} b Number b
- * @returns {boolean} Truth
- * @public
- * @since 1.0
- * @function
- */
-export let isCloser = (x, a, b) => Math.abs(x - a) &lt; Math.abs(x - b);
-
-/**
- * @description Get the closest option from the options to &lt;code>x&lt;/code>.
- * @param {number} x Number
- * @param {number[]} opt Options
- * @returns {number} Closest number
- * @public
- * @since 1.0
- * @function
- */
-export let getClosest = (x, opt) => {
-  let closest = opt[0];
-  for (let i = 1; i &lt; opt.length; i++) closest = isCloser(x, closest, opt[i]) ? closest : opt[i];
-  return closest;
-};
-
-/**
- * @description Single parametric equation.
- * @param {string} [formula='y=x'] Formula
- * @returns {Equation} Equation
- * @this {Equation}
- * @since 1.0
- * @property {string} Equation.formula Formula
- * @property {string} Equation.leftSide LHS
- * @property {string} Equation.rightSide RHS
- * @property {function(NumberLike): number} Equation.compute Compute data
- * @property {function(): string} Equation.toString String representation
- * @class
- */
-class Equation {
-  constructor(formula = 'y=x') {
-    this.formula = formula.normal();
-    [this.leftSide, this.rightSide] = this.formula.split('=');
-    this.compute = (data) => {
-      return eval(this.rightSide.multiReplace([
-        [/x/g, data.x || 0], [/y/g, data.y || 0], [/z/g, data.z || 0],
-        [/pi/ig, Math.PI], [/e/ig, Math.E], [/sqrt(2)/ig, Math.SQRT2],
-        [/(pow|max|min)\((.*?),(.*?)\)/, 'Math.$1($2, $3)'], //Fails on first occurrence :/
-        [/(sqrt|cbrt|cos|sin|tan|acos|asin|cosh|sinh|tanh|acosh|asinh|atanh|exp|abs|e\^)\((.*?)\)/, 'Math.$1($2)'],
-        [/(ln|log|nthroot|clampTop|clampBottom)\((.*?),(.*?)\)/, '$1($2, $3)'],
-        [/(clamp)\((.*?),(.*?),(.*?)\)/, '$1($2, $3, $4)']
-      ]))
-    };
-  }
-
-  toString() {
-    return `Equation(${this.formula})`;
-  };
-}
-
-/**
- * @description Generate an array of all possible binary numbers with &lt;code>x&lt;/code> digits or less.
- * @param {number} x Number of digits
- * @returns {Array} Array of possible binary numbers
- * @public
- * @since 1.0
- * @function
- */
-export let binaryCases = (x) => {
-  let end = parseInt('1'.repeat(x)), res = [], i = 0;
-  do {
-    res.push(conv(i++, 10, 2));
-  } while (i &lt;= conv(end));
-  return res;
-};
-
-/**
- * @description Get the truth table of an expression.
- * @param {string} exp Expression
- * @returns {Array} Truth table
- * @public
- * @since 1.0
- * @function
- */
-export let truthTable = (exp) => { //Get the truth table of an expression
-  // /(([a-z])(\+|\x2a))+/g
-  let ascii = misc.asciiTable("a-z"), vars = [], rows, res = [];
-  for (let character of ascii) {
-    if (exp.contains(characters)) vars.push(character);
-  }
+  let inter = first.filter(item => rest.some(arr => arr.contains(item)));
+  return toSort ? inter.sort() : inter;
   //essence.say(`variables: ${vars.toStr(true)}`, 'info');
   rows = binaryCases(vars.length);
   for (let row of rows) {
@@ -3390,13 +2856,13 @@ export let revPolishCalc = (exp) => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 06 2017 15:08:33 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Jan 08 2017 03:32:28 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

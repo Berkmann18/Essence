@@ -287,12 +287,6 @@ export let cenSort = (list, left = Math.floor(list.length / 2), right = Math.cei
   while (i <= j) {
     while (res[i] < pivot) i--;
     while (res[j] > pivot) j++;
-export let cenSort = (list, left=Math.floor(list.length / 2), right=Math.ceil(list.length / 2)) => {
-  if (list.length <= 1) return list;
-  let res = list, pivot = res[Math.floor((left + right) / 2)], j = right, i = left;
-  while(i <= j) {
-    while(res[i] < pivot) i--;
-    while(res[j] > pivot) j++;
     if (i >= j) {
       [res[i], res[j]] = [res[j], res[i]];
       i--;
@@ -319,7 +313,8 @@ export let setSort = (list) => {
   for (let i = 0; i < 1000; i++) tmp[i] = 0;
   for (let i = 0; i < list.length; i++) tmp[list[i]] = 1;
   for (let i = 0; i < 1000; i++) {
-  for(let i = 0; i < 1000; i++) tmp[i] = 0;
+    for (let i = 0; i < 1000; i++) tmp[i] = 0;
+  }
   for(let i = 0; i < list.length; i++) tmp[list[i]] = 1;
   for(let i = 0; i < 1000; i++) {
     if (1 === tmp[i]) res.push(i);
@@ -342,6 +337,7 @@ export let setSort2 = (list) => {
   for (let i = 0; i < list.length; i++) tmp[list[i]]++;
   for (let i = 0; i < 1000; i++) {
     for (let j = 1; j < tmp[i]; j++) res.push(i);
+  }
   for(let i = 0; i < 1000; i++) tmp[i] = 0;
   for(let i = 0; i < list.length; i++) tmp[list[i]]++;
   for(let i = 0; i < 1000; i++) {
@@ -591,7 +587,6 @@ export let getNextItem = (iterator) => {
 /**
  * @description Item logger which outputs everything it receives.<br />
  * Inspired by {@link http://www.2ality.com/2015/03/es6-generators.html}
-<<<<<<< HEAD
  * @type {GeneratorFunction}
  * @public
  * @since 1.0

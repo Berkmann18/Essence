@@ -2687,7 +2687,6 @@ export let intersection = (arrays, toSort = false) => {
   let first = misc.rmDuplicates(arrays[0]), rest = arrays.get(1).map(arr => misc.rmDuplicates(arr));
   let inter = first.filter(item => rest.some(arr => arr.contains(item)));
   return toSort ? inter.sort() : inter;
-  }
   //essence.say(`variables: ${vars.toStr(true)}`, 'info');
   rows = binaryCases(vars.length);
   for (let row of rows) {
