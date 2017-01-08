@@ -22,6 +22,9 @@ import * as qtest from './qtest';
 
 /**
  * @description Essence's console logger.
+ * @param {*} message Message
+ * @param {string} [type] Log type (info/error/warn/succ/quest/fulltime/time/colour)
+ * @param {...string} [style] Additional style
  * @public
  * @since 1.0
  * @function
