@@ -439,9 +439,10 @@ export let mergeSort = (list) => {
  * @todo complete
  */
 export let spreadSort = (list) => {
-  let mid = list[list.midIndex()], left = mid, right = mid, res = list;
+  /*let mid = list[list.midIndex()], left = mid, right = mid, res = list;
   //look up the rest
-  return res;
+  return res;*/
+  return list;
 };
 
 /**
