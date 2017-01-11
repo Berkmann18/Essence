@@ -27,7 +27,8 @@
     "test": "eslint src & csslint src",
     "webpack": "webpack",
     "doc": "jsdoc -c ./conf.json",
-    "build": "npm run babel; npm run webpack"
+    "build": "npm run babel; npm run webpack",
+    "min": "minify -o dist src --no-comments"
   },
   "repository": {
     "type": "git",
