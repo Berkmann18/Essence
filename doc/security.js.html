@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: security.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: security.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @module security
  * @description Security focused module.
  * @requires module:essence
@@ -35,8 +63,8 @@ export let encrypt = (txt, key) => {
     let len = txt.length, extra = 0, mid = Math.floor(len / 2);
 
     mid = (len % 2 === 0) ? txt.charCodeAt(mid) : (txt.charCodeAt(txt[mid - 1]) + txt.charCodeAt(txt[mid])) / 2;
-    if (mid >= 97 && mid <= 122) extra = 2;
-    else if (mid >= 65 && mid <= 90) extra = 1;
+    if (mid >= 97 &amp;&amp; mid &lt;= 122) extra = 2;
+    else if (mid >= 65 &amp;&amp; mid &lt;= 90) extra = 1;
     else if (mid - Math.floor(mid / 2) * 2 === 0) extra = -1;
     else extra = 2;
 
@@ -61,16 +89,16 @@ export let encrypt = (txt, key) => {
 export let decrypt = (txt, key) => {
   let res = '';
   if (key) {
-    for (let i = 1; i <= txt.length; i++) res += trans(txt[i - 1], key);
+    for (let i = 1; i &lt;= txt.length; i++) res += trans(txt[i - 1], key);
   } else {
     res = new Array(131073); //2 * Math.pow(2, 16) + 1
-    for (let i = -65536; i < 65537; i++) {
+    for (let i = -65536; i &lt; 65537; i++) {
       res[i + 65536] = '';
       for (let chr of txt) res[i + 65536] += trans(chr, i % 65537);
     }
   }
   if (!key) console.log(console.table(res));
-  return key? res: dom.complexTable(`Decryption result for <i>${txt}</i>`, maths.range(-65536, 1, 65536), res, ['Key', 'Result'], `decrypted_${txt}`, false);
+  return key? res: dom.complexTable(`Decryption result for &lt;i>${txt}&lt;/i>`, maths.range(-65536, 1, 65536), res, ['Key', 'Result'], `decrypted_${txt}`, false);
 };
 
 /**
@@ -186,7 +214,7 @@ export let abcEncode = (txt) => {
 export let abcDecode = (txt) => {
   let code = new Array(txt.length);
   if (essence.isType(txt, 'String') || essence.isType(txt, 'Array')) {
-    for (let i = 0; i < txt.length; i += 2) {
+    for (let i = 0; i &lt; txt.length; i += 2) {
       switch (txt.get(i, i + 2)) {
         case '00': code[i] = ' ';break;
         case '01': code[i] = 'a';break;
@@ -285,7 +313,7 @@ export let abcDecode = (txt) => {
  */
 export let ilEncrypt = (data) => {
   let res = essence.isType(data, 'String') ? data.split('') : data;
-  for (let i = 0; i < res.length; i++) res[i] = String.fromCharCode(data[i].charCodeAt(0) + data.length * 2);
+  for (let i = 0; i &lt; res.length; i++) res[i] = String.fromCharCode(data[i].charCodeAt(0) + data.length * 2);
   return essence.isType(data, 'String') ? res.join('') : res;
 };
 
@@ -300,7 +328,7 @@ export let ilEncrypt = (data) => {
  */
 export let ilDecrypt = (data) => {
   let res = essence.isType(data, 'String') ? data.split('') : data;
-  for (let i = 0; i < res.length; i++) res[i] = String.fromCharCode(data[i].charCodeAt(0) - data.length * 2);
+  for (let i = 0; i &lt; res.length; i++) res[i] = String.fromCharCode(data[i].charCodeAt(0) - data.length * 2);
   return essence.isType(data, 'String') ? res.join('') : res;
 };
 
@@ -318,12 +346,12 @@ export let ilDecrypt = (data) => {
 export let computeRSA = (p, q, safe=false) => {
   if (!Array.from(arguments).length) {
     p = maths.bruteForceNum('isPrime(x)', 23, 99);
-    q = maths.bruteForceNum(`isPrime(x) && x!=${p}`, 23, 99);
+    q = maths.bruteForceNum(`isPrime(x) &amp;&amp; x!=${p}`, 23, 99);
   }
   if (!maths.isPrime(p)) throw new Error(`p=${p}; isn't a prime number !!`);
   if (!maths.isPrime(q)) throw new Error(`q=${q}; isn't a prime number !!`);
-  if (p < 20 || q < 20) essence.say('p/q should be bigger !', 'warn');
-  let n = p * q, z = (p - 1) * (q - 1), e = maths.bruteForceNum(`1<x<${n} && maths.gcd(x, ${z})==1`, 2, n + 1), d; //1 < end < n & gcd(end, z) = 1
+  if (p &lt; 20 || q &lt; 20) essence.say('p/q should be bigger !', 'warn');
+  let n = p * q, z = (p - 1) * (q - 1), e = maths.bruteForceNum(`1&lt;x&lt;${n} &amp;&amp; maths.gcd(x, ${z})==1`, 2, n + 1), d; //1 &lt; end &lt; n &amp; gcd(end, z) = 1
   d = maths.bruteForceNum(`(x*${e})%${z}==1`, 0, n); //other possible condition: `x*${e}==1+k{z}`, n);
 
   essence.say([n, d]); //Private key
@@ -367,7 +395,7 @@ export let decryptRSAFromFile = (text, file) => {
  * @see module:security~decryptRSA
  */
 export let encryptRSA = (text, p, q) => {
-  let n = p * q, z = (p - 1) * (q - 1), e = maths.bruteForceNum(`1<x<${n} && maths.gcd(x, ${z})==1`, 2, n + 1);
+  let n = p * q, z = (p - 1) * (q - 1), e = maths.bruteForceNum(`1&lt;x&lt;${n} &amp;&amp; maths.gcd(x, ${z})==1`, 2, n + 1);
   return rsa.createPublicKey(z, e).encrypt(text);
 };
 
@@ -382,7 +410,7 @@ export let encryptRSA = (text, p, q) => {
  * @see module:security~encryptRSA
  */
 export let decryptRSA = (text, p, q) => {
-  let n = p * q, z = (p - 1) * (q - 1), e = maths.bruteForceNum(`1<x<${n} && maths.gcd(x, ${z})==1`, 2, n + 1), d = maths.bruteForceNum(`(x*${e})%${z}==1`, 0, n);
+  let n = p * q, z = (p - 1) * (q - 1), e = maths.bruteForceNum(`1&lt;x&lt;${n} &amp;&amp; maths.gcd(x, ${z})==1`, 2, n + 1), d = maths.bruteForceNum(`(x*${e})%${z}==1`, 0, n);
   return rsa.createPrivateKeyFromComponents(z, e, p, q, d * p, d * q, 1 / q, d).decrypt(text);
 };
 
@@ -395,13 +423,13 @@ export let decryptRSA = (text, p, q) => {
  * @function
  */
 export let genPassword = () => {
-  let chars = [], sym = ['&', '~', '"', '#', '\'', '{', '[', '(', '-', '|', '`', '_', '\\', '^', '@', ')', ']', '+', '=', '}', '%', '*', '?', ',', ';', '.', '/', ':', '!', ' ', ''], word = '';
-  for (let i = 65; i < 123; i++) {
-    if (i <= 90 || i >= 97) chars[i - 65] = String.fromCharCode(i);
+  let chars = [], sym = ['&amp;', '~', '"', '#', '\'', '{', '[', '(', '-', '|', '`', '_', '\\', '^', '@', ')', ']', '+', '=', '}', '%', '*', '?', ',', ';', '.', '/', ':', '!', ' ', ''], word = '';
+  for (let i = 65; i &lt; 123; i++) {
+    if (i &lt;= 90 || i >= 97) chars[i - 65] = String.fromCharCode(i);
   }
   chars = chars.concat(sym, maths.range(9)).remove();
-  while (word.length < 20) word += chars.rand();
-  if (word.length < 20) word += chars.rand();
+  while (word.length &lt; 20) word += chars.rand();
+  if (word.length &lt; 20) word += chars.rand();
   return word
 };
 
@@ -440,7 +468,7 @@ export let toFSHA = (str) => str.map((c) => /[A-Za-z]/.test(c) ? c : c.charCodeA
  */
 export let DES = (text, keys) => {
   let left = text.portion(2, -1), right = text.portion(2, 1);
-  for (let i = 1; i < 16; i++) {
+  for (let i = 1; i &lt; 16; i++) {
     left[i] = right[i - 1];
     /*right[i] = essence.isType(left[i - 1], 'String')
       ? left[i - 1].charCodeAt(0) ^ trans(right[i - 1].charCodeAt(0), (essence.isType(keys[i - 1], 'String') ? keys[i - 1].charCodeAt(0) : keys[i - 1]))
@@ -451,7 +479,7 @@ export let DES = (text, keys) => {
 };
 
 /**
- * @description Password checker (might be worth using password-checker).<br />
+ * @description Password checker (might be worth using password-checker).&lt;br />
  * Inspired from {@link http://www.passwordmeter.com}.
  * @param {String} password Password to check
  * @param {boolean} [realScore=false] Flag indicating that the user only wants a real un-clamped score
@@ -463,9 +491,9 @@ export let checkPassword = (password, realScore) => {
   /*
    Type	Pool of Characters Possible
    Lowercase	26
-   Lower & Upper Case	52
+   Lower &amp; Upper Case	52
    Alphanumeric	36
-   Alphanumeric & Upper Case	62
+   Alphanumeric &amp; Upper Case	62
    Common ASCII Characters	30
    Diceware Words List	7,776
    English Dictionary Words	171,000
@@ -476,33 +504,33 @@ export let checkPassword = (password, realScore) => {
   let score = 0, uppercase = 0, lowercase = 0, num = 0, symbol = 0, midChar = 0, uniqueChar = 0, repChar = 0, repInc = 0, consecUppercase = 0, consecLowercase = 0, consecNum=0, seqAlpha=0, seqNum=0, seqSymbol=0, reqChar = 0;
   let multMidChar = 2, multiConsecUppercase = 2, multConsecLowercase = 2, multiConsecNum = 2, multiSeqAlpha = 3, multiSeqNum = 3, multiSeqSymbol = 3, multLength = 4, multNum = 4, nMultSymbol = 6;
   let tmpUppercase = '', tmpLowercase = '', tmpNum = '', minPwLen = 8;
-  let alpha = 'abcdefghijklmnopqrstuvwxyz', numbers = '01234567890', symbols = ')!@#$%^&*()';
+  let alpha = 'abcdefghijklmnopqrstuvwxyz', numbers = '01234567890', symbols = ')!@#$%^&amp;*()';
   score = parseInt(password.length * multLength);
   let pwArr = password.replace(/\s+/g, '').split(/\s*/);
 
   /* Loop through password to check for Symbol, Numeric, Lowercase and Uppercase pattern matches */
-  for (let i = 0; i < pwArr.length; i++) {
+  for (let i = 0; i &lt; pwArr.length; i++) {
     if (pwArr[i].match(/[A-Z]/g)) {
-      if (tmpUppercase !== '' && (tmpUppercase + 1) === i) consecUppercase++;
+      if (tmpUppercase !== '' &amp;&amp; (tmpUppercase + 1) === i) consecUppercase++;
       tmpUppercase = i;
       uppercase++;
     } else if (pwArr[i].match(/[a-z]/g)) {
-      if (tmpLowercase !== '' && (tmpLowercase + 1) === i) consecLowercase++;
+      if (tmpLowercase !== '' &amp;&amp; (tmpLowercase + 1) === i) consecLowercase++;
       tmpLowercase = i;
       lowercase++;
     } else if (pwArr[i].match(/[0-9]/g)) {
-      if (i > 0 && i < (pwArr.length - 1)) midChar++;
-      if (tmpNum !== '' && (tmpNum + 1) === i) consecNum++;
+      if (i > 0 &amp;&amp; i &lt; (pwArr.length - 1)) midChar++;
+      if (tmpNum !== '' &amp;&amp; (tmpNum + 1) === i) consecNum++;
       tmpNum = i;
       num++;
     } else if (pwArr[i].match(/[^a-zA-Z0-9_]/g)) {
-      if (i > 0 && i < (pwArr.length - 1)) midChar++;
+      if (i > 0 &amp;&amp; i &lt; (pwArr.length - 1)) midChar++;
       symbol++;
     }
     //Repetition check
     let bCharExists = false;
-    for (let j = 0; j < pwArr.length; j++) {
-      if (pwArr[i] === pwArr[j] && i != j) { //Repetition present
+    for (let j = 0; j &lt; pwArr.length; j++) {
+      if (pwArr[i] === pwArr[j] &amp;&amp; i != j) { //Repetition present
         bCharExists = true;
         /*
          Calculate increment deduction based on proximity to identical characters
@@ -521,21 +549,21 @@ export let checkPassword = (password, realScore) => {
   }
 
   //Check for sequential alpha string patterns (forward and reverse)
-  for (let s = 0; s < 23; s++) {
+  for (let s = 0; s &lt; 23; s++) {
     let sFwd = alpha.substring(s,parseInt(s + 3));
     let sRev = sFwd.reverse();
     if (password.toLowerCase().has(sFwd) || password.toLowerCase().has(sRev)) seqAlpha++;
   }
 
   //Check for sequential numeric string patterns (forward and reverse)
-  for (let s = 0; s < 8; s++) {
+  for (let s = 0; s &lt; 8; s++) {
     let sFwd = numbers.substring(s, parseInt(s + 3));
     let sRev = sFwd.reverse();
     if (password.toLowerCase().has(sFwd) || password.toLowerCase().has(sRev)) seqNum++;
   }
 
   //Check for sequential symbol string patterns (forward and reverse)
-  for (let s = 0; s < 8; s++) {
+  for (let s = 0; s &lt; 8; s++) {
     let sFwd = symbols.substring(s, parseInt(s + 3));
     let sRev = sFwd.reverse();
     if (password.toLowerCase().has(sFwd) || password.toLowerCase().has(sRev)) seqSymbol++;
@@ -543,15 +571,15 @@ export let checkPassword = (password, realScore) => {
 
   //Modify overall score value based on usage vs requirements
   //General point assignment
-  if (uppercase > 0 && uppercase < password.length) score = parseInt(score + ((password.length - uppercase) * 2));
-  if (lowercase > 0 && lowercase < password.length) score = parseInt(score + ((password.length - lowercase) * 2));
-  if (num > 0 && num < password.length) score = parseInt(score + (num * multNum));
+  if (uppercase > 0 &amp;&amp; uppercase &lt; password.length) score = parseInt(score + ((password.length - uppercase) * 2));
+  if (lowercase > 0 &amp;&amp; lowercase &lt; password.length) score = parseInt(score + ((password.length - lowercase) * 2));
+  if (num > 0 &amp;&amp; num &lt; password.length) score = parseInt(score + (num * multNum));
   if (symbol > 0) score = parseInt(score + (symbol * nMultSymbol));
   if (midChar > 0) score = parseInt(score + (midChar * multMidChar));
 
   //Point deductions for poor practices
-  if ((lowercase > 0 || uppercase > 0) && symbol === 0 && num === 0) score = parseInt(score - password.length); //Only Letters
-  if (lowercase === 0 && uppercase === 0 && symbol === 0 && num > 0) score = parseInt(score - password.length); //Only Numbers
+  if ((lowercase > 0 || uppercase > 0) &amp;&amp; symbol === 0 &amp;&amp; num === 0) score = parseInt(score - password.length); //Only Letters
+  if (lowercase === 0 &amp;&amp; uppercase === 0 &amp;&amp; symbol === 0 &amp;&amp; num > 0) score = parseInt(score - password.length); //Only Numbers
   if (repChar > 0) score = parseInt(score - repInc); //Same character exists more than once
   if (consecUppercase > 0) score = parseInt(score - (consecUppercase * multiConsecUppercase)); //Consecutive Uppercase Letters exist
   if (consecLowercase > 0) score = parseInt(score - (consecLowercase * multConsecLowercase)); //Consecutive Lowercase Letters exist
@@ -576,13 +604,35 @@ export let checkPassword = (password, realScore) => {
   if (!realScore) score = maths.clamp(score, 0, 100);
   let complexity;
 
-  if (score < 0) complexity = 'Really weak';
-  else if (score >= 0 && score < 20) complexity = 'Very weak';
-  else if (score >= 20 && score < 40) complexity = 'Weak';
-  else if (score >= 40 && score < 60) complexity = 'Good';
-  else if (score >= 60 && score < 80) complexity = 'Strong';
-  else if (score >= 80 && score <= 100) complexity = 'Very strong';
+  if (score &lt; 0) complexity = 'Really weak';
+  else if (score >= 0 &amp;&amp; score &lt; 20) complexity = 'Very weak';
+  else if (score >= 20 &amp;&amp; score &lt; 40) complexity = 'Weak';
+  else if (score >= 40 &amp;&amp; score &lt; 60) complexity = 'Good';
+  else if (score >= 60 &amp;&amp; score &lt; 80) complexity = 'Strong';
+  else if (score >= 80 &amp;&amp; score &lt;= 100) complexity = 'Very strong';
   else if (score > 100) complexity = 'Really strong';
   else complexity = 'Too short';
   return realScore ? score : [`${score}%`, complexity];
-};
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jan 23 2017 23:34:34 GMT+0000 (GMT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

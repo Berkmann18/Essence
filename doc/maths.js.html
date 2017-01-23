@@ -39,14 +39,6 @@ import * as misc from './misc';
 
 //Constants
 /**
- * @const {number} EPS Epsilon
- * @type {number}
- * @public
- * @since 1.0
- */
-export const EPS = Math.pow(2, -52); //Might already exist in ES6
-
-/**
  * @const {string[]} Numerical/bit operator signs
  * @type {string[]}
  * @public
@@ -504,7 +496,7 @@ export let genNearlySortedArr = (n = 10, min = 0, max = 100) => {
  * @throws {TypeError} Not an array
  */
 export let sumPow2 = (arr, nbDec = 2) => {
-  if (!isNativeType(arr, 'Array')) throw TypeError('sumPow2 only accept arrays!');
+  if (!essence.isNativeType(arr, 'Array')) throw TypeError('sumPow2 only accept arrays!');
   return arr.map((x) => x * x).sum().toNDec(nbDec)
 };
 
@@ -630,7 +622,7 @@ export let dec2min = (dec) => (30 * dec) / 50;
 export let toSec = (i) => {
   if (i == parseFloat(i)) return parseFloat(i); //Seconds stay seconds
   let withH = i.count(':') === 2;
-  if (!isNativeType(i, 'String')) i += '';
+  if (!essence.isNativeType(i, 'String')) i += '';
   if (i.length >= 4 &amp;&amp; i.indexOf(':') === 1) return toSec('0' + i); //So times without the leading 0 or simply with a 1-digit first section could be read properly
 
   let time = i.split(':'), m, s;
@@ -722,7 +714,7 @@ export let nthroot = (x, n, nbDec = 20) => {
  * @description Logarithm (log&lt;sub>&lt;code>y&lt;/code>&lt;/sub>(&lt;code>x&lt;/code>)).
  * @param {number} x Number
  * @param {number} [y=10] Base
- * @returns {number} Result
+ * @returns {number} Number of times &lt;code>x&lt;/code> can be cut by &lt;code>y&lt;/code> until reaching one.
  * @see module:maths~ln
  * @since 1.0
  * @public
@@ -764,6 +756,7 @@ export let gcd = (a, b) => b ? gcd(b, a % b) : Math.abs(a);
 export let lcm = (a, b) => {
   let multiple = a;
   range(a, 1, b).forEach((n) => multiple = (multiple * n) / gcd(multiple, n));
+
   return multiple;
 };
 
@@ -1112,7 +1105,7 @@ export let isPrime = (x) => primeN(range(1, 1, x)).contains(x);
  * @function
  */
 export let primeN = (arr) => {
-  let res = dsa.QuickSort(arr);
+  let res = arr.sort();
   for (let i = 0; i &lt; arr.length; i++) {
     if (arr[i] % 2 === 0 &amp;&amp; arr[i] != 2) res[i] = 'x';
     for (let j = 0; j &lt; i; j++) {
@@ -1192,7 +1185,6 @@ export let simpleInterest = (po, i, t = 1) => po * (1 + i * t);
  */
 export let compoundInterest = (po, i, t = 1, n) => n > 1 ? po * Math.pow(1 + i / n, t * n) : po * Math.pow(1 + i, t);
 
-
 /**
  * @description Everything but not 0.
  * @param {number} x Number
@@ -1202,7 +1194,7 @@ export let compoundInterest = (po, i, t = 1, n) => n > 1 ? po * Math.pow(1 + i /
  * @since 1.0
  * @function
  */
-export let non0 = (x) => (x === 0) ? EPS : x;
+export let non0 = (x) => (x === 0) ? Number.EPSILON : x;
 
 /**
  * @description Fraction form of n.&lt;br />
@@ -1221,8 +1213,7 @@ export let toFrac = (n, prec, roundUp = false) => {
 
   let i = n | 0 || '', dps = s.substring(s.indexOf('.'));
   if (!prec) prec = Math.pow(10, dps.length - 1);
-  let num = roundUp ? (dps * prec) | 1 : Math.round(dps * prec), den = prec,
-    g = gcd(num, den);
+  let num = roundUp ? (dps * prec) | 1 : Math.round(dps * prec), den = prec, g = gcd(num, den);
 
   if (den / g === 1) return String(i + (num / g));
   if (i) i += ' and ';
@@ -1239,7 +1230,7 @@ export let toFrac = (n, prec, roundUp = false) => {
  * @since 1.0
  * @function
  */
-export let clearNum = (n, nDec, frFormat = false) => frFormat ? new Intl.NumberFormat('fr-FR').format(n) : new Intl.NumberFormat().format(number);
+export let clearNum = (n, nDec, frFormat = false) => frFormat ? new Intl.NumberFormat('fr-FR').format(n) : new Intl.NumberFormat().format(n);
 
 /**
  * @description Get the increment value from &lt;code>a&lt;/code> to &lt;code>b&lt;/code>.
@@ -2303,7 +2294,7 @@ export let fromCelsius = (x, unit) => {
  * @since 1.0
  * @function
  */
-export let convTemperature = (x, unit) => romCelsius(toCelsius(x), unit);
+export let convTemperature = (x, unit) => fromCelsius(toCelsius(x), unit);
 
 /**
  * @description &lt;code>x&lt;/code> unit to &lt;code>y&lt;/code> m&lt;sup>3&lt;/sup>.
@@ -2685,7 +2676,7 @@ export let vector2Point = (v) => new dsa.Pt(v.x, v.y, v.z);
  */
 export let vector2PointForm = (r) => {
   let i = r.split('i'), j = i[1].split('j');
-  return `(${i[0].clean()}, ${(j[0].slice(1, j[0].length)).clean()}, ${(j[1].split("k")[0]).clean()})`;
+  return `(${i[0].clean()}, ${(j[0].slice(1, j[0].length)).clean()}, ${(j[1].split('k')[0]).clean()})`;
 };
 
 /**
@@ -2712,7 +2703,8 @@ export let union = (arrays, toSort = false) => toSort ? misc.rmDuplicates(arrays
  */
 export let intersection = (arrays, toSort = false) => {
   let first = misc.rmDuplicates(arrays[0]), rest = arrays.get(1).map(arr => misc.rmDuplicates(arr));
-  return first.filter(item => rest.some(arr => arr.contains(item)))
+  let inter = first.filter(item => rest.some(arr => arr.contains(item)));
+  return toSort ? inter.sort() : inter;
 };
 
 /**
@@ -2727,7 +2719,8 @@ export let intersection = (arrays, toSort = false) => {
  */
 export let complement = (arrays, toSort = false) => {
   let first = misc.rmDuplicates(arrays[0]), rest = misc.rmDuplicates(arrays.get(1).linearise());
-  return first.filter(item => rest.miss(item));
+  let compl = first.filter(item => rest.miss(item));
+  return toSort ? compl.sort() : compl;
 };
 
 /**
@@ -2742,7 +2735,8 @@ export let complement = (arrays, toSort = false) => {
  */
 export let symDif = (arrays, toSort = false) => {
   let array = arrays.linearise();
-  return essence.isTypedArray(array, 'Number') ? array.unique().sanitise('Number') : array.unique();
+  let sd = essence.isTypedArray(array, 'Number') ? array.unique().sanitise('Number') : array.unique();
+  return toSort ? sd.sort() : sd;
 };
 
 /**
@@ -2759,7 +2753,6 @@ export let bitStr = (a, b) => {
   for (let i in a) {
     if (a.has(i)) ba[i] = (a[i] === b[i]) | 0;
   }
-  return ba
 };
 
 /**
@@ -2924,7 +2917,7 @@ export let equivalent = (a, b) => Math.round(a) === Math.round(b) || (a | 0) ===
  * @since 1.0
  * @function
  */
-export let approxEqual = (a, b, precision = EPS) => a >= b - precision &amp;&amp; a &lt;= b + precision || b >= a - precision &amp;&amp; b &lt;= a + precision;
+export let approxEqual = (a, b, precision = Math.EPSILON) => a >= b - precision &amp;&amp; a &lt;= b + precision || b >= a - precision &amp;&amp; b &lt;= a + precision;
 
 /**
  * @description Truthness of the proposition among all elements of the array.
@@ -3094,7 +3087,7 @@ export let bruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, precision 
  * @see module:maths~DECIMALS64
  * @see module:maths~bruteForceFloat
  */
-export let bruteForceDouble = (cond) => teForceFloat(cond, MIN_DOUBLE, MAX_DOUBLE, DECIMALS64);
+export let bruteForceDouble = (cond) => bruteForceFloat(cond, MIN_DOUBLE, MAX_DOUBLE, DECIMALS64);
 
 /**
  * @description Brute force through &amp;integers; to find x and y such that &lt;code>min&lt;/code> &amp;le; x &amp;le; &lt;code>max&lt;/code>,
@@ -3245,11 +3238,10 @@ export let binaryCases = (x) => {
  */
 export let truthTable = (exp) => { //Get the truth table of an expression
   // /(([a-z])(\+|\x2a))+/g
-  let ascii = misc.asciiTable("a-z"), vars = [], rows, res = [];
-  for (let character of ascii) {
-    if (exp.contains(characters)) vars.push(character);
+  let ascii = misc.asciiTable('a-z'), vars = [], rows, res = [];
+  for (let chr of ascii) {
+    if (exp.has(chr)) vars.push(chr);
   }
-  //essence.say(`variables: ${vars.toStr(true)}`, 'info');
   rows = binaryCases(vars.length);
   for (let row of rows) {
     let cexp = exp;
@@ -3260,7 +3252,7 @@ export let truthTable = (exp) => { //Get the truth table of an expression
   return [vars, rows, res];
 };
 
-/**
+  /**
  * @description Get the DNF form of an expression.
  * @param {string} exp Expression
  * @returns {string} DNF
@@ -3390,13 +3382,13 @@ export let revPolishCalc = (exp) => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 06 2017 15:08:33 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jan 23 2017 23:34:34 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

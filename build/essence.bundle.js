@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -67,19 +66,11 @@
 	import * as dom from './dom';
 	import * as qtest from './qtest';
 	
-	/*
-	 Array.linearise:
-	 const flat = {};
-	 [[0, 1], [2, 3], [4, 5]].reduce((memo, item, index) => {
-	 const flatten = memo.concat(item);
-	 flat[index] = flatten;
-	 return flatten;
-	 });
-	 */
-	
-	//NodeJS suggestion !a.length instead of a.isEmpty()
 	/**
 	 * @description Essence's console logger.
+	 * @param {*} message Message
+	 * @param {string} [type] Log type (info/error/warn/succ/quest/fulltime/time/colour)
+	 * @param {...string} [style] Additional style
 	 * @public
 	 * @since 1.0
 	 * @function
@@ -130,7 +121,7 @@
 	 * @public
 	 * @since 1.0
 	 */
-	let loadTime = 0;
+	export let loadTime = 0;
 	
 	/**
 	 * @description Time taken by the browser to draw the UI via the time taken to window.onpageshow to
@@ -139,13 +130,14 @@
 	 * @public
 	 * @since 1.0
 	 */
-	let displayTime = 0;
+	export let displayTime = 0;
 	
 	/**
 	 * @description Start the first mark of the page-loading timer.
 	 * @protected
 	 * @since 1.0
 	 * @function
+	 * @see module:essence~loadTime
 	 */
 	window.onload = () => loadTime = new Date().getTime();
 	
@@ -154,6 +146,7 @@
 	 * @protected
 	 * @since 1.0
 	 * @function
+	 * @see module:essence~displayTime
 	 */
 	window.onpageshow = () => displayTime = new Date().getTime();
 	
@@ -538,6 +531,7 @@
 	  scroll(x = 0, y = 0) {
 	    //noinspection JSAnnotator
 	    this.node.scrollLeft += x;
+	    //noinspection JSAnnotator
 	    this.node.scrollTop += y;
 	  };
 	
@@ -740,8 +734,7 @@
 	 * @external Object
 	 */
 	Object.prototype.delete = () => {
-	  this.property = null;
-	  delete this;
+	  this.property = undefined;
 	};
 	
 	/**
@@ -1142,9 +1135,9 @@
 	 * @external Array
 	 */
 	Array.prototype.shuffle = (n = this.length) => {
-	  /* eslint no-unused-vars: "off" */
+	  /* eslint no-unused-vars: 0 */
 	  for (let i of n) [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]] = [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]];
-	  /* eslint no-unused-vars: "error" */
+	  /* eslint no-unused-vars: 2 */
 	  return this;
 	};
 	
@@ -1612,7 +1605,9 @@
 	 * @external Array
 	 */
 	Array.prototype.increment = (n = 1) => {
+	  /* eslint no-unused-vars: 0 */
 	  for (let num of this) num += n;
+	  /* eslint no-unused-vars: 2 */
 	};
 	
 	/**
@@ -1765,7 +1760,13 @@
 	 * @external Array
 	 */
 	Array.prototype.numElm = () => this.linearise().length;
-	
+	/* Or
+	 this.reduce((memo, item, index) => {
+	 const flatten = memo.concat(item);
+	 flat[index] = flatten;
+	 return flatten;
+	 });
+	 */
 	
 	/**
 	 * @description Size of the array.
@@ -1858,11 +1859,11 @@
 	 * @external Array
 	 */
 	Array.prototype.divide = (n) => {
-	  let res = new Array(Math.round(this.length / n)).fill(''), k = 0;
-	  for (let num of res) {
+	  let k = 0;
+	
+	  return (new Array(Math.round(this.length / n)).fill('')).map(num => {
 	    for (let j = 0; j < n; j++) num += this[k++];
-	  }
-	  return res
+	  });
 	};
 	
 	/**
@@ -2435,12 +2436,11 @@
 	 * @external Array
 	 * @this Array
 	 */
-	
 	Array.prototype.binaryIndexOf = (searchElement) => {
-	  let minIndex = 0, maxIndex = this.length - 1, currentIndex, currentElement, resultIndex;
+	  let minIndex = 0, maxIndex = this.length - 1, currentIndex, currentElement/*, resultIndex*/;
 	
 	  while (minIndex <= maxIndex) {
-	    resultIndex = currentIndex = (minIndex + maxIndex) >> 1;
+	    /*resultIndex = */currentIndex = (minIndex + maxIndex) >> 1;
 	    currentElement = this[currentIndex];
 	
 	    if (currentElement < searchElement) minIndex = currentIndex + 1;
@@ -3239,12 +3239,12 @@
 	 * exist(d); //false
 	 */
 	export let exist = (obj) => {
-	  /* eslint no-shadow-restricted-names: "off" */
+	  /* eslint no-shadow-restricted-names: 0 */
 	  let undefined, t;
 	  try {
 	    //noinspection JSUnusedAssignment
 	    t = typeof obj !== 'undefined' || obj !== undefined || obj in window;
-	    /* eslint no-shadow-restricted-names: "error" */
+	    /* eslint no-shadow-restricted-names: 2 */
 	  } catch (e) {
 	    t = false;
 	  }
@@ -3790,81 +3790,3 @@
 /***/ }
 /******/ ]);
 //# sourceMappingURL=essence.bundle.js.map
-=======
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * @module essence
- * @description Core module of the framework
- * @typedef {(number|string)} NumberLike
- * @typedef {(number|number[])} Nums
- * @typedef {(string|string[])} Str
- * @typedef {(number|boolean)} Bool
- * @typedef {(Array|object|string)} List
- * @typedef {(Array|object)} dict
- * @typedef {(XML|string)} code
- * @typedef {(Node|TreeNode|NTreeNode|Vertex)} Node
- * @since 1.0
- */
-
-//AirBnB suggestion
-//usage: has.call(object, key)
-//const has = Object.prototype.hasOwnProperty;
-
-//obj.toArray() => Array.from(obj)
-/*
- Array.linearise:
- const flat = {};
- [[0, 1], [2, 3], [4, 5]].reduce((memo, item, index) => {
- const flatten = memo.concat(item);
- flat[index] = flatten;
- return flatten;
- });
- */
-
-//NodeJS suggestion !a.length instead of a.isEmpty()
-/**
- * @description Essence's console logger.
- * @public
- * @since 1.0
- * @function
- */
-var say = exports.say = function say(message, type) {
-  for (var _len = arguments.length, style = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-    style[_key - 2] = arguments[_key];
-  }
-
-  var _console, _console2, _console3, _console4, _console5, _console6;
-
-  var styles = {
-    header: 'font-weight: bold; display: block',
-    info: 'background: #00008f; color: #000',
-    error: 'background: #8f0000; color: #000',
-    warn: 'background: #f8c808; color: #000',
-    succ: 'background: #008f00; color: #000',
-    quest: 'background: #0000f8; color: #000'
-  };
-  switch (type) {
-    case 'info':
-      (_console = console).info.apply(_console, [message, styles.info].concat(style));
-      break;
-    case 'error':
-      (_console2 = console).error.apply(_console2, [message, styles.error].concat(style));
-      break;
-    case 'warn':
-      (_console3 = console).warn.apply(_console3, [message, styles.warn].concat(style));
-      break;
-    case 'succ':
-      (_console4 = console).log.apply(_console4, [message, styles.succ].concat(style));
-      break;
-    case 'quest':
-      (_console5 = console).log.apply(_console5, [message, styles.quest].concat(style));
-      break;
-    default:
-      (_console6 = console).log.apply(_console6, [message].concat(style));
-  }
-};
->>>>>>> develop

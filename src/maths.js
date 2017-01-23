@@ -686,7 +686,7 @@ export let nthroot = (x, n, nbDec = 20) => {
  * @description Logarithm (log<sub><code>y</code></sub>(<code>x</code>)).
  * @param {number} x Number
  * @param {number} [y=10] Base
- * @returns {number} Result
+ * @returns {number} Number of times <code>x</code> can be cut by <code>y</code> until reaching one.
  * @see module:maths~ln
  * @since 1.0
  * @public
@@ -725,20 +725,10 @@ export let gcd = (a, b) => b ? gcd(b, a % b) : Math.abs(a);
  * @since 1.0
  * @function
  */
-export let gcd = (a, b) => b ? gcd(b, a % b): Math.abs(a);
-
-/**
-* @description Least Common Multiplier
-* @param {number} a Number a
-* @param {number} b Number b
-* @returns {number} LCM
-* @public
-* @since 1.0
-* @function
-*/
 export let lcm = (a, b) => {
   let multiple = a;
   range(a, 1, b).forEach((n) => multiple = (multiple * n) / gcd(multiple, n));
+
   return multiple;
 };
 
@@ -1087,7 +1077,7 @@ export let isPrime = (x) => primeN(range(1, 1, x)).contains(x);
  * @function
  */
 export let primeN = (arr) => {
-  let res = dsa.QuickSort(arr);
+  let res = arr.sort();
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] % 2 === 0 && arr[i] != 2) res[i] = 'x';
     for (let j = 0; j < i; j++) {
@@ -2687,8 +2677,543 @@ export let intersection = (arrays, toSort = false) => {
   let first = misc.rmDuplicates(arrays[0]), rest = arrays.get(1).map(arr => misc.rmDuplicates(arr));
   let inter = first.filter(item => rest.some(arr => arr.contains(item)));
   return toSort ? inter.sort() : inter;
+};
+
+/**
+ * @description Complement (\) also known as set xor.<br />
+ * It will give all the elements of the first array which isn't in any of the other arrays.
+ * @param {Array[]} arrays Array of arrays to union complement
+ * @param {boolean} [toSort=false] Sort the elements
+ * @returns {Array} a<sub>0</sub> \ a<sub>1</sub> ... \ a<sub>n</sub>
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let complement = (arrays, toSort = false) => {
+  let first = misc.rmDuplicates(arrays[0]), rest = misc.rmDuplicates(arrays.get(1).linearise());
+  let compl = first.filter(item => rest.miss(item));
+  return toSort ? compl.sort() : compl;
+};
+
+/**
+ * @description Symmetric difference.<br />
+ * It will give all the elements that aren't shared by all arrays i.e. unique to each arrays.
+ * @param {Array[]} arrays Array of arrays to intersect together
+ * @param {boolean} [toSort=false] Sort the elements
+ * @returns {Array} a &Union; b - a &Intersection; b &rArr; a only & b only
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let symDif = (arrays, toSort = false) => {
+  let array = arrays.linearise();
+  let sd = essence.isTypedArray(array, 'Number') ? array.unique().sanitise('Number') : array.unique();
+  return toSort ? sd.sort() : sd;
+};
+
+/**
+ * @description Bit string of a set in relation to another.
+ * @param {Array} a Array a
+ * @param {Array} b Array b
+ * @returns {Array} Bit string B<sub>a</sub> of <i>b</i>
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let bitStr = (a, b) => {
+  let ba = []; //Ba in b
+  for (let i in a) {
+    if (a.has(i)) ba[i] = (a[i] === b[i]) | 0;
   }
-  //essence.say(`variables: ${vars.toStr(true)}`, 'info');
+};
+
+/**
+ * @description Logical AND for arrays.
+ * @param {Array} a Array a
+ * @param {Array} b Array b
+ * @param {?string} [cr=null] Filling character
+ * @param {boolean} [toArr=false] To array
+ * @returns {Array|boolean} Result
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let And = (a, b, cr = null, toArr = false) => {
+  essence.toSameLength(a, b, cr);
+  let res = toArr ? [] : (a[0] && b[0]);
+  for (let i in a) {
+    if (a.has(i)) {
+      toArr ? res.push(a[i] && b[i]) : res = res && a[i] && b[i];
+    }
+  }
+  return res
+};
+
+/**
+ * @description Logical OR for arrays.
+ * @param {Array} a Array a
+ * @param {Array} b Array b
+ * @param {?string} [cr=null] Filling character
+ * @param {boolean} [toArr=false] To array
+ * @returns {Array|boolean} Result
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let Or = (a, b, cr = null, toArr = false) => {
+  essence.toSameLength(a, b, cr);
+  let res = toArr ? [] : (a[0] || b[0]);
+  for (let i in a) {
+    if (a.has(i)) {
+      toArr ? res.push(a[i] || b[i]) : res = res || a[i] || b[i];
+    }
+  }
+  return res
+};
+
+/**
+ * @description Logical XOR for arrays.
+ * @param {Array} a Array a
+ * @param {Array} b Array b
+ * @param {?string} [cr=null] Filling character
+ * @param {boolean} [toArr=false] To array
+ * @returns {Array|boolean} Result
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let Xor = (a, b, cr = null, toArr = false) => {
+  essence.toSameLength(a, b, cr || null);
+  let res = toArr ? [] : xor(a[0], b[0]);
+  for (let i in a) {
+    if (a.has(i)) {
+      toArr ? res.push(xor(a[i], b[i])) : res = xor(res, xor(a[i], b[i]));
+    }
+  }
+  return res
+};
+
+/**
+ * @description Logical imply for arrays.
+ * @param {Array} a Array a
+ * @param {Array} b Array b
+ * @param {string|null} [cr=null] Filling character
+ * @param {boolean} [toArr=false] To array
+ * @returns {Array|boolean} Result
+ * @since 1.0
+ * @func
+ */
+export let Imply = (a, b, cr = null, toArr = false) => {
+  essence.toSameLength(a, b, cr);
+  let res = toArr ? [] : (!a[0] || b[0]);
+  for (let i in a) {
+    if (a.has(i)) {
+      toArr ? res.push(!a[i] || b[i]) : res = (!res || (!a[i] || b[i]));
+    }
+  }
+  return res
+};
+
+/**
+ * @description Manhattan distance between two points.
+ * @param {number[]} a Initial point
+ * @param {number[]} b Final point
+ * @returns {number} Distance
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let manhattanDist = (a, b) => Math.abs(Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]));
+
+/**
+ * @description Euclidian distance between two points.
+ * @param {number[]} a Initial point
+ * @param {number[]} b Final point
+ * @returns {number} Distance
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let euclidianDist = (a, b) => Math.sqrt(Math.pow(a[0] - b[0], 2) + Math.pow(a[1] - b[1], 2));
+
+/**
+ * @description Diagonal distance between two points.
+ * @param {number[]} a Initial point
+ * @param {number[]} b Final point
+ * @returns {number} Distance
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let diagDist = (a, b) => Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]));
+
+/**
+ * @description Heuristic of a matrix.
+ * @param {Array} mtx Matrix
+ * @param {Array} solvedMtx Solved matrix (goal)
+ * @param {Function} [hrt=euclidianDist] Heuristic method
+ * @returns {number} Result
+ * @see module:maths~euclidianDist
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let h = (mtx, solvedMtx, hrt = euclidianDist) => {
+  let res = [];
+  for (let i = 0; i < mtx.length; i++) {
+    res.push([]);
+    for (let j = 0; j < mtx[i].length; j++) res[i][j] = hrt([i, j], essence.lookfor(mtx[i][j], solvedMtx));
+  }
+  //essence.say(console.table(res));
+  return res.sum2d()
+};
+
+/**
+ * @description Is a equivalent to b, a &hArr; b.
+ * @param {number} a Number a
+ * @param {number} b Number b
+ * @return {boolean} Equivalence
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let equivalent = (a, b) => Math.round(a) === Math.round(b) || (a | 0) === (b | 0) || (a | 1) === (a | 1) || (a | 0) === (b | 1) || (a | 1) === (b | 0);
+
+/**
+ * @description Is a approximately equal to b, a &approx; b.
+ * @param {number} a Number a
+ * @param {number} b Number b
+ * @param {number} [precision=EPS] Precision
+ * @return {boolean} Approximative equality
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let approxEqual = (a, b, precision = Math.EPSILON) => a >= b - precision && a <= b + precision || b >= a - precision && b <= a + precision;
+
+/**
+ * @description Truthness of the proposition among all elements of the array.
+ * @summary Propositional function P(arr)
+ * @param {NumberLike[]} arr Array
+ * @param {string} prop Proposition
+ * @return {boolean[]} P(arr)
+ * @public
+ * @since 1.0
+ * @function
+ * @example
+ * let arr = [0, 0, 1, 6, -3, -8, 4, -2];
+ * P(arr,
+ */
+export let P = (arr, prop) => arr.map(x => eval(prop.replace(/x/g, x + '')));
+
+/**
+ * @description Check if the proposition holds for all elements of the array.
+ * @summary Universal quantification of P(arr): &forall;P(arr)
+ * @param {NumberLike[]} arr Array
+ * @param {string} prop Proposition
+ * @return {boolean} Quantification result
+ * @public
+ * @since 1.0
+ * @function
+ * @see module:maths~forSome
+ */
+export let forAll = (arr, prop) => arr.every(x => eval(prop.replace(/x/g, x + '')));
+
+/**
+ * @description Check if the proposition holds for some elements of the array.
+ * @summary Existential quantification of P(arr): &exist;P(arr)
+ * @param {NumberLike[]} arr Array
+ * @param {string} prop Proposition
+ * @return {boolean} Quantification result
+ * @public
+ * @since 1.0
+ * @function
+ * @see module:maths~forAll
+ */
+export let forSome = (arr, prop) => arr.some(x => eval(prop.replace(/x/g, x + '')));
+
+/**
+ * @description Check if the proposition holds for only one element of the array.
+ * @summary Uniqueness quantification of P(arr)
+ * @param {NumberLike[]} arr Array
+ * @param {string} prop Proposition
+ * @return {boolean} Quantification result
+ * @see module:maths~P
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let forOne = (arr, prop) => P(arr, prop).count(true) === 1;
+
+/**
+ * @description Read and convert coordinates to code readable data.
+ * @param {string} str Coordinates
+ * @param {boolean} isInt=false Convert the cells into integers
+ * @returns {NumberLike[]} Coordinates
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let readCoord = (str, isInt) => {
+  let c = str.slice(1, str.length - 1).split(', ');
+  return isInt ? [c[0] | 0, c[1] | 0] : c
+};
+
+/**
+ * @description <code>x</code> % <code>b</code> where <code>x</code> < <code>a</code> isn't allowed.
+ * @param {number} x Number
+ * @param {number} a Lowest bound
+ * @param {number} b Divisor
+ * @returns {number} Result
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let modRange = (x, a, b) => {
+  let r = x % (b + 1);
+  return r + (r < a) ? a + r : 0;
+};
+
+/**
+ * @description Alphabetical modulus.
+ * @param {number} code Ascii code
+ * @returns {number} Moded ascii code
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let abcModulus = (code) => {
+  let m = code % 123;
+  if (90 < m && m < 97) return m + abcModulus(Math.abs(getClosest(m, [90, 97]) - m));
+  return m + ((m < 65 && m != 32) ? 65 + m : 0);
+};
+
+/**
+ * @description Convert a (possibly infinite) sequence of iterated values into a sequence of length <code>n</code>.
+ * <br />Source: {@link http://www.2ality.com/2015/03/es6-generators.html}
+ * @param {number} n Number of items to take from the iterable object
+ * @param {Iterable} iterable Iterable object
+ * @public
+ * @since 1.0
+ * @type {GeneratorFunction}
+ * @returns {GeneratorFunction|undefined} Taken bits
+ */
+export let take = function*(n, iterable) {
+  for (let x of iterable) {
+    if (n <= 0) return;
+    n--;
+    yield x;
+  }
+};
+
+/**
+ * @description Brute force through &integers; to find an x such that <code>min</code> &le; x &le; <code>max</code> and the condition is true for x.
+ * @param {string} cond Condition
+ * @param {number} [min={@link #MIN_INT32|MIN_INT32}] Minimum
+ * @param {number} [max={@link #MAX_INT32|MAX_INT32}] Maximum
+ * @returns {Bool} x or false
+ * @public
+ * @since 1.0
+ * @function
+ * @see module:maths~MIN_INT32
+ * @see module:maths~MAX_INT32
+ */
+export let bruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
+  for (let x = min; x <= max; x++) {
+    if (eval(cond.replace(misc.RegExpify('x'), x + ''))) return x;
+  }
+  return false;
+};
+
+/**
+ * @description Brute force through &#8474; to find an x such that <code>min</code> &le; x &le; <code>max</code> and the condition is true for x.
+ * @param {string} cond Condition
+ * @param {number} [min={@link #MIN_FLOAT|MIN_FLOAT}] Minimum
+ * @param {number} [max={@link #MAX_FLOAT|MAX_FLOAT}] Maximum
+ * @param {number} [precision={@link #DECIMALS32|DECIMALS32}] Precision.
+ * @returns {Bool} x or false
+ * @public
+ * @since 1.0
+ * @function
+ * @see module:maths~MIN_FLOAT
+ * @see module:maths~MAX_FLOAT
+ * @see module:maths~DECIMALS32
+ * @see module:maths~bruteForceDouble
+ */
+export let bruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, precision = DECIMALS32) => {
+  for (let x = min; x <= max; x += precision) {
+    if (eval(cond.replace(misc.RegExpify('x'), x + ''))) return x;
+  }
+  return false;
+};
+
+/**
+ * @description Brute force through &#8474; to find an x such that <code>min</code> &le; x &le; <code>max</code> and the condition is true for x.
+ * @param {string} cond Condition
+ * @returns {Bool} x or false
+ * @public
+ * @since 1.0
+ * @function
+ * @see module:maths~MIN_DOUBLE
+ * @see module:maths~MAX_DOUBLE
+ * @see module:maths~DECIMALS64
+ * @see module:maths~bruteForceFloat
+ */
+export let bruteForceDouble = (cond) => bruteForceFloat(cond, MIN_DOUBLE, MAX_DOUBLE, DECIMALS64);
+
+/**
+ * @description Brute force through &integers; to find x and y such that <code>min</code> &le; x &le; <code>max</code>,
+ * <code>min</code> &le; y &le; <code>max</code> and the condition is true for x and y
+ * @param {string} cond Condition
+ * @param {number} [min={@link #MIN_INT32|MIN_INT32}] Minimum
+ * @param {number} [max={@link #MAX_INT32|MAX_INT32}] Maximum
+ * @returns {boolean|number[]} [x, y] or false
+ * @public
+ * @since 1.0
+ * @function
+ * @see module:maths~MIN_INT32
+ * @see module:maths~MAX_INT32
+ */
+export let doubleBruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
+  for (let x = min; x <= max; x++) {
+    for (let y = min; y <= max; y++) {
+      if (eval(cond.replace(misc.RegExpify('x'), x + '').replace(misc.RegExpify('y'), y + ''))) return [x, y];
+    }
+  }
+  return false;
+};
+
+/**
+ * @description Brute force through &#8474; to find x and y such that <code>min</code> &le; x &le; <code>max</code>,
+ * <code>min</code> &le; y &le; <code>max</code> and the condition is true for x and y
+ * @param {string} cond Condition
+ * @param {number} [min={@link #MIN_FLOAT|MIN_FLOAT}] Minimum
+ * @param {number} [max={@link #MAX_FLOAT|MAX_FLOAT}] Maximum
+ * @param {number} [precision={@link #DECIMALS32|DECIMALS32}] Precision.
+ * @returns {boolean|number[]} [x, y] or false
+ * @public
+ * @since 1.0
+ * @function
+ * @see module:maths~MIN_FLOAT
+ * @see module:maths~MAX_FLOAT
+ * @see module:maths~DECIMALS32
+ * @see module:maths~doubleBruteForceDouble
+ */
+export let doubleBruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, precision = DECIMALS32) => {
+  for (let x = min; x <= max; x += precision) {
+    for (let y = min; y <= max; y += precision) {
+      if (eval(cond.replace(misc.RegExpify('x'), x + '').replace(misc.RegExpify('y'), y + ''))) return [x, y];
+    }
+  }
+  return false;
+};
+
+/**
+ * @description Brute force through &#8474; to find x and y such that <code>min</code> &le; x &le; <code>max</code>,
+ * <code>min</code> &le; y &le; <code>max</code> and the condition is true for x and y
+ * @param {string} cond Condition
+ * @returns {boolean|number[]} [x, y] or false
+ * @public
+ * @since 1.0
+ * @function
+ * @see module:maths~MIN_DOUBLE
+ * @see module:maths~MAX_DOUBLE
+ * @see module:maths~DECIMALS64
+ * @see module:maths~doubleBruteForceFloat
+ */
+export let doubleBruteForceDouble = (cond) => doubleBruteForceFloat(cond, MIN_DOUBLE, MAX_DOUBLE, DECIMALS64);
+
+/**
+ * @description Is <code>a</code> closer to <code>x</code> than <code>b</code>.
+ * @param {number} x Number x
+ * @param {number} a Number a
+ * @param {number} b Number b
+ * @returns {boolean} Truth
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let isCloser = (x, a, b) => Math.abs(x - a) < Math.abs(x - b);
+
+/**
+ * @description Get the closest option from the options to <code>x</code>.
+ * @param {number} x Number
+ * @param {number[]} opt Options
+ * @returns {number} Closest number
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let getClosest = (x, opt) => {
+  let closest = opt[0];
+  for (let i = 1; i < opt.length; i++) closest = isCloser(x, closest, opt[i]) ? closest : opt[i];
+  return closest;
+};
+
+/**
+ * @description Single parametric equation.
+ * @param {string} [formula='y=x'] Formula
+ * @returns {Equation} Equation
+ * @this {Equation}
+ * @since 1.0
+ * @property {string} Equation.formula Formula
+ * @property {string} Equation.leftSide LHS
+ * @property {string} Equation.rightSide RHS
+ * @property {function(NumberLike): number} Equation.compute Compute data
+ * @property {function(): string} Equation.toString String representation
+ * @class
+ */
+class Equation {
+  constructor(formula = 'y=x') {
+    this.formula = formula.normal();
+    [this.leftSide, this.rightSide] = this.formula.split('=');
+    this.compute = (data) => {
+      return eval(this.rightSide.multiReplace([
+        [/x/g, data.x || 0], [/y/g, data.y || 0], [/z/g, data.z || 0],
+        [/pi/ig, Math.PI], [/e/ig, Math.E], [/sqrt(2)/ig, Math.SQRT2],
+        [/(pow|max|min)\((.*?),(.*?)\)/, 'Math.$1($2, $3)'], //Fails on first occurrence :/
+        [/(sqrt|cbrt|cos|sin|tan|acos|asin|cosh|sinh|tanh|acosh|asinh|atanh|exp|abs|e\^)\((.*?)\)/, 'Math.$1($2)'],
+        [/(ln|log|nthroot|clampTop|clampBottom)\((.*?),(.*?)\)/, '$1($2, $3)'],
+        [/(clamp)\((.*?),(.*?),(.*?)\)/, '$1($2, $3, $4)']
+      ]))
+    };
+  }
+
+  toString() {
+    return `Equation(${this.formula})`;
+  };
+}
+
+/**
+ * @description Generate an array of all possible binary numbers with <code>x</code> digits or less.
+ * @param {number} x Number of digits
+ * @returns {Array} Array of possible binary numbers
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let binaryCases = (x) => {
+  let end = parseInt('1'.repeat(x)), res = [], i = 0;
+  do {
+    res.push(conv(i++, 10, 2));
+  } while (i <= conv(end));
+  return res;
+};
+
+/**
+ * @description Get the truth table of an expression.
+ * @param {string} exp Expression
+ * @returns {Array} Truth table
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let truthTable = (exp) => { //Get the truth table of an expression
+  // /(([a-z])(\+|\x2a))+/g
+  let ascii = misc.asciiTable('a-z'), vars = [], rows, res = [];
+  for (let chr of ascii) {
+    if (exp.has(chr)) vars.push(chr);
+  }
   rows = binaryCases(vars.length);
   for (let row of rows) {
     let cexp = exp;
@@ -2699,7 +3224,7 @@ export let intersection = (arrays, toSort = false) => {
   return [vars, rows, res];
 };
 
-/**
+  /**
  * @description Get the DNF form of an expression.
  * @param {string} exp Expression
  * @returns {string} DNF

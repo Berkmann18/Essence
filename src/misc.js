@@ -4,7 +4,6 @@
  * @requires module:essence
  * @since 1.0
  */
-<<<<<<< HEAD
 import * as essence from './essence';
 
 /**

@@ -48,19 +48,11 @@ import * as dsa from './dsa';
 import * as dom from './dom';
 import * as qtest from './qtest';
 
-/*
- Array.linearise:
- const flat = {};
- [[0, 1], [2, 3], [4, 5]].reduce((memo, item, index) => {
- const flatten = memo.concat(item);
- flat[index] = flatten;
- return flatten;
- });
- */
-
-//NodeJS suggestion !a.length instead of a.isEmpty()
 /**
  * @description Essence's console logger.
+ * @param {*} message Message
+ * @param {string} [type] Log type (info/error/warn/succ/quest/fulltime/time/colour)
+ * @param {...string} [style] Additional style
  * @public
  * @since 1.0
  * @function
@@ -111,7 +103,7 @@ export let say = (message, type, ...style) => {
  * @public
  * @since 1.0
  */
-let loadTime = 0;
+export let loadTime = 0;
 
 /**
  * @description Time taken by the browser to draw the UI via the time taken to window.onpageshow to
@@ -120,13 +112,14 @@ let loadTime = 0;
  * @public
  * @since 1.0
  */
-let displayTime = 0;
+export let displayTime = 0;
 
 /**
  * @description Start the first mark of the page-loading timer.
  * @protected
  * @since 1.0
  * @function
+ * @see module:essence~loadTime
  */
 window.onload = () => loadTime = new Date().getTime();
 
@@ -135,6 +128,7 @@ window.onload = () => loadTime = new Date().getTime();
  * @protected
  * @since 1.0
  * @function
+ * @see module:essence~displayTime
  */
 window.onpageshow = () => displayTime = new Date().getTime();
 
@@ -519,6 +513,7 @@ export class Element {
   scroll(x = 0, y = 0) {
     //noinspection JSAnnotator
     this.node.scrollLeft += x;
+    //noinspection JSAnnotator
     this.node.scrollTop += y;
   };
 
@@ -721,8 +716,7 @@ Object.prototype.isIterable = () => isNativeType(this, 'String') || isNativeType
  * @external Object
  */
 Object.prototype.delete = () => {
-  this.property = null;
-  delete this;
+  this.property = undefined;
 };
 
 /**
@@ -1123,9 +1117,9 @@ Array.prototype.minOf = (start = 0, n = this.length - 1) => {
  * @external Array
  */
 Array.prototype.shuffle = (n = this.length) => {
-  /* eslint no-unused-vars: "off" */
+  /* eslint no-unused-vars: 0 */
   for (let i of n) [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]] = [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]];
-  /* eslint no-unused-vars: "error" */
+  /* eslint no-unused-vars: 2 */
   return this;
 };
 
@@ -1593,7 +1587,9 @@ Array.prototype.getIncrement = (nbDec = 2) => nbDec == 0 ? parseInt(((this.max()
  * @external Array
  */
 Array.prototype.increment = (n = 1) => {
+  /* eslint no-unused-vars: 0 */
   for (let num of this) num += n;
+  /* eslint no-unused-vars: 2 */
 };
 
 /**
@@ -1746,7 +1742,13 @@ Array.prototype.rot = (deg) => {
  * @external Array
  */
 Array.prototype.numElm = () => this.linearise().length;
-
+/* Or
+ this.reduce((memo, item, index) => {
+ const flatten = memo.concat(item);
+ flat[index] = flatten;
+ return flatten;
+ });
+ */
 
 /**
  * @description Size of the array.
@@ -1839,11 +1841,11 @@ Array.prototype.lookFor = (x) => {
  * @external Array
  */
 Array.prototype.divide = (n) => {
-  let res = new Array(Math.round(this.length / n)).fill(''), k = 0;
-  for (let num of res) {
+  let k = 0;
+
+  return (new Array(Math.round(this.length / n)).fill('')).map(num => {
     for (let j = 0; j &lt; n; j++) num += this[k++];
-  }
-  return res
+  });
 };
 
 /**
@@ -2416,12 +2418,11 @@ Array.prototype.removeLast = (n, preserveInitial) => {
  * @external Array
  * @this Array
  */
-
 Array.prototype.binaryIndexOf = (searchElement) => {
-  let minIndex = 0, maxIndex = this.length - 1, currentIndex, currentElement, resultIndex;
+  let minIndex = 0, maxIndex = this.length - 1, currentIndex, currentElement/*, resultIndex*/;
 
   while (minIndex &lt;= maxIndex) {
-    resultIndex = currentIndex = (minIndex + maxIndex) >> 1;
+    /*resultIndex = */currentIndex = (minIndex + maxIndex) >> 1;
     currentElement = this[currentIndex];
 
     if (currentElement &lt; searchElement) minIndex = currentIndex + 1;
@@ -3220,12 +3221,12 @@ export let isNon = (val) => (val === false || val === undefined || val === null 
  * exist(d); //false
  */
 export let exist = (obj) => {
-  /* eslint no-shadow-restricted-names: "off" */
+  /* eslint no-shadow-restricted-names: 0 */
   let undefined, t;
   try {
     //noinspection JSUnusedAssignment
     t = typeof obj !== 'undefined' || obj !== undefined || obj in window;
-    /* eslint no-shadow-restricted-names: "error" */
+    /* eslint no-shadow-restricted-names: 2 */
   } catch (e) {
     t = false;
   }
@@ -3776,13 +3777,13 @@ export let asyncTime = (cb, params, format) => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 06 2017 15:08:33 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jan 23 2017 23:34:34 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

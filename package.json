@@ -7,7 +7,9 @@
     "doc": "doc",
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "ursa": "^0.9.4"
+  },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.18.0",
@@ -27,7 +29,8 @@
     "test": "eslint src & csslint src",
     "webpack": "webpack",
     "doc": "jsdoc -c ./conf.json",
-    "build": "npm run babel; npm run webpack"
+    "build": "npm run babel; npm run webpack",
+    "min": "minify -o dist src --no-comments"
   },
   "repository": {
     "type": "git",

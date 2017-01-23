@@ -22,6 +22,9 @@ import * as qtest from './qtest';
 
 /**
  * @description Essence's console logger.
+ * @param {*} message Message
+ * @param {string} [type] Log type (info/error/warn/succ/quest/fulltime/time/colour)
+ * @param {...string} [style] Additional style
  * @public
  * @since 1.0
  * @function
@@ -482,6 +485,7 @@ export class Element {
   scroll(x = 0, y = 0) {
     //noinspection JSAnnotator
     this.node.scrollLeft += x;
+    //noinspection JSAnnotator
     this.node.scrollTop += y;
   };
 
@@ -684,8 +688,7 @@ Object.prototype.isIterable = () => isNativeType(this, 'String') || isNativeType
  * @external Object
  */
 Object.prototype.delete = () => {
-  this.property = null;
-  delete this;
+  this.property = undefined;
 };
 
 /**
@@ -1086,9 +1089,9 @@ Array.prototype.minOf = (start = 0, n = this.length - 1) => {
  * @external Array
  */
 Array.prototype.shuffle = (n = this.length) => {
-  /* eslint no-unused-vars: "off" */
+  /* eslint no-unused-vars: 0 */
   for (let i of n) [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]] = [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]];
-  /* eslint no-unused-vars: "error" */
+  /* eslint no-unused-vars: 2 */
   return this;
 };
 
@@ -1556,7 +1559,9 @@ Array.prototype.getIncrement = (nbDec = 2) => nbDec == 0 ? parseInt(((this.max()
  * @external Array
  */
 Array.prototype.increment = (n = 1) => {
+  /* eslint no-unused-vars: 0 */
   for (let num of this) num += n;
+  /* eslint no-unused-vars: 2 */
 };
 
 /**
@@ -1808,11 +1813,11 @@ Array.prototype.lookFor = (x) => {
  * @external Array
  */
 Array.prototype.divide = (n) => {
-  let res = new Array(Math.round(this.length / n)).fill(''), k = 0;
-  for (let num of res) {
+  let k = 0;
+
+  return (new Array(Math.round(this.length / n)).fill('')).map(num => {
     for (let j = 0; j < n; j++) num += this[k++];
-  }
-  return res
+  });
 };
 
 /**
@@ -2385,12 +2390,11 @@ Array.prototype.removeLast = (n, preserveInitial) => {
  * @external Array
  * @this Array
  */
-
 Array.prototype.binaryIndexOf = (searchElement) => {
-  let minIndex = 0, maxIndex = this.length - 1, currentIndex, currentElement, resultIndex;
+  let minIndex = 0, maxIndex = this.length - 1, currentIndex, currentElement/*, resultIndex*/;
 
   while (minIndex <= maxIndex) {
-    resultIndex = currentIndex = (minIndex + maxIndex) >> 1;
+    /*resultIndex = */currentIndex = (minIndex + maxIndex) >> 1;
     currentElement = this[currentIndex];
 
     if (currentElement < searchElement) minIndex = currentIndex + 1;
@@ -3189,12 +3193,12 @@ export let isNon = (val) => (val === false || val === undefined || val === null 
  * exist(d); //false
  */
 export let exist = (obj) => {
-  /* eslint no-shadow-restricted-names: "off" */
+  /* eslint no-shadow-restricted-names: 0 */
   let undefined, t;
   try {
     //noinspection JSUnusedAssignment
     t = typeof obj !== 'undefined' || obj !== undefined || obj in window;
-    /* eslint no-shadow-restricted-names: "error" */
+    /* eslint no-shadow-restricted-names: 2 */
   } catch (e) {
     t = false;
   }
