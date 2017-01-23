@@ -6,14 +6,21 @@
  */
 import * as essence from './essence';
 import * as qtest from './qtest';
+<<<<<<< HEAD
 import * as maths from './maths';
 let fs = require('fs'), rsa = require('ursa');
+=======
+>>>>>>> develop
 
 /**
  * @description Caesar crypting
  * @param {NumberLike} character Character to encrypt
  * @param {number} n Key
+<<<<<<< HEAD
  * @returns {string} Crypted character
+=======
+ * @returns {string} Cryped character
+>>>>>>> develop
  * @public
  * @since 1.0
  * @function
@@ -179,9 +186,15 @@ export let abcEncode = (txt) => {
  * @description Alphabetically decode from hexadecimal to lowercase text.
  * @param {string} txt Hexadecimal code
  * @returns {string} Alphabetical text
+<<<<<<< HEAD
  * @see module:security~abcEncode
  * @since 1.0
  * @function
+=======
+ * @see module:Security~abcEncode
+ * @since 1.0
+ * @func
+>>>>>>> develop
  */
 export let abcDecode = (txt) => {
   let code = new Array(txt.length);
@@ -272,6 +285,7 @@ export let abcDecode = (txt) => {
     return essence.isType(txt, 'String') ? code.join('') : code
   }
   return qtest.InvalidParamError('The parameter of abcDecode must be a string or an array.');
+<<<<<<< HEAD
 };
 
 /**
@@ -585,4 +599,6 @@ export let checkPassword = (password, realScore) => {
   else if (score > 100) complexity = 'Really strong';
   else complexity = 'Too short';
   return realScore ? score : [`${score}%`, complexity];
+=======
+>>>>>>> develop
 };
