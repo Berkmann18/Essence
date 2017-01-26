@@ -4,8 +4,9 @@
  * @requires module:essence
  * @since 1.0
  */
-import {$n, $e, isNon} from './essence';
-import * as files from './files';
+import {$n, $e, isNon, Copy, isCustomType, getDate, getTime, getTimestamp, keys} from './essence';
+import {getDirectoryPath, save} from './files';
+import {RegExpify} from './misc';
 
 /**
  * @description Add CSS code into the page.
@@ -54,8 +55,8 @@ export const emptyDoc = (title = document.title, author = 'anonymous') => {
   $e('html').write(`<html>
     <head>
       <title>${title}</title>
-      <meta charset="UTF-8" />
-      <meta name="author" content="${author}" />
+      <meta charset='UTF-8' />
+      <meta name='author' content='${author}' />
     </head>
     <body></body>
   </html>`, true);
@@ -158,7 +159,7 @@ export let noRightClick = (restore=false) => {
 export let redirect = (to, divId, dt=3e3) => { //Redirect to #to in #dt ms
   let s = Math.floor(dt / 1e3); //Convert from ms to start
   //Write the Redirecting message to the screen
-  $e(`#${divId}`).write(`<h2> Redirecting to <ins>${to}</ins> ...<br />in <span id="timeleft">${s}</span>start</h2>`, true);
+  $e(`#${divId}`).write(`<h2> Redirecting to <ins>${to}</ins> ...<br />in <span id='timeleft'>${s}</span>start</h2>`, true);
   s--;
   $e('#timeleft').write(s);
   setTimeout(`location=${to};`, dt); //Set the timeout for the redirection
@@ -346,7 +347,7 @@ export let gatherScripts = (asList) => { //Sort of getResources() but dedicated 
  * @see module:dom~gatherExternalScripts
  */
 export let gatherInternalScripts = (format=false) => {
-  let internalScripts = Array.from(document.scripts).filter(s => s.text != "");
+  let internalScripts = Array.from(document.scripts).filter(s => s.text != '');
   return format ? internalScripts.map(s => s.src) : internalScripts;
 };
 
@@ -360,13 +361,13 @@ export let gatherInternalScripts = (format=false) => {
  * @see module:dom~gatherInternalScripts
  */
 export let gatherExternalScripts = (format=false) => {
-  let externalScripts = Array.from(document.scripts).filter(s => s.src != "");
+  let externalScripts = Array.from(document.scripts).filter(s => s.src != '');
   return format ? externalScripts.map(s => s.src) : externalScripts;
 };
 
 /**
  * @description Gather remote resources from the file.
- * @param {string} [type] Type (either: "script", "stylesheet" or "" (for both))
+ * @param {string} [type] Type (either: 'script', 'stylesheet' or '' (for both))
  * @return {string[]} Remote resources
  * @function
  * @public
@@ -375,12 +376,12 @@ export let gatherExternalScripts = (format=false) => {
  */
 export let gatherRemoteResources = (type) => {
   let $rsc = type === 'script' ? gatherScripts(true) : (type === 'stylesheet' ? gatherStylesheets(true) : gatherStylesheets(true).concat(gatherScripts(true)));
-  return $rsc.filter(r => r.sameFirst(location.href) != files.getDirectoryPath())
+  return $rsc.filter(r => r.sameFirst(location.href) != getDirectoryPath())
 };
 
 /**
  * @description Gather local resources from the file.
- * @param {string} [type] Type (either: "script", "stylesheet" or "" (for both))
+ * @param {string} [type] Type (either: 'script', 'stylesheet' or '' (for both))
  * @return {string[]} Remote resources
  * @function
  * @public
@@ -389,7 +390,7 @@ export let gatherRemoteResources = (type) => {
  */
 export let gatherLocalResources = (type) => {
   let $rsc = type === 'script' ? gatherScripts(true) : (type === 'stylesheet' ? gatherStylesheets(true) : gatherStylesheets(true).concat(gatherScripts(true)));
-  return $rsc.filter(r => r.sameFirst(location.href) === files.getDirectoryPath())
+  return $rsc.filter(r => r.sameFirst(location.href) === getDirectoryPath())
 };
 
 /**
@@ -437,6 +438,36 @@ export let gatherExternalStylesheets = (format=false) => {
 };
 
 /**
+ * @description Open (initialise the beginning of) an HTML table.
+ * @param {NumberLike} [caption=''] Caption
+ * @param {string} [id='t'] ID of the table
+ * @param {string} [style] Style of table
+ * @returns {string} Open HTML table
+ * @private
+ * @since 1.0
+ * @function
+ */
+let openHtmlTable = (caption, id='t', style='') => `<table id='${id}' style='${style}' cellspacing=0 cellpadding=2>${caption ? `<caption>${caption}</caption>` : ''}`;
+
+/**
+ * @description Close an HTML table.
+ * @param {string} table HTML table
+ * @param {string} [id='t'] ID of the table
+ * @returns {string} Closed HTML table
+ * @private
+ * @since 1.0
+ * @function
+ */
+let closeHtmlTable = (table, id='t') => {
+  table += '</table>';
+  addCSS(`#${id} table{background: #000;}
+    #${id} table, #${id} td, #${id} th{border: 1px solid #000; color: #000; background: #fff;}
+    #${id} tr:nth-child(even) td, #${id} tr:nth-child(even) th{background: #ddd;}
+    #${id} tr td:hover, #${id} tr th:hover{background: #bbb;}`);
+  return table
+};
+
+/**
  * @description A basic HTML table.
  * @param {NumberLike} [caption=''] Caption
  * @param {Array} rows Rows of the table
@@ -450,19 +481,394 @@ export let gatherExternalStylesheets = (format=false) => {
  * @function
  */
 export let simpleTable = (caption='', rows, id='t', style='', split, cellIds) => {
-  let tab = `<table id="${id}" style="${style}" cellspacing=0 cellpadding=2>${caption ? `<caption>${caption}</caption>` : ''}`;
+  let tab = openHtmlTable(caption, id, style);
   for (let i = 0; i < rows.length; i++) {
     tab += '<tr>';
     if (split) {
-      for (let j = 0; j < rows[i].length; j++) tab += `<td id="${id + (isNon(cellIds) ? i + '_' + j : cellIds[i][j])}">${rows[i][j]}</td>`;
-    } else tab += `<td id="${id + (isNon(cellIds) ? i : cellIds[i])}">${rows[i]}</td>`;
+      for (let j = 0; j < rows[i].length; j++) tab += `<td id='${id + (isNon(cellIds) ? i + '_' + j : cellIds[i][j])}'>${rows[i][j]}</td>`;
+    } else tab += `<td id='${id + (isNon(cellIds) ? i : cellIds[i])}'>${rows[i]}</td>`;
     tab += '</tr>';
   }
-  tab += '</table>';
-  addCSS(`#${id} table{background: #000;}
-    #${id} table, #${id} td {border: 1px solid #000; color: #000; background: #fff;}
-    #${id} tr:nth-child(even) td{background: #ddd;}
-    #${id} tr td:hover{background: #bbb;}`);
-  return tab
+  return closeHtmlTable(tab, id);
+};
+
+/**
+ * @description Row HTML table.
+ * @param {NumberLike} caption Caption
+ * @param {Array} headerRows Row headers
+ * @param {Array} rows Rows of the table
+ * @param {string} [id='t'] ID of the table
+ * @param {boolean} [split=false] Split rows into multiple columns
+ * @param {string} [style] Style of table
+ * @param {string[]} [cellIds] Ids of each cells
+ * @returns {string} HTML code
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let rowTable = (caption, headerRows, rows, id='t', split=false, style='', cellIds) => {
+  let tab = openHtmlTable(caption, id, style);
+  //let rowspan = (headerRows.length <= rows.length) ? rows.length / headerRows.length: headerRows.length / rows.length;
+  for (let i = 0; i < rows.length; i++) {
+    tab += headerRows ? `<tr><th>${headerRows[i]}</th>`: '<tr>';
+    if (split) {
+      for (let j = 0; j < rows[i].length; j++) {
+        tab += `<td id='${id + (isNon(cellIds) ? i + '_' + j : cellIds[i][j])}'>${rows[i][j]}</td>`;
+      }
+    } else tab += `<td id='${id + (isNon(cellIds) ? i : cellIds[i])}'>${rows[i]}</td>`;
+    tab += '</tr>';
+  }
+  return closeHtmlTable(tab, id);
+};
+
+/**
+ * @description Column HTML table.
+ * @param {NumberLike} caption Caption
+ * @param {Array} headerCols Row headers
+ * @param {Array} cols Cols of the table
+ * @param {string} [id='t'] ID of the table
+ * @param {boolean} [split=false] Split columns into multiple rows
+ * @param {string} [style] Style of table
+ * @param {string[]} [cellIds] Ids of each cells
+ * @returns {string} HTML code
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let colTable = (caption, headerCols, cols, id='t', split=false, style='', cellIds) => {
+  let tab = openHtmlTable(caption, id, style);
+  //let colspan = (headerCols.length <= cols.length) ? cols.length / headerCols.length : headerCols.length / cols.length;
+  if (headerCols) {
+    tab += '<tr>';
+    for (let col of headerCols) tab += `<th>${col}</th>`;
+    tab += '</tr>';
+  }
+  for (let i = 0; i < cols.length; i++) {
+    tab += '<tr>';
+    if (split) {
+      for (let j = 0; j < cols[i].length; j++) tab += `<td id='${id + (isNon(cellIds) ? i + '_' + j : cellIds[i][j])}'>${cols[i][j]}</td>`;
+    } else tab += `<td id='${id + (isNon(cellIds) ? i : cellIds[i])}'>${cols[i]}</td>`;
+    tab += '</tr>';
+  }
+  return closeHtmlTable(tab, id);
+};
+
+/**
+ * @description Complex HTML table
+ * @param {NumberLike} caption Caption
+ * @param {Array} headerRows Row headers
+ * @param {Array} rows Rows of the table
+ * @param {Array} headerCols Columns Headers
+ * @param {string} id ID of the table
+ * @param {boolean} [split=false] Split rows into multiple columns
+ * @param {string} [style] Style of table
+ * @param {string[]} [cellIds] Ids of each cells
+ * @returns {string} HTML code
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let complexTable = (caption, headerRows, rows, headerCols, id='t', split=false, style='', cellIds) => {
+  let tab = openHtmlTable(caption, id, style);
+  for (let col of headerCols) tab += `<th>${col}</th>`;
+  tab += '</tr>';
+  for (let i = 0; i < rows.length; i++) {
+    tab += headerRows ? `<tr><th>${headerRows[i]}</th>`: '<tr>';
+    if (split) {
+      for (let j = 0; j < rows[i].length; j++) tab += `<td id='${id + (isNon(cellIds) ? i + '_' + j : cellIds[i][j])}'>${rows[i][j]}</td>`;
+    } else tab += `<td id='${id + (isNon(cellIds) ? i : cellIds[i])}'>${rows[i]}</td>`;
+    tab += '</tr>';
+  }
+  return closeHtmlTable(tab, id);
+};
+
+/**
+ * @description HTML table with coloured empty cells
+ * @param {NumberLike} caption Caption
+ * @param {Array} cols Columns
+ * @param {string[]} clrs Colours list
+ * @param {string} [id='t'] ID of the table
+ * @param {boolean} [split=false] Split the cells into multiple ones
+ * @param {string} [style] Style of the table
+ * @returns {string} Colour HTML table
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let colourTable = (caption, cols, clrs, id='c', split=false, style='') => {
+  let tab = openHtmlTable(caption, id, style);
+  if (cols) {
+    tab += '<tr>';
+    for(let col of cols) tab += `<th>${col}</th>`;
+    tab += '</tr>';
+  }
+  for (let i = 0; i < clrs.length; i++) {
+    tab += '<tr>';
+    if (split) {
+      for (let j = 0; j < clrs[i].length; j++) tab += isValid(clrs[i][j], 'color') ? `<td style='background: ${clrs[i][j]}'><br /></td>`: `<td>${clrs[i][j]}</td>`;
+    } else tab += `<td style='background: ${clrs[i]}'><br /></td>`;
+    tab += '</tr>'
+  }
+  return closeHtmlTable(tab, id);
+};
+
+/**
+ * @description Compare two matrices and display a table with all the different elements of <code>b</code> in regards to <code>a</code>.
+ * @param {Array} a Matrix a
+ * @param {Array} b Matrix b
+ * @param {boolean} [toHTML=false] HTML output
+ * @returns {*} Comparison table result
+ * @public
+ * @since 1.0
+ * @function
+ * @throws {Error} Uncomparable matrices
+ */
+export let tableCompare = (a, b, toHTML) => {
+  if (a.size(true) != b.size(true)) throw new Error('You can\'t compare two matrices of different sizes');
+  let res = Copy(a);
+  for (let i = 0; i < res.length; i++) {
+    for (let j = 0; j < res[i].length; j++) res[i][j] = (a[i][j] === b[i][j]) ? '' : b[i][j];
+  }
+  toHTML ? println(simpleTable('Comparison', res)) : console.table(res);
+  return res;
+};
+
+/**
+ * @description (Ask to) bookmark a webpage?
+ * @param {string} url URL of the webpage
+ * @param {string} title Title
+ * @param {string} [elmId='body'] Element ID
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let addToFav = (url, title, elmId='body') => {
+  let place = elmId ? `#${elmId}` : 'body';
+  if (navigator.appName.substring(0, 3) === 'Mic' && navigator.appVersion.substring(0, 1) >= 4) $e(place).write(`<a href='#' onClick='window.external.AddFavorite(${url}, ${title});return false;'>Bookmark this webpage</a><br />`, true);
+  else $e(place).write('Press CTRL + D to add this webpage to your bookmarks!', true)
+};
+
+/**
+ * @description Browser check.<br />
+ * Improved from somewhere
+ * @returns {checkBrowser} Browser check
+ * @this checkBrowser
+ * @public
+ * @since 1.0
+ * @todo Document the properties
+ * @constructor
+ */
+export let checkBrowser = () => {
+  this.ver = navigator.appVersion;
+  this.dom = !!document.getElementById;
+  this.ie5 = this.ver.has('MSIE 5') && this.dom;
+  this.ie4 = document.all && !this.dom;
+  this.ns5 = this.dom && (this.ver | 0) >= 5;
+  this.ns4 = document.layers && !this.dom;
+  this.any = (this.ie5 || this.ie4 || this.ns4 || this.ns5);
+  return this
+};
+
+/**
+ * @description Browser detection system.<br />
+ * Source: somewhere
+ * @type {{init: (()), searchString: ((data)), searchVersion: ((dataString)), dataBrowser: [*], dataOS: [*], info: (())}}
+ * @public
+ * @since 1.0
+ * @global
+ * @property {Function} BrowserDetect.init Initializer
+ * @property {function(Object): Object} BrowserDetect.searchString String search
+ * @property {function(string): number} BrowserDetect.searchVersion Version search
+ * @property {Object[]} BrowserDetect.dataBrowser Browser data
+ * @property {Object[]} BrowserDetect.dataOS OS data
+ * @property {function(): string} BrowserDetect.info Information about the browser
+ */
+export let BrowserDetect = {
+  init() {
+    this.browser = this.searchString(this.dataBrowser) || 'Unknown browser';
+    this.version = this.searchVersion(navigator.userAgent) || this.searchVersion(navigator.appVersion) || 'xx.yy';
+    this.OS = this.searchString(this.dataOS) || 'Unknown OS';
+  },
+  searchString(data) {
+    for (let d of data) {
+      let dataString = d.string, dataProp = d.prop;
+      this.versionSearchString = d.versionSearch || d.identity;
+      if (dataString) {
+        if (dataString.contains(d.subString)) return d.identity
+      }else if (dataProp) return data[i].identity
+    }
+  },
+  searchVersion(dataString) {
+    let index = dataString.indexOf(this.versionSearchString);
+    if (index === -1) return;
+    return parseFloat(dataString.substring(index + this.versionSearchString.length + 1))
+  },
+  dataBrowser: [{
+    string: navigator.userAgent, subString: 'Chrome', identity: 'Chrome'
+  }, {
+    string: navigator.userAgent, subString: 'OmniWeb', versionSearch: 'OmniWeb/', identity: 'OmniWeb'
+  }, {
+    string: navigator.vendor, subString: 'Apple', identity: 'Safari', versionSearch: 'Version'
+  }, {
+    prop: window.opera, identity: 'Opera', versionSearch: 'Version'
+  }, {
+    string: navigator.vendor, subString: 'iCab', identity: 'iCab'
+  }, {
+    string: navigator.vendor, subString: 'KDE', identity: 'Konqueror'
+  }, {
+    string: navigator.userAgent, subString: 'Firefox', identity: 'Firefox'
+  }, {
+    string: navigator.vendor, subString: 'Camino', identity: 'Camino'
+  }, { //For newer Netscapes (6+)
+    string: navigator.userAgent, subString: 'Netscape', identity: 'Netscape'
+  }, {
+    string: navigator.userAgent, subString: 'MSIE', identity: 'Explorer', versionSearch: 'MSIE'
+  }, {
+    string: navigator.userAgent, subString: 'Gecko', identity: 'Mozilla', versionSearch: 'rv'
+  }, { //For older Netscapes (4-)
+    string: navigator.userAgent, subString: 'Mozilla', identity: 'Netscape', versionSearch: 'Mozilla'
+  }],
+  dataOS: [{
+    string: navigator.platform, subString: 'Win', identity: 'Windows'
+  }, {
+    string: navigator.platform, subString: 'Mac', identity: 'Mac'
+  }, {
+    string: navigator.userAgent, subString: 'iPhone', identity: 'iPhone/iPod'
+  }, {
+    string: navigator.userAgent, subString: 'Android', identity: 'HTC/Samsung/LG/Nexus'
+  }, {
+    string: navigator.userAgent, subString: 'BlackBerry', identity: 'BlackBerry'
+  }, {
+    string: navigator.platform, subString: 'Linux', identity: 'Linux'
+  }],
+  info() {
+    return this.browser + '/' + this.version + ' (' + this.OS + ')';
+  }
+};
+
+/**
+ * @description Type a message.
+ * @param {string} msg Message
+ * @param {Element|string} where Place to type the message
+ * @param {boolean} [HTML=false] HTML flag
+ * @returns {undefined}
+ * @public
+ * @see module:dom~writeMsg2
+ * @since 1.0
+ * @function
+ */
+export let writeMsg = (msg, where, HTML=false) => {
+  let txt, pos = 0;
+  while (pos < msg.length + 10) {
+    txt = msg.substring(pos, 0);
+    isCustomType(where, 'Element') ? where.write(txt, HTML) : $e(where).write(txt, HTML);
+    pos++;
+  }
+};
+
+/**
+ * @description Type a message.
+ * @param {string} msg Message
+ * @param {string} slc Place to type the message
+ * @param {boolean} [HTML=false] HTML flag
+ * @param {number} [delay=150] Inter-character delay
+ * @param {string} [txt=''] Text
+ * @param {number} [pos=0] Position
+ * @see module:dom~writeMsg
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let writeMsg2 = (msg, slc, HTML=false, delay=150, txt='', pos=0) => {
+  if (pos < msg.length + 10) {
+    txt = msg.substring(pos, 0);
+    HTML ? $n(slc).innerHTML = txt : $n(slc).innerText = txt;
+    pos++;
+    setTimeout(`writeMsg2('${msg}', '${slc}', ${HTML}, ${delay}, '${txt}', ${pos})`, delay);
+  }
+};
+
+/**
+ * @description Templating + conversion.
+ * @param {string} [name='Template"] Name
+ * @param {string} [txt=''] Text/code containing the {{params}}
+ * @param {string[]} [params=['tab', 'date', 'time', 'timestamp', 'br']] Parameters
+ * @param {boolean} [consoleSpecial=false] Resulting text formatted to the console
+ * @constructor
+ * @this {Template}
+ * @returns {Template} Template
+ * @since 1.0
+ * @func
+ * @property {string} Template.name Name
+ * @property {string} Template.path Path (for saving)
+ * @property {string[]} Template.params Parameters (in {{...}})
+ * @property {string[]} Template.special Special parameters (predefined parameters)
+ * @property {string[]} Template.specialEq Special parameters equivalence
+ * @property {string} Template.text Raw text/code containing the parameters ({{param}})
+ * @property {function(Object, boolean): (code)} Template.gen Text/code generator
+ * @property {function(Object, string, string)} Template.save Save the generated text/code in the specified path
+ */
+export class Template {
+  constructor(name='Template', txt='', params=['name', 'description', 'version', 'title', 'path'], consoleSpecial=false) {
+    this.name = name;
+    this.path = this.name + '.jst';
+    this.params = params;
+    this.special = ['tab', 'date', 'time', 'timestamp', 'br', ''];
+    this.specialEq = ['&nbsp;'.repeat(8), getDate(), getTime(true), getTimestamp(true), '<br />'];
+    if (consoleSpecial) {
+      this.specialEq[0] = '\t';
+      this.specialEq[4] = '\n';
+    }
+    this.text = txt;
+  }
+  gen(obj, unEscape) {
+    let res = unEscape ? unescapeHTML(this.text): this.text, k = keys(obj);
+    for(let i = 0; i < k.length; i++) res = res.replace(RegExpify(`{{${k[i]}}}`), obj[k[i]]);
+    for(let i = 0; i < this.special.length; i++) res = res.replace(RegExpify(`%${this.special[i]}%`), this.specialEq[i]);
+    return res
+  }
+  save(obj, name=this.name, ext='js', type='javascript') {
+    obj ? save(this.gen(obj), `${name}.${ext}`, type) : save(this.text, this.path, 'javascript')
+  }
+}
+
+/**
+ * @description Remove (X)HTML tags.
+ * @param {string} str String with potential tags
+ * @returns {string} Tagless string
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let stripTags = (str) => str.replace(/<[\s\S]+>(.*?)<\/[\s\S]+>/, '$1');
+
+/**
+ * @description Make tabs up.
+ * @param {number} [n=1] Number of tabs
+ * @returns {string} Tabs
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let tabs = (n=1) => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.repeat(n);
+
+/**
+ * @description Get the value of an attribute of a tag with a known attribute selector.
+ * @param {string} tagName Tag name
+ * @param {string} knownAttrSelector Know attribute selector (in the form: attr='val')
+ * @param {string} attr Attribute
+ * @return {*} Value of the attribute in the tag
+ * @public
+ * @since 1.0
+ * @function
+ * @example
+ * //We want to get the meta description and we know that there's an element such as $n("meta[name='description']") &ne; null
+ * var docDescription = $t("meta", "name='description'", "content");
+ * @global
+ */
+export let $t = (tagName, knownAttrSelector, attr) => {
+  let tag = $e(`${tagName}[${knownAttrSelector}]`).val(false, true), start;
+  start = tag.search(attr + '="|\'') + attr.length + 2;
+  return tag.get(start, start + tag.get(start).indexOf(tag.has('\'') ? '\'': '"') - 1);
 };
 

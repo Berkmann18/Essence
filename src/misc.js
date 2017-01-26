@@ -4,7 +4,7 @@
  * @requires module:essence
  * @since 1.0
  */
-import * as essence from './essence';
+import {say} from './essence';
 
 /**
  * @description Process centre/manager.
@@ -49,7 +49,7 @@ export let Processes = {
       this.list.remove(process);
       //noinspection JSAnnotator
       process.delete();
-    }).catch(err => essence.say(err, 'error'));
+    }).catch(err => say(err, 'error'));
   },
   removeByName(name) {
     let processSearch = this.list.filter(process => process.name === name);
@@ -60,7 +60,7 @@ export let Processes = {
       this.list.remove(process);
       //noinspection JSAnnotator
       process.delete();
-    }).catch(err => essence.say(err, 'error'));
+    }).catch(err => say(err, 'error'));
   }
 };
 

@@ -4,9 +4,9 @@
  * @requires module:essence
  * @since 1.0
  */
-import * as data from './data';
-import * as essence from './essence';
-import * as maths from './maths';
+import {END_OF_SEQUENCE}  from './data';
+import {isNon, isNativeType, say} from './essence';
+import {range} from './maths';
 
 //Data structures
 /**
@@ -254,10 +254,10 @@ export let maxSort = (list) => {
   }
   //console.log('current result: ' + res.toStr(true));
   for (let i = list.length - 1; i > 1; i--) { //Same thing but from the end to complete the missing ones
-    if (list[i] === Math.floor(res[res.length - 1] - i * inc) && essence.isNon(res[i])
-      || list[i] === Math.round(res[res.length - 1] - i * inc) && essence.isNon(res[i])
-      || list[i] === Math.ceil(res[res.length - 1] + i * inc) && essence.isNon(res[i])
-      || list[i] >= Math.floor(res[res.length - 1] + i * inc) && list[i] <= Math.ceil(res[0] + i * inc) && essence.isNon(res[i])) res[i] = list[i];
+    if (list[i] === Math.floor(res[res.length - 1] - i * inc) && isNon(res[i])
+      || list[i] === Math.round(res[res.length - 1] - i * inc) && isNon(res[i])
+      || list[i] === Math.ceil(res[res.length - 1] + i * inc) && isNon(res[i])
+      || list[i] >= Math.floor(res[res.length - 1] + i * inc) && list[i] <= Math.ceil(res[0] + i * inc) && isNon(res[i])) res[i] = list[i];
   }
   //console.log('current result: ' + res.toStr(true));
   for (let i = 1; i < list.length - 1; i++) {
@@ -399,8 +399,8 @@ export let shellSort = (list) => {
   let res = list, gap = list.midIndex();
   while (gap > 0) {
     for (let small = 0; small < gap; small++) {
-      let range = maths.range(small + gap, gap, list.length);
-      for (let i of range) {
+      let rg = range(small + gap, gap, list.length);
+      for (let i of rg) {
         let pos = i;
         while (pos >= gap && res[i - gap] > list[i]) {
           res[pos] = res[pos - gap]; //[res[pos], res[pos - gap]] = [res[pos - gap], res[pos]]
@@ -557,7 +557,7 @@ export let get = (list, start = 0, end) => {
   }
   if (end < 0) end = list.length + end - 1;
   for (let i = start; i <= (end || list.length - 1); i++) res.push(list[i]);
-  return essence.isNativeType(res, 'String') ? res.join('') : res;
+  return isNativeType(res, 'String') ? res.join('') : res;
 };
 
 export let sort = (list, order = 'asc') => {
@@ -582,7 +582,7 @@ export let sort = (list, order = 'asc') => {
 export let getNextItem = (iterator) => {
   let item = iterator.next();
   //noinspection JSUnresolvedVariable
-  return item.done ? data.END_OF_SEQUENCE : item.value;
+  return item.done ? END_OF_SEQUENCE : item.value;
 };
 
 /**
@@ -596,7 +596,7 @@ export const logItems = Coroutine(function*() {
   try {
     for (; ;) {
       let item = yield;
-      essence.say(item, 'time');
+      say(item, 'time');
     }
   } finally {
     console.log('DONE');

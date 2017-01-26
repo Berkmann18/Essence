@@ -12,13 +12,13 @@
  * @requires data
  * @since 1.0
  */
-import * as data from './data';
-import * as ui from './ui';
-import * as misc from './misc';
-import * as maths from './maths';
-import * as dsa from './dsa';
-import * as dom from './dom';
-import * as qtest from './qtest';
+import {END_OF_SEQUENCE, MONTHS, DAYS, DAY_IN_SEC, MONTH_IN_DAY} from './data';
+import {clrToArr, addCSSRule, negateColour, cssPath} from './ui';
+import {asciiTable, camelCaseTo, name2type, rmDuplicates} from './misc';
+import {randTo, sumPow2, mixedRange, nthroot, range, conv} from './maths';
+import {get, getNextItem} from './dsa';
+import {gatherScripts, gatherStylesheets} from './dom';
+import {InvalidParamError} from './qtest';
 
 /**
  * @description Essence's console logger.
@@ -62,7 +62,7 @@ export let say = (message, type, ...style) => {
       console.log(`%c[${getTime(true)}]%c  ${message}`, STYLES.header, STYLES.headerEnd);
       break;
     case 'colour':
-      console.log(`%cr%cg%cb%c(%c${ui.clrToArr(message).join(', %c')}%c)`, 'color: #f00', 'color: #0f0', 'color: #00f', 'color: #00f', 'color: #000', 'color: #f00', 'color: #0f0', 'color: #00f', 'color: #00f', 'color: #000');
+      console.log(`%cr%cg%cb%c(%c${clrToArr(message).join(', %c')}%c)`, 'color: #f00', 'color: #0f0', 'color: #00f', 'color: #00f', 'color: #000', 'color: #f00', 'color: #0f0', 'color: #00f', 'color: #00f', 'color: #000');
       break;
     default:
       console.log(message, ...style);
@@ -248,7 +248,7 @@ export let entries = (obj) => Object.entries(obj);
  */
 export class Element {
   constructor(selector) {
-    if (/^([#.*_-`~&]\W*|\S|undefined|null|)$/.test(selector)) throw new qtest.InvalidParamError(`Element cannot accept the selector '${selector}' as its invalid.`); //Reject invalid selectors
+    if (/^([#.*_-`~&]\W*|\S|undefined|null|)$/.test(selector)) throw new InvalidParamError(`Element cannot accept the selector '${selector}' as its invalid.`); //Reject invalid selectors
     if (selector[0] === '#') this.node = document.querySelector(selector) || document.getElementById(selector.slice(1, selector.length)); //Id
     else if (selector[0] === '.') this.node = document.querySelector(selector) || document.getElementByClassName(selector.slice(1, selector.length)); //Class
     else if (selector[0] === '*') this.node = document.querySelectorAll(selector.slice(1, selector.length)) || document.getElementsByTagName(selector.slice(1, selector.length)); //Node list
@@ -363,7 +363,7 @@ export class Element {
   };
 
   setCSS(prop, val) {
-    if (this.isNodeList()) ui.addCSSRule(/\*\S/.test(this.selector) ? this.selector.get(1) : this.selector, misc.camelCaseTo(prop, 'hyphen') + ': ' + val);
+    if (this.isNodeList()) addCSSRule(/\*\S/.test(this.selector) ? this.selector.get(1) : this.selector, camelCaseTo(prop, 'hyphen') + ': ' + val);
     else this.node.style[prop] = val;
   };
 
@@ -531,8 +531,8 @@ export class Element {
       if (this.css('color') === '') this.setCSS('color', 'inherit'); //if the colour wasn't set or is only known to CSS as the default inherited value
       if (this.css('backgroundColor') === '') this.setCSS('backgroundColor', 'inherit');
     }
-    ui.negateColour(this.selector, 'color', 'a');
-    ui.negateColour(this.selector, 'backgroundColor', 'a');
+    negateColour(this.selector, 'color', 'a');
+    negateColour(this.selector, 'backgroundColor', 'a');
   };
 
   classes() {
@@ -547,7 +547,7 @@ export class Element {
   //noinspection JSUnusedGlobalSymbols
   multiElm(method, ...args) {
     let nodes = Array.from(this.node);
-    for (let node of nodes) $e(ui.cssPath(node))[method](...args);
+    for (let node of nodes) $e(cssPath(node))[method](...args);
   };
 
   delete() {
@@ -559,7 +559,7 @@ export class Element {
   };
 
   moveCSS() {
-    ui.addCSSRule(this.selector, this.attr('style'));
+    addCSSRule(this.selector, this.attr('style'));
     this.rmAttr('style');
   };
 }
@@ -598,7 +598,7 @@ function include(file, type = 'link') {
  * @see module:essence~include
  */
 export let includeOnce = (file, type = 'link', parentPath = '') => {
-  let rsc = type === 'script' ? dom.gatherScripts(true) : dom.gatherStylesheets(true);
+  let rsc = type === 'script' ? gatherScripts(true) : gatherStylesheets(true);
   if ((parentPath && (rsc.has(parentPath + file) || rsc.contains(parentPath + file)))
     || rsc.has(file) || rsc.contains(file)) return false;
   else include(file, type)
@@ -1090,7 +1090,7 @@ Array.prototype.minOf = (start = 0, n = this.length - 1) => {
  */
 Array.prototype.shuffle = (n = this.length) => {
   /* eslint no-unused-vars: 0 */
-  for (let i of n) [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]] = [this[maths.randTo(this.length - 1)], this[maths.randTo(this.length - 1)]];
+  for (let i of n) [this[randTo(this.length - 1)], this[randTo(this.length - 1)]] = [this[randTo(this.length - 1)], this[randTo(this.length - 1)]];
   /* eslint no-unused-vars: 2 */
   return this;
 };
@@ -1191,7 +1191,7 @@ Array.prototype.debug = () => {
  * @external Array
  */
 Array.prototype.getOccurrences = (simplified = false) => {
-  let arr = misc.rmDuplicates(this), res = [];
+  let arr = rmDuplicates(this), res = [];
   for (let cell of arr) res.push(`${cell}: ${this.count(cell)} {${this.positions(cell).toStr(true)}}`);
   if (simplified) {
     for (let item of res) item = parseInt(item.replace(/(?:.*?):(\d+)\{(.*?)}/g, '$1'));
@@ -1445,7 +1445,7 @@ Array.prototype.maxAvg = (n = this.length - 1, nbDec = 2) => {
  * @memberof Array.prototype
  * @external Array
  */
-Array.prototype.letiance = (nbDec = 2) => (maths.sumPow2(this, nbDec) / this.length - Math.pow(this.mean(nbDec), 2)).toNDec(nbDec);
+Array.prototype.letiance = (nbDec = 2) => (sumPow2(this, nbDec) / this.length - Math.pow(this.mean(nbDec), 2)).toNDec(nbDec);
 
 /**
  * @description Standard deviation.
@@ -1476,7 +1476,7 @@ Array.prototype.rand = (n) => {
     let res = [];
     for (let i = 0; i < n; i++) res.push(this.rand());
     return res
-  } else return this[maths.lenRand(this.length)]
+  } else return this[lenRand(this.length)]
 };
 
 /**
@@ -1590,7 +1590,7 @@ Array.prototype.iqr = (nbDec = 2) => this.quartile(3, nbDec) - this.quartile(1, 
  * @external Array
  * @see module:dsa~get
  */
-Array.prototype.get = (start = 0, end) => dsa.get(this, start, end);
+Array.prototype.get = (start = 0, end) => get(this, start, end);
 
 /**
  * @description Clean the array by removing undesirable items.
@@ -1605,7 +1605,7 @@ Array.prototype.get = (start = 0, end) => dsa.get(this, start, end);
  */
 Array.prototype.clean = (noDuplic = false) => {
   let arr = this.filter(x => !isNon(x));
-  return noDuplic ? misc.rmDuplicates(arr).remove() : arr; //Take off (or not) duplicates of actual values and double clean it
+  return noDuplic ? rmDuplicates(arr).remove() : arr; //Take off (or not) duplicates of actual values and double clean it
 };
 
 
@@ -1832,7 +1832,7 @@ Array.prototype.divide = (n) => {
  * @todo Add the support for 4x4+ matrices
  */
 Array.prototype.getAdjoint = () => {
-  let m = this.translate(), res = mkArray(this.length, 2, maths.EPS);
+  let m = this.translate(), res = mkArray(this.length, 2, Math.EPSILON);
   //+-+
   //-+-
   //+-+
@@ -2004,7 +2004,7 @@ Array.prototype.inv = () => this.isInvertible() ? this.dotProd(1 / this.det() * 
  * @external Array
  */
 Array.prototype.mix = () => {
-  let randPos = maths.mixedRange(0, 1, this.length - 1, true), res = [];
+  let randPos = mixedRange(0, 1, this.length - 1, true), res = [];
   for (let i of this) res[i] = this[randPos[i]];
   return res
 };
@@ -2027,7 +2027,7 @@ Array.prototype.littleMix = () => {
   } else {
     inc = this.getIncrement(0);
     for (let i of this) {
-      let rd = maths.randTo(inc);
+      let rd = randTo(inc);
       res.push(this[i]);
       if (i > 0 && rd === 0) [res[i], res[i - 1]] = [res[i - 1], res[i]];
       else if (i > 1 && rd === inc) [res[i], res[i - 2]] = [res[i - 2], res[i]];
@@ -2094,7 +2094,7 @@ Array.prototype.to1d = (jointer) => {
  * @external Array
  */
 Array.prototype.toNd = (n = 2) => {
-  let size = maths.nthroot(this.length, n, 0), res = [], k = 0; //Size of the size^n
+  let size = nthroot(this.length, n, 0), res = [], k = 0; //Size of the size^n
   for (let i = 0; i < size; i++) {
     res[i] = [];
     for (let j = 0; j < size; j++) res[i][j] = this[k++];
@@ -2326,7 +2326,7 @@ Array.prototype.neighbour = function (y, x) {
  */
 Array.prototype.sanitise = (type) => {
   for (let row of this) {
-    for (let cell of row) cell = misc.name2Type(type, cell);
+    for (let cell of row) cell = name2Type(type, cell);
   }
   return this;
 };
@@ -2570,7 +2570,7 @@ String.prototype.toNDigits = (n = 2) => {
  * @since 1.0
  */
 String.prototype.mix = (separator = '', jointer = separator) => {
-  let randPos = maths.mixedRange(0, 1, this.length - 1), iStr = this.split(separator), fStr = [];
+  let randPos = mixedRange(0, 1, this.length - 1), iStr = this.split(separator), fStr = [];
   for (let i = 0; i < this.length; i++) fStr[i] = iStr[randPos[i]];
   return fStr.join(jointer)
 };
@@ -2698,7 +2698,7 @@ String.prototype.getOccurrences = Array.prototype.getOccurrences;
  * @external String
  * @see module:dsa~get
  */
-String.prototype.get = (start = 0, end) => dsa.get(this, start, end);
+String.prototype.get = (start = 0, end) => get(this, start, end);
 
 /**
  * @description Zip/compress the string.
@@ -2902,17 +2902,17 @@ String.prototype.tokenize = () => {
     let iterator = this[Symbol.iterator]();
     let ch;
     do {
-      ch = dsa.getNextItem(iterator);
+      ch = getNextItem(iterator);
       if (ch.isChar()) {
         let word = '';
         do {
           word += ch;
-          ch = dsa.getNextItem(iterator);
+          ch = getNextItem(iterator);
         } while (ch.isChar());
         yield word;
       }
       //Ignore all other characters
-    } while (ch !== data.END_OF_SEQUENCE);
+    } while (ch !== END_OF_SEQUENCE);
   };
   return [...tokenizer()];
 };
@@ -2994,7 +2994,7 @@ Number.prototype.sign = (str) => str ? (this < 0 ? '-' : (this > 0 ? '+' : '')) 
  */
 Number.prototype.isPrime = (n) => {
   for (let i = 2; i < n; i++) {
-    if (maths.primeCheck(i, n)) return false
+    if (primeCheck(i, n)) return false
   }
   return true
 };
@@ -3163,7 +3163,7 @@ export let isTypedArray = (arr, type) => arr.every(item => isType(item, type));
  * @function
  */
 export let getArrayType = (arr) => {
-  let types = arr.map(item => getType(item)), type = misc.rmDuplicates(types);
+  let types = arr.map(item => getType(item)), type = rmDuplicates(types);
   return type.length > 1 ? 'Any' : type[0];
 };
 
@@ -3306,7 +3306,7 @@ export let txt2date = (txt) => {
 export let dateTime = (id) => {
   let date = new Date();
   let year = date.getFullYear(), month = date.getMonth();
-  let months = data.MONTHS;
+  let months = MONTHS;
   let d = date.getDate(), day = date.getDay(), h = date.getHours();
   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   let tt = '', GMT = date.getTimezoneOffset(), m, s;
@@ -3335,7 +3335,7 @@ export let dateTime = (id) => {
  * @function
  */
 export let dayOfWeek = (d) => {
-  let day = parseInt(d.split('/')[0]), m = [0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5], days = data.DAYS;
+  let day = parseInt(d.split('/')[0]), m = [0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5], days = DAYS;
   let y = parseInt(d.split('/').last()) % 100 + Math.floor(d.split('/').last() / 4), c = Math.floor(d.split('/').last() / 100 % 4), cCode;
   if (c === 0) cCode = 6;
   else if (c === 1) cCode = 4;
@@ -3413,7 +3413,7 @@ export let dateDiff = (from = new Date(), to, part = 'd', round = false) => {
  * @see module:data~MONTH_IN_DAY
  */
 export let date2s = (d = 0, w = 0, m = 0, y = 0) => {
-  return d * data.DAY_IN_SEC + w * 7 * data.DAY_IN_SEC + m * data.MONTH_IN_DAY * data.DAY_IN_SEC + y * 365 * data.MONTH_IN_DAY * data.DAY_IN_SEC;
+  return d * DAY_IN_SEC + w * 7 * DAY_IN_SEC + m * MONTH_IN_DAY * DAY_IN_SEC + y * 365 * MONTH_IN_DAY * DAY_IN_SEC;
 };
 
 /**
@@ -3431,13 +3431,13 @@ export let date2s = (d = 0, w = 0, m = 0, y = 0) => {
 export let s2date = (s, what = 'd') => {
   switch (what.toLowerCase()[0]) {
     case 'w':
-      return s / (7 * data.DAY_IN_SEC); //Weeks
+      return s / (7 * DAY_IN_SEC); //Weeks
     case 'm':
-      return s / (data.MONTH_IN_DAY * data.DAY_IN_SEC); //Months
+      return s / (MONTH_IN_DAY * DAY_IN_SEC); //Months
     case 'y':
-      return s / (365 * data.MONTH_IN_DAY * data.DAY_IN_SEC); //Years
+      return s / (365 * MONTH_IN_DAY * DAY_IN_SEC); //Years
     default:
-      return s / data.DAY_IN_SEC; //Days
+      return s / DAY_IN_SEC; //Days
   }
 };
 
@@ -3455,7 +3455,7 @@ export let s2date = (s, what = 'd') => {
  * @func
  */
 export let genStr = (len, filter, stackLayer = 0) => {
-  let str = '', az = misc.asciiTable('a-z'), AZ = misc.asciiTable('A-Z'), zero9 = maths.range(9), commonChar = ['&', '~', '"', '#', '\'', '{', '[', '(', '-', '|', '`', '_', '\\', '^', '@', ')', ']', '+', '=', '}', '%', '*', '?', ',', ';', '.', '/', ':', '!', ' '],
+  let str = '', az = asciiTable('a-z'), AZ = asciiTable('A-Z'), zero9 = range(9), commonChar = ['&', '~', '"', '#', '\'', '{', '[', '(', '-', '|', '`', '_', '\\', '^', '@', ')', ']', '+', '=', '}', '%', '*', '?', ',', ';', '.', '/', ':', '!', ' '],
     charlist;
   charlist = az.concat(AZ, zero9, commonChar);
   let c = '', i = 0;
@@ -3628,7 +3628,7 @@ export let keyTable = (map, propOnly = false) => { //Same as above but in the fo
  * @since 1.0
  * @function
  */
-export let char2hex = (c) => maths.conv(c.charCodeAt(0), 10, 16);
+export let char2hex = (c) => conv(c.charCodeAt(0), 10, 16);
 
 /**
  * @description Hexadecimal to character.
@@ -3638,7 +3638,7 @@ export let char2hex = (c) => maths.conv(c.charCodeAt(0), 10, 16);
  * @since 1.0
  * @function
  */
-export let hex2char = (h) => String.fromCharCode(maths.conv(h, 16));
+export let hex2char = (h) => String.fromCharCode(conv(h, 16));
 
 /**
  * @description Character to binary.
@@ -3648,7 +3648,7 @@ export let hex2char = (h) => String.fromCharCode(maths.conv(h, 16));
  * @since 1.0
  * @function
  */
-export let char2bin = (c) => maths.conv(c.charCodeAt(0), 10, 2);
+export let char2bin = (c) => conv(c.charCodeAt(0), 10, 2);
 
 
 /**
@@ -3659,7 +3659,7 @@ export let char2bin = (c) => maths.conv(c.charCodeAt(0), 10, 2);
  * @since 1.0
  * @function
  */
-export let bin2char = (b) => String.fromCharCode(maths.conv(b, 2));
+export let bin2char = (b) => String.fromCharCode(conv(b, 2));
 
 /**
  * @description Text to number converter.
@@ -3672,7 +3672,7 @@ export let bin2char = (b) => String.fromCharCode(maths.conv(b, 2));
  */
 export let txt2num = (txt, base = 10) => {
   let res = '';
-  for (let i = 0; i < txt.length; i++) res += maths.conv(txt.charCodeAt(i), 10, base) + ' ';
+  for (let i = 0; i < txt.length; i++) res += conv(txt.charCodeAt(i), 10, base) + ' ';
   return res.trimRight();
 };
 
@@ -3686,7 +3686,7 @@ export let txt2num = (txt, base = 10) => {
  */
 export let num2txt = (num, base = 10) => {
   let res = '';
-  for (let i = 0; i < num.split(' ').length; i++) res += String.fromCharCode(maths.conv(num.split(' ')[i], base));
+  for (let i = 0; i < num.split(' ').length; i++) res += String.fromCharCode(conv(num.split(' ')[i], base));
   return res;
 };
 

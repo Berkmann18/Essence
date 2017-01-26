@@ -4,23 +4,16 @@
  * @requires module:essence
  * @since 1.0
  */
-import * as essence from './essence';
-import * as qtest from './qtest';
-<<<<<<< HEAD
-import * as maths from './maths';
+import {isType, say} from './essence';
+import {InvalidParamError} from './qtest';
+import {range, bruteForceNum, getStep, abcModulus, gcd, isPrime, clamp} from './maths';
 let fs = require('fs'), rsa = require('ursa');
-=======
->>>>>>> develop
 
 /**
  * @description Caesar crypting
  * @param {NumberLike} character Character to encrypt
  * @param {number} n Key
-<<<<<<< HEAD
  * @returns {string} Crypted character
-=======
- * @returns {string} Cryped character
->>>>>>> develop
  * @public
  * @since 1.0
  * @function
@@ -77,7 +70,7 @@ export let decrypt = (txt, key) => {
     }
   }
   if (!key) console.log(console.table(res));
-  return key? res: dom.complexTable(`Decryption result for <i>${txt}</i>`, maths.range(-65536, 1, 65536), res, ['Key', 'Result'], `decrypted_${txt}`, false);
+  return key? res: dom.complexTable(`Decryption result for <i>${txt}</i>`, range(-65536, 1, 65536), res, ['Key', 'Result'], `decrypted_${txt}`, false);
 };
 
 /**
@@ -91,7 +84,7 @@ export let decrypt = (txt, key) => {
  */
 export let abcEncode = (txt) => {
   let code = new Array(txt.length);
-  if (essence.isType(txt, 'String') || essence.isType(txt, 'Array')) {
+  if (isType(txt, 'String') || isType(txt, 'Array')) {
     for (let i in txt) {
       if (txt.hasOwnProperty(i)) {
         switch (txt[i]) {
@@ -177,28 +170,22 @@ export let abcEncode = (txt) => {
         }
       }
     }
-    return essence.isType(txt, 'String') ? code.join('') : code
+    return isType(txt, 'String') ? code.join('') : code
   }
-  throw new qtest.InvalidParamError('The parameter of abcEncode must be a string or an array.');
+  throw new InvalidParamError('The parameter of abcEncode must be a string or an array.');
 };
 
 /**
  * @description Alphabetically decode from hexadecimal to lowercase text.
  * @param {string} txt Hexadecimal code
  * @returns {string} Alphabetical text
-<<<<<<< HEAD
  * @see module:security~abcEncode
  * @since 1.0
  * @function
-=======
- * @see module:Security~abcEncode
- * @since 1.0
- * @func
->>>>>>> develop
  */
 export let abcDecode = (txt) => {
   let code = new Array(txt.length);
-  if (essence.isType(txt, 'String') || essence.isType(txt, 'Array')) {
+  if (isType(txt, 'String') || isType(txt, 'Array')) {
     for (let i = 0; i < txt.length; i += 2) {
       switch (txt.get(i, i + 2)) {
         case '00': code[i] = ' ';break;
@@ -282,10 +269,9 @@ export let abcDecode = (txt) => {
         default: code[i] = 0;
       }
     }
-    return essence.isType(txt, 'String') ? code.join('') : code
+    return isType(txt, 'String') ? code.join('') : code
   }
-  return qtest.InvalidParamError('The parameter of abcDecode must be a string or an array.');
-<<<<<<< HEAD
+  return InvalidParamError('The parameter of abcDecode must be a string or an array.');
 };
 
 /**
@@ -298,9 +284,9 @@ export let abcDecode = (txt) => {
  * @see module:security~ilDecrypt
  */
 export let ilEncrypt = (data) => {
-  let res = essence.isType(data, 'String') ? data.split('') : data;
+  let res = isType(data, 'String') ? data.split('') : data;
   for (let i = 0; i < res.length; i++) res[i] = String.fromCharCode(data[i].charCodeAt(0) + data.length * 2);
-  return essence.isType(data, 'String') ? res.join('') : res;
+  return isType(data, 'String') ? res.join('') : res;
 };
 
 /**
@@ -313,9 +299,9 @@ export let ilEncrypt = (data) => {
  * @see module:security~ilEncrypt
  */
 export let ilDecrypt = (data) => {
-  let res = essence.isType(data, 'String') ? data.split('') : data;
+  let res = isType(data, 'String') ? data.split('') : data;
   for (let i = 0; i < res.length; i++) res[i] = String.fromCharCode(data[i].charCodeAt(0) - data.length * 2);
-  return essence.isType(data, 'String') ? res.join('') : res;
+  return isType(data, 'String') ? res.join('') : res;
 };
 
 /**
@@ -331,16 +317,16 @@ export let ilDecrypt = (data) => {
  */
 export let computeRSA = (p, q, safe=false) => {
   if (!Array.from(arguments).length) {
-    p = maths.bruteForceNum('isPrime(x)', 23, 99);
-    q = maths.bruteForceNum(`isPrime(x) && x!=${p}`, 23, 99);
+    p = bruteForceNum('isPrime(x)', 23, 99);
+    q = bruteForceNum(`isPrime(x) && x!=${p}`, 23, 99);
   }
-  if (!maths.isPrime(p)) throw new Error(`p=${p}; isn't a prime number !!`);
-  if (!maths.isPrime(q)) throw new Error(`q=${q}; isn't a prime number !!`);
-  if (p < 20 || q < 20) essence.say('p/q should be bigger !', 'warn');
-  let n = p * q, z = (p - 1) * (q - 1), e = maths.bruteForceNum(`1<x<${n} && maths.gcd(x, ${z})==1`, 2, n + 1), d; //1 < end < n & gcd(end, z) = 1
-  d = maths.bruteForceNum(`(x*${e})%${z}==1`, 0, n); //other possible condition: `x*${e}==1+k{z}`, n);
+  if (!isPrime(p)) throw new Error(`p=${p}; isn't a prime number !!`);
+  if (!isPrime(q)) throw new Error(`q=${q}; isn't a prime number !!`);
+  if (p < 20 || q < 20) say('p/q should be bigger !', 'warn');
+  let n = p * q, z = (p - 1) * (q - 1), e = bruteForceNum(`1<x<${n} && gcd(x, ${z})==1`, 2, n + 1), d; //1 < end < n & gcd(end, z) = 1
+  d = bruteForceNum(`(x*${e})%${z}==1`, 0, n); //other possible condition: `x*${e}==1+k{z}`, n);
 
-  essence.say([n, d]); //Private key
+  say([n, d]); //Private key
   return safe ? [[n, d], [n, e]] : [n, e]; //Public key
 };
 
@@ -381,7 +367,7 @@ export let decryptRSAFromFile = (text, file) => {
  * @see module:security~decryptRSA
  */
 export let encryptRSA = (text, p, q) => {
-  let n = p * q, z = (p - 1) * (q - 1), e = maths.bruteForceNum(`1<x<${n} && maths.gcd(x, ${z})==1`, 2, n + 1);
+  let n = p * q, z = (p - 1) * (q - 1), e = bruteForceNum(`1<x<${n} && gcd(x, ${z})==1`, 2, n + 1);
   return rsa.createPublicKey(z, e).encrypt(text);
 };
 
@@ -396,7 +382,7 @@ export let encryptRSA = (text, p, q) => {
  * @see module:security~encryptRSA
  */
 export let decryptRSA = (text, p, q) => {
-  let n = p * q, z = (p - 1) * (q - 1), e = maths.bruteForceNum(`1<x<${n} && maths.gcd(x, ${z})==1`, 2, n + 1), d = maths.bruteForceNum(`(x*${e})%${z}==1`, 0, n);
+  let n = p * q, z = (p - 1) * (q - 1), e = bruteForceNum(`1<x<${n} && gcd(x, ${z})==1`, 2, n + 1), d = bruteForceNum(`(x*${e})%${z}==1`, 0, n);
   return rsa.createPrivateKeyFromComponents(z, e, p, q, d * p, d * q, 1 / q, d).decrypt(text);
 };
 
@@ -413,7 +399,7 @@ export let genPassword = () => {
   for (let i = 65; i < 123; i++) {
     if (i <= 90 || i >= 97) chars[i - 65] = String.fromCharCode(i);
   }
-  chars = chars.concat(sym, maths.range(9)).remove();
+  chars = chars.concat(sym, range(9)).remove();
   while (word.length < 20) word += chars.rand();
   if (word.length < 20) word += chars.rand();
   return word
@@ -428,8 +414,8 @@ export let genPassword = () => {
  * @function
  */
 export let hash = (word) => {
-  let s = maths.getStep(word.split('').map((x) => x.charCodeAt(0)).min(), word.split('').map((x) => x.charCodeAt(0)).max()), w = word.split('');
-  let p = w.even().concat(w.odd()).join('').map((c) => String.fromCharCode(maths.abcModulus(c.charCodeAt(0) + s)));
+  let s = getStep(word.split('').map((x) => x.charCodeAt(0)).min(), word.split('').map((x) => x.charCodeAt(0)).max()), w = word.split('');
+  let p = w.even().concat(w.odd()).join('').map((c) => String.fromCharCode(abcModulus(c.charCodeAt(0) + s)));
   return toFSHA(p.split('').portion(2).concat(p.split('').portion(-2)).join(''));
 };
 
@@ -456,9 +442,9 @@ export let DES = (text, keys) => {
   let left = text.portion(2, -1), right = text.portion(2, 1);
   for (let i = 1; i < 16; i++) {
     left[i] = right[i - 1];
-    /*right[i] = essence.isType(left[i - 1], 'String')
-      ? left[i - 1].charCodeAt(0) ^ trans(right[i - 1].charCodeAt(0), (essence.isType(keys[i - 1], 'String') ? keys[i - 1].charCodeAt(0) : keys[i - 1]))
-      : left[i - 1] ^ trans(right[i - 1], (essence.isType(keys[i - 1], 'String') ? keys[i - 1].charCodeAt(0): keys[i - 1]));*/ //Or keys[i] instead of keys[i - 1]
+    /*right[i] = isType(left[i - 1], 'String')
+      ? left[i - 1].charCodeAt(0) ^ trans(right[i - 1].charCodeAt(0), (isType(keys[i - 1], 'String') ? keys[i - 1].charCodeAt(0) : keys[i - 1]))
+      : left[i - 1] ^ trans(right[i - 1], (isType(keys[i - 1], 'String') ? keys[i - 1].charCodeAt(0): keys[i - 1]));*/ //Or keys[i] instead of keys[i - 1]
     right[i] = String.fromCharCode(left.charCodeAt(i - 1) ^ trans(right[i - 1], keys[i]).charCodeAt(0));
   }
   return left.concat(right);
@@ -587,7 +573,7 @@ export let checkPassword = (password, realScore) => {
   if (reqChar > minReqChars) score = parseInt(score + (reqChar * 2)); //One or more required characters exist
 
   //Determine complexity based on overall score
-  if (!realScore) score = maths.clamp(score, 0, 100);
+  if (!realScore) score = clamp(score, 0, 100);
   let complexity;
 
   if (score < 0) complexity = 'Really weak';
@@ -599,6 +585,4 @@ export let checkPassword = (password, realScore) => {
   else if (score > 100) complexity = 'Really strong';
   else complexity = 'Too short';
   return realScore ? score : [`${score}%`, complexity];
-=======
->>>>>>> develop
 };
