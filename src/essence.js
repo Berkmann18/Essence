@@ -13,11 +13,11 @@
  * @since 1.0
  */
 import {END_OF_SEQUENCE, MONTHS, DAYS, DAY_IN_SEC, MONTH_IN_DAY} from './data';
-import {clrToArr, addCSSRule, negateColour, cssPath} from './ui';
+import {clrToArr, addCSSRule, negateColour} from './ui';
 import {asciiTable, camelCaseTo, name2type, rmDuplicates} from './misc';
 import {randTo, sumPow2, mixedRange, nthroot, range, conv} from './maths';
 import {get, getNextItem} from './dsa';
-import {gatherScripts, gatherStylesheets} from './dom';
+import {gatherScripts, gatherStylesheets, cssPath} from './dom';
 import {InvalidParamError} from './qtest';
 
 /**
@@ -724,7 +724,7 @@ Object.prototype.equals = (obj) => this.toString() === obj.toString() || this.to
  * @example
  * 'Hello world !'.multiReplace([[/[A-Za-z]/g, '1'], [/(\s|\!)/, '0']]); //'1111101111100'
  */
-Object.prototype.multiReplace = function (rules) {
+Object.prototype.multiReplace = (rules) => {
   let res = this.replace(rules[0][0], rules[0][1]);
   for (let i = 1; i < rules.length; i++) res = res.replace(rules[i][0], rules[i][1]);
   return res

@@ -4,9 +4,10 @@
  * @requires module:essence
  * @since 1.0
  */
-import {$n, $e, isNon, Copy, isCustomType, getDate, getTime, getTimestamp, keys} from './essence';
-import {getDirectoryPath, save} from './files';
-import {RegExpify} from './misc';
+import {$n, $e, isNon, Copy, isCustomType, getDate, getTime, getTimestamp, keys, isType} from './essence';
+import {getDirectoryPath, save, getFilename} from './files';
+import {RegExpify, Objectify} from './misc';
+import {lorem} from './data';
 
 /**
  * @description Add CSS code into the page.
@@ -862,8 +863,8 @@ export let tabs = (n=1) => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.re
  * @since 1.0
  * @function
  * @example
- * //We want to get the meta description and we know that there's an element such as $n("meta[name='description']") &ne; null
- * var docDescription = $t("meta", "name='description'", "content");
+ * //We want to get the meta description and we know that there's an element such as $n('meta[name='description']') &ne; null
+ * var docDescription = $t('meta', 'name='description'', 'content');
  * @global
  */
 export let $t = (tagName, knownAttrSelector, attr) => {
@@ -872,3 +873,235 @@ export let $t = (tagName, knownAttrSelector, attr) => {
   return tag.get(start, start + tag.get(start).indexOf(tag.has('\'') ? '\'': '"') - 1);
 };
 
+/**
+ * @description A Document templating system that will change the DOM with the use of data-* attributes or {{*}}
+ * @global
+ * @type {{attrs: string[], assoc: Array, get: DocTemplate.get, getAll: DocTemplate.getAll, getVal: DocTemplate.getVal, getValAll: DocTemplate.getValAll, associate: DocTemplate.associate, associateAll: DocTemplate.associateAll, template: Template, deMustache: DocTemplate.deMustache}}
+ * @public
+ * @since 1.0
+ * @this DocTemplate
+ * @property {string[]} DocTemplate.attrs Attributes (either preceded by data- attributes in HTML elements or between {{ and }})
+ * @property {Array} DocTemplate.assoc Associations What the templating system is going to use to associate/change the elements with data-[attr] or the {{attr}} strings
+ * @property {function(Str, *)} DocTemplate.add Add attribute(s)/association(s) pairs
+ * @property {function(string, boolean): (Array|NodeList)} DocTemplate.get Get the HTML elements with the attribute data-[<code>attrName</code>]
+ * @property {function(boolean): (Array[]|NodeList[])} DocTemplate.getAll Get All the HTML elements with a data-* attribute
+ * @property {function(string): Array} DocTemplate.getVal Get the values of the data-[<code>attrName</code>] attributes
+ * @property {function(): Array} DocTemplate.getVallAll Get all the values of the data-[attr] attributes
+ * @property {function(string, boolean)} DocTemplate.associate Place the corresponding association (in <code>DocTemplate.assoc</code>) in the HTML element's inner value
+ * @property {function(boolean)} DocTemplate.associateAll Place the associations (in <code>DocTemplate.assoc</code>) in the HTML element's inner values
+ * @property {Template} DocTemplate.template Mustache template (<span style='color: red;'>warning: This might mess up some JS generated HTML content</span>)
+ * @property {Function} DocTemplate.deMustache Change all the mustached variables in the HTML body
+ */
+export let DocTemplate = {
+  attrs: ['lorem', 'greet', 'date', 'time', 'timestamp', 'charset', 'author', 'title', 'dir'],
+  assoc: [lorem, 'Welcome !', getDate(), getTime(true), getTimestamp(true), $t('meta', 'charset', 'charset') || 'UTF-8', $t('meta', 'name="author"', 'content') || 'Maximilian Berkmann', ($n('title', true) != null) ? $e('title').val() : getFilename(true), getDirectoryPath()],
+  add(attr, assoc) {
+    isType(attr, 'Array') ? this.attrs.append(attr) : this.attrs.push(attr);
+    isType(assoc, 'Array') ? this.assoc.append(assoc) : this.assoc.push(assoc);
+  },
+  get(attrName, toArr=false) {
+    return toArr ? Array.from($n('*[data-' + attrName + ']')) : $n(`*[data-${attrName}]`);
+  },
+  getAll(oneDim=false) {
+    let nodeLists = this.attrs.map(attr => $n(`*[data-${attr}]`));
+    return oneDim ? nodeLists.map(nodeList => Array.from(nodeList)) : nodeLists;
+  },
+  getVal(attrName) {
+    return this.get(attrName, true).map(node => node.getAttribute(`data-${attrName}`));
+  },
+  getValAll() {
+    let pos = -1;
+    return this.getAll(true).map(nodeList => {
+      pos++;
+      return nodeList.map(node => node.getAttribute(`data-${DocTemplate.attrs[pos]}`));
+    });
+  },
+  associate(attrName, html=false) {
+    this.get(attrName, true).map(node => html ? node.innerHTML = this.assoc[this.attrs.indexOf(attrName)] : node.innerText = this.assoc[this.attrs.indexOf(attrName)]);
+  },
+  associateAll(html=false) {
+    for (let i = 0; i < this.attrs.length; i++) this.get(this.attrs[i], true).map(node => html ? node.innerHTML = this.assoc[i] : node.innerText = this.assoc[i])
+  },
+  template: new Template('DocTemplate', escapeHTML($e('body').val(true)), this.attrs),
+  deMustache() {
+    $e('body').write(this.template.gen(Objectify(this.attrs, this.assoc), true), true);
+  },
+  fullDeMustache() {
+    $e('html').write((new Template('DocTemplate', escapeHTML($e('html').val(true)), this.attrs)).gen(Objectify(this.attrs, this.assoc), true), true);
+  }
+};
+
+/**
+ * @description Turn HTML code into console/alert friendly text.
+ * @param {code} code Code
+ * @returns {string} Console friendly text
+ * @function
+ * @public
+ * @since 1.0
+ * @see module:dom~text2html
+ */
+export let html2text = (code) => code.multiReplace([[/<br \/>/gm, '\n'], [/\s{2,4}/gm, '\t']]);
+
+/**
+ * @description Turn console/alert friendly text into HTML code.
+ * @param {string} text Console friendly text
+ * @returns {code} HTML code
+ * @function
+ * @public
+ * @since 1.0
+ * @see module:dom~html2text
+ */
+export let text2html = (text) => text.multiReplace([[/\n/gm, '<br />'], [/\t|\s{2}/gm, '&nbsp;&nbsp']]);
+
+/**
+ * @description A text buffer to allow complex text printing management.
+ * @type {{log: string, writeToDocument: Buffer.writeToDocument, writeToConsole: Buffer.writeToConsole, add: Buffer.add, show: Buffer.show}}
+ * @property {code} Buffer.log Buffer's content
+ * @property {function(boolean)} Buffer.writeToDocument Write the buffer's content to the page
+ * @property {Function} Buffer.writeToConsole Write the buffer's content to the console
+ * @property {function(code)} Buffer.add Add content to the buffer
+ * @property {function(boolean, boolean, boolean)} Buffer.show Show the buffer's content at the desired place in the appropriate format
+ * @property {Function} Buffer.clear Clear the buffer
+ * @global
+ * @public
+ * @since 1.0
+ */
+export let Buffer = {
+  log: '',
+  writeToDocument(isHTML=false) {
+    print(this.log, isHTML);
+  },
+  writeToConsole () {
+    console.log(`\t[Buffer]\n${this.log}`);
+  },
+  add(text) {
+    this.log += text + '\n';
+  },
+  show(console=false, withHTML=false, keepLog=false) {
+    if (console) this.writeToConsole();
+    else {
+      this.log = text2html(this.log);
+      this.writeToDocument(withHTML);
+    }
+    if (!keepLog) this.log = '';
+  },
+  clear () {
+    this.log = '';
+    console.log('Buffer cleared');
+  }
+};
+
+/**
+ * @description Dissect a selector and return if it matches some top-level CSS selections (or the matching bits).
+ * @param {String} selector Selector
+ * @param {boolean} [booleanOnly=false] Return the result as boolean (so test results)
+ * @returns {{list: boolean, tag: boolean, id: boolean, class: boolean, pseudoSelector: boolean, multiple: boolean, namespace: boolean}} Dissection
+ * @public
+ * @since 1.0
+ * @function
+ * @TODO make sure it gets the tags and spaces right
+ */
+export let dissect = (selector, booleanOnly=false) => {
+  let hasPart = (regexp) => selector.match(new RegExp(regexp, 'g'));
+
+  return booleanOnly ? {
+      list: /\*\w+/g.test(selector),
+      tag: /^\w+[^#.|:](\s*?\w*[^#.|:]|$)/g.test(selector), //To improve
+      id: /#\w+/g.test(selector),
+      class: /\.\w+/g.test(selector),
+      pseudoSelector: /:\w+/g.test(selector),
+      multiple: /\s+/g.test(selector),
+      namespace: /\w+\|\w+/g.test(selector)
+    }: {
+      list: hasPart(/\*\w+/),
+      tag: hasPart(/^\w+[^#.|:](\s*?\w*[^#.|:]|$)/), //To improve
+      id: hasPart(/#\w+/),
+      class: hasPart(/\.\w+/),
+      pseudoSelector: hasPart(/:\w+/),
+      multiple: hasPart(/\s+/),
+      namespace: hasPart(/\w+\|\w+/)
+    };
+};
+
+/**
+ * @description Try to gather an element <em>$e(selector)</em> while placing it if it's not there yet to be used
+ * @param {String} selector Selector of the tested element
+ * @param {String} [container='body'] Container where the new element will be placed if it doesn't already exist
+ * @param {code} [newHTMLValue=''] Value (HTML code) that the element will get if it's not already existent
+ * @returns {Element} Element
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let tryElement = (selector, container='body', newHTMLValue='') => {
+  try {
+    $e(selector);
+  } catch (err) {
+    let dissection = dissect(selector);
+    let element = document.createElement(dissection.tag[0]);
+    element.id = dissection.id[0].remove('#');
+    element.className = dissection.class.join(' ').remove('.');
+    element.innerHTML = newHTMLValue;
+    $n(container).appendChild(element);
+  }
+  return $e(selector);
+};
+
+/**
+ * @description Try to gather an element <em>$n(selector)</em> while placing it if it's not there yet to be used.
+ * @param {String} selector Selector of the tested element
+ * @param {String} [container='body'] Container where the new element will be placed if it doesn't already exist
+ * @param {{tagName: String, id: String, class: String, title: (undefined|String)}} attr Attributes of the newly created element (if not already present)
+ * @returns {HTMLElement} HTML element
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let tryNode = (selector, container='body', attr) => {
+  try {
+    $n(selector);
+  } catch (err) {
+    let node = document.createElement(attr.tagName);
+    if (attr.has('id')) node.id = attr.id;
+    if (attr.has('class')) node.className = attr.class;
+    if (attr.has('title')) node.title = attr.title;
+    $n(container).appendChild(node);
+  }
+  return $n(selector);
+};
+
+/**
+ * @description Get the CSS path of a node <i>$n(...)</i>.<br />
+ * Inspired by {@link https://stackoverflow.com/questions/4588119/get-elements-css-selector-when-it-doesnt-have-an-id|@Phrogz's answer on here}.
+ * @param {HTMLElement} node Node
+ * @returns {string} CSS Path
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let cssPath = (node) => {
+  let names = [];
+  while (node.parentNode) {
+    if (node.id) {
+      names.unshift(`#${node.id}`);
+      break;
+    } else {
+      if (node === node.ownerDocument.documentElement) names.unshift(node.tagName.toLowerCase());
+      else{
+        for (let c = 1, e = node; e.previousElementSibling; e = e.previousElementSibling, c++) names.unshift(`${node.tagName.toLowerCase()}:nth-child(${c})`);
+      }
+      node = node.parentNode;
+    }
+  }
+  return names.join(' > ');
+};
+
+/**
+ * @description Simplify a CSS Path (useful in conjuction with cssPath()).
+ * @param {String} path CSS Path
+ * @returns {String} Simplified CSS Path
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let simplifyCSSPath = (path) => path.replace(/(?:html > )*(head:nth-child\(1\)|body:nth-child\(2\)) > +/gmi, '');
