@@ -32,8 +32,10 @@
  * @requires module:essence
  * @since 1.0
  */
-import {$n, $e, isNon} from './essence';
-import * as files from './files';
+import {$n, $e, isNon, Copy, isCustomType, getDate, getTime, getTimestamp, keys, isType} from './essence';
+import {getDirectoryPath, save, getFilename} from './files';
+import {RegExpify, Objectify} from './misc';
+import {lorem} from './data';
 
 /**
  * @description Add CSS code into the page.
@@ -82,8 +84,8 @@ export const emptyDoc = (title = document.title, author = 'anonymous') => {
   $e('html').write(`&lt;html>
     &lt;head>
       &lt;title>${title}&lt;/title>
-      &lt;meta charset="UTF-8" />
-      &lt;meta name="author" content="${author}" />
+      &lt;meta charset='UTF-8' />
+      &lt;meta name='author' content='${author}' />
     &lt;/head>
     &lt;body>&lt;/body>
   &lt;/html>`, true);
@@ -186,7 +188,7 @@ export let noRightClick = (restore=false) => {
 export let redirect = (to, divId, dt=3e3) => { //Redirect to #to in #dt ms
   let s = Math.floor(dt / 1e3); //Convert from ms to start
   //Write the Redirecting message to the screen
-  $e(`#${divId}`).write(`&lt;h2> Redirecting to &lt;ins>${to}&lt;/ins> ...&lt;br />in &lt;span id="timeleft">${s}&lt;/span>start&lt;/h2>`, true);
+  $e(`#${divId}`).write(`&lt;h2> Redirecting to &lt;ins>${to}&lt;/ins> ...&lt;br />in &lt;span id='timeleft'>${s}&lt;/span>start&lt;/h2>`, true);
   s--;
   $e('#timeleft').write(s);
   setTimeout(`location=${to};`, dt); //Set the timeout for the redirection
@@ -374,7 +376,7 @@ export let gatherScripts = (asList) => { //Sort of getResources() but dedicated 
  * @see module:dom~gatherExternalScripts
  */
 export let gatherInternalScripts = (format=false) => {
-  let internalScripts = Array.from(document.scripts).filter(s => s.text != "");
+  let internalScripts = Array.from(document.scripts).filter(s => s.text != '');
   return format ? internalScripts.map(s => s.src) : internalScripts;
 };
 
@@ -388,13 +390,13 @@ export let gatherInternalScripts = (format=false) => {
  * @see module:dom~gatherInternalScripts
  */
 export let gatherExternalScripts = (format=false) => {
-  let externalScripts = Array.from(document.scripts).filter(s => s.src != "");
+  let externalScripts = Array.from(document.scripts).filter(s => s.src != '');
   return format ? externalScripts.map(s => s.src) : externalScripts;
 };
 
 /**
  * @description Gather remote resources from the file.
- * @param {string} [type] Type (either: "script", "stylesheet" or "" (for both))
+ * @param {string} [type] Type (either: 'script', 'stylesheet' or '' (for both))
  * @return {string[]} Remote resources
  * @function
  * @public
@@ -403,12 +405,12 @@ export let gatherExternalScripts = (format=false) => {
  */
 export let gatherRemoteResources = (type) => {
   let $rsc = type === 'script' ? gatherScripts(true) : (type === 'stylesheet' ? gatherStylesheets(true) : gatherStylesheets(true).concat(gatherScripts(true)));
-  return $rsc.filter(r => r.sameFirst(location.href) != files.getDirectoryPath())
+  return $rsc.filter(r => r.sameFirst(location.href) != getDirectoryPath())
 };
 
 /**
  * @description Gather local resources from the file.
- * @param {string} [type] Type (either: "script", "stylesheet" or "" (for both))
+ * @param {string} [type] Type (either: 'script', 'stylesheet' or '' (for both))
  * @return {string[]} Remote resources
  * @function
  * @public
@@ -417,7 +419,7 @@ export let gatherRemoteResources = (type) => {
  */
 export let gatherLocalResources = (type) => {
   let $rsc = type === 'script' ? gatherScripts(true) : (type === 'stylesheet' ? gatherStylesheets(true) : gatherStylesheets(true).concat(gatherScripts(true)));
-  return $rsc.filter(r => r.sameFirst(location.href) === files.getDirectoryPath())
+  return $rsc.filter(r => r.sameFirst(location.href) === getDirectoryPath())
 };
 
 /**
@@ -465,6 +467,36 @@ export let gatherExternalStylesheets = (format=false) => {
 };
 
 /**
+ * @description Open (initialise the beginning of) an HTML table.
+ * @param {NumberLike} [caption=''] Caption
+ * @param {string} [id='t'] ID of the table
+ * @param {string} [style] Style of table
+ * @returns {string} Open HTML table
+ * @private
+ * @since 1.0
+ * @function
+ */
+let openHtmlTable = (caption, id='t', style='') => `&lt;table id='${id}' style='${style}' cellspacing=0 cellpadding=2>${caption ? `&lt;caption>${caption}&lt;/caption>` : ''}`;
+
+/**
+ * @description Close an HTML table.
+ * @param {string} table HTML table
+ * @param {string} [id='t'] ID of the table
+ * @returns {string} Closed HTML table
+ * @private
+ * @since 1.0
+ * @function
+ */
+let closeHtmlTable = (table, id='t') => {
+  table += '&lt;/table>';
+  addCSS(`#${id} table{background: #000;}
+    #${id} table, #${id} td, #${id} th{border: 1px solid #000; color: #000; background: #fff;}
+    #${id} tr:nth-child(even) td, #${id} tr:nth-child(even) th{background: #ddd;}
+    #${id} tr td:hover, #${id} tr th:hover{background: #bbb;}`);
+  return table
+};
+
+/**
  * @description A basic HTML table.
  * @param {NumberLike} [caption=''] Caption
  * @param {Array} rows Rows of the table
@@ -478,23 +510,629 @@ export let gatherExternalStylesheets = (format=false) => {
  * @function
  */
 export let simpleTable = (caption='', rows, id='t', style='', split, cellIds) => {
-  let tab = `&lt;table id="${id}" style="${style}" cellspacing=0 cellpadding=2>${caption ? `&lt;caption>${caption}&lt;/caption>` : ''}`;
+  let tab = openHtmlTable(caption, id, style);
   for (let i = 0; i &lt; rows.length; i++) {
     tab += '&lt;tr>';
     if (split) {
-      for (let j = 0; j &lt; rows[i].length; j++) tab += `&lt;td id="${id + (isNon(cellIds) ? i + '_' + j : cellIds[i][j])}">${rows[i][j]}&lt;/td>`;
-    } else tab += `&lt;td id="${id + (isNon(cellIds) ? i : cellIds[i])}">${rows[i]}&lt;/td>`;
+      for (let j = 0; j &lt; rows[i].length; j++) tab += `&lt;td id='${id + (isNon(cellIds) ? i + '_' + j : cellIds[i][j])}'>${rows[i][j]}&lt;/td>`;
+    } else tab += `&lt;td id='${id + (isNon(cellIds) ? i : cellIds[i])}'>${rows[i]}&lt;/td>`;
     tab += '&lt;/tr>';
   }
-  tab += '&lt;/table>';
-  addCSS(`#${id} table{background: #000;}
-    #${id} table, #${id} td {border: 1px solid #000; color: #000; background: #fff;}
-    #${id} tr:nth-child(even) td{background: #ddd;}
-    #${id} tr td:hover{background: #bbb;}`);
-  return tab
+  return closeHtmlTable(tab, id);
 };
 
-</code></pre>
+/**
+ * @description Row HTML table.
+ * @param {NumberLike} caption Caption
+ * @param {Array} headerRows Row headers
+ * @param {Array} rows Rows of the table
+ * @param {string} [id='t'] ID of the table
+ * @param {boolean} [split=false] Split rows into multiple columns
+ * @param {string} [style] Style of table
+ * @param {string[]} [cellIds] Ids of each cells
+ * @returns {string} HTML code
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let rowTable = (caption, headerRows, rows, id='t', split=false, style='', cellIds) => {
+  let tab = openHtmlTable(caption, id, style);
+  //let rowspan = (headerRows.length &lt;= rows.length) ? rows.length / headerRows.length: headerRows.length / rows.length;
+  for (let i = 0; i &lt; rows.length; i++) {
+    tab += headerRows ? `&lt;tr>&lt;th>${headerRows[i]}&lt;/th>`: '&lt;tr>';
+    if (split) {
+      for (let j = 0; j &lt; rows[i].length; j++) {
+        tab += `&lt;td id='${id + (isNon(cellIds) ? i + '_' + j : cellIds[i][j])}'>${rows[i][j]}&lt;/td>`;
+      }
+    } else tab += `&lt;td id='${id + (isNon(cellIds) ? i : cellIds[i])}'>${rows[i]}&lt;/td>`;
+    tab += '&lt;/tr>';
+  }
+  return closeHtmlTable(tab, id);
+};
+
+/**
+ * @description Column HTML table.
+ * @param {NumberLike} caption Caption
+ * @param {Array} headerCols Row headers
+ * @param {Array} cols Cols of the table
+ * @param {string} [id='t'] ID of the table
+ * @param {boolean} [split=false] Split columns into multiple rows
+ * @param {string} [style] Style of table
+ * @param {string[]} [cellIds] Ids of each cells
+ * @returns {string} HTML code
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let colTable = (caption, headerCols, cols, id='t', split=false, style='', cellIds) => {
+  let tab = openHtmlTable(caption, id, style);
+  //let colspan = (headerCols.length &lt;= cols.length) ? cols.length / headerCols.length : headerCols.length / cols.length;
+  if (headerCols) {
+    tab += '&lt;tr>';
+    for (let col of headerCols) tab += `&lt;th>${col}&lt;/th>`;
+    tab += '&lt;/tr>';
+  }
+  for (let i = 0; i &lt; cols.length; i++) {
+    tab += '&lt;tr>';
+    if (split) {
+      for (let j = 0; j &lt; cols[i].length; j++) tab += `&lt;td id='${id + (isNon(cellIds) ? i + '_' + j : cellIds[i][j])}'>${cols[i][j]}&lt;/td>`;
+    } else tab += `&lt;td id='${id + (isNon(cellIds) ? i : cellIds[i])}'>${cols[i]}&lt;/td>`;
+    tab += '&lt;/tr>';
+  }
+  return closeHtmlTable(tab, id);
+};
+
+/**
+ * @description Complex HTML table
+ * @param {NumberLike} caption Caption
+ * @param {Array} headerRows Row headers
+ * @param {Array} rows Rows of the table
+ * @param {Array} headerCols Columns Headers
+ * @param {string} id ID of the table
+ * @param {boolean} [split=false] Split rows into multiple columns
+ * @param {string} [style] Style of table
+ * @param {string[]} [cellIds] Ids of each cells
+ * @returns {string} HTML code
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let complexTable = (caption, headerRows, rows, headerCols, id='t', split=false, style='', cellIds) => {
+  let tab = openHtmlTable(caption, id, style);
+  for (let col of headerCols) tab += `&lt;th>${col}&lt;/th>`;
+  tab += '&lt;/tr>';
+  for (let i = 0; i &lt; rows.length; i++) {
+    tab += headerRows ? `&lt;tr>&lt;th>${headerRows[i]}&lt;/th>`: '&lt;tr>';
+    if (split) {
+      for (let j = 0; j &lt; rows[i].length; j++) tab += `&lt;td id='${id + (isNon(cellIds) ? i + '_' + j : cellIds[i][j])}'>${rows[i][j]}&lt;/td>`;
+    } else tab += `&lt;td id='${id + (isNon(cellIds) ? i : cellIds[i])}'>${rows[i]}&lt;/td>`;
+    tab += '&lt;/tr>';
+  }
+  return closeHtmlTable(tab, id);
+};
+
+/**
+ * @description HTML table with coloured empty cells
+ * @param {NumberLike} caption Caption
+ * @param {Array} cols Columns
+ * @param {string[]} clrs Colours list
+ * @param {string} [id='t'] ID of the table
+ * @param {boolean} [split=false] Split the cells into multiple ones
+ * @param {string} [style] Style of the table
+ * @returns {string} Colour HTML table
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let colourTable = (caption, cols, clrs, id='c', split=false, style='') => {
+  let tab = openHtmlTable(caption, id, style);
+  if (cols) {
+    tab += '&lt;tr>';
+    for(let col of cols) tab += `&lt;th>${col}&lt;/th>`;
+    tab += '&lt;/tr>';
+  }
+  for (let i = 0; i &lt; clrs.length; i++) {
+    tab += '&lt;tr>';
+    if (split) {
+      for (let j = 0; j &lt; clrs[i].length; j++) tab += isValid(clrs[i][j], 'color') ? `&lt;td style='background: ${clrs[i][j]}'>&lt;br />&lt;/td>`: `&lt;td>${clrs[i][j]}&lt;/td>`;
+    } else tab += `&lt;td style='background: ${clrs[i]}'>&lt;br />&lt;/td>`;
+    tab += '&lt;/tr>'
+  }
+  return closeHtmlTable(tab, id);
+};
+
+/**
+ * @description Compare two matrices and display a table with all the different elements of &lt;code>b&lt;/code> in regards to &lt;code>a&lt;/code>.
+ * @param {Array} a Matrix a
+ * @param {Array} b Matrix b
+ * @param {boolean} [toHTML=false] HTML output
+ * @returns {*} Comparison table result
+ * @public
+ * @since 1.0
+ * @function
+ * @throws {Error} Uncomparable matrices
+ */
+export let tableCompare = (a, b, toHTML) => {
+  if (a.size(true) != b.size(true)) throw new Error('You can\'t compare two matrices of different sizes');
+  let res = Copy(a);
+  for (let i = 0; i &lt; res.length; i++) {
+    for (let j = 0; j &lt; res[i].length; j++) res[i][j] = (a[i][j] === b[i][j]) ? '' : b[i][j];
+  }
+  toHTML ? println(simpleTable('Comparison', res)) : console.table(res);
+  return res;
+};
+
+/**
+ * @description (Ask to) bookmark a webpage?
+ * @param {string} url URL of the webpage
+ * @param {string} title Title
+ * @param {string} [elmId='body'] Element ID
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let addToFav = (url, title, elmId='body') => {
+  let place = elmId ? `#${elmId}` : 'body';
+  if (navigator.appName.substring(0, 3) === 'Mic' &amp;&amp; navigator.appVersion.substring(0, 1) >= 4) $e(place).write(`&lt;a href='#' onClick='window.external.AddFavorite(${url}, ${title});return false;'>Bookmark this webpage&lt;/a>&lt;br />`, true);
+  else $e(place).write('Press CTRL + D to add this webpage to your bookmarks!', true)
+};
+
+/**
+ * @description Browser check.&lt;br />
+ * Improved from somewhere
+ * @returns {checkBrowser} Browser check
+ * @this checkBrowser
+ * @public
+ * @since 1.0
+ * @todo Document the properties
+ * @constructor
+ */
+export let checkBrowser = () => {
+  this.ver = navigator.appVersion;
+  this.dom = !!document.getElementById;
+  this.ie5 = this.ver.has('MSIE 5') &amp;&amp; this.dom;
+  this.ie4 = document.all &amp;&amp; !this.dom;
+  this.ns5 = this.dom &amp;&amp; (this.ver | 0) >= 5;
+  this.ns4 = document.layers &amp;&amp; !this.dom;
+  this.any = (this.ie5 || this.ie4 || this.ns4 || this.ns5);
+  return this
+};
+
+/**
+ * @description Browser detection system.&lt;br />
+ * Source: somewhere
+ * @type {{init: (()), searchString: ((data)), searchVersion: ((dataString)), dataBrowser: [*], dataOS: [*], info: (())}}
+ * @public
+ * @since 1.0
+ * @global
+ * @property {Function} BrowserDetect.init Initializer
+ * @property {function(Object): Object} BrowserDetect.searchString String search
+ * @property {function(string): number} BrowserDetect.searchVersion Version search
+ * @property {Object[]} BrowserDetect.dataBrowser Browser data
+ * @property {Object[]} BrowserDetect.dataOS OS data
+ * @property {function(): string} BrowserDetect.info Information about the browser
+ */
+export let BrowserDetect = {
+  init() {
+    this.browser = this.searchString(this.dataBrowser) || 'Unknown browser';
+    this.version = this.searchVersion(navigator.userAgent) || this.searchVersion(navigator.appVersion) || 'xx.yy';
+    this.OS = this.searchString(this.dataOS) || 'Unknown OS';
+  },
+  searchString(data) {
+    for (let d of data) {
+      let dataString = d.string, dataProp = d.prop;
+      this.versionSearchString = d.versionSearch || d.identity;
+      if (dataString) {
+        if (dataString.contains(d.subString)) return d.identity
+      }else if (dataProp) return data[i].identity
+    }
+  },
+  searchVersion(dataString) {
+    let index = dataString.indexOf(this.versionSearchString);
+    if (index === -1) return;
+    return parseFloat(dataString.substring(index + this.versionSearchString.length + 1))
+  },
+  dataBrowser: [{
+    string: navigator.userAgent, subString: 'Chrome', identity: 'Chrome'
+  }, {
+    string: navigator.userAgent, subString: 'OmniWeb', versionSearch: 'OmniWeb/', identity: 'OmniWeb'
+  }, {
+    string: navigator.vendor, subString: 'Apple', identity: 'Safari', versionSearch: 'Version'
+  }, {
+    prop: window.opera, identity: 'Opera', versionSearch: 'Version'
+  }, {
+    string: navigator.vendor, subString: 'iCab', identity: 'iCab'
+  }, {
+    string: navigator.vendor, subString: 'KDE', identity: 'Konqueror'
+  }, {
+    string: navigator.userAgent, subString: 'Firefox', identity: 'Firefox'
+  }, {
+    string: navigator.vendor, subString: 'Camino', identity: 'Camino'
+  }, { //For newer Netscapes (6+)
+    string: navigator.userAgent, subString: 'Netscape', identity: 'Netscape'
+  }, {
+    string: navigator.userAgent, subString: 'MSIE', identity: 'Explorer', versionSearch: 'MSIE'
+  }, {
+    string: navigator.userAgent, subString: 'Gecko', identity: 'Mozilla', versionSearch: 'rv'
+  }, { //For older Netscapes (4-)
+    string: navigator.userAgent, subString: 'Mozilla', identity: 'Netscape', versionSearch: 'Mozilla'
+  }],
+  dataOS: [{
+    string: navigator.platform, subString: 'Win', identity: 'Windows'
+  }, {
+    string: navigator.platform, subString: 'Mac', identity: 'Mac'
+  }, {
+    string: navigator.userAgent, subString: 'iPhone', identity: 'iPhone/iPod'
+  }, {
+    string: navigator.userAgent, subString: 'Android', identity: 'HTC/Samsung/LG/Nexus'
+  }, {
+    string: navigator.userAgent, subString: 'BlackBerry', identity: 'BlackBerry'
+  }, {
+    string: navigator.platform, subString: 'Linux', identity: 'Linux'
+  }],
+  info() {
+    return this.browser + '/' + this.version + ' (' + this.OS + ')';
+  }
+};
+
+/**
+ * @description Type a message.
+ * @param {string} msg Message
+ * @param {Element|string} where Place to type the message
+ * @param {boolean} [HTML=false] HTML flag
+ * @returns {undefined}
+ * @public
+ * @see module:dom~writeMsg2
+ * @since 1.0
+ * @function
+ */
+export let writeMsg = (msg, where, HTML=false) => {
+  let txt, pos = 0;
+  while (pos &lt; msg.length + 10) {
+    txt = msg.substring(pos, 0);
+    isCustomType(where, 'Element') ? where.write(txt, HTML) : $e(where).write(txt, HTML);
+    pos++;
+  }
+};
+
+/**
+ * @description Type a message.
+ * @param {string} msg Message
+ * @param {string} slc Place to type the message
+ * @param {boolean} [HTML=false] HTML flag
+ * @param {number} [delay=150] Inter-character delay
+ * @param {string} [txt=''] Text
+ * @param {number} [pos=0] Position
+ * @see module:dom~writeMsg
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let writeMsg2 = (msg, slc, HTML=false, delay=150, txt='', pos=0) => {
+  if (pos &lt; msg.length + 10) {
+    txt = msg.substring(pos, 0);
+    HTML ? $n(slc).innerHTML = txt : $n(slc).innerText = txt;
+    pos++;
+    setTimeout(`writeMsg2('${msg}', '${slc}', ${HTML}, ${delay}, '${txt}', ${pos})`, delay);
+  }
+};
+
+/**
+ * @description Templating + conversion.
+ * @param {string} [name='Template"] Name
+ * @param {string} [txt=''] Text/code containing the {{params}}
+ * @param {string[]} [params=['tab', 'date', 'time', 'timestamp', 'br']] Parameters
+ * @param {boolean} [consoleSpecial=false] Resulting text formatted to the console
+ * @constructor
+ * @this {Template}
+ * @returns {Template} Template
+ * @since 1.0
+ * @func
+ * @property {string} Template.name Name
+ * @property {string} Template.path Path (for saving)
+ * @property {string[]} Template.params Parameters (in {{...}})
+ * @property {string[]} Template.special Special parameters (predefined parameters)
+ * @property {string[]} Template.specialEq Special parameters equivalence
+ * @property {string} Template.text Raw text/code containing the parameters ({{param}})
+ * @property {function(Object, boolean): (code)} Template.gen Text/code generator
+ * @property {function(Object, string, string)} Template.save Save the generated text/code in the specified path
+ */
+export class Template {
+  constructor(name='Template', txt='', params=['name', 'description', 'version', 'title', 'path'], consoleSpecial=false) {
+    this.name = name;
+    this.path = this.name + '.jst';
+    this.params = params;
+    this.special = ['tab', 'date', 'time', 'timestamp', 'br', ''];
+    this.specialEq = ['&amp;nbsp;'.repeat(8), getDate(), getTime(true), getTimestamp(true), '&lt;br />'];
+    if (consoleSpecial) {
+      this.specialEq[0] = '\t';
+      this.specialEq[4] = '\n';
+    }
+    this.text = txt;
+  }
+  gen(obj, unEscape) {
+    let res = unEscape ? unescapeHTML(this.text): this.text, k = keys(obj);
+    for(let i = 0; i &lt; k.length; i++) res = res.replace(RegExpify(`{{${k[i]}}}`), obj[k[i]]);
+    for(let i = 0; i &lt; this.special.length; i++) res = res.replace(RegExpify(`%${this.special[i]}%`), this.specialEq[i]);
+    return res
+  }
+  save(obj, name=this.name, ext='js', type='javascript') {
+    obj ? save(this.gen(obj), `${name}.${ext}`, type) : save(this.text, this.path, 'javascript')
+  }
+}
+
+/**
+ * @description Remove (X)HTML tags.
+ * @param {string} str String with potential tags
+ * @returns {string} Tagless string
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let stripTags = (str) => str.replace(/&lt;[\s\S]+>(.*?)&lt;\/[\s\S]+>/, '$1');
+
+/**
+ * @description Make tabs up.
+ * @param {number} [n=1] Number of tabs
+ * @returns {string} Tabs
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let tabs = (n=1) => '&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'.repeat(n);
+
+/**
+ * @description Get the value of an attribute of a tag with a known attribute selector.
+ * @param {string} tagName Tag name
+ * @param {string} knownAttrSelector Know attribute selector (in the form: attr='val')
+ * @param {string} attr Attribute
+ * @return {*} Value of the attribute in the tag
+ * @public
+ * @since 1.0
+ * @function
+ * @example
+ * //We want to get the meta description and we know that there's an element such as $n('meta[name='description']') &amp;ne; null
+ * var docDescription = $t('meta', 'name='description'', 'content');
+ * @global
+ */
+export let $t = (tagName, knownAttrSelector, attr) => {
+  let tag = $e(`${tagName}[${knownAttrSelector}]`).val(false, true), start;
+  start = tag.search(attr + '="|\'') + attr.length + 2;
+  return tag.get(start, start + tag.get(start).indexOf(tag.has('\'') ? '\'': '"') - 1);
+};
+
+/**
+ * @description A Document templating system that will change the DOM with the use of data-* attributes or {{*}}
+ * @global
+ * @type {{attrs: string[], assoc: Array, get: DocTemplate.get, getAll: DocTemplate.getAll, getVal: DocTemplate.getVal, getValAll: DocTemplate.getValAll, associate: DocTemplate.associate, associateAll: DocTemplate.associateAll, template: Template, deMustache: DocTemplate.deMustache}}
+ * @public
+ * @since 1.0
+ * @this DocTemplate
+ * @property {string[]} DocTemplate.attrs Attributes (either preceded by data- attributes in HTML elements or between {{ and }})
+ * @property {Array} DocTemplate.assoc Associations What the templating system is going to use to associate/change the elements with data-[attr] or the {{attr}} strings
+ * @property {function(Str, *)} DocTemplate.add Add attribute(s)/association(s) pairs
+ * @property {function(string, boolean): (Array|NodeList)} DocTemplate.get Get the HTML elements with the attribute data-[&lt;code>attrName&lt;/code>]
+ * @property {function(boolean): (Array[]|NodeList[])} DocTemplate.getAll Get All the HTML elements with a data-* attribute
+ * @property {function(string): Array} DocTemplate.getVal Get the values of the data-[&lt;code>attrName&lt;/code>] attributes
+ * @property {function(): Array} DocTemplate.getVallAll Get all the values of the data-[attr] attributes
+ * @property {function(string, boolean)} DocTemplate.associate Place the corresponding association (in &lt;code>DocTemplate.assoc&lt;/code>) in the HTML element's inner value
+ * @property {function(boolean)} DocTemplate.associateAll Place the associations (in &lt;code>DocTemplate.assoc&lt;/code>) in the HTML element's inner values
+ * @property {Template} DocTemplate.template Mustache template (&lt;span style='color: red;'>warning: This might mess up some JS generated HTML content&lt;/span>)
+ * @property {Function} DocTemplate.deMustache Change all the mustached variables in the HTML body
+ */
+export let DocTemplate = {
+  attrs: ['lorem', 'greet', 'date', 'time', 'timestamp', 'charset', 'author', 'title', 'dir'],
+  assoc: [lorem, 'Welcome !', getDate(), getTime(true), getTimestamp(true), $t('meta', 'charset', 'charset') || 'UTF-8', $t('meta', 'name="author"', 'content') || 'Maximilian Berkmann', ($n('title', true) != null) ? $e('title').val() : getFilename(true), getDirectoryPath()],
+  add(attr, assoc) {
+    isType(attr, 'Array') ? this.attrs.append(attr) : this.attrs.push(attr);
+    isType(assoc, 'Array') ? this.assoc.append(assoc) : this.assoc.push(assoc);
+  },
+  get(attrName, toArr=false) {
+    return toArr ? Array.from($n('*[data-' + attrName + ']')) : $n(`*[data-${attrName}]`);
+  },
+  getAll(oneDim=false) {
+    let nodeLists = this.attrs.map(attr => $n(`*[data-${attr}]`));
+    return oneDim ? nodeLists.map(nodeList => Array.from(nodeList)) : nodeLists;
+  },
+  getVal(attrName) {
+    return this.get(attrName, true).map(node => node.getAttribute(`data-${attrName}`));
+  },
+  getValAll() {
+    let pos = -1;
+    return this.getAll(true).map(nodeList => {
+      pos++;
+      return nodeList.map(node => node.getAttribute(`data-${DocTemplate.attrs[pos]}`));
+    });
+  },
+  associate(attrName, html=false) {
+    this.get(attrName, true).map(node => html ? node.innerHTML = this.assoc[this.attrs.indexOf(attrName)] : node.innerText = this.assoc[this.attrs.indexOf(attrName)]);
+  },
+  associateAll(html=false) {
+    for (let i = 0; i &lt; this.attrs.length; i++) this.get(this.attrs[i], true).map(node => html ? node.innerHTML = this.assoc[i] : node.innerText = this.assoc[i])
+  },
+  template: new Template('DocTemplate', escapeHTML($e('body').val(true)), this.attrs),
+  deMustache() {
+    $e('body').write(this.template.gen(Objectify(this.attrs, this.assoc), true), true);
+  },
+  fullDeMustache() {
+    $e('html').write((new Template('DocTemplate', escapeHTML($e('html').val(true)), this.attrs)).gen(Objectify(this.attrs, this.assoc), true), true);
+  }
+};
+
+/**
+ * @description Turn HTML code into console/alert friendly text.
+ * @param {code} code Code
+ * @returns {string} Console friendly text
+ * @function
+ * @public
+ * @since 1.0
+ * @see module:dom~text2html
+ */
+export let html2text = (code) => code.multiReplace([[/&lt;br \/>/gm, '\n'], [/\s{2,4}/gm, '\t']]);
+
+/**
+ * @description Turn console/alert friendly text into HTML code.
+ * @param {string} text Console friendly text
+ * @returns {code} HTML code
+ * @function
+ * @public
+ * @since 1.0
+ * @see module:dom~html2text
+ */
+export let text2html = (text) => text.multiReplace([[/\n/gm, '&lt;br />'], [/\t|\s{2}/gm, '&amp;nbsp;&amp;nbsp']]);
+
+/**
+ * @description A text buffer to allow complex text printing management.
+ * @type {{log: string, writeToDocument: Buffer.writeToDocument, writeToConsole: Buffer.writeToConsole, add: Buffer.add, show: Buffer.show}}
+ * @property {code} Buffer.log Buffer's content
+ * @property {function(boolean)} Buffer.writeToDocument Write the buffer's content to the page
+ * @property {Function} Buffer.writeToConsole Write the buffer's content to the console
+ * @property {function(code)} Buffer.add Add content to the buffer
+ * @property {function(boolean, boolean, boolean)} Buffer.show Show the buffer's content at the desired place in the appropriate format
+ * @property {Function} Buffer.clear Clear the buffer
+ * @global
+ * @public
+ * @since 1.0
+ */
+export let Buffer = {
+  log: '',
+  writeToDocument(isHTML=false) {
+    print(this.log, isHTML);
+  },
+  writeToConsole () {
+    console.log(`\t[Buffer]\n${this.log}`);
+  },
+  add(text) {
+    this.log += text + '\n';
+  },
+  show(console=false, withHTML=false, keepLog=false) {
+    if (console) this.writeToConsole();
+    else {
+      this.log = text2html(this.log);
+      this.writeToDocument(withHTML);
+    }
+    if (!keepLog) this.log = '';
+  },
+  clear () {
+    this.log = '';
+    console.log('Buffer cleared');
+  }
+};
+
+/**
+ * @description Dissect a selector and return if it matches some top-level CSS selections (or the matching bits).
+ * @param {String} selector Selector
+ * @param {boolean} [booleanOnly=false] Return the result as boolean (so test results)
+ * @returns {{list: boolean, tag: boolean, id: boolean, class: boolean, pseudoSelector: boolean, multiple: boolean, namespace: boolean}} Dissection
+ * @public
+ * @since 1.0
+ * @function
+ * @TODO make sure it gets the tags and spaces right
+ */
+export let dissect = (selector, booleanOnly=false) => {
+  let hasPart = (regexp) => selector.match(new RegExp(regexp, 'g'));
+
+  return booleanOnly ? {
+      list: /\*\w+/g.test(selector),
+      tag: /^\w+[^#.|:](\s*?\w*[^#.|:]|$)/g.test(selector), //To improve
+      id: /#\w+/g.test(selector),
+      class: /\.\w+/g.test(selector),
+      pseudoSelector: /:\w+/g.test(selector),
+      multiple: /\s+/g.test(selector),
+      namespace: /\w+\|\w+/g.test(selector)
+    }: {
+      list: hasPart(/\*\w+/),
+      tag: hasPart(/^\w+[^#.|:](\s*?\w*[^#.|:]|$)/), //To improve
+      id: hasPart(/#\w+/),
+      class: hasPart(/\.\w+/),
+      pseudoSelector: hasPart(/:\w+/),
+      multiple: hasPart(/\s+/),
+      namespace: hasPart(/\w+\|\w+/)
+    };
+};
+
+/**
+ * @description Try to gather an element &lt;em>$e(selector)&lt;/em> while placing it if it's not there yet to be used
+ * @param {String} selector Selector of the tested element
+ * @param {String} [container='body'] Container where the new element will be placed if it doesn't already exist
+ * @param {code} [newHTMLValue=''] Value (HTML code) that the element will get if it's not already existent
+ * @returns {Element} Element
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let tryElement = (selector, container='body', newHTMLValue='') => {
+  try {
+    $e(selector);
+  } catch (err) {
+    let dissection = dissect(selector);
+    let element = document.createElement(dissection.tag[0]);
+    element.id = dissection.id[0].remove('#');
+    element.className = dissection.class.join(' ').remove('.');
+    element.innerHTML = newHTMLValue;
+    $n(container).appendChild(element);
+  }
+  return $e(selector);
+};
+
+/**
+ * @description Try to gather an element &lt;em>$n(selector)&lt;/em> while placing it if it's not there yet to be used.
+ * @param {String} selector Selector of the tested element
+ * @param {String} [container='body'] Container where the new element will be placed if it doesn't already exist
+ * @param {{tagName: String, id: String, class: String, title: (undefined|String)}} attr Attributes of the newly created element (if not already present)
+ * @returns {HTMLElement} HTML element
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let tryNode = (selector, container='body', attr) => {
+  try {
+    $n(selector);
+  } catch (err) {
+    let node = document.createElement(attr.tagName);
+    if (attr.has('id')) node.id = attr.id;
+    if (attr.has('class')) node.className = attr.class;
+    if (attr.has('title')) node.title = attr.title;
+    $n(container).appendChild(node);
+  }
+  return $n(selector);
+};
+
+/**
+ * @description Get the CSS path of a node &lt;i>$n(...)&lt;/i>.&lt;br />
+ * Inspired by {@link https://stackoverflow.com/questions/4588119/get-elements-css-selector-when-it-doesnt-have-an-id|@Phrogz's answer on here}.
+ * @param {HTMLElement} node Node
+ * @returns {string} CSS Path
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let cssPath = (node) => {
+  let names = [];
+  while (node.parentNode) {
+    if (node.id) {
+      names.unshift(`#${node.id}`);
+      break;
+    } else {
+      if (node === node.ownerDocument.documentElement) names.unshift(node.tagName.toLowerCase());
+      else{
+        for (let c = 1, e = node; e.previousElementSibling; e = e.previousElementSibling, c++) names.unshift(`${node.tagName.toLowerCase()}:nth-child(${c})`);
+      }
+      node = node.parentNode;
+    }
+  }
+  return names.join(' > ');
+};
+
+/**
+ * @description Simplify a CSS Path (useful in conjuction with cssPath()).
+ * @param {String} path CSS Path
+ * @returns {String} Simplified CSS Path
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let simplifyCSSPath = (path) => path.replace(/(?:html > )*(head:nth-child\(1\)|body:nth-child\(2\)) > +/gmi, '');</code></pre>
         </article>
     </section>
 
@@ -504,17 +1142,13 @@ export let simpleTable = (caption='', rows, id='t', style='', split, cellIds) =>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dom.checkBrowser.html">checkBrowser</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-dsa-Edge.html">Edge</a></li><li><a href="module-dsa-LinkedList.html">LinkedList</a></li><li><a href="module-dsa-Node.html">Node</a></li><li><a href="module-dsa-Vertex.html">Vertex</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#$t">$t</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#BrowserDetect">BrowserDetect</a></li><li><a href="global.html#Buffer">Buffer</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#DocTemplate">DocTemplate</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-<<<<<<< HEAD
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Jan 23 2017 23:34:34 GMT+0000 (GMT)
-=======
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Jan 08 2017 23:45:25 GMT+0000 (GMT)
->>>>>>> develop
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 12:34:15 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

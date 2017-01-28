@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: InvalidExpressionError</title>
+    <title>JSDoc: Class: LinkedList</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: InvalidExpressionError</h1>
+    <h1 class="page-title">Class: LinkedList</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>InvalidExpressionError</h2>
+        <h2>LinkedList</h2>
         
     
 </header>
@@ -40,16 +40,16 @@
 
     
 
-    <h4 class="name" id="InvalidExpressionError"><span class="type-signature"></span>new InvalidExpressionError<span class="signature">(msg<span class="signature-attributes">opt</span>, fname<span class="signature-attributes">opt</span>, lineNum<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {InvalidExpressionError}</span></h4>
+    <h4 class="name" id="LinkedList"><span class="type-signature"></span>new LinkedList<span class="signature">(pl<span class="signature-attributes">opt</span>, nx<span class="signature-attributes">opt</span>, name)</span><span class="type-signature"></span></h4>
 
     
-    <p class="summary">Invalid expression error.</p>
+    <p class="summary">Linked list.</p>
     
 
 
 
 <div class="description">
-    Invalid expression error
+    Linked list.
 </div>
 
 
@@ -59,7 +59,7 @@
 
 
     <h5>This:</h5>
-    <ul><li>{InvalidExpressionError}</li></ul>
+    <ul><li>LinkedList</li></ul>
 
 
 
@@ -92,7 +92,85 @@
 
         <tr>
             
-                <td class="name"><code>msg</code></td>
+                <td class="name"><code>pl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">Payload</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">LinkedList</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {payload: 1, next: ?LinkedList}
+                
+                </td>
+            
+
+            <td class="description last">Next</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -107,8 +185,6 @@
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -119,90 +195,10 @@
             
                 <td class="default">
                 
-                    'The expression is invalid !'
-                
                 </td>
             
 
-            <td class="description last">Message</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>fname</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    location.href
-                
-                </td>
-            
-
-            <td class="description last">Filename</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>lineNum</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    getLineNum()
-                
-                </td>
-            
-
-            <td class="description last">Line number</td>
+            <td class="description last">Name of the linked list</td>
         </tr>
 
     
@@ -210,6 +206,176 @@
 </table>
 
 
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>LinkedList.payload</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">NumberLike</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Payload</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>LinkedList.next</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">LinkedList</span>
+|
+
+<span class="param-type"><a href="Object.html">Object</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Next element</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>LinkedList.name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>LinkedList.show</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Show the linked list</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>LinkedList.next.show</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Show the linked list</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>LinkedList.toString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">String representation</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -246,7 +412,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="qtest.js.html">qtest.js</a>, <a href="qtest.js.html#line86">line 86</a>
+        <a href="dsa.js.html">dsa.js</a>, <a href="dsa.js.html#line623">line 623</a>
     </li></ul></dd>
     
 
@@ -267,61 +433,13 @@
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc">
-    
-        
-<span class="param-type">Error</span>
 
 
-    
-    </div>
-
-
-    
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Error
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">InvalidExpressionError</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
     
     </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li>Error</li>
-    </ul>
-
 
     
 
@@ -356,7 +474,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 12:34:16 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 12:34:15 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

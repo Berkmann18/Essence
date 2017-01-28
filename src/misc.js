@@ -76,3 +76,39 @@ export let send = (sender, receiver) => {
   for(let x of sender) receiver.next(x);
   receiver.return(); //Signal end of stream
 };
+
+/**
+ * @description Start date of an event.<br />
+ * Used by {@link module:misc~debounce}
+ * @since 1.0
+ * @private
+ * @type {Date}
+ */
+const EVT_START_DATE = new Date(0);
+
+/**
+ * Debounce function that will wrap our event and thus avoid the over-firing of the event handlers
+ * (e.g: when clicking way too many times in a short time).<br />
+ * Source: {@link https://medium.com/@maxheiber/thanks-for-these-good-examples-of-js-interview-questions-8e1728731083#.hwvnl96ex}
+ * @param {Function} cb Function to debounce
+ * @param {number} [delay=100] Debouncing delay
+ * @returns {function()} Debounced function
+ * @public
+ * @since 1.0
+ * @function
+ * @example
+ * let myFunc = () => console.log('CLICK!');
+ *
+ * $e('#btn').on('click', debounce(myFunc, 500));
+ */
+export let debounce = (cb, delay=100) => {
+  let lastCallDate = EVT_START_DATE;
+  return (...args) => {
+    let curDate = new Date();
+    const shouldSkip = new Date() - lastCallDate < delay;
+    if (shouldSkip) return;
+    lastCallDate = curDate;
+    return cb.apply(null, args)
+  }
+};
+

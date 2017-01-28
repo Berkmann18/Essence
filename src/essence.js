@@ -105,6 +105,21 @@ window.onload = () => loadTime = new Date().getTime();
 window.onpageshow = () => displayTime = new Date().getTime();
 
 /**
+ * @description Exence's equivalent of jQuery's $(document).ready()
+ * @param {Function} cb Callback used whenever the document is ready
+ * @public
+ * @since 1.0
+ */
+export let ready = (cb) => new Promise(resolve => {
+  let domLoadHandler = resolve(cb && cb()), states = ['complete', 'interactive'];
+
+  states.contains(document.readyState) ? wait(domLoadHandler) : document.addEventListener('DOMContentLoaded', domLoadHandler);
+});
+/*
+export let docReady = (cb) => $e('body').on('DOMContentLoaded', cb);
+ */
+
+/**
  * @description Get the information about the key pressed
  * @param {*} keyStroke Keystroke
  * @param {boolean} [toLowerCase=false] To lower case

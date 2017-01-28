@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: InvalidExpressionError</title>
+    <title>JSDoc: Class: Node</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: InvalidExpressionError</h1>
+    <h1 class="page-title">Class: Node</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>InvalidExpressionError</h2>
+        <h2>Node</h2>
         
     
 </header>
@@ -40,16 +40,16 @@
 
     
 
-    <h4 class="name" id="InvalidExpressionError"><span class="type-signature"></span>new InvalidExpressionError<span class="signature">(msg<span class="signature-attributes">opt</span>, fname<span class="signature-attributes">opt</span>, lineNum<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {InvalidExpressionError}</span></h4>
+    <h4 class="name" id="Node"><span class="type-signature"></span>new Node<span class="signature">(pl<span class="signature-attributes">opt</span>, nx<span class="signature-attributes">opt</span>, pv<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
-    <p class="summary">Invalid expression error.</p>
+    <p class="summary">Node.</p>
     
 
 
 
 <div class="description">
-    Invalid expression error
+    Node.
 </div>
 
 
@@ -59,7 +59,7 @@
 
 
     <h5>This:</h5>
-    <ul><li>{InvalidExpressionError}</li></ul>
+    <ul><li>Node</li></ul>
 
 
 
@@ -92,13 +92,13 @@
 
         <tr>
             
-                <td class="name"><code>msg</code></td>
+                <td class="name"><code>pl</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">*</span>
 
 
             
@@ -119,25 +119,25 @@
             
                 <td class="default">
                 
-                    'The expression is invalid !'
+                    1
                 
                 </td>
             
 
-            <td class="description last">Message</td>
+            <td class="description last">Payload</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>fname</code></td>
+                <td class="name"><code>nx</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Node</span>
 
 
             
@@ -158,25 +158,23 @@
             
                 <td class="default">
                 
-                    location.href
-                
                 </td>
             
 
-            <td class="description last">Filename</td>
+            <td class="description last">Next node</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>lineNum</code></td>
+                <td class="name"><code>pv</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">Node</span>
 
 
             
@@ -197,12 +195,10 @@
             
                 <td class="default">
                 
-                    getLineNum()
-                
                 </td>
             
 
-            <td class="description last">Line number</td>
+            <td class="description last">Previous node</td>
         </tr>
 
     
@@ -210,6 +206,311 @@
 </table>
 
 
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.payload</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">NumberLike</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Payload</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.next</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Node</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Next node</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.traverse</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Node traversal</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.print</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Node printer</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.printList</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Node list printer</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.last</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Get the last node</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.append</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Append the list with a new node</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.remove</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Node remover</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.reverse</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List reversal</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.find</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Look for a node</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.equals</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Node comparator</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Node.toString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">String representation</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -246,7 +547,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="qtest.js.html">qtest.js</a>, <a href="qtest.js.html#line86">line 86</a>
+        <a href="dsa.js.html">dsa.js</a>, <a href="dsa.js.html#line662">line 662</a>
     </li></ul></dd>
     
 
@@ -267,61 +568,13 @@
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc">
-    
-        
-<span class="param-type">Error</span>
 
 
-    
-    </div>
-
-
-    
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Error
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">InvalidExpressionError</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
     
     </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li>Error</li>
-    </ul>
-
 
     
 
@@ -356,7 +609,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 12:34:16 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 12:34:15 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

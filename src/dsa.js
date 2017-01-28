@@ -5,8 +5,9 @@
  * @since 1.0
  */
 import {END_OF_SEQUENCE}  from './data';
-import {isNon, isNativeType, say} from './essence';
-import {range} from './maths';
+import {isNon, isNativeType, say, isType} from './essence';
+import {range, euclidianDist} from './maths';
+import {Buffer} from './dom';
 
 //Data structures
 /**
@@ -602,4 +603,290 @@ export const logItems = Coroutine(function*() {
     console.log('DONE');
   }
 });
+
+/**
+ * @description Linked list.
+ * @param {*} [pl=1] Payload
+ * @param {LinkedList} [nx={payload: 1, next: ?LinkedList}] Next
+ * @param {string} name Name of the linked list
+ * @this LinkedList
+ * @class
+ * @public
+ * @since 1.0
+ * @property {NumberLike} LinkedList.payload Payload
+ * @property {LinkedList|Object} LinkedList.next Next element
+ * @property {string} LinkedList.name Name
+ * @property {function(this:LinkedList): string} LinkedList.show Show the linked list
+ * @property {function(this:LinkedList): string} LinkedList.next.show Show the linked list
+ * @property {function(): string} LinkedList.toString String representation
+ */
+class LinkedList {
+  constructor(pl=1, nx={payload: 1, next: null}, name) {
+    this.payload = pl;
+    this.next = nx;
+    this.next.show = () => `${this.name}:${this.next.payload}->`;
+    this.name = name;
+  }
+
+  show () {
+    `${this.name}:${this.payload}->${this.next ? this.next.show() : null}`
+  };
+
+  toString() {
+    return `LinkedList(${this.show()})`
+  };
+}
+
+/**
+ * @description Node.
+ * @param {*} [pl=1] Payload
+ * @param {Node} [nx] Next node
+ * @param {Node} [pv] Previous node
+ * @this Node
+ * @class
+ * @public
+ * @since 1.0
+ * @property {NumberLike} Node.payload Payload
+ * @property {Node} Node.next Next node
+ * @property {function(): Node} Node.traverse Node traversal
+ * @property {Function} Node.print Node printer
+ * @property {Function} Node.printList Node list printer
+ * @property {function(): Node} Node.last Get the last node
+ * @property {function(NumberLike)} Node.append Append the list with a new node
+ * @property {Function} Node.remove Node remover
+ * @property {function(): Node} Node.reverse List reversal
+ * @property {function(NumberLike, number): Nums} Node.find Look for a node
+ * @property {function(Node): boolean} Node.equals Node comparator
+ * @property {function(): string} Node.toString String representation
+ */
+class Node {
+  constructor(pl=1, nx=null, pv=null) {
+    this.payload = pl;
+    this.next = nx;
+    this.prev = pv;
+  }
+
+  traverse() {
+    if (this.next) this.next.traverse();
+    say(`payload: ${this.payload}`);
+  };
+
+  print() {
+    if (this.next != null) this.next.print();
+    Buffer.add(`${this.payload}=>`);
+  };
+
+  printList() {
+    (this.next === null) ? Buffer.add(`->${this.payload}`) : this.next.printList();
+    Buffer.writeToConsole();
+  };
+
+  last() {
+    return (this.next === null) ? this : this.next.last();
+  };
+
+  append(n) {
+    if (this.next === null) {
+      this.next = new Node(n); //If there is no next node, link the new one here
+      this.next.prev = this;
+    } else this.next.append(n); //Else, append to next node
+  };
+
+  remove() {
+    let n = this.next;
+    this.next = n.next;
+    n.next.prev = this;
+  };
+
+  reverse() {
+    if (this.next == null) return this;
+    else {
+      let newHead = this.next.reverse();
+      newHead.next = this;
+      newHead.prev = null;
+      this.prev = newHead;
+      this.next = null;
+      return newHead
+    }
+  };
+
+  toString() {
+    return `Node(payload=${this.payload}, previous=${this.prev}, next=${this.next})`
+  };
+
+  equals(node) {
+    return this.payload === node.payload && this.next.equals(node.next) && this.prev.equals(node.prev)
+  };
+
+  find(n, d=0) {
+    if (this.payload === n) return d;
+    if (this.next) return this.next.find(n, d + 1);
+    return [-1, d]
+  };
+}
+
+/**
+ * @description Nodes for path finding algs
+ * @param {number} [g=0] Current total cost
+ * @param {number} [h=0] Current total heuristic
+ * @param {number[]} [pos=[0, 0]] 2D position of the node
+ * @param {*} [payload=''] Payload
+ * @param {Edge[]} [edges=[]] List of edges connected to the path node
+ * @this Vertex
+ * @public
+ * @class
+ * @since 1.0
+ * @property {number} Vertex.g Cost of the path to that node
+ * @property {number} Vertex.h Heuristic to get to that node
+ * @property {number} Vertex.f Cost of the path (g) + heuristic estimate
+ * @property {Edge[]} Vertex.edges List of edges connected to the path node
+ * @property {*} Vertex.payload Payload (content/data) of the node
+ * @property {number[]} Vertex.pos Position of the node
+ * @property {?Vertex} Vertex.parent Parent of the vertex
+ * @property {function(number): Vertex} Vertex.back Go n vertexes back
+ * @property {function(Vertex): boolean} Vertex.isCloser Check if the current vertex is closer than the other one
+ * @property {function(Vertex[]): string} Vertex.toString String representation
+ * @property {function(Vertex[])} Vertex.join Join Vertexes with edges
+ * @property {function(): Vertex} Vertex.getVertexInEdge Get the vertex connected to a particular edge
+ * @property {function(): Vertex[]} Vertex.getConnectedVertices Get the vertexes connected to this one
+ * @property {function(): (Vertex[]|Vertex[][])} Vertex.getNetwork Get the network/tree/graph/map of vertices connected to this one
+ * @property {function(): number} Vertex.size Size of the vertex's network
+ * @property {function(Vertex): number} Vertex.distanceFrom Distance from this vertex to another
+ * @property {function(): Vertex} Vertex.getNearestVertex Get the nearest connected vertex
+ */
+class Vertex {
+  constructor(g=0, h=0, pos=[0, 0], payload='', edges=[]) {
+    this.g = g;
+    this.h = h;
+    this.f = this.g + this.h | 1;
+    this.pos = pos;
+    this.parent = null;
+    this.payload = payload;
+    this.edges = edges;
+  }
+
+  back(n=0) {
+    return (n <= 1) ? this.parent : this.parent.back(n - 1);
+  };
+
+  isCloser(vertex) {
+    return this.f <= vertex.f;
+  };
+
+  toString() {
+    let edges = this.edges.length > 0 ? this.edges.map((edge) => {
+        try {
+          return edge.toString()
+        } catch (err) {
+          return null;
+        }
+      }) : '';
+    return `Vertex(g=${this.g}, h=${this.h}, f=${this.f}, pos=[${this.pos.toStr(true)}], payload=${this.payload}, edges=[${edges}], parent=${(this.parent || this.parent.toString())})`;
+  };
+
+  join(vertices) {
+    for (let i = 0; i < vertices.length; i++) {
+      if (!isType(this.edges[i], 'Edge')) this.edges[i] = new Edge(this, vertices[i]);
+      else {
+        this.edges[i].startNode = this;
+        this.edges[i].endNode = vertices[i];
+      }
+      vertices[i].edges.push(this.edges[i]);
+      vertices[i].edges.last().startNode = this;
+      vertices[i].edges.last().endNode = vertices[i];
+    }
+  };
+
+  getVertexInEdge(index=0) {
+    let edge = this.edges[index];
+    return edge.startNode.equals(this) ? edge.endNode : edge.startNode;
+  };
+
+  getConnectedVertices() {
+    let list = [];
+    for (let i = 0; i < this.edges.length; i++) list.push(this.getVertexInEdge(i));
+    return list;
+  };
+
+  find(n, depth=0) {
+    if (this.payload === n) return depth;
+    let search = this.getConnectedVertices().map(node => {
+      try {
+        return node.find(n, depth + 1);
+      } catch (err) {
+        return [-1, depth];
+      }
+    });
+    let res = search.filter(item => !isType(item, 'Array')); //Filters out the items [-1, $depth]
+
+    return res.length > 0 ? res : [-1, depth]
+  };
+
+  getNetwork() {
+    let listVertices = (vertex) => {
+      let list = vertex.getConnectedVertices().remove([this, null], true);
+      return list.length > 0 ? list.map(listVertices) : list;
+    };
+    return this.getConnectedVertices().map(listVertices);
+  };
+
+  size() {
+    return this.getNetwork().linearise().length;
+  };
+
+  distanceFrom(vertex) {
+    return euclidianDist(this.pos, vertex.pos);
+  };
+
+  getNearestVertex() {
+    let smallestEdge = this.edges.filter(edge => edge.length === this.edges.map(edge => edge.length).min());
+    return smallestEdge.startNode.equals(this) ? smallestEdge.endNode : smallestEdge.startNode;
+  };
+}
+
+/**
+ * @description Edge that connects two Vertices
+ * @param {?Vertex} start Starting vertex/node
+ * @param {?Vertex} end Ending vertex/node
+ * @param {number} [len=0] Length of the edge.
+ * @this Edge
+ * @public
+ * @since 1.0
+ * @class
+ * @property {?Vertex} Edge.startNode Starting node/vertex of the edge
+ * @property {?Vertex} Edge.endNode Ending node/vertex of the edge
+ * @property {number} Edge.length Length of the edge
+ * @property {function(): string} Edge.toString String representation of the edge
+ * @property {Function} Edge.draw Draw the edge
+ * @property {function(): Edge[]} Edge.getSurroundingEdges Get all the surrounding edges
+ * @property {function(): Edge[]} Edge.getNeighbours Get the neighbour edges
+ */
+class Edge {
+  constructor(start=null, end=null, len) {
+    this.startNode = start || null;
+    this.endNode = end || null;
+    this.length = len || ((!isNon(start) && !isNon(end)) ? euclidianDist(start.pos, end.pos) : 0);
+    this.line = new Line(start? start.pos: [0, 0], end? end.pos: [0, 0]);
+  }
+
+  toString() {
+    return `Edge(startNode=${this.startNode}, endNode=${this.endNode}, length=${this.length})`;
+  };
+
+  draw() {
+    this.line.draw();
+  };
+
+  getSurroundingEdges() {
+    let vertexNetwork = this.startNode ? this.startNode.getNetwork() : [];
+    vertexNetwork.append(this.endNode? this.endNode.getNetwork() : []);
+    return vertexNetwork.map(vertex => vertex.edges).linearise().remove(this, true); //Get a 1d array of edges which are different than this one
+  };
+
+  getNeighbours() {
+    let neighbours = this.startNode? this.startNode.getConnectedVertices() : [];
+    neighbours.append(this.endNode ? this.endNode.getConnectedVertices() : []);
+    return neighbours.map(vertex => vertex.edges).linearise().remove(this, true);
+  }
+}
 
