@@ -48,11 +48,7 @@ Types
 
 /**
  * @description Invalid parameter error.
- * @param {string} [msg='The parameter used at <code>lineNum</code> is invalid']  Message
- * @param {string} [fname=location.href] Filename
- * @param {number} [lineNum=getLineNum()] Line number
  * @class
- * @returns {InvalidParamError} Parameter error
  * @extends {TypeError}
  * @this {InvalidParamError}
  * @public
@@ -60,6 +56,11 @@ Types
  * @throws {TypeError}
  */
 export class InvalidParamError extends TypeError {
+  /**
+   * @param {string} [msg='The parameter used at <code>lineNum</code> is invalid']  Message
+   * @param {string} [fname=location.href] Filename
+   * @param {number} [lineNum=getLineNum()] Line number
+   */
   constructor(msg='The parameter is invalid !', fname=location.href, lineNum=getLineNum()) {
     let error = TypeError.call(this, msg);
     this.name = 'InvalidParamError';
@@ -72,11 +73,7 @@ export class InvalidParamError extends TypeError {
 
 /**
  * @description Invalid expression error
- * @param {string} [msg='The expression is invalid !']  Message
- * @param {string} [fname=location.href] Filename
- * @param {number} [lineNum=getLineNum()] Line number
  * @class
- * @returns {InvalidExpressionError} Error
  * @extends {Error}
  * @this {InvalidExpressionError}
  * @public
@@ -84,6 +81,11 @@ export class InvalidParamError extends TypeError {
  * @throws {Error}
  */
 export class InvalidExpressionError extends Error {
+  /**
+   * @param {string} [msg='The expression is invalid !']  Message
+   * @param {string} [fname=location.href] Filename
+   * @param {number} [lineNum=getLineNum()] Line number
+   */
   constructor(msg='The parameter is invalid !', fname=location.href, lineNum=getLineNum()) {
     let error = Error.call(this, msg);
     this.name = 'InvalidExpressionError';

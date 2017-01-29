@@ -243,9 +243,7 @@
 	
 	/**
 	 * @description Element
-	 * @param {string} selector A CSS selector
 	 * @this Element
-	 * @returns {Element} Element object
 	 * @constructor
 	 * @public
 	 * @since 1.0
@@ -294,6 +292,9 @@
 	 * @property {function()} Element.moveCSS Move the inline-CSS into the current stylesheet
 	 */
 	export class Element {
+      /**
+       * @param {string} selector A CSS selector
+       */
 	  constructor(selector) {
 	    if (/^([#.*_-`~&]\W*|\S|undefined|null|)$/.test(selector)) throw new qtest.InvalidParamError(`Element cannot accept the selector '${selector}' as its invalid.`); //Reject invalid selectors
 	    if (selector[0] === '#') this.node = document.querySelector(selector) || document.getElementById(selector.slice(1, selector.length)); //Id

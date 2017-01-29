@@ -209,11 +209,9 @@ export let values = (obj) => Object.values(obj);
 export let entries = (obj) => Object.entries(obj);
 
 /**
- * @description Element
- * @param {string} selector A CSS selector
+ * @description Element.
  * @this Element
- * @returns {Element} Element object
- * @constructor
+ * @class
  * @public
  * @since 1.0
  * @throws {InvalidParamError} Invalid parameter
@@ -261,6 +259,9 @@ export let entries = (obj) => Object.entries(obj);
  * @property {function()} Element.moveCSS Move the inline-CSS into the current stylesheet
  */
 export class Element {
+  /**
+   * @param {string} selector A CSS selector
+   */
   constructor(selector) {
     if (/^([#.*_-`~&]\W*|\S|undefined|null|)$/.test(selector)) throw new InvalidParamError(`Element cannot accept the selector '${selector}' as its invalid.`); //Reject invalid selectors
     if (selector[0] === '#') this.node = document.querySelector(selector) || document.getElementById(selector.slice(1, selector.length)); //Id

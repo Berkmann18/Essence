@@ -5,10 +5,11 @@
  * @since 1.0
  */
 import {END_OF_SEQUENCE}  from './data';
-import {isNon, isNativeType, say, isType} from './essence';
-import {range, euclidianDist} from './maths';
+import {isNon, isNativeType, say, isType, entries, keys, isCustomType, lookfor} from './essence';
+import {range, euclidianDist, manhattanDist, conv} from './maths';
 import {Buffer, println} from './dom';
-import {rmDuplicates} from './misc';
+import {rmDuplicates, RegExpify} from './misc';
+import {InvalidParamError} from './qtest';
 
 //Data structures
 /**
@@ -607,9 +608,6 @@ export const logItems = Coroutine(function*() {
 
 /**
  * @description Linked list.
- * @param {*} [pl=1] Payload
- * @param {LinkedList} [nx={payload: 1, next: ?LinkedList}] Next
- * @param {string} name Name of the linked list
  * @this LinkedList
  * @class
  * @public
@@ -622,6 +620,11 @@ export const logItems = Coroutine(function*() {
  * @property {function(): string} LinkedList.toString String representation
  */
 class LinkedList {
+  /**
+   * @param {*} [pl=1] Payload
+   * @param {(LinkedList|{payload: number, next: null})} [nx={payload: 1, next: ?LinkedList}] Next
+   * @param {string} name Name of the linked list
+   */
   constructor(pl=1, nx={payload: 1, next: null}, name) {
     this.payload = pl;
     this.next = nx;
@@ -640,9 +643,6 @@ class LinkedList {
 
 /**
  * @description Node.
- * @param {*} [pl=1] Payload
- * @param {Node} [nx] Next node
- * @param {Node} [pv] Previous node
  * @this Node
  * @class
  * @public
@@ -661,6 +661,11 @@ class LinkedList {
  * @property {function(): string} Node.toString String representation
  */
 class Node {
+  /**
+   * @param {*} [pl=1] Payload
+   * @param {Node} [nx] Next node
+   * @param {Node} [pv] Previous node
+   */
   constructor(pl=1, nx=null, pv=null) {
     this.payload = pl;
     this.next = nx;
@@ -728,11 +733,6 @@ class Node {
 
 /**
  * @description Nodes for path finding algs
- * @param {number} [g=0] Current total cost
- * @param {number} [h=0] Current total heuristic
- * @param {number[]} [pos=[0, 0]] 2D position of the node
- * @param {*} [payload=''] Payload
- * @param {Edge[]} [edges=[]] List of edges connected to the path node
  * @this Vertex
  * @public
  * @class
@@ -756,6 +756,13 @@ class Node {
  * @property {function(): Vertex} Vertex.getNearestVertex Get the nearest connected vertex
  */
 class Vertex {
+  /**
+   * @param {number} [g=0] Current total cost
+   * @param {number} [h=0] Current total heuristic
+   * @param {number[]} [pos=[0, 0]] 2D position of the node
+   * @param {*} [payload=''] Payload
+   * @param {Edge[]} [edges=[]] List of edges connected to the path node
+   */
   constructor(g=0, h=0, pos=[0, 0], payload='', edges=[]) {
     this.g = g;
     this.h = h;
@@ -846,10 +853,7 @@ class Vertex {
 }
 
 /**
- * @description Edge that connects two Vertices
- * @param {?Vertex} start Starting vertex/node
- * @param {?Vertex} end Ending vertex/node
- * @param {number} [len=0] Length of the edge.
+ * @description Edge that connects two Vertices.
  * @this Edge
  * @public
  * @since 1.0
@@ -863,11 +867,16 @@ class Vertex {
  * @property {function(): Edge[]} Edge.getNeighbours Get the neighbour edges
  */
 class Edge {
-  constructor(start=null, end=null, len) {
-    this.startNode = start || null;
-    this.endNode = end || null;
+  /**
+   * @param {?Vertex} [start=null] Starting vertex/node
+   * @param {?Vertex} [end=null] Ending vertex/node
+   * @param {number} [len=0] Length of the edge.
+   */
+  constructor(start=null, end=null, len=0) {
+    this.startNode = start;
+    this.endNode = end;
     this.length = len || ((!isNon(start) && !isNon(end)) ? euclidianDist(start.pos, end.pos) : 0);
-    this.line = new Line(start? start.pos: [0, 0], end? end.pos: [0, 0]);
+    this.line = new Line(start ? start.pos : [0, 0], end ? end.pos : [0, 0]);
   }
 
   toString() {
@@ -893,9 +902,6 @@ class Edge {
 
 /**
  * @description Binary tree node.
- * @param {*} [pl=0] Payload
- * @param {TreeNode} [l] Left child
- * @param {TreeNode} [r] Right child
  * @this TreeNode
  * @class
  * @public
@@ -932,6 +938,11 @@ class Edge {
  * @property {function(NumberLike): number} TreeNode.count Count the number of times there's a particular payload
  */
 export class TreeNode {
+  /**
+   * @param {*} [pl=0] Payload
+   * @param {TreeNode} [l=null] Left child
+   * @param {TreeNode} [r=null] Right child
+   */
   constructor(pl=0, l=null, r=null) {
     this.left = l;
     this.right = r;
@@ -1120,9 +1131,6 @@ export class TreeNode {
 /**
  * @description N-ary tree node.
  * @see module:dsa~TreeNode
- * @param {*} pl Payload
- * @param {TreeNode[]} [ch=[]] Child
- * @returns {NTreeNode} NTreeNode
  * @this NTreeNode
  * @public
  * @since 1.0
@@ -1157,6 +1165,10 @@ export class TreeNode {
  * @property {function(*): number} NTreeNode.count Count the number of times there's a particular payload
  */
 class NTreeNode extends TreeNode {
+  /**
+   * @param {*} pl Payload
+   * @param {TreeNode[]} [ch=[]] Child
+   */
   constructor(pl=0, ch=[]) {
     this.payload = pl;
     this.child = ch;
@@ -1186,7 +1198,7 @@ class NTreeNode extends TreeNode {
       Buffer.add(`${this.payload}->`);
       this.child[i].printInOrder();
       this.child[i + 1].printInOrder();
-      Buffer.add('\r\n'');
+      Buffer.add('\r\n');
     }
   };
   printPostOrder() {
@@ -1194,7 +1206,7 @@ class NTreeNode extends TreeNode {
       this.child[i].printInOrder();
       this.child[i + 1].printInOrder();
       Buffer.add(`${this.payload}->`);
-      Buffer.add('\r\n'');
+      Buffer.add('\r\n');
     }
   };
 
@@ -1330,28 +1342,862 @@ export let traverseTree = (node, symbol='--', start='|', indent=0) => {
 /**
  * @description Sorted mathematical set
  * @this SortedSet
- * @see module:DataStruct~Set
- * @param {Array} arr Array
- * @returns {SortedSet} Sorted set
- * @constructor
+ * @class
  * @inheritdoc
+ * @public
  * @since 1.0
  * @property {number[]} SortedSet.value Values
  * @property {function(*)} SortedSet.add Add an item to the set and sort it
  * @property {function(): string} SortedSet.toString String representation
- * @todo Check ES6's Set's API first!
+ * @property {function(): number} SortedSet.size Size of the set
+ * @property {function()} SortedSet.clear Clear the set
+ * @property {function(*): boolean} SortedSet.delete Delete an eventual item from the set
+ * @property {function(): Iterator} SortedSet.entries Entries of the set
+ * @property {function(): Iterator} SortedSet.keys Keys of the set
+ * @property {function(*): boolean} SortedSet.has Check if the set has an item
  */
 class SortedSet {
+  /**
+   * @param {Array} arr Array
+   */
   constructor(arr=[]) {
     this.value = [...arr].sort();
   }
+
+  size() {
+    return this.value.length;
+  }
+
   add(item) {
     isType(item, 'Array') ? this.value.multiPlace(item) : this.value.place(item);
     this.value = rmDuplicates(this.value);
   };
+
+  clear() {
+    this.value = [];
+  }
+
+  delete(item) {
+    let included = this.has(item);
+    this.value.remove(item);
+    return included;
+  }
+
+  entries() {
+    return entries(this.value);
+  }
+
+  forEach(cb, thisArg) {
+    this.value.forEach(cb, thisArg);
+  }
+
+  has(item) {
+    return this.value.contains(item);
+  }
+
+  keys() {
+    return keys(this.value);
+  }
 
   toString() {
     return `SortedSet(${this.value.toString()})`
   };
 }
 
+/**
+ * @description Stack.
+ * @this Stack
+ * @public
+ * @class
+ * @since 1.0
+ * @property {number[]} Stack.value Values
+ * @property {?number} Stack.limit Limit
+ * @property {function(): *} Stack.peek Returns the top value
+ * @property {function(): *} Stack.ground Returns the bottom value
+ * @property {function(*)} Stack.push Add items at the top
+ * @property {function(): *} Stack.pop Remove the top item
+ * @property {function(): boolean} Stack.isEmpty Emptiness check
+ * @property {function(): boolean} Stack.isFull Fullness check
+ * @property {function(): number} Stack.size Size
+ * @property {function(): string} Stack.toString String representation
+ */
+class Stack {
+  /**
+   * @param {Array|*} [arr] Array
+   * @param {?number} [lim=null] Limit
+   */
+  constructor(arr, lim=null) {
+    this.value = isType(lim, 'Number') ? new Array(lim) : [];
+    this.limit = lim;
+    if (arr) this.value.push(arr);
+  }
+
+  peek() {
+    return this.value.last()
+  };
+
+  ground() {
+    return this.value[0]
+  };
+
+  /**
+   * @throws {Error} Stack overflow
+   * @param {*} item Item
+   * @returns {undefined}
+   */
+  push(item) {
+    if (this.isFull()) throw new Error('Stack overflow !');
+    isType(item, 'Array') ? this.value.concat(item) : this.value.push(item);
+  };
+
+  /**
+   * @throws {Error} Stack underflow
+   * @return {*} Item
+   */
+  pop() {
+    if (this.isEmpty()) throw new Error('Stack underflow !');
+    return this.value.pop();
+  };
+
+  isEmpty() {
+    return this.value.length === 0
+  };
+
+  isFull() {
+    return this.limit != null ? this.value.length >= this.limit : false
+  };
+
+  size() {
+    return this.value.length
+  };
+
+  toString() {
+    return `Stack(${this.value.toString()})`
+  };
+}
+
+/**
+ * @description Stack array.
+ * @this StackArray
+ * @class
+ * @public
+ * @since 1.0
+ * @property {number[]} StackArray.value Values
+ * @property {number} StackArray.top Top index
+ * @property {function(): *} StackArray.peek Returns the top value
+ * @property {function(): *} StackArray.ground Returns the bottom value
+ * @property {function(*)} StackArray.push Add items at the top
+ * @property {function(): *} StackArray.pop Remove the top item
+ * @property {function(): boolean} StackArray.isEmpty Emptiness check
+ * @property {function(): boolean} StackArray.isFull Fullness check
+ * @property {function(): number} StackArray.size Size
+ * @property {function(): string} StackArray.toString String representation
+ * @see module:dsa~Stack
+ */
+class StackArray {
+  /**
+   * @param {number} sz Array size
+   */
+  constructor(sz) {
+    this.value = new Array(sz);
+    /** @default */
+    this.top = -1;
+  }
+
+  peek() {
+    return this.value[this.top]
+  };
+
+  ground() {
+    return this.value[0];
+  };
+
+  /**
+   * @throws {Error} Stack overflow
+   * @param {*} item Item
+   * @returns {undefined}
+   */
+  push(item) {
+    if (this.isFull()) throw new Error('Stack overflow !');
+    if (isType(item, 'Array')) {
+      for (let el of item) this.push(el);
+    } else {
+      this.top++;
+      this.value[this.top] = item;
+    }
+  };
+
+  /**
+   * @throws {Error} Stack underflow
+   * @param {*} item Item
+   * @returns {*} Item
+   */
+  pop(item) {
+    if (this.isEmpty()) throw new Error('Stack underflow !');
+    if (isType(item, 'Array')) {
+      for (let el of item) this.pop(el);
+    } else {
+      let el = this.peek();
+      this.top--;
+      return el
+    }
+  };
+
+  isEmpty() {
+    return this.top <= -1
+  };
+
+  isFull() {
+    return this.top >= this.value.length
+  };
+
+  size() {
+    return this.top + 1
+  };
+
+  toString() {
+    return `Stack(${this.value.toString()})`
+  };
+}
+
+/**
+ * @description Stack list
+ * @this StackList
+ * @class
+ * @public
+ * @since 1.0
+ * @property {number[]} StackList.top Top node
+ * @property {function(): *} StackList.peek Returns the top value
+ * @property {function(): *} StackList.ground Returns the bottom value
+ * @property {function(*)} StackList.push Add items at the top
+ * @property {function(): *} StackList.pop Remove the top item
+ * @property {function(): boolean} StackList.isEmpty Emptiness check
+ * @property {function(): boolean} StackList.isFull Fullness check
+ * @property {function(): number} StackList.size Size
+ * @property {function(): string} StackList.toString String representation
+ * @see module:dsa~Stack
+ */
+class StackList {
+  /**
+   * @param {Array|*} [arr] Array or payloads
+   */
+  constructor(arr) {
+    this.top = null;
+    if (arr) this.push(arr);
+  }
+
+  ground() {
+    return (this.isEmpty() || this.top === null) ? null : (this.top.next === null ? this.top.payload : this.top.next.payload);
+  };
+
+  peek() {
+    return this.top.payload;
+  };
+
+  push(item) {
+    if (isType(item, 'Array')) {
+      for (let el of item) this.push(el);
+    } else this.top = new Node(item, this.top);
+    return this
+  };
+
+  /**
+   * @throws {Error} Stack underflow
+   * @param {number} [n] Number of pops to do
+   * @returns {Node} Item
+   */
+  pop(n) {
+    if (!this.isEmpty()) throw new Error('I can\'t pop from an empty stack list');
+    if (n) {
+      for(let i = 0; i < n; i++) this.pop();
+    } else {
+      let el = this.top.payload;
+      this.top = this.top.next;
+      return el
+    }
+  };
+
+  isEmpty() {
+    return this.top == null
+  };
+
+  size() {
+    let size = 0, crt = this.top;
+    while (crt != null) {
+      crt = crt.next;
+      size++;
+    }
+    return size;
+  };
+
+  toString() {
+    let chain = '', crt = this.top;
+    do {
+      chain += crt.payload + '->';
+      crt = crt.next;
+    } while (crt != null);
+    return `StackList(${chain})`;
+  };
+}
+
+/**
+ * @description Queue.
+ * @param {Array|*} [arr] Array or element
+ * @param {?number} [lim=null] Limit
+ * @this Queue
+ * @class
+ * @public
+ * @since 1.0
+ * @property {number[]} Queue.value Values
+ * @property {?number} Queue.limit Limit
+ * @property {function(): *} Queue.head Returns the first value
+ * @property {function(): *} Queue.tail Returns the last value
+ * @property {function(*)} Queue.enqueue Add items at the end
+ * @property {function(): *} Queue.dequeue Remove the first item
+ * @property {function(): boolean} Queue.isEmpty Emptiness check
+ * @property {function(): boolean} Queue.isFull Fullness check
+ * @property {function(): number} Queue.size Size
+ * @property {function(): string} Queue.toString String representation
+ */
+class Queue {
+  constructor(arr, lim=null) {
+    this.value = isType(lim, 'Number') ? new Array(lim) : [];
+    this.limit = lim;
+    if (arr) this.value.push(arr);
+  };
+
+  /**
+   * @throws {Error} Queue overflow
+   * @param {*} item Item
+   * @returns {undefined}
+   */
+  enqueue(item) {
+    if (this.isFull()) throw new Error('Queue overflow !');
+    isType(item, 'Array') ? this.value.prepend(item) : this.value.unshift(item);
+  };
+
+  /**
+   * @throws {Error} Queue underflow
+   * @returns {*} Item
+   */
+  dequeue() {
+    if (this.isEmpty()) throw new Error('Queue underflow !');
+    let item = this.head();
+    this.value.pop();
+    return item
+  };
+
+  head() {
+    return this.value.last()
+  };
+
+  tail() {
+    return this.value[0]
+  };
+
+  isEmpty() {
+    return this.value.length === 0
+  };
+
+  isFull() {
+    return this.limit != null? this.value.length >= this.limit: false
+  };
+
+  size() {
+    return this.value.length
+  };
+
+  toString() {
+    return `Queue(head=${this.head()}, tail=${this.tail()}, value=${this.value.toString()})`
+  };
+}
+
+/**
+ * @description Queue array.
+ * @this QueueArray
+ * @class
+ * @since 1.0
+ * @see module:dsa~Queue
+ * @property {number[]} QueueArray.value Values
+ * @property {number} QueueArray.front Front index
+ * @property {number} QueueArray.back Back index
+ * @property {function(): *} QueueArray.head Returns the first value
+ * @property {function(): *} QueueArray.tail Returns the last value
+ * @property {function(*)} QueueArray.enqueue Add items at the end
+ * @property {function(): *} QueueArray.dequeue Remove the first item
+ * @property {function(): boolean} QueueArray.isEmpty Emptiness check
+ * @property {function(): boolean} QueueArray.isFull Fullness check
+ * @property {function(): number} QueueArray.size Size
+ * @property {function(): string} QueueArray.toString String representation
+ */
+class QueueArray {
+  /**
+   * @param {Array|*} [arr=[]] Array or element
+   */
+  constructor(arr=[]) {
+    /** @default */
+    this.value = arr;
+    /** @default */
+    this.front = -1;
+    /** @default */
+    this.back = -1;
+  }
+
+  /**
+   * @throws {Error} Queue full
+   * @param {*} item Item
+   * @returns {undefined}
+   */
+  enqueue(item) {
+    if (isType(item, 'Array')) {
+      for (let i = 0; i < item.length; i++) this.enqueue(item[i]);
+    } else {
+      if (this.isFull()) throw new Error('The queue is full');
+      if (this.isEmpty()) {
+        this.front++;
+        this.back++;
+        this.value[this.back] = item;
+      } else {
+        this.back = (this.back + 1) % this.value.length;
+        this.value[this.back] = item;
+      }
+    }
+  };
+
+  /**
+   * @throws {Error} Queue empty
+   * @returns {*} Dequeued element
+   */
+  dequeue() {
+    let val;
+    if (this.isEmpty()) throw new Error('I can\'t dequeue from an empty queue');
+    if (this.front === this.back) {
+      val = this.value[this.front];
+      this.front = this.back = -1;
+    }else {
+      val = this.value[this.front];
+      this.front = (this.front + 1) % this.value.length;
+    }
+    return val
+  };
+
+  isEmpty() {
+    return this.front === -1 && this.back === -1
+  };
+
+  isFull() {
+    return this.back>(this.front + 1) % this.value.length
+  };
+
+  size() {
+    return this.value.length
+  };
+
+  toString() {
+    return `Queue(front=${this.front}, back=${this.back}, value=${this.value.toString()})`
+  };
+}
+
+/**
+ * @description Queue list.
+ * @this QueueList
+ * @class
+ * @since 1.0
+ * @property {number[]} QueueList.value Values
+ * @property {?Node} QueueList.front Front node
+ * @property {?Node} QueueList.back Back node
+ * @property {number} QueueList.len Length of the list
+ * @property {function(): *} QueueList.head Returns the first value
+ * @property {function(): *} QueueList.tail Returns the last value
+ * @property {function(*)} QueueList.enqueue Add items at the end
+ * @property {function(): *} QueueList.dequeue Remove the first item
+ * @property {function(): boolean} QueueList.isEmpty Emptiness check
+ * @property {function(): boolean} QueueList.isFull Fullness check
+ * @property {function(): number} QueueList.size Size
+ * @property {function(): string} QueueList.toString String representation
+ * @property {function(*)} QueueList.remove Node removal
+ * @property {function(number, *)} QueueList.insertAt Positional node insertion
+ */
+class QueueList {
+  constructor() {
+    this.front = new Node(null);
+    this.back = new Node(null);
+    this.len = 0;
+  }
+
+  enqueue(item) {
+    if (isType(item, 'Array')) {
+      for (let el of item) this.enqueue(el);
+    } else {
+      let n = this.back != null ? new Node(item, this.back, null) : new Node(item);
+      this.back.prev = n;
+      this.back = n;
+      this.len++;
+    }
+    return this
+  };
+
+  /**
+   * @throws {Error} Queue underflow
+   * @returns {?Node} Dequeued node
+   */
+  dequeue() {
+    if (this.isEmpty()) throw new Error('I can\'t dequeue an empty queue list');
+    this.front = this.front.prev;
+    this.len--;
+    return this.front
+  };
+
+  isEmpty() {
+    return this.len === 0 || this.back === null
+  };
+
+  size() {
+    return this.len
+  };
+
+  toString() {
+    let str = '', crt = this.front;
+    while (crt != null) {
+      str += '<-' + crt.payload;
+      crt = crt.prev;
+    }
+    return str
+  };
+
+  remove(pl) {
+    let crt = this.front;
+    while (crt != null) {
+      if (crt.payload != null && (crt.payload == pl || crt.payload.equals(pl))) crt = null;
+      crt = crt.next;
+    }
+  };
+
+  insertAt(i, pl) {
+    this.back.next = new Node(pl);
+    if (i === 0) this.front = new Node(pl);
+    else if (i === this.len) this.back = new Node(pl);
+    else if (i > this.len) this.enqueue(pl);
+  };
+}
+
+/**
+ * @description A* algorithm.<br />
+ * JS version of: {@link https://en.wikipedia.org/wiki/A*_search_algorithm|wiki's pseudo alg}
+ * @param {Vertex} start Starting node
+ * @param {Vertex} goal Ending node
+ * @param {Vertex[]} grid Grid
+ * @returns {?Array} Optimal Path
+ * @public
+ * @since 1.0
+ * @function
+ * @throws {InvalidParamError} Not a Vertex object
+ * @todo Getting rid of the redundancy
+ */
+export let A = (start, goal, grid) => {
+  if (!isCustomType(start, 'Vertex') || !isCustomType(goal, 'Vertex')) throw new InvalidParamError('The boundary nodes needs to be Vertex objects !');
+  /*
+   closedSet: The set of nodes already evaluated
+   openSet: The set of currently discovered nodes still to be evaluated (where only the start node is known)
+   */
+  let closedSet = [], openSet = [start], cameFrom = {}, gScore = {}, fScore = {}, current;
+  gScore[start] = 0; //cost of going from start to start
+  //Heuristic for the start node
+  start.f = euclidianDist(start.pos, goal.pos);
+  fScore[start] = euclidianDist(start.pos, goal.pos);
+
+  while (!openSet.isEmpty()) {
+    //Node in openSet which has the lowest fScore
+    current = openSet.filter(node => node.f === openSet.map(node => node.f).min());
+
+    if (current.equals(goal)) return reconPath(cameFrom, current);
+    openSet.remove(current);
+    closedSet.push(current);
+
+    let currentPos = lookfor(current, grid), tentativeGScore = 0; //position of the current node and the gScore of the path from start to the neighbour
+    grid.neighbour(currentPos[0], currentPos[1]).map(function (neighbour) { //Goes through each neighbours of the current neighbour
+      //if (closedSet.has(neighbour)) continue;
+      tentativeGScore = current.g + manhattanDist(currentPos, neighbour.pos); //Distance from start to a neighbour
+      if (!openSet.has(neighbour)) openSet.push(neighbour); //Discover a new neighbour
+      //else if (tentativeGScore >= neighbour.g) continue;
+      cameFrom[neighbour] = current;
+      neighbour.g = gScore[neighbour] = tentativeGScore;
+      neighbour.f = fScore[neighbour] = neighbour.g + euclidianDist(neighbour.pos, goal.pos);
+    });
+  }
+  return null;
+};
+
+/**
+ * @description Path reconstructor.
+ * @param {Array} cameFrom List of visited nodes
+ * @param {Array} current Current node
+ * @returns {Array} Reconstructed path
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let reconPath = (cameFrom, current) => {
+  let totalPath = [current];
+  while (current in cameFrom) {
+    current = cameFrom[current];
+    totalPath.append(current);
+  }
+  return totalPath;
+};
+
+/**
+ * @description Iterative Depending A* path finding algorithm.
+ * @public
+ * @since 1.0
+ * @function
+ * @see module:dsa~Astar
+ * @todo Do it !
+ */
+export let IDAstar = () => {
+
+};
+
+/**
+ * @description Sort alphabetically an string|array.
+ * @param {string|Array} x String|array to alphabetically sort
+ * @returns {string|Array} Sorted string|array
+ * @public
+ * @since 1.0
+ * @function
+ */
+export alphabetSort = (x) => {
+  if (!x.isIterable()) throw new TypeError('alphabetSort cannot sort non iterable objects');
+  if (isType(x, 'String')) return x.split('').sort((a, b) => a - b).join('');
+
+  let res = x.uniform(), s = true, j = 1;
+  while (s) {
+    s = false;
+    for (let k = 0; k < res.maxLength(); k++) {
+      for (let i = 0; i < res.length - j; i++) {
+        if (k == 0 && res[i].charAt(k) > res[i + 1].charAt(k)) { //Sort the by the first letter
+          [res[i], res[i + 1]] = [res[i + 1], res[i]];
+          s = true;
+        } else if (res[i].charAt(k - 1) === res[i + 1].charAt(k - 1) && res[i].charAt(k) > res[i + 1].charAt(k)) {
+          [res[i], res[i + 1]] = [res[i + 1], res[i]];
+          s = true;
+        }
+      }
+      j++;
+    }
+  }
+  return res.trimAll('r')
+};
+
+/**
+ * @description Sort the array from the most occurring items to the least occurring ones.
+ * @param {Array} arr Array to sort
+ * @returns {Array} Sorted array <i>(by occurrence obviously)</i>
+ * @function
+ * @public
+ * @since 1.0
+ */
+export let occurrenceSort = (arr) => {
+  let counts = arr.map(x => arr.count(x)), vals = rmDuplicates(arr);
+  let lookup = new Map(counts), res = []; //Tablify(counts, vals);
+  vals.map(x => lookup.add(arr.count(x), x));
+  //lookup.forEach((x, i) => console.log(lookup.keys.get(i), x.toStr(true)), true)
+  lookup.forEach(x => res.prepend(x), true);
+  return res;
+};
+
+/**
+ * @description Find if x is in the list.
+ * @param {Array} list List
+ * @param {*} x Element/term to find
+ * @returns {boolean} Found or not
+ * @public
+ * @since 1.0
+ * @todo Make it right
+ * @function
+ */
+export let binarySearch = (list, x) => {
+  list.sort((a, b) => a - b);
+  let i = 2, term = list[Math.floor(list.length / i)], l = 0;
+  while (term != x && i < list.length) {
+    if (term === x) return true;
+    else {
+      i *= 2;
+      term = term < x ? list[Math.floor(list.length / i)] : list[3 * Math.floor(list.length / i)];
+    }
+    l++;
+  }
+  return term === x
+};
+
+/**
+ * @description Binary search.<br />
+ * Source: {@link https://www.khanacademy.org/computing/computer-science/algorithms/binary-search/a/implementing-binary-search-of-an-array|KhanAcademy}
+ * @param {number[]} arr Array
+ * @param {NumberLike} target Target of the search
+ * @return {number} Binary index
+ * @public
+ * @since 1.0
+ */
+export let search = (arr, target) => {
+  let min = 0, max = arr.length - 1, guess = Math.floor((max - min) / 2);
+  if (arr[guess] === target) return guess;
+  while (arr[guess] != target) {
+    if (max < min) return -1;
+    (arr[guess] < target) ? min = guess + 1 : max = guess - 1;
+    guess = Math.floor((max - min) / 2);
+  }
+};
+
+/**
+ * @description Compressed data using Huffman's approach while differentiating uppercase from lowercase letters.
+ * @class
+ * @this {Archive}
+ * @public
+ * @since 1.0
+ * @property {string} Archive.name Name of the archive
+ * @property {string} Archive.data Data to compress
+ * @property {string[]} Archive.dictionary Dictionary (values formatted as: letter=bitcode)
+ * @property {Function} Archive.updateDict Update the dictionary
+ * @property {function(): Str} Archive.getResult Get the result
+ */
+class Archive {
+  /**
+   * @param {string} [name='Archive'] Name of the archive
+   * @param {string} [data=''] Data to compress
+   */
+  constructor(name='Archive', data='') {
+    this.name = name;
+    this.data = data;
+    this.dictionary = [];
+    this.result = [];
+  }
+
+  updateDict() {
+    let lexiq = [], count = [], tmp = alphabetSort(data);
+    for (let i = 0; i < this.data.length - 1; i++) {
+      if (tmp[i] != tmp[i + 1]) lexiq.push(tmp[i]);
+    }
+    lexiq = rmDuplicates(lexiq);
+    tmp = [];
+    for (let i = 0; i < lexiq.length; i++) {
+      count[i] = data.count(lexiq[i]);
+      //say(`lexiq[${i}]=${lexiq[i]} is present ${timesLiteral(count[i])}`, "inf");
+      tmp[i] = lexiq[i] + count[i];
+    }
+
+    this.dictionary = occurrenceSort(this.data);
+
+    for (let i = 0; i < this.dictionary.length; i++) this.result[i] = conv(i, 10, 2);
+  };
+
+  getResult() {
+    this.updateDict();
+    let res = this.data;
+    for (let i = 0; i < this.data.length; i++) {
+      console.log(`${i}//${this.dictionary[this.dictionary.indexOf(this.data[i])]}`);
+      res = res.replace(RegExpify(this.dictionary[this.dictionary.indexOf(this.data[i])]), this.result[i]);
+    }
+    return res;
+  };
+}
+
+/**
+ * @description State history allowing undos and redos on the element while keeping track of the previous and following states.
+ * @this {virtualHistory}
+ * @class
+ * @public
+ * @since 1.0
+ * @property {*} virtualHistory.src Source
+ * @property {*} virtualHistory.DEFAULT_STATE Default state of the source
+ * @property {number} virtualHistory.state State number
+ * @property {Function} virtualHistory.reset Reset the current state
+ * @property {function(*)} virtualHistory.update Update the current state if needed
+ * @property {function(*)} virtualHistory.add Add the new state to the list
+ * @property {function(number): *} virtualHistory.get Get the i-th state
+ * @property {Function} virtualHistory.undo Go the the previous state
+ * @property {Function} virtualHistory.redo Go the following state
+ * @property {function(): string} virtualHistory.getStates List the states
+ * @property {*} virtualHistory.isStateDefault Check if the current state is the default one
+ */
+class virtualHistory {
+  /**
+   * @param {*} elm Element
+   */
+  constructor(elm) {
+    this.src = elm;
+    this.DEFAULT_STATE = elm;
+    this.states = new Set(this.src);
+    this.state = 0;
+  }
+
+  reset() {
+    this.src = this.DEFAULT_STATE;
+  };
+
+  update(elm) {
+    if (this.src != elm) this.add(elm);
+  };
+
+  add(val) {
+    if (isType(val, 'Array')) {
+      for (let state of val) this.add(state);
+    } else {
+      this.src = val;
+      this.states.add(this.src);
+      this.state++;
+    }
+  };
+
+  get(i) {
+    let j = 0;
+    for (let item of this.states.values()) {
+      if (i === j++) return item;
+    }
+    return;
+  };
+
+  /**
+   * @throws {Error} Set underflow
+   * @returns {undefined}
+   */
+  undo() {
+    if (this.state === 0) throw new Error('Set underflow, it\'s not possible to undo to a non-existent state.');
+    this.state--;
+    this.src = this.get(this.state);
+  };
+
+  /**
+   * @throws {Error} Set overflow
+   * @returns {undefined}
+   */
+  redo() {
+    if (this.state === (this.states.size() - 1)) throw new Error('Set overflow, it\'s not possible to redo to a non-existent state.');
+    this.state++;
+    this.src = this.get(this.state);
+  };
+
+  getStates() {
+    return this.states.toString()
+  };
+
+  isStateDefault() {
+    return this.src === this.DEFAULT_STATE
+  };
+}
+
+/**
+ * @description Get the occurrence list.
+ * @param {string} list String
+ * @returns {{}} Occurring object list
+ * @public
+ * @since 1.0
+ * @throws {TypeError} list must be iterable
+ */
+export let occurrenceList = (list) => {
+  if (!list.isIterable()) throw new TypeError('It must be an iterable object !');
+  let nums = list.getOccurrences(true), chars = [], oc = list.getOccurrences(), res = {};
+  for (let i = 0; i < oc.length; i++) chars[i] = oc[i].split(':')[0];
+  for (let i = 0; i < nums.length; i++) res[chars[i]] = nums[i];
+  return res;
+};

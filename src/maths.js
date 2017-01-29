@@ -1077,7 +1077,7 @@ export let isPrime = (x) => primeN(range(1, 1, x)).contains(x);
  * @function
  */
 export let primeN = (arr) => {
-  let res = arr.sort();
+  let res = arr.sort((a, b) => a - b);
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] % 2 === 0 && arr[i] != 2) res[i] = 'x';
     for (let j = 0; j < i; j++) {
@@ -2652,6 +2652,20 @@ export let vector2PointForm = (r) => {
 };
 
 /**
+ * @description Check if a set is a superset of another.
+ * @param {(Array|Set|SortedSet)} set Set
+ * @param {(Array|Set|SortedSet)} subset (Sub)set
+ * @returns {boolean} Superset state
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let isSuperset = (set, subset) => {
+  for (let item of subset) if (!(set.contains(item) || set.has(item))) return false;
+  return true;
+};
+
+/**
  * @description Union (&Union;).<br />
  * It will give a single array with unique values of all the elemenets of all arrays.
  * @param {Array[]} arrays Array of arrays to unit
@@ -2661,7 +2675,7 @@ export let vector2PointForm = (r) => {
  * @since 1.0
  * @function
  */
-export let union = (arrays, toSort = false) => toSort ? rmDuplicates(arrays[0].concat(...arrays.get(1))).sort() : rmDuplicates(arrays[0].concat(...arrays.get(1)));
+export let union = (arrays, toSort = false) => toSort ? rmDuplicates(arrays[0].concat(...arrays.get(1))).sort((a, b) => a - b) : rmDuplicates(arrays[0].concat(...arrays.get(1)));
 
 /**
  * @description Intersection (&Intersection;).<br />
@@ -2676,7 +2690,7 @@ export let union = (arrays, toSort = false) => toSort ? rmDuplicates(arrays[0].c
 export let intersection = (arrays, toSort = false) => {
   let first = rmDuplicates(arrays[0]), rest = arrays.get(1).map(arr => rmDuplicates(arr));
   let inter = first.filter(item => rest.some(arr => arr.contains(item)));
-  return toSort ? inter.sort() : inter;
+  return toSort ? inter.sort((a, b) => a - b) : inter;
 };
 
 /**
@@ -2692,7 +2706,7 @@ export let intersection = (arrays, toSort = false) => {
 export let complement = (arrays, toSort = false) => {
   let first = rmDuplicates(arrays[0]), rest = rmDuplicates(arrays.get(1).linearise());
   let compl = first.filter(item => rest.miss(item));
-  return toSort ? compl.sort() : compl;
+  return toSort ? compl.sort((a, b) => a - b) : compl;
 };
 
 /**
@@ -2708,7 +2722,7 @@ export let complement = (arrays, toSort = false) => {
 export let symDif = (arrays, toSort = false) => {
   let array = arrays.linearise();
   let sd = isTypedArray(array, 'Number') ? array.unique().sanitise('Number') : array.unique();
-  return toSort ? sd.sort() : sd;
+  return toSort ? sd.sort((a, b) => a - b) : sd;
 };
 
 /**
@@ -3152,9 +3166,8 @@ export let getClosest = (x, opt) => {
 
 /**
  * @description Single parametric equation.
- * @param {string} [formula='y=x'] Formula
- * @returns {Equation} Equation
  * @this {Equation}
+ * @public
  * @since 1.0
  * @property {string} Equation.formula Formula
  * @property {string} Equation.leftSide LHS
@@ -3164,6 +3177,9 @@ export let getClosest = (x, opt) => {
  * @class
  */
 class Equation {
+  /**
+   * @param {string} [formula='y=x'] Formula
+   */
   constructor(formula = 'y=x') {
     this.formula = formula.normal();
     [this.leftSide, this.rightSide] = this.formula.split('=');
