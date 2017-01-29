@@ -112,7 +112,6 @@ window.onpageshow = () => displayTime = new Date().getTime();
  */
 export let ready = (cb) => new Promise(resolve => {
   let domLoadHandler = resolve(cb && cb()), states = ['complete', 'interactive'];
-
   states.contains(document.readyState) ? wait(domLoadHandler) : document.addEventListener('DOMContentLoaded', domLoadHandler);
 });
 /*

@@ -7,7 +7,8 @@
 import {END_OF_SEQUENCE}  from './data';
 import {isNon, isNativeType, say, isType} from './essence';
 import {range, euclidianDist} from './maths';
-import {Buffer} from './dom';
+import {Buffer, println} from './dom';
+import {rmDuplicates} from './misc';
 
 //Data structures
 /**
@@ -888,5 +889,469 @@ class Edge {
     neighbours.append(this.endNode ? this.endNode.getConnectedVertices() : []);
     return neighbours.map(vertex => vertex.edges).linearise().remove(this, true);
   }
+}
+
+/**
+ * @description Binary tree node.
+ * @param {*} [pl=0] Payload
+ * @param {TreeNode} [l] Left child
+ * @param {TreeNode} [r] Right child
+ * @this TreeNode
+ * @class
+ * @public
+ * @since 1.0
+ * @property {TreeNode} TreeNode.left Left child
+ * @property {TreeNode} TreeNode.right Right child
+ * @property {NumberLike} TreeNode.payload Payload
+ * @property {function(?TreeNode, ?TreeNode)} TreeNode.add Child adder
+ * @property {function(TreeNode[])} TreeNode.addLeft Left child adder
+ * @property {function(TreeNode[])} TreeNode.addRight Right child adder
+ * @property {function(): TreeNode} TreeNode.traverse Tree traversal
+ * @property {Function} TreeNode.printInOrder Console in-order printing
+ * @property {Function} TreeNode.printPreOrder Console pre-order printing
+ * @property {Function} TreeNode.printPostOrder Console post-order printing
+ * @property {Function} TreeNode.printInOrder Console in-order printing
+ * @property {Function} TreeNode.inOrder Window in-order printing
+ * @property {Function} TreeNode.preOrder Window pre-order printing
+ * @property {Function} TreeNode.postOrder Window post-order printing
+ * @property {function(): string} TreeNode.getInOrder In-order getter
+ * @property {function(): string} TreeNode.getPreOrder Pre-order getter
+ * @property {function(): string} TreeNode.getPostOrder Post-order getter
+ * @property {function(): boolean} TreeNode.isLeaf Leaf check
+ * @property {function(*, string): number[]} TreeNode.find Look for a tree-node
+ * @property {function(*): number[]} TreeNode.dfs Depth First Search
+ * @property {function(*): number[]} TreeNode.bfs Breath First Search
+ * @property {Function} TreeNode.sum Sum of the payloads
+ * @property {Function} TreeNode.min Smallest payload
+ * @property {Function} TreeNode.max Biggest payload
+ * @property {function(number): number} TreeNode.nbOfBranches Branches counter
+ * @property {function(): number} TreeNode.avg Average of the payloads
+ * @property {function(): string} TreeNode.printBFS Print in the BFS order
+ * @property {function(): string} TreeNode.toString String representation
+ * @property {function(boolean): Array} TreeNode.toArray Array representation
+ * @property {function(NumberLike): number} TreeNode.count Count the number of times there's a particular payload
+ */
+export class TreeNode {
+  constructor(pl=0, l=null, r=null) {
+    this.left = l;
+    this.right = r;
+    this.payload = pl;
+  }
+  add(l, r=null) {
+    this.left = l;
+    this.right = r;
+  };
+  addLeft(child) {
+    for (let i = 0; i < child.length; i++) (i === 0)  ? this.left = child[0] : child[i - 1].left = child[i];
+  };
+  addRight(childs) {
+    for (let i in childs) {
+      if(childs.has(i)) {
+        (i === 0) ? this.right = childs[0] : childs[i-1].right = childs[i];
+      }
+    }
+  };
+  traverse() {
+    if (this.left) this.left.traverse();
+    if (this.right) this.right.traverse();
+    return this
+  };
+
+  //Console printing
+  printInOrder() {
+    if (this.left) this.left.printInOrder();
+    Buffer.add(`${this.payload}->`);
+    if (this.right) this.right.printInOrder();
+    Buffer.add('\r\n');
+  };
+  printPreOrder() {
+    Buffer.add(`${this.payload}->`);
+    if (this.left) this.left.printPreOrder();
+    if (this.right) this.right.printPreOrder();
+    Buffer.add('\r\n');
+  };
+  printPostOrder() {
+    if (this.left) this.left.printPreOrder();
+    if (this.right) this.right.printPreOrder();
+    Buffer.add(`${this.payload}->`);
+    Buffer.add('\r\n');
+  };
+
+  //Window printing
+  inOrder(t='', s='&nbsp;&nbsp;', d=0, sym='|-') {
+    if (this.left) this.left.inOrder(t + s, s, d + 1, sym);
+    println(t + sym + this.payload + s + ` (depth=${d})`);
+    if (this.right) this.right.inOrder(t + s, s, d + 1, sym);
+  };
+  preOrder(t='', s='&nbsp;&nbsp;', d=0, sym='|-') {
+    println(t + sym + this.payload + s + ` (depth=${d})`);
+    if (this.left) this.left.preOrder(t + s, s, d + 1, sym);
+    if (this.right) this.right.preOrder(t + s, s, d + 1, sym)
+  };
+  postOrder(t='', s='&nbsp;&nbsp;', d=0, sym='|-') {
+    if (this.left) this.left.postOrder(t + s, s, d + 1, sym);
+    if (this.right) this.right.postOrder(t + s, s, d + 1, sym);
+    println(t + sym + this.payload + s + ` (depth=${d})`);
+  };
+
+  //Getter
+  getInOrder(sym='->') {
+    let order = '';
+    if (this.left) order += this.left.getInOrder(sym);
+    order += sym + this.payload;
+    if (this.right) order += this.right.getInOrder(sym);
+    return order
+  };
+  getPreOrder(sym='->') {
+    let order = '';
+    order += sym + this.payload;
+    if (this.left) order += this.left.getPreOrder(sym);
+    if (this.right) order += this.right.getPreOrder(sym);
+    return order
+  };
+  getPostOrder(sym='->') {
+    let order = '';
+    if (this.left) order += this.left.getPostOrder(sym);
+    if (this.right) order += this.right.getPostOrder(sym);
+    return order + sym + this.payload
+  };
+  isLeaf() { //Is it an end of branch ?
+    return !this.left && !this.right
+  };
+  find(n, method='bfs') {
+    return (method.normal() === 'bfs') ? this.bfs(n) : this.dfs(n)
+  };
+  dfs(n) { //Depth First Search
+    let d = 0, td = 0; //Depth, total depth
+    let stack = [];
+    stack.push(this);
+    while (!stack.equals([])) {
+      d = 0;
+      let cur = stack.pop();
+      try {
+        if (cur.payload === n) return [d, td]
+      } catch (e) {
+        return [-1, td]
+      }
+      if (cur.left) stack.push(cur.left);
+      if (cur.right) stack.push(cur.right);
+      d++;
+      td++;
+    }
+  };
+  bfs(n) { //Breadth First Search
+    let b = 0, tb = 0; //Breadth, total breadth
+    let queue = [];
+    queue.unshift(this); //Add as the end
+    while (!queue.equals([])) {
+      b = 0;
+      let cur = queue.pop(); //Get the first element of the queue
+      try {
+        if (cur.payload === n) return [b, tb]
+      } catch (err) {
+        return [-1, tb]
+      }
+      if (cur.left) queue.unshift(cur.left);
+      if (cur.right) queue.unshift(cur.right);
+      b++;
+      tb++;
+    }
+  };
+  sum() {
+    let s = this.payload;
+    if (this.left) s += this.left.sum();
+    if (this.right) s += this.right.sum();
+    return s
+  };
+  min() {
+    let m = this.payload;
+    if (this.left) m = Math.min(m, this.left.min());
+    if (this.right) m = Math.min(m, this.right.min());
+    return m
+  };
+  max() {
+    let m = this.payload;
+    if (this.left) m = Math.max(m, this.left.max());
+    if (this.right) m = Math.max(m, this.right.max());
+    return m
+  };
+  nbOfBranches(n=0) {
+    if (this.left) n = this.left.nbOfBranches(n + 1);
+    if (this.right) n = this.right.nbOfBranches(n + 1);
+    return n
+  };
+  avg() {
+    return this.sum() / this.nbOfBranches()
+  };
+  printBFS(sym='->') {
+    let queue = [], res = '';
+    queue.unshift(this); //Add as the end
+    while (!queue.equals([])) {
+      let cur = queue.pop(); //Get the first element of the queue
+      res += cur + sym;
+      try {
+        if (cur.left) queue.unshift(cur.left);
+        if (cur.right) queue.unshift(cur.right);
+      } catch (err) {
+        say(`${err} caused ${this}.printBFS(${sym}) to go wrong`, 'error');
+      }
+    }
+    return res
+  };
+  toString() {
+    let str = `TreeNode(payload=${this.payload}, `;
+    if (this.left) str += `left=${this.left.toString()}`;
+    if (this.right) str += `right=${this.right.toString()}`;
+    return str.substring(0, str.length) + ')'
+  };
+  toArray(singly) {
+    let arr = [];
+    if (this.left) singly ? arr.push(this.left.toArray().toString().split(',')) : arr.push(this.left.toArray());
+    arr.push(this.payload);
+    if (this.right) singly ? arr.push(this.right.toArray().toString().split(',')) : arr.push(this.right.toArray());
+    return singly ? arr.toString().split(',') : arr
+  };
+
+  count(n) {
+    return this.getInOrder().countWord(n, '->');
+  };
+}
+
+/**
+ * @description N-ary tree node.
+ * @see module:dsa~TreeNode
+ * @param {*} pl Payload
+ * @param {TreeNode[]} [ch=[]] Child
+ * @returns {NTreeNode} NTreeNode
+ * @this NTreeNode
+ * @public
+ * @since 1.0
+ * @class
+ * @property {NTreeNode[]} NTreeNode.child Child
+ * @property {NumberLike} NTreeNode.payload Payload
+ * @property {function(NTreeNode)} NTreeNode.add Child adder
+ * @property {function(NTreeNode)} NTreeNode.remove Child remove
+ * @property {function(): NTreeNode} NTreeNode.traverse Tree traversal
+ * @property {Function} NTreeNode.printInOrder Console in-order printing
+ * @property {Function} NTreeNode.printPreOrder Console pre-order printing
+ * @property {Function} NTreeNode.printPostOrder Console post-order printing
+ * @property {Function} NTreeNode.printInOrder Console in-order printing
+ * @property {function(number, string, number, string)} NTreeNode.inOrder Window in-order printing
+ * @property {function(number, string, number, string)} NTreeNode.preOrder Window pre-order printing
+ * @property {function(number, string, number, string)} NTreeNode.postOrder Window post-order printing
+ * @property {function(): string} NTreeNode.getOrder ??-order getter
+ * @property {function(): boolean} NTreeNode.isLeaf Leaf check
+ * @property {function(*, string): Nums} NTreeNode.find Look for a tree-node
+ * @property {function(...number): Nums} NTreeNode.dfs Depth First Search
+ * @property {function(...number): Nums} NTreeNode.bfs Breath First Search
+ * @property {function(): number} NTreeNode.sum Sum of the payloads
+ * @property {function(): number} NTreeNode.min Smallest payload
+ * @property {function(): number} NTreeNode.max Biggest payload
+ * @property {function(number): number} NTreeNode.nbOfBranches Branches counter
+ * @property {function(): number} NTreeNode.avg Average of the payloads
+ * @property {function(string)} NTreeNode.printBFS Print in the BFS order
+ * @property {function(): string} NTreeNode.toString String representation
+ * @property {function(): Array} NTreeNode.toArray Array representation
+ * @property {function(number): NTreeNode} NTreeNode.getChild Child getter
+ * @property {function(string, boolean): ?string} NTreeNode.see See the tree for that particular node
+ * @property {function(*): number} NTreeNode.count Count the number of times there's a particular payload
+ */
+class NTreeNode extends TreeNode {
+  constructor(pl=0, ch=[]) {
+    this.payload = pl;
+    this.child = ch;
+  }
+  add(c) {
+    this.child.push(c);
+  };
+  remove(c) {
+    this.child.remove(c);
+  };
+  traverse() {
+    for (let child of this.child) child.traverse();
+    return this
+  };
+
+  //Console printing
+  printInOrder() {
+    for (let i = 0; i < this.child - 1; i++) {
+      this.child[i].printInOrder();
+      Buffer.add(`${this.payload}->`);
+      this.child[i + 1].printInOrder();
+      Buffer.add('\r\n');
+    }
+  };
+  printPreOrder() {
+    for (let i = 0; i < this.child - 1; i++) {
+      Buffer.add(`${this.payload}->`);
+      this.child[i].printInOrder();
+      this.child[i + 1].printInOrder();
+      Buffer.add('\r\n'');
+    }
+  };
+  printPostOrder() {
+    for (let i = 0; i < this.child - 1; i++) {
+      this.child[i].printInOrder();
+      this.child[i + 1].printInOrder();
+      Buffer.add(`${this.payload}->`);
+      Buffer.add('\r\n'');
+    }
+  };
+
+  //Window printing
+  inOrder(t='', s='&nbsp;&nbsp;', d=0, sym='|-') {
+    for (let i = 0; i < this.child; i++) {
+      this.child[i].inOrder(t + s, s, d + 1, sym);
+      println(t + sym + this.payload + s + ` (depth=${d})`);
+      this.child[i].inOrder(t + s, s, d + 1, sym);
+    }
+  };
+  preOrder(t='', s='&nbsp;&nbsp;', d=0, sym='|-') {
+    println(t + sym + this.payload + s + ` (depth=${d})`);
+    for (let i = 0; i < this.child - 1; i++) this.child[i].preOrder(t + s, s, d + 1, sym);
+  };
+  postOrder(t='', s='&nbsp;&nbsp;', d=0, sym='|-') {
+    for (let i = 0; i < this.child; i++) this.child[i].postOrder(t + s, s, d + 1, sym);
+    println(t + sym + this.payload + s + ` (depth=${d})`);
+  };
+
+  //Getter
+  getOrder(sym='->') {
+    let getPayloads = node => node.isLeaf() ? node.payload : node.payload + sym + node.getOrder(sym);
+    return this.payload + sym + this.child.map(getPayloads).join(sym);
+  };
+
+  isLeaf() {
+    return this.child.length === 0;
+  };
+
+  find(n, method='bfs') {
+    return (method && method.toLowerCase() === 'bfs') ? this.bfs(n) : this.dfs(n)
+  };
+  dfs(n, d=0, td=0) { //Depth First Search
+    for (let c of this.child) {
+      if (!isType(c, 'NTreeNode')) throw new TypeError(`The child "${c}" is not a NTreeNode`);
+      c.dfs(n, d + 1, td++);
+    }
+    return [-1, td]
+  };
+  bfs(n, b=0, tb=0) { //Breadth First Search
+    let queue = [];
+    queue.unshift(this); //Add as the end
+    while (!queue.equals([])) {
+      b = 0;
+      let cur = new NTreeNode(queue.pop()); //Get the first element of the queue
+      if (cur.payload === n) return [b, tb];
+      if (cur.left) queue.unshift(cur.left);
+      if (cur.right) queue.unshift(cur.right);
+      b++;
+      tb++;
+    }
+    return [-1, tb]
+  };
+  sum() {
+    let s = this.payload;
+    for (let c of this.child) s += c.payload;
+    return s
+  };
+  min() {
+    let m = this.payload;
+    for (let c of this.child) m = Math.min(m, c.payload);
+    return m
+  };
+  max() {
+    let m = this.payload;
+    for (let c of this.child) m = Math.max(m, c.payload);
+    return m
+  };
+  nbOfBranches(n=0) {
+    for (let c of this.child) n = c.nbOfBranches(n + 1);
+    return n
+  };
+  avg() {
+    return this.sum() / this.nbOfBranches()
+  };
+  printBFS(t='-') {
+    let queue = [this], tab = t;
+    while (!queue.isEmpty()) {
+      let cur = new NTreeNode(queue.pop()); //Get the first element of the queue
+      println(`${tab}>${cur.payload}`);
+      tab += '-';
+      for (let c in this.child) queue.unshift(c);
+    }
+  };
+  toString() {
+    let str = `NTreeNode(payload=${this.payload}, child=[`;
+    for (let c of this.child) str += this.child[c].toString() + ', ';
+    return (str.substring(0, str.length) + '])').replace(', ]', ']');
+  };
+  toArray(singly=false) {
+    let arr = [];
+    arr.push(this.payload);
+    for (let c of this.child) singly ? arr.push(c.toArray().toString().split(',')) : arr.push(c.toArray());
+    return singly ? arr.toString().split(',') : arr
+  };
+
+  getChild(pos) {
+    return this.child[pos];
+  };
+
+  see(symbol, console=false) {
+    traverseTree(this, symbol);
+    Buffer.show(console, !console, true);
+    let tree = Buffer.log;
+    Buffer.clear();
+    return tree;
+  };
+
+  count(n) {
+    return this.getOrder().countWord(n, '->');
+  };
+}
+
+/**
+ * @description Traverse a (sub)tree starting from a particular node.
+ * @param {Node} node Node
+ * @param {string} [symbol="--"] Symbol/string/character to denote a branch
+ * @param {string} [start="|"] Starting symbol/string/character to denote the head of a branch
+ * @param {number} [indent=0] Indentation preceding a branch
+ * @return {string} Current buffer (assuming it's only containing what this function added to it).
+ * @function
+ * @since 1.0
+ * @public
+ */
+export let traverseTree = (node, symbol='--', start='|', indent=0) => {
+  Buffer.add('  '.repeat(indent) + start + symbol + node.payload);
+  indent++;
+  for (let i = 0; i < node.child.length; i++) traverseTree(node.getChild(i), symbol, start, indent);
+  return Buffer.log;
+};
+
+/**
+ * @description Sorted mathematical set
+ * @this SortedSet
+ * @see module:DataStruct~Set
+ * @param {Array} arr Array
+ * @returns {SortedSet} Sorted set
+ * @constructor
+ * @inheritdoc
+ * @since 1.0
+ * @property {number[]} SortedSet.value Values
+ * @property {function(*)} SortedSet.add Add an item to the set and sort it
+ * @property {function(): string} SortedSet.toString String representation
+ * @todo Check ES6's Set's API first!
+ */
+class SortedSet {
+  constructor(arr=[]) {
+    this.value = [...arr].sort();
+  }
+  add(item) {
+    isType(item, 'Array') ? this.value.multiPlace(item) : this.value.place(item);
+    this.value = rmDuplicates(this.value);
+  };
+
+  toString() {
+    return `SortedSet(${this.value.toString()})`
+  };
 }
 
