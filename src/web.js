@@ -4,8 +4,8 @@
  * @requires module:essence
  * @since 1.0
  */
-import * as essence from './essence';
-import * as data from './data';
+import {say, getKey} from './essence';
+import {lastKeyPair} from './data';
 
 /**
  * @description Turn the current webpage into an in-browser editor
@@ -55,7 +55,7 @@ export let ServerBase = {
       this.list.remove(server);
       //noinspection JSAnnotator
       server.delete();
-    }).catch(err => essence.say(err, 'error'));
+    }).catch(err => say(err, 'error'));
   }
 };
 
@@ -83,7 +83,7 @@ export const Sys = {
     recording: false,
     data: [],
     record(keyStroke) {
-      let keyPair = essence.getKey(keyStroke);
+      let keyPair = getKey(keyStroke);
       if (this.recording) this.data.push(keyPair[0]);
       if (keyPair[1] === 10 || keyPair[1] === 13) this.ready = true;
 
@@ -101,7 +101,7 @@ export const Sys = {
        */
       window.onkeypress = (keyStroke) => {
         this.record(keyStroke);
-        data.lastKeyPair = essence.getKey(keyStroke);
+        lastKeyPair = getKey(keyStroke);
       };
     },
     stopRecording() {
@@ -123,7 +123,7 @@ export const Sys = {
     console.groupEnd();
   },
   out() {
-    essence.say(this.in.data);
+    say(this.in.data);
     return this.in.data;
   },
   toString() {
@@ -142,7 +142,7 @@ export const Sys = {
  * @returns {Promise} Promise containing the answer
  */
 export let ask = (label='Is there a problem ?') => {
-  essence.say(label, 'quest');
+  say(label, 'quest');
   Sys.reset();
   Sys.in.startRecording();
   let hasAnswer = new Promise((resolve, reject) => {

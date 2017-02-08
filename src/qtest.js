@@ -4,9 +4,9 @@
  * @requires module:essence
  * @since 1.0
  */
-import * as essence from './essence';
-import * as files from './files';
-import * as maths from './maths';
+import {entries, say, isType, Copy, time} from './essence';
+import {stripPath, getFilename} from './files';
+import {nthroot} from './maths';
 
 /**
  * @description Error handler.
@@ -26,7 +26,7 @@ export const handleError = (msg, url, line) => console.log(`[Essence] An error h
  * @since 1.0
  * @function
  */
-export const EvtLog = event => essence.entries(event).map((key, value) => essence.say(`${key}: ${value}`));
+export const EvtLog = event => entries(event).map((key, value) => say(`${key}: ${value}`));
 
 /*
 Types
@@ -48,11 +48,7 @@ Types
 
 /**
  * @description Invalid parameter error.
- * @param {string} [msg='The parameter used at <code>lineNum</code> is invalid']  Message
- * @param {string} [fname=location.href] Filename
- * @param {number} [lineNum=getLineNum()] Line number
  * @class
- * @returns {InvalidParamError} Parameter error
  * @extends {TypeError}
  * @this {InvalidParamError}
  * @public
@@ -60,6 +56,11 @@ Types
  * @throws {TypeError}
  */
 export class InvalidParamError extends TypeError {
+  /**
+   * @param {string} [msg='The parameter used at <code>lineNum</code> is invalid']  Message
+   * @param {string} [fname=location.href] Filename
+   * @param {number} [lineNum=getLineNum()] Line number
+   */
   constructor(msg='The parameter is invalid !', fname=location.href, lineNum=getLineNum()) {
     let error = TypeError.call(this, msg);
     this.name = 'InvalidParamError';
@@ -72,11 +73,7 @@ export class InvalidParamError extends TypeError {
 
 /**
  * @description Invalid expression error
- * @param {string} [msg='The expression is invalid !']  Message
- * @param {string} [fname=location.href] Filename
- * @param {number} [lineNum=getLineNum()] Line number
  * @class
- * @returns {InvalidExpressionError} Error
  * @extends {Error}
  * @this {InvalidExpressionError}
  * @public
@@ -84,6 +81,11 @@ export class InvalidParamError extends TypeError {
  * @throws {Error}
  */
 export class InvalidExpressionError extends Error {
+  /**
+   * @param {string} [msg='The expression is invalid !']  Message
+   * @param {string} [fname=location.href] Filename
+   * @param {number} [lineNum=getLineNum()] Line number
+   */
   constructor(msg='The parameter is invalid !', fname=location.href, lineNum=getLineNum()) {
     let error = Error.call(this, msg);
     this.name = 'InvalidExpressionError';
@@ -111,7 +113,7 @@ export let getTrace = () => {
     }
     //return new Error("");
   };
-  let fn = files.stripPath(err().stack.split('\n').last());
+  let fn = stripPath(err().stack.split('\n').last());
   return fn.split(' ').last();
 };
 
@@ -140,23 +142,23 @@ export let testErr = (err) => {
     //noinspection ExceptionCaughtLocallyJS
     throw err;
   } catch (e) {
-    essence.say(`%cTested error%c:\n${e.stack}`, 'error', 'text-decoration: underline; color: #000;", "text-decoration: none; color: #000;');
+    say(`%cTested error%c:\n${e.stack}`, 'error', 'text-decoration: underline; color: #000;", "text-decoration: none; color: #000;');
   }
 };
 
 /**
  * @description Error testing for beginners.<br />
  * Source: {@link https://scontent-lhr3-1.xx.fbcdn.net/hphotos-xfl1/v/t1.0-9/12705609_1071795346206130_3757520485028328706_n.jpg?oh=cb99a4624d9732414b787f7eb8437c73&oe=57383223}
- * @param {Function} fx Function
+ * @param {Function} fn Function
  * @param {*} [param] Parameter
  * @returns {undefined}
  * @public
  * @since 1.0
  * @function
  */
-export let noobTest = (fx, param) => {
+export let noobTest = (fn, param) => {
   try {
-    fx(param);
+   fn(param);
   } catch(e) {
     location.href = 'http://stackoverflow.com/search?q=[js]+' + e.message;
   }
@@ -164,7 +166,7 @@ export let noobTest = (fx, param) => {
 
 /**
  * @description Test a function/expression
- * @param {function(*)|string} fx Function/expression
+ * @param {function(*)|string}fn Function/expression
  * @param {*} [args] Arguments
  * @public
  * @since 1.0
@@ -172,9 +174,9 @@ export let noobTest = (fx, param) => {
  */
 export let test = (fx, ...args) => {
   try {
-    essence.isType(fx, 'String') ? eval(fx) : fx(...args);
+    isType(fx, 'String') ? eval(fx) :fn(...args);
   } catch (e) {
-    handleError(`${e}\n`, files.getFilename(true), getLineNum(true));
+    handleError(`${e}\n`, getFilename(true), getLineNum(true));
   }
 };
 
@@ -203,8 +205,8 @@ export let UnitTest = {
   coverage: 0,
   test(then, expected, description='Test #f', noisy=false) {
     this.total++;
-    let actual = essence.Copy(then), timeSpent, passed; //to avoid random changes while calling the same function/method with the same parameter(start)
-    timeSpent = essence.time(() => passed = actual.equals(expected));
+    let actual = Copy(then), timeSpent, passed; //to avoid random changes while calling the same function/method with the same parameter(start)
+    timeSpent = time(() => passed = actual.equals(expected));
     if (!passed) {
       this.fail++;
       console.log(`%c[Unit]%c ${description}${this.fail}: Expected "%c${expected}%c" but was "%c${actual}%c"\t(${timeSpent}ms)`, 'color: #c0c', 'color: #000', 'color: #0f0', 'color: #000', 'color: #f00', 'color: #000');
@@ -212,8 +214,8 @@ export let UnitTest = {
   },
   testFalse(then, expected, cmt='Test #f', noisy=false) {
     this.total++;
-    let actual = essence.Copy(then), timeSpent, passed;
-    timeSpent = essence.time(() => passed = actual.equals(expected));
+    let actual = Copy(then), timeSpent, passed;
+    timeSpent = time(() => passed = actual.equals(expected));
     if (passed) {
       this.fail++;
       console.log(`%c[Unit]%c ${cmt}: Didn't expected %c${expected}%c" to be "%c${actual}%c"\t(${timeSpent}ms)`, 'color: #c0c', 'color: #000', 'color: #0f0', 'color: #000', 'color: #f00', 'color: #000');
@@ -244,7 +246,7 @@ export let UnitTest = {
     this.multiTest([
       [eval(1.0 + 2.0), 3.0], //Rounding
       ['Hello World'.split(' '), [['H', 'end', 'l', 'l', 'o'].join(''), ['W', 'o', 'r', 'l', 'd'].join('')]], //Diving and joining
-      [maths.nthroot(5, 2, 4), Math.pow(5, 1/2).toNDec(4)]
+      [nthroot(5, 2, 4), Math.pow(5, 1/2).toNDec(4)]
     ]);
   },
   libTests: [],

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: InvalidExpressionError</title>
+    <title>JSDoc: Class: Edge</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: InvalidExpressionError</h1>
+    <h1 class="page-title">Class: Edge</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>InvalidExpressionError</h2>
+        <h2>Edge</h2>
         
     
 </header>
@@ -40,16 +40,16 @@
 
     
 
-    <h4 class="name" id="InvalidExpressionError"><span class="type-signature"></span>new InvalidExpressionError<span class="signature">(msg<span class="signature-attributes">opt</span>, fname<span class="signature-attributes">opt</span>, lineNum<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {InvalidExpressionError}</span></h4>
+    <h4 class="name" id="Edge"><span class="type-signature"></span>new Edge<span class="signature">(start<span class="signature-attributes">nullable</span>, end<span class="signature-attributes">nullable</span>, len<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
-    <p class="summary">Invalid expression error.</p>
+    <p class="summary">Edge that connects two Vertices.</p>
     
 
 
 
 <div class="description">
-    Invalid expression error
+    Edge that connects two Vertices
 </div>
 
 
@@ -59,7 +59,7 @@
 
 
     <h5>This:</h5>
-    <ul><li>{InvalidExpressionError}</li></ul>
+    <ul><li>Edge</li></ul>
 
 
 
@@ -92,13 +92,13 @@
 
         <tr>
             
-                <td class="name"><code>msg</code></td>
+                <td class="name"><code>start</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Vertex</span>
 
 
             
@@ -107,9 +107,9 @@
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
+                
+                    &lt;nullable><br>
                 
 
                 
@@ -119,25 +119,23 @@
             
                 <td class="default">
                 
-                    'The expression is invalid !'
-                
                 </td>
             
 
-            <td class="description last">Message</td>
+            <td class="description last">Starting vertex/node</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>fname</code></td>
+                <td class="name"><code>end</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Vertex</span>
 
 
             
@@ -146,9 +144,9 @@
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
+                
+                    &lt;nullable><br>
                 
 
                 
@@ -158,19 +156,17 @@
             
                 <td class="default">
                 
-                    location.href
-                
                 </td>
             
 
-            <td class="description last">Filename</td>
+            <td class="description last">Ending vertex/node</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>lineNum</code></td>
+                <td class="name"><code>len</code></td>
             
 
             <td class="type">
@@ -197,12 +193,12 @@
             
                 <td class="default">
                 
-                    getLineNum()
+                    0
                 
                 </td>
             
 
-            <td class="description last">Line number</td>
+            <td class="description last">Length of the edge.</td>
         </tr>
 
     
@@ -210,6 +206,244 @@
 </table>
 
 
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Edge.startNode</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Vertex</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Starting node/vertex of the edge</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Edge.endNode</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Vertex</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Ending node/vertex of the edge</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Edge.length</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Length of the edge</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Edge.toString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">String representation of the edge</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Edge.draw</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Draw the edge</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Edge.getSurroundingEdges</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Get all the surrounding edges</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Edge.getNeighbours</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Get the neighbour edges</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -246,7 +480,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="qtest.js.html">qtest.js</a>, <a href="qtest.js.html#line86">line 86</a>
+        <a href="dsa.js.html">dsa.js</a>, <a href="dsa.js.html#line864">line 864</a>
     </li></ul></dd>
     
 
@@ -267,61 +501,13 @@
 
 
 
-<h5>Throws:</h5>
-
-        
-
-    <div class="param-desc">
-    
-        
-<span class="param-type">Error</span>
 
 
-    
-    </div>
-
-
-    
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Error
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">InvalidExpressionError</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
     
     </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li>Error</li>
-    </ul>
-
 
     
 
@@ -356,7 +542,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 12:34:16 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 12:34:15 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

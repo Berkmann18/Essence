@@ -4,10 +4,20 @@
  * @requires module:essence
  * @since 1.0
  */
-import * as essence from './essence';
-import * as qtest from './qtest';
-import * as dsa from './dsa';
-import * as misc from './misc';
+import {
+  isNativeType,
+  getTime,
+  mkArray,
+  isNon,
+  isTypedArray,
+  toSameLength,
+  say,
+  lookfor,
+  isType
+} from "./essence";
+import {InvalidParamError, InvalidExpressionError} from "./qtest";
+import {Pt, Stack} from "./dsa";
+import {rmDuplicates, RegExpify, asciiTable} from "./misc";
 
 //Constants
 /**
@@ -193,7 +203,7 @@ export const NaturalNum = function*() {
  * @since 1.0
  * @todo Find a way to get N.value to be correctly updated when calling N.next() and make a Number set factory
  */
-export const N = (function () {
+export const N = (() => {
   let gen = NaturalNum();
   let value = gen.next().value;
   let reset = () => {
@@ -468,7 +478,7 @@ export let genNearlySortedArr = (n = 10, min = 0, max = 100) => {
  * @throws {TypeError} Not an array
  */
 export let sumPow2 = (arr, nbDec = 2) => {
-  if (!essence.isNativeType(arr, 'Array')) throw TypeError('sumPow2 only accept arrays!');
+  if (!isNativeType(arr, 'Array')) throw TypeError('sumPow2 only accept arrays!');
   return arr.map((x) => x * x).sum().toNDec(nbDec)
 };
 
@@ -555,7 +565,7 @@ export let floatingPtBin = (bin) => {
       mantissa = getMantissa(bin.get(15), 112);
       break;
     default:
-      throw new qtest.InvalidParamError('Invalid binary number');
+      throw new InvalidParamError('Invalid binary number');
   }
   return sign * Math.pow(2, exponent) * mantissa;
 };
@@ -594,7 +604,7 @@ export let dec2min = (dec) => (30 * dec) / 50;
 export let toSec = (i) => {
   if (i == parseFloat(i)) return parseFloat(i); //Seconds stay seconds
   let withH = i.count(':') === 2;
-  if (!essence.isNativeType(i, 'String')) i += '';
+  if (!esseisNativeType(i, 'String')) i += '';
   if (i.length >= 4 && i.indexOf(':') === 1) return toSec('0' + i); //So times without the leading 0 or simply with a 1-digit first section could be read properly
 
   let time = i.split(':'), m, s;
@@ -647,9 +657,9 @@ export let sec2time = (i, withH = false) => {
  * @function
  * @returns {string}
  */
-export let timeDiff = (start = essence.getTime(true), end) => {
+export let timeDiff = (start = getTime(true), end) => {
   let withH = end.count(':') === 2;
-  if (xor(start.count(':') === 2, end.count(':') === 2)) throw new qtest.InvalidParamError('Both times needs to be in the same format');
+  if (xor(start.count(':') === 2, end.count(':') === 2)) throw new InvalidParamError('Both times needs to be in the same format');
   return sec2time(toSec(end) - toSec(start), withH);
 };
 
@@ -1077,7 +1087,7 @@ export let isPrime = (x) => primeN(range(1, 1, x)).contains(x);
  * @function
  */
 export let primeN = (arr) => {
-  let res = arr.sort();
+  let res = arr.sort((a, b) => a - b);
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] % 2 === 0 && arr[i] != 2) res[i] = 'x';
     for (let j = 0; j < i; j++) {
@@ -1245,7 +1255,7 @@ export let quadraticSolver = (a, b, c, nDec) => {
  * @function
  */
 export let eqSolver = (formula, res, low = -100, high = 200) => {
-  let results = essence.mkArray(low > 0 ? high - low : high - low + 1, 2, 1);
+  let results = mkArray(low > 0 ? high - low : high - low + 1, 2, 1);
   //Translation from text to commands or to a computer readable string for eval()
   //Str.replace(/([A-z]|[0-9])\x29$/m, 'm') for end )
   //Str.replace(/^\x28([A-z]|[0-9])/m, 'm') for start (
@@ -1270,7 +1280,7 @@ export let eqSolver = (formula, res, low = -100, high = 200) => {
     let re = new RegExp('end\\^([(]. * ?[)]|\\d + \\.\\d + |\\d + |[a-z] + )');
     formula = formula.replace(re, 'Math.exp($1)');
   }
-  essence.say(`Formula now converted to %c${formula}`, 'info', 'color: #00f');
+  say(`Formula now converted to %c${formula}`, 'info', 'color: #00f');
   //Brute force using any values within [a, b]
   for (let x = low; x <= high; x++) {
     for (let y = low; y <= high; y++) results[x][y] = `(${x}, ${y}) ${eval(formula)}`;
@@ -1292,7 +1302,7 @@ export let eqSolver = (formula, res, low = -100, high = 200) => {
  * @function
  */
 export let manuEqSolver = (eq, max, dim, r) => {
-  let res = essence.mkArray(max + 1, dim, 1), p = [];
+  let res = mkArray(max + 1, dim, 1), p = [];
   for (let x = 0; x < res.length; x++) {
     if (dim === 2) {
       for (let y = 0; y < res.length; y++) {
@@ -1322,7 +1332,7 @@ export let manuEqSolver = (eq, max, dim, r) => {
  * @since 1.0
  * @function
  */
-export let getNumFromStr = (x) => essence.isNon(x) ? NaN : parseFloat(x.replace(/[A-Za-z_ ]+/g, ''));
+export let getNumFromStr = (x) => isNon(x) ? NaN : parseFloat(x.replace(/[A-Za-z_ ]+/g, ''));
 
 /**
  * @description Get the numbers from a string or an array.<br />
@@ -2635,7 +2645,7 @@ export let scalarProd = (v1, v2) => v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
  * @since 1.0
  * @function
  */
-export let vector2Point = (v) => new dsa.Pt(v.x, v.y, v.z);
+export let vector2Point = (v) => new Pt(v.x, v.y, v.z);
 
 /**
  * @description Convert a vector to a point form (R = xi + yj + zk&rarr;(x, y, z)).
@@ -2652,6 +2662,20 @@ export let vector2PointForm = (r) => {
 };
 
 /**
+ * @description Check if a set is a superset of another.
+ * @param {(Array|Set|SortedSet)} set Set
+ * @param {(Array|Set|SortedSet)} subset (Sub)set
+ * @returns {boolean} Superset state
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let isSuperset = (set, subset) => {
+  for (let item of subset) if (set.miss(item) && !set.has(item)) return false;
+  return true;
+};
+
+/**
  * @description Union (&Union;).<br />
  * It will give a single array with unique values of all the elemenets of all arrays.
  * @param {Array[]} arrays Array of arrays to unit
@@ -2661,7 +2685,7 @@ export let vector2PointForm = (r) => {
  * @since 1.0
  * @function
  */
-export let union = (arrays, toSort = false) => toSort ? misc.rmDuplicates(arrays[0].concat(...arrays.get(1))).sort() : misc.rmDuplicates(arrays[0].concat(...arrays.get(1)));
+export let union = (arrays, toSort = false) => toSort ? rmDuplicates(arrays[0].concat(...arrays.get(1))).sort((a, b) => a - b) : rmDuplicates(arrays[0].concat(...arrays.get(1)));
 
 /**
  * @description Intersection (&Intersection;).<br />
@@ -2674,9 +2698,9 @@ export let union = (arrays, toSort = false) => toSort ? misc.rmDuplicates(arrays
  * @function
  */
 export let intersection = (arrays, toSort = false) => {
-  let first = misc.rmDuplicates(arrays[0]), rest = arrays.get(1).map(arr => misc.rmDuplicates(arr));
+  let first = rmDuplicates(arrays[0]), rest = arrays.get(1).map(arr => rmDuplicates(arr));
   let inter = first.filter(item => rest.some(arr => arr.contains(item)));
-  return toSort ? inter.sort() : inter;
+  return toSort ? inter.sort((a, b) => a - b) : inter;
 };
 
 /**
@@ -2690,9 +2714,9 @@ export let intersection = (arrays, toSort = false) => {
  * @function
  */
 export let complement = (arrays, toSort = false) => {
-  let first = misc.rmDuplicates(arrays[0]), rest = misc.rmDuplicates(arrays.get(1).linearise());
+  let first = rmDuplicates(arrays[0]), rest = rmDuplicates(arrays.get(1).linearise());
   let compl = first.filter(item => rest.miss(item));
-  return toSort ? compl.sort() : compl;
+  return toSort ? compl.sort((a, b) => a - b) : compl;
 };
 
 /**
@@ -2707,8 +2731,8 @@ export let complement = (arrays, toSort = false) => {
  */
 export let symDif = (arrays, toSort = false) => {
   let array = arrays.linearise();
-  let sd = essence.isTypedArray(array, 'Number') ? array.unique().sanitise('Number') : array.unique();
-  return toSort ? sd.sort() : sd;
+  let sd = isTypedArray(array, 'Number') ? array.unique().sanitise('Number') : array.unique();
+  return toSort ? sd.sort((a, b) => a - b) : sd;
 };
 
 /**
@@ -2739,7 +2763,7 @@ export let bitStr = (a, b) => {
  * @function
  */
 export let And = (a, b, cr = null, toArr = false) => {
-  essence.toSameLength(a, b, cr);
+  toSameLength(a, b, cr);
   let res = toArr ? [] : (a[0] && b[0]);
   for (let i in a) {
     if (a.has(i)) {
@@ -2761,7 +2785,7 @@ export let And = (a, b, cr = null, toArr = false) => {
  * @function
  */
 export let Or = (a, b, cr = null, toArr = false) => {
-  essence.toSameLength(a, b, cr);
+  toSameLength(a, b, cr);
   let res = toArr ? [] : (a[0] || b[0]);
   for (let i in a) {
     if (a.has(i)) {
@@ -2783,7 +2807,7 @@ export let Or = (a, b, cr = null, toArr = false) => {
  * @function
  */
 export let Xor = (a, b, cr = null, toArr = false) => {
-  essence.toSameLength(a, b, cr || null);
+  toSameLength(a, b, cr || null);
   let res = toArr ? [] : xor(a[0], b[0]);
   for (let i in a) {
     if (a.has(i)) {
@@ -2804,7 +2828,7 @@ export let Xor = (a, b, cr = null, toArr = false) => {
  * @func
  */
 export let Imply = (a, b, cr = null, toArr = false) => {
-  essence.toSameLength(a, b, cr);
+  toSameLength(a, b, cr);
   let res = toArr ? [] : (!a[0] || b[0]);
   for (let i in a) {
     if (a.has(i)) {
@@ -2862,9 +2886,9 @@ export let h = (mtx, solvedMtx, hrt = euclidianDist) => {
   let res = [];
   for (let i = 0; i < mtx.length; i++) {
     res.push([]);
-    for (let j = 0; j < mtx[i].length; j++) res[i][j] = hrt([i, j], essence.lookfor(mtx[i][j], solvedMtx));
+    for (let j = 0; j < mtx[i].length; j++) res[i][j] = hrt([i, j], lookfor(mtx[i][j], solvedMtx));
   }
-  //essence.say(console.table(res));
+  //say(console.table(res));
   return res.sum2d()
 };
 
@@ -3020,7 +3044,7 @@ export let take = function*(n, iterable) {
  */
 export let bruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
   for (let x = min; x <= max; x++) {
-    if (eval(cond.replace(misc.RegExpify('x'), x + ''))) return x;
+    if (eval(cond.replace(RegExpify('x'), x + ''))) return x;
   }
   return false;
 };
@@ -3042,7 +3066,7 @@ export let bruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
  */
 export let bruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, precision = DECIMALS32) => {
   for (let x = min; x <= max; x += precision) {
-    if (eval(cond.replace(misc.RegExpify('x'), x + ''))) return x;
+    if (eval(cond.replace(RegExpify('x'), x + ''))) return x;
   }
   return false;
 };
@@ -3077,7 +3101,7 @@ export let bruteForceDouble = (cond) => bruteForceFloat(cond, MIN_DOUBLE, MAX_DO
 export let doubleBruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
   for (let x = min; x <= max; x++) {
     for (let y = min; y <= max; y++) {
-      if (eval(cond.replace(misc.RegExpify('x'), x + '').replace(misc.RegExpify('y'), y + ''))) return [x, y];
+      if (eval(cond.replace(RegExpify('x'), x + '').replace(RegExpify('y'), y + ''))) return [x, y];
     }
   }
   return false;
@@ -3102,7 +3126,7 @@ export let doubleBruteForceNum = (cond, min = MIN_INT32, max = MAX_INT32) => {
 export let doubleBruteForceFloat = (cond, min = MIN_FLOAT, max = MAX_FLOAT, precision = DECIMALS32) => {
   for (let x = min; x <= max; x += precision) {
     for (let y = min; y <= max; y += precision) {
-      if (eval(cond.replace(misc.RegExpify('x'), x + '').replace(misc.RegExpify('y'), y + ''))) return [x, y];
+      if (eval(cond.replace(RegExpify('x'), x + '').replace(RegExpify('y'), y + ''))) return [x, y];
     }
   }
   return false;
@@ -3152,9 +3176,8 @@ export let getClosest = (x, opt) => {
 
 /**
  * @description Single parametric equation.
- * @param {string} [formula='y=x'] Formula
- * @returns {Equation} Equation
  * @this {Equation}
+ * @public
  * @since 1.0
  * @property {string} Equation.formula Formula
  * @property {string} Equation.leftSide LHS
@@ -3163,7 +3186,10 @@ export let getClosest = (x, opt) => {
  * @property {function(): string} Equation.toString String representation
  * @class
  */
-class Equation {
+export class Equation {
+  /**
+   * @param {string} [formula='y=x'] Formula
+   */
   constructor(formula = 'y=x') {
     this.formula = formula.normal();
     [this.leftSide, this.rightSide] = this.formula.split('=');
@@ -3210,7 +3236,7 @@ export let binaryCases = (x) => {
  */
 export let truthTable = (exp) => { //Get the truth table of an expression
   // /(([a-z])(\+|\x2a))+/g
-  let ascii = misc.asciiTable('a-z'), vars = [], rows, res = [];
+  let ascii = asciiTable('a-z'), vars = [], rows, res = [];
   for (let chr of ascii) {
     if (exp.has(chr)) vars.push(chr);
   }
@@ -3218,7 +3244,7 @@ export let truthTable = (exp) => { //Get the truth table of an expression
   for (let row of rows) {
     let cexp = exp;
     for (let j = 0; j < vars.length; j++) cexp = cexp.multiReplace([[vars[j], row[j]]]);
-    //essence.say(`current exp: ${cexp}`, 'info');
+    //say(`current exp: ${cexp}`, 'info');
     res.push(eval(cexp));
   }
   return [vars, rows, res];
@@ -3295,7 +3321,7 @@ export let sampleMean = (arr) => Math.sqrt(sumPow2(arr) / arr.length - arr.mean(
  */
 export let confidenceInterval = (avg, c = .95, n, sd) => {
   let z = InvNorm(c); //sd ? InvNorm(c) : TDistrib((1 - c) / 2, n - 1);
-  if (essence.isType(avg, 'Array')) {
+  if (isType(avg, 'Array')) {
     sd = avg.stddev();
     n = avg.length;
     avg = sampleMean(avg);
@@ -3324,10 +3350,10 @@ export let Fibonacci = (x) => (x <= 1) ? x : Fibonacci(x - 1) + Fibonacci(x - 2)
  * revPolishCalc('1 4 + 2 *'); //equivalent to (1 + 4) * 2 = 10
  */
 export let revPolishCalc = (exp) => {
-  let values = new dsa.Stack(), chars = exp.split(' '), res = 0, nbOfNums = 0;
+  let values = new Stack(), chars = exp.split(' '), res = 0, nbOfNums = 0;
 
   if (chars.length === 1) return parseFloat(chars[0]);
-  else if (chars.length === 2) throw new qtest.InvalidExpressionError('Unsufficient amount of values!');
+  else if (chars.length === 2) throw new InvalidExpressionError('Unsufficient amount of values!');
 
   for (let char of chars) {
     if (isNaN(char)) {
@@ -3336,11 +3362,11 @@ export let revPolishCalc = (exp) => {
         res = eval(num1 + char + num0);
         values.push(res);
         nbOfNums = 0;
-      } else throw new qtest.InvalidExpressionError(`WTF is the ${char} character doing here?`);
+      } else throw new InvalidExpressionError(`WTF is the ${char} character doing here?`);
     } else { //Number
       values.push(parseFloat(char));
       if (nbOfNums <= 2) nbOfNums++;
-      else throw new qtest.InvalidExpressionError('Too many numbers without operations!');
+      else throw new InvalidExpressionError('Too many numbers without operations!');
     }
   }
   return res;
