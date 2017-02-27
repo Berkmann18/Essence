@@ -1966,7 +1966,7 @@ export let IDAstar = () => {
  * @since 1.0
  * @function
  */
-export alphabetSort = (x) => {
+export let alphabetSort = (x) => {
   if (!x.isIterable()) throw new TypeError('alphabetSort cannot sort non iterable objects');
   if (isType(x, 'String')) return x.split('').sort((a, b) => a - b).join('');
 

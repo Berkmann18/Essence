@@ -674,7 +674,7 @@ export let checkBrowser = () => {
 /**
  * @description Browser detection system.<br />
  * Source: somewhere
- * @type {{init: (()), searchString: ((data)), searchVersion: ((dataString)), dataBrowser: [*], dataOS: [*], info: (())}}
+ * @type {{init: (()), searchString: ((data)), searchVersion: ((string)), dataBrowser: Object[], dataOS: Object[], info: (())}}
  * @public
  * @since 1.0
  * @global

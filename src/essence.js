@@ -665,7 +665,7 @@ Object.prototype.count = (character) => Array.from(this).filter(x => x === chara
  * @memberof Object.prototype
  * @external Object
  */
-export Object.prototype.positions = (character) => {
+Object.prototype.positions = (character) => {
   let pos = [];
   //noinspection JSUnresolvedVariable
   for (let item of this) {
@@ -690,7 +690,7 @@ export Object.prototype.positions = (character) => {
  * myArr.isIterable(); //true
  * myObj.isIterable(); //true
  */
-export Object.prototype.isIterable = () => isNativeType(this, 'String') || isNativeType(this, 'Array') || isNativeType(this, 'Object');
+Object.prototype.isIterable = () => isNativeType(this, 'String') || isNativeType(this, 'Array') || isNativeType(this, 'Object');
 
 /**
  * @description Self-destruction of the object.<br />
@@ -702,7 +702,7 @@ export Object.prototype.isIterable = () => isNativeType(this, 'String') || isNat
  * @memberof Object.prototype
  * @external Object
  */
-export Object.prototype.delete = () => {
+Object.prototype.delete = () => {
   this.property = undefined;
 };
 
@@ -724,7 +724,7 @@ export Object.prototype.delete = () => {
  * c.join('').equals(a); //true
  * c.equals(a); //false
  */
-export Object.prototype.equals = (obj) => this.toString() === obj.toString() || this.toLocaleString() === obj.toLocaleString() || this === obj;
+Object.prototype.equals = (obj) => this.toString() === obj.toString() || this.toLocaleString() === obj.toLocaleString() || this === obj;
 
 /**
  * @description Multiple replacement.
@@ -762,7 +762,7 @@ Object.prototype.multiReplace = (rules) => {
  * b.compareTo(a) === 1 //b > a
  * a.compareTo(a) === 0 //a = a
  */
-export Object.prototype.compareTo = (obj) => {
+Object.prototype.compareTo = (obj) => {
   if (getNativeType(this) != getNativeType(obj)) throw new TypeError(`${this} and ${obj} aren't of the same type, so can't be compared.`);
   if ((getNativeType(this) === 'Object' && getCustomType(this) === getCustomType(obj)) || getNativeType(this) === getNativeType(obj)) {
     return this.equals(obj) ? 0 : (this.toString() < obj.toString() || this.toLocaleString() < obj.toLocaleString()) ? -1 : 1;
@@ -786,7 +786,7 @@ export Object.prototype.compareTo = (obj) => {
  * b.has('w'); //true
  * b.has(' '); //false
  */
-export Object.prototype.has = (prop) => Object.prototype.hasOwnProperty.call(this, prop); //Better than this[prop] != undefined
+Object.prototype.has = (prop) => Object.prototype.hasOwnProperty.call(this, prop); //Better than this[prop] != undefined
 
 /**
  * @description Emptiness check on the object.
@@ -805,7 +805,7 @@ export Object.prototype.has = (prop) => Object.prototype.hasOwnProperty.call(thi
  * c.isEmpty(); //false
  * d.isEmpty(); //true
  */
-export Object.prototype.isEmpty = () => !(this.length);
+Object.prototype.isEmpty = () => !(this.length);
 
 /**
  * @description High level inheritance.
@@ -817,7 +817,7 @@ export Object.prototype.isEmpty = () => !(this.length);
  * @since 1.0
  * @method
  */
-export Object.prototype.inherits = (parent) => {
+Object.prototype.inherits = (parent) => {
   this.prototype = Object.create(parent.prototype);
   this.prototype.constructor = this;
 };
@@ -835,7 +835,7 @@ export Object.prototype.inherits = (parent) => {
  * @method
  * @todo Find a stable way to use it without having this=window (note: the ES5 way on {@link https://stackoverflow.com/questions/6868883/augmenting-types-in-javascript} works)
  */
-export Object.prototype.method = (name, fn) => {
+Object.prototype.method = (name, fn) => {
   this.prototype[name] = fn.apply(this);
   return this;
 };
@@ -854,7 +854,7 @@ export Object.prototype.method = (name, fn) => {
  * @deprecated
  * @todo Find a stable way to use it without having this=window (note: the ES5 way on {@link https://stackoverflow.com/questions/6868883/augmenting-types-in-javascript} works)
  */
-export Function.prototype.method = (name, fn) => {
+Function.prototype.method = (name, fn) => {
   this.prototype[name] = fn;
   return this;
 };
@@ -870,7 +870,7 @@ export Function.prototype.method = (name, fn) => {
  * @memberof Function.prototype
  * @external Function
  */
-export Function.prototype.inheritsFrom = (parentClassOrObj) => {
+Function.prototype.inheritsFrom = (parentClassOrObj) => {
   if (parentClassOrObj.constructor === Function) { //Normal Inheritance
     this.prototype = new parentClassOrObj;
     this.prototype.constructor = this;
@@ -895,7 +895,7 @@ export Function.prototype.inheritsFrom = (parentClassOrObj) => {
  * @external Array
  * @see module:essence~Array.prototype.miss
  */
-export Array.prototype.contains = (value) => this.indexOf(value) > -1;
+Array.prototype.contains = (value) => this.indexOf(value) > -1;
 
 /**
  * @description Check if an array doesn't contains a value.
@@ -908,7 +908,7 @@ export Array.prototype.contains = (value) => this.indexOf(value) > -1;
  * @external Array
  * @see module:essence~Array.prototype.contains
  */
-export Array.prototype.miss = (value) => this.indexOf(value) === -1;
+Array.prototype.miss = (value) => this.indexOf(value) === -1;
 
 /**
  * @description Get the first element of the array.
@@ -921,7 +921,7 @@ export Array.prototype.miss = (value) => this.indexOf(value) === -1;
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.first = (value) => isNon(value) ? this[0] : this[0] = value;
+Array.prototype.first = (value) => isNon(value) ? this[0] : this[0] = value;
 
 /**
  * @description Get the last element of the array.
@@ -934,7 +934,7 @@ export Array.prototype.first = (value) => isNon(value) ? this[0] : this[0] = val
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.last = (value) => isNon(value) ? this[this.length - 1] : this[this.length - 1] = value;
+Array.prototype.last = (value) => isNon(value) ? this[this.length - 1] : this[this.length - 1] = value;
 
 /**
  * @description Line of a 2D array.
@@ -947,7 +947,7 @@ export Array.prototype.last = (value) => isNon(value) ? this[this.length - 1] : 
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.line = (n = 0) => {
+Array.prototype.line = (n = 0) => {
   return this.map((i) => {
     if (n < 0) n = this[i].length - n;
     return i[n];
@@ -966,7 +966,7 @@ export Array.prototype.line = (n = 0) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.block = (start = 0, end = this.length - 1) => this.map((i) => i.get(start, end));
+Array.prototype.block = (start = 0, end = this.length - 1) => this.map((i) => i.get(start, end));
 
 /**
  * @description Returns the last index of the array.
@@ -978,7 +978,7 @@ export Array.prototype.block = (start = 0, end = this.length - 1) => this.map((i
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.lastIndex = () => this.length - 1;
+Array.prototype.lastIndex = () => this.length - 1;
 
 /**
  * @description Returns the middle index of the array.
@@ -991,7 +991,7 @@ export Array.prototype.lastIndex = () => this.length - 1;
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.midIndex = (under) => under ? Math.floor(this.length / 2) - 1 : Math.floor(this.length / 2);
+Array.prototype.midIndex = (under) => under ? Math.floor(this.length / 2) - 1 : Math.floor(this.length / 2);
 
 /**
  * @description Returns the values of the array that are in an even position.
@@ -1003,7 +1003,7 @@ export Array.prototype.midIndex = (under) => under ? Math.floor(this.length / 2)
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.even = () => this.filter((item, i) => i % 2 === 0);
+Array.prototype.even = () => this.filter((item, i) => i % 2 === 0);
 
 /**
  * @description Returns the values of the array that are in an odd position.
@@ -1015,7 +1015,7 @@ export Array.prototype.even = () => this.filter((item, i) => i % 2 === 0);
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.odd = () => this.filter((item, i) => i % 2 != 0);
+Array.prototype.odd = () => this.filter((item, i) => i % 2 != 0);
 
 /**
  * @description Get the maximum value of the array.
@@ -1029,7 +1029,7 @@ export Array.prototype.odd = () => this.filter((item, i) => i % 2 != 0);
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.max = (start = 0, end = this.length - 1) => {
+Array.prototype.max = (start = 0, end = this.length - 1) => {
   let max = this[start];
   if ((!start && !end) || (start === 0 && end >= this.length - 1)) for (let i = 1; i < this.length; i++) max = Math.max(max, this[i]);
   else if (start && !end) for (let i = start + 1; i < this.length; i++) max = Math.max(max, this[i]);
@@ -1049,7 +1049,7 @@ export Array.prototype.max = (start = 0, end = this.length - 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.maxOf = (start = 0, n = this.length - 1) => {
+Array.prototype.maxOf = (start = 0, n = this.length - 1) => {
   let max = this[start];
   for (let i = start + 1; i <= n; i++) max = Math.max(max, this[i]);
   return max
@@ -1066,7 +1066,7 @@ export Array.prototype.maxOf = (start = 0, n = this.length - 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.median = (value) => {
+Array.prototype.median = (value) => {
   let arr = this.sort((a, b) => a - b);
   let half = Math.floor(arr.length / 2);
   return arr.length % 2 ? (value ? arr[half] = value : arr[half]) : (arr[half - 1] + arr[half]) / 2
@@ -1084,7 +1084,7 @@ export Array.prototype.median = (value) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.min = (start = 0, end = this.length - 1) => {
+Array.prototype.min = (start = 0, end = this.length - 1) => {
   let min = this[start];
   if ((!start && !end) || (start === 0 && end >= this.length - 1)) for (let i = 1; i < this.length; i++) min = Math.min(min, this[i]);
   else if (start && !end) for (let i = start + 1; i < this.length; i++) min = Math.min(min, this[i]);
@@ -1104,7 +1104,7 @@ export Array.prototype.min = (start = 0, end = this.length - 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.minOf = (start = 0, n = this.length - 1) => {
+Array.prototype.minOf = (start = 0, n = this.length - 1) => {
   let min = this[start];
   for (let i = start + 1; i <= n; i++) min = Math.min(min, this[i]);
   return min
@@ -1121,7 +1121,7 @@ export Array.prototype.minOf = (start = 0, n = this.length - 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.shuffle = (n = this.length) => {
+Array.prototype.shuffle = (n = this.length) => {
   /* eslint no-unused-vars: 0 */
   for (let i of n) [this[randTo(this.length - 1)], this[randTo(this.length - 1)]] = [this[randTo(this.length - 1)], this[randTo(this.length - 1)]];
   /* eslint no-unused-vars: 2 */
@@ -1138,7 +1138,7 @@ export Array.prototype.shuffle = (n = this.length) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.maxLength = () => {
+Array.prototype.maxLength = () => {
   let ml = 0;
   for (let row of this) ml = Math.max(ml, row.length);
   return ml
@@ -1154,7 +1154,7 @@ export Array.prototype.maxLength = () => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.minLength = () => {
+Array.prototype.minLength = () => {
   let ml = this[0].length;
   for (let row of this) ml = Math.min(ml, row.length);
   return ml
@@ -1171,7 +1171,7 @@ export Array.prototype.minLength = () => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.Fill2D = (character) => this.fill(new Array(this.length).fill(character));
+Array.prototype.Fill2D = (character) => this.fill(new Array(this.length).fill(character));
 
 /**
  * @description Remove a character/number/string from the array with(out) affecting the initial array.<br />
@@ -1186,7 +1186,7 @@ export Array.prototype.Fill2D = (character) => this.fill(new Array(this.length).
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.remove = (character, preserveInitial) => {
+Array.prototype.remove = (character, preserveInitial) => {
   if (preserveInitial) {
     return isNativeType(character, 'Array') ? character.map(c => this.filter(x => x != c || x != undefined)) : this.filter(x => x != character || x != undefined);
   } else {
@@ -1206,7 +1206,7 @@ export Array.prototype.remove = (character, preserveInitial) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.debug = () => {
+Array.prototype.debug = () => {
   say(`%cDebugging the following array:%c ${this}`, 'text-decoration: bold', 'text-decoration: none');
   this.map((cell, i) => say(`${i}: ${cell}`))
 };
@@ -1244,7 +1244,7 @@ Array.prototype.getOccurrences = (simplified = false) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.replace = function (Ci, Cf, toStr = false) {
+Array.prototype.replace = function (Ci, Cf, toStr = false) {
   for (let item of this) {
     if (item === Ci || (isNativeType(Ci, 'RegExp') && Ci.test(item))) item = Cf;
   }
@@ -1263,7 +1263,7 @@ export Array.prototype.replace = function (Ci, Cf, toStr = false) {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.sum = (start = 0, end = this.length - 1) => {
+Array.prototype.sum = (start = 0, end = this.length - 1) => {
   let s = 0;
   if ((!start && !end) || (start === 0 && end >= this.length - 1)) for (let num of this) s += num;
   else if (start && !end) for (let i = start; i < this.length; i++) s += this[i];
@@ -1283,7 +1283,7 @@ export Array.prototype.sum = (start = 0, end = this.length - 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.prod = (start = 0, end = this.length - 1) => {
+Array.prototype.prod = (start = 0, end = this.length - 1) => {
   let p = 0;
   if ((!start && !end) || (start === 0 && end >= this.length - 1)) for (let num of this) p *= num;
   else if (start && !end) for (let i = start; i < this.length; i++) p *= this[i];
@@ -1302,7 +1302,7 @@ export Array.prototype.prod = (start = 0, end = this.length - 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.sum2d = (start = [0, 0], end = [this.length - 1, this.last().length - 1]) => {
+Array.prototype.sum2d = (start = [0, 0], end = [this.length - 1, this.last().length - 1]) => {
   let s = 0;
   if ((!start && !end) || (start.equals([0, 0]) && end >= this.length - 1)) {
     for (let i of this) {
@@ -1332,7 +1332,7 @@ export Array.prototype.sum2d = (start = [0, 0], end = [this.length - 1, this.las
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.mean = (nbDec = 2, start = 0, end = this.length - 1) => {
+Array.prototype.mean = (nbDec = 2, start = 0, end = this.length - 1) => {
   let sum = this.sum(start, end);
   return (sum / (this.get(start, end).length)).toNDec(nbDec);
 };
@@ -1349,7 +1349,7 @@ export Array.prototype.mean = (nbDec = 2, start = 0, end = this.length - 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.meanOf = (nbDec = 2, start = 0, n = this.length - start - 1) => {
+Array.prototype.meanOf = (nbDec = 2, start = 0, n = this.length - start - 1) => {
   let sum = 0;
   for (let i = 0; i < n; i++) sum += this[start + i];
   return (sum / n).toNDec(nbDec);
@@ -1367,7 +1367,7 @@ export Array.prototype.meanOf = (nbDec = 2, start = 0, n = this.length - start -
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.minMean = (n = this.length - 1, nbDec = 2) => {
+Array.prototype.minMean = (n = this.length - 1, nbDec = 2) => {
   if (this.length - (n - 1) < 0) throw new Error('You\'re expecting a minimum mean with more values than the are.');
   let means = [];
   for (let i = 0; i < n; i++) means.push(this.mean(nbDec, i, i + n - 1));
@@ -1386,7 +1386,7 @@ export Array.prototype.minMean = (n = this.length - 1, nbDec = 2) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.maxMean = (n = this.length - 1, nbDec) => {
+Array.prototype.maxMean = (n = this.length - 1, nbDec) => {
   if (this.length - (n - 1) < 0) throw new Error('You\'re expecting a maximum mean with more values than the are.');
   let means = [];
   for (let i = 0; i < n; i++) means.push(this.mean(nbDec, i, n + i - 1));
@@ -1405,7 +1405,7 @@ export Array.prototype.maxMean = (n = this.length - 1, nbDec) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.avg = (nbDec = 2, start = 0, end = this.length - 1) => {
+Array.prototype.avg = (nbDec = 2, start = 0, end = this.length - 1) => {
   let sum = this.sum(start, end) - this.max(start, end) - this.min(start, end);
   return (sum / (this.get(start, end).length - 2)).toNDec(nbDec)
 };
@@ -1421,7 +1421,7 @@ export Array.prototype.avg = (nbDec = 2, start = 0, end = this.length - 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.avgOf = (nbDec = 2, start = 0, n = this.length - start - 1) => {
+Array.prototype.avgOf = (nbDec = 2, start = 0, n = this.length - start - 1) => {
   let sum = 0;
   for (let i = 0; i < n; i++) {
     if (this[start + i] != this.maxOf(start, n) || this[start + i] != this.minOf(start, n + 1)) sum += this[start + i];
@@ -1441,7 +1441,7 @@ export Array.prototype.avgOf = (nbDec = 2, start = 0, n = this.length - start - 
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.minAvg = (n = this.length - 1, nbDec = 2) => {
+Array.prototype.minAvg = (n = this.length - 1, nbDec = 2) => {
   if (this.length - (n - 1) < 0) throw new Error('You\'re expecting a minimum average with more values than the are.');
   let avgs = [];
   for (let i = 0; i < n; i++) avgs.push(this.avg(nbDec, i, i + n - 1));
@@ -1460,7 +1460,7 @@ export Array.prototype.minAvg = (n = this.length - 1, nbDec = 2) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.maxAvg = (n = this.length - 1, nbDec = 2) => {
+Array.prototype.maxAvg = (n = this.length - 1, nbDec = 2) => {
   if (this.length - (n - 1) < 0) throw new Error('You\'re expecting a maximum average with more values than the are.');
   let avgs = [];
   for (let i = 0; i < n; i++) avgs.push(this.avg(nbDec, i, n + i - 1));
@@ -1491,7 +1491,7 @@ Array.prototype.letiance = (nbDec = 2) => (sumPow2(this, nbDec) / this.length - 
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.stddev = (nbDec = 2) => Math.sqrt(this.letiance(nbDec)).toNDec(nbDec);
+Array.prototype.stddev = (nbDec = 2) => Math.sqrt(this.letiance(nbDec)).toNDec(nbDec);
 
 /**
  * @description Get a random cell of the array.
@@ -1504,7 +1504,7 @@ export Array.prototype.stddev = (nbDec = 2) => Math.sqrt(this.letiance(nbDec)).t
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.rand = (n) => {
+Array.prototype.rand = (n) => {
   if (n && n > 0) {
     let res = [];
     for (let i = 0; i < n; i++) res.push(this.rand());
@@ -1524,7 +1524,7 @@ export Array.prototype.rand = (n) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.quartile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 4) - 1] + this[Math.floor(n * this.length / 4)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 4)]).toNDec(nbDec);
+Array.prototype.quartile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 4) - 1] + this[Math.floor(n * this.length / 4)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 4)]).toNDec(nbDec);
 
 /**
  * @description Quintile (Q<sub>1</sub>, ..., Q<sub>4</sub>)
@@ -1538,7 +1538,7 @@ export Array.prototype.quartile = (n, nbDec = 2) => this.length % 2 === 0 ? ((th
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.quintile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 5) - 1] + this[Math.floor(n * this.length / 5)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 5)]).toNDec(nbDec);
+Array.prototype.quintile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 5) - 1] + this[Math.floor(n * this.length / 5)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 5)]).toNDec(nbDec);
 
 /**
  * @description Decile (D<sub>1</sub>, ..., D<sub>9</sub>).
@@ -1552,7 +1552,7 @@ export Array.prototype.quintile = (n, nbDec = 2) => this.length % 2 === 0 ? ((th
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.decile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 10) - 1] + this[Math.floor(n * this.length / 10)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 10)]).toNDec(nbDec);
+Array.prototype.decile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 10) - 1] + this[Math.floor(n * this.length / 10)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 10)]).toNDec(nbDec);
 
 /**
  * @description Percentile (P<sub>1</sub>, ..., P<sub>99</sub>).
@@ -1566,7 +1566,7 @@ export Array.prototype.decile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.percentile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 100) - 1] + this[Math.floor(n * this.length / 100)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 100)]).toNDec(nbDec);
+Array.prototype.percentile = (n, nbDec = 2) => this.length % 2 === 0 ? ((this[Math.floor(n * this.length / 100) - 1] + this[Math.floor(n * this.length / 100)]) / 2).toNDec(nbDec) : (this[Math.floor(n * this.length / 100)]).toNDec(nbDec);
 
 /**
  * @description Get the average increment between the values of the array.
@@ -1579,7 +1579,7 @@ export Array.prototype.percentile = (n, nbDec = 2) => this.length % 2 === 0 ? ((
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.getIncrement = (nbDec = 2) => nbDec == 0 ? parseInt(((this.max() - this.min()) / (this.length - 1))) : ((this.max() - this.min()) / (this.length - 1)).toNDec(nbDec);
+Array.prototype.getIncrement = (nbDec = 2) => nbDec == 0 ? parseInt(((this.max() - this.min()) / (this.length - 1))) : ((this.max() - this.min()) / (this.length - 1)).toNDec(nbDec);
 
 /**
  * @description Increment every elements by n.
@@ -1591,7 +1591,7 @@ export Array.prototype.getIncrement = (nbDec = 2) => nbDec == 0 ? parseInt(((thi
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.increment = (n = 1) => {
+Array.prototype.increment = (n = 1) => {
   /* eslint no-unused-vars: 0 */
   for (let num of this) num += n;
   /* eslint no-unused-vars: 2 */
@@ -1608,7 +1608,7 @@ export Array.prototype.increment = (n = 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.iqr = (nbDec = 2) => this.quartile(3, nbDec) - this.quartile(1, nbDec).toNDec(nbDec);
+Array.prototype.iqr = (nbDec = 2) => this.quartile(3, nbDec) - this.quartile(1, nbDec).toNDec(nbDec);
 
 /**
  * @description Get the sub/full-array.
@@ -1636,7 +1636,7 @@ Array.prototype.get = (start = 0, end) => get(this, start, end);
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.clean = (noDuplic = false) => {
+Array.prototype.clean = (noDuplic = false) => {
   let arr = this.filter(x => !isNon(x));
   return noDuplic ? rmDuplicates(arr).remove() : arr; //Take off (or not) duplicates of actual values and double clean it
 };
@@ -1674,7 +1674,7 @@ Array.prototype.chg = (arr, start = 0, end = this.length - 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.rot = (deg) => {
+Array.prototype.rot = (deg) => {
   if (deg % 90 != 0) throw new Error('The absolute degree of rotation must be either 90° or 180°');
   if (this.numElm() === 4 && this.length === 2) { //2x2 matrix
     if (deg === 90) [this[0][0], this[1][0], this[1][1], this[0][1]] = [this[1][0], this[1][1], this[0][1], this[0][0]];
@@ -1746,7 +1746,7 @@ export Array.prototype.rot = (deg) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.numElm = () => this.linearise().length;
+Array.prototype.numElm = () => this.linearise().length;
 /* Or
  this.reduce((memo, item, index) => {
  const flatten = memo.concat(item);
@@ -1767,7 +1767,7 @@ export Array.prototype.numElm = () => this.linearise().length;
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.size = (str) => str ? this.length + 'x' + this.maxLength() : [this.length, this.maxLength()];
+Array.prototype.size = (str) => str ? this.length + 'x' + this.maxLength() : [this.length, this.maxLength()];
 
 /**
  * @description Determinant of the matrix.
@@ -1779,7 +1779,7 @@ export Array.prototype.size = (str) => str ? this.length + 'x' + this.maxLength(
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.det = () => {
+Array.prototype.det = () => {
   let d = 0;
   if (this.numElm() === 4 && this.length === 2) d = this[0][0] * this[1][1] - this[0][1] * this[1][0];
   else if (this.numElm() === 9 && this.length === 3) {
@@ -1798,7 +1798,7 @@ export Array.prototype.det = () => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.translate = function () {
+Array.prototype.translate = function () {
   if (this.size()[0] === this.size()[1]) { //NxN
     for (let i = 0; i < Math.round(this.length / 2); i++) {
       for (let j = 0; i < this[0].length; j++) {
@@ -1827,7 +1827,7 @@ export Array.prototype.translate = function () {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.lookFor = (x) => {
+Array.prototype.lookFor = (x) => {
   for (let item of this) {
     if (item === x || item.equals(x)) return item;
   }
@@ -1845,7 +1845,7 @@ export Array.prototype.lookFor = (x) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.divide = (n) => {
+Array.prototype.divide = (n) => {
   let k = 0;
 
   return (new Array(Math.round(this.length / n)).fill('')).map(num => {
@@ -1903,7 +1903,7 @@ Array.prototype.isInvertible = () => this.det() != 0;
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.dotProd = (scalar) => {
+Array.prototype.dotProd = (scalar) => {
   let res = [];
   for (let i = 0; i < this.length; i++) {
     res[i] = [];
@@ -1923,7 +1923,7 @@ export Array.prototype.dotProd = (scalar) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.dotAdd = (scalar) => {
+Array.prototype.dotAdd = (scalar) => {
   let res = [];
   for (let i = 0; i < this.length; i++) {
     res[i] = [];
@@ -1944,7 +1944,7 @@ export Array.prototype.dotAdd = (scalar) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.dotSub = (scalar, order = 'a-b') => {
+Array.prototype.dotSub = (scalar, order = 'a-b') => {
   let res = [];
   for (let i = 0; i < this.length; i++) {
     res[i] = [];
@@ -1965,7 +1965,7 @@ export Array.prototype.dotSub = (scalar, order = 'a-b') => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.dotFrac = (scalar, order = 'a/b') => {
+Array.prototype.dotFrac = (scalar, order = 'a/b') => {
   let res = [];
   for (let i = 0; i < this.length; i++) {
     res[i] = [];
@@ -1986,7 +1986,7 @@ export Array.prototype.dotFrac = (scalar, order = 'a/b') => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.toStr = (clean = false) => {
+Array.prototype.toStr = (clean = false) => {
   if (is2dArray(this)) {
     let str = '';
     for (let i of this) {
@@ -2006,7 +2006,7 @@ export Array.prototype.toStr = (clean = false) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.toInt = () => {
+Array.prototype.toInt = () => {
   let n = 0;
   for (let i of this) {
     n += this[i] * Math.pow(10, this.length - i - 1);
@@ -2024,7 +2024,7 @@ export Array.prototype.toInt = () => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.inv = () => this.isInvertible() ? this.dotProd(1 / this.det() * this.getAdjoint()) : null;
+Array.prototype.inv = () => this.isInvertible() ? this.dotProd(1 / this.det() * this.getAdjoint()) : null;
 
 /**
  * @description Mix up the array.
@@ -2052,7 +2052,7 @@ Array.prototype.mix = () => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.littleMix = () => {
+Array.prototype.littleMix = () => {
   let res = [], inc;
   if (is2dArray(this)) {
     res = Copy(this).linearise();
@@ -2080,7 +2080,7 @@ export Array.prototype.littleMix = () => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.prepend = (arr) => {
+Array.prototype.prepend = (arr) => {
   for (let i of arr) this.unshift(arr[i]);
   return this;
 };
@@ -2108,7 +2108,7 @@ Array.prototype.unique = () => this.filter(x => this.count(x) === 1);
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.to1d = (jointer) => {
+Array.prototype.to1d = (jointer) => {
   let res = Copy(this);
   for (let i of res) res[i] = res[i].join(jointer || '');
   return res
@@ -2146,7 +2146,7 @@ Array.prototype.toNd = (n = 2) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.toNcol = (n = 2) => {
+Array.prototype.toNcol = (n = 2) => {
   let res = [], k = 0;
   for (let i = 0; i < this.length / n; i++) {
     res[i] = [];
@@ -2165,7 +2165,7 @@ export Array.prototype.toNcol = (n = 2) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.toNrow = (n = 2) => {
+Array.prototype.toNrow = (n = 2) => {
   let res = [], k = 0;
   for (let i = 0; i < n; i++) {
     res[i] = [];
@@ -2184,7 +2184,7 @@ export Array.prototype.toNrow = (n = 2) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.linearise = () => this.toString().split(',');
+Array.prototype.linearise = () => this.toString().split(',');
 
 /**
  * @description Ensure that all the elements are of the same length.
@@ -2195,7 +2195,7 @@ export Array.prototype.linearise = () => this.toString().split(',');
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.uniform = (cr = ' ') => {
+Array.prototype.uniform = (cr = ' ') => {
   let res = this, ml = res.maxLength();
   for (let i of res) {
     while (res[i].length < ml) isNativeType(res[i], 'Array') ? res[i].push(cr) : res[i] += cr;
@@ -2212,7 +2212,7 @@ export Array.prototype.uniform = (cr = ' ') => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.zip = () => {
+Array.prototype.zip = () => {
   let res = [], j;
   for (let i of this) {
     if (this[i] === this[i + 1]) {
@@ -2235,7 +2235,7 @@ export Array.prototype.zip = () => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.unzip = (noPairs = false) => {
+Array.prototype.unzip = (noPairs = false) => {
   let res = [];
   for (let i of this) {
     if (/[\S\s](@)(\d+)/g.test(this[i])) res.push(this[i][0].repeat(this[i][this[i].indexOf('@') + 1]));
@@ -2256,7 +2256,7 @@ export Array.prototype.unzip = (noPairs = false) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.trimAll = (side) => {
+Array.prototype.trimAll = (side) => {
   let res = [];
   side = side ? side[0].toLowerCase() : '';
   for (let i of this) res[i] = (side === 'l') ? this[i].trimLeft() : ((side === 'r') ? this[i].trimRight() : this[i].trim());
@@ -2273,7 +2273,7 @@ export Array.prototype.trimAll = (side) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.isSorted = () => {
+Array.prototype.isSorted = () => {
   if (this[0] > this[1]) return false;
   for (let i = 1; i < this.length; i++) {
     if (this[i] > this[i + 1]) return false
@@ -2311,7 +2311,7 @@ Array.prototype.uniquePush = (obj) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.neighbour = (y, x) => {
+Array.prototype.neighbour = (y, x) => {
   let n = [], seq;
   if (isNativeType(y, 'Array')) {
     x = parseInt(y[1]);
@@ -2357,7 +2357,7 @@ export Array.prototype.neighbour = (y, x) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.sanitise = (type) => {
+Array.prototype.sanitise = (type) => {
   for (let row of this) {
     for (let cell of row) cell = name2Type(type, cell);
   }
@@ -2375,7 +2375,7 @@ export Array.prototype.sanitise = (type) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.portion = (denominator = 2, numerator = 1) => {
+Array.prototype.portion = (denominator = 2, numerator = 1) => {
   return (this.length % 2 === 0) ? this.get(numerator * Math.round(this.length) / denominator) : this.get(Math.floor(numerator * Math.floor(this.length) / denominator));
 };
 
@@ -2391,7 +2391,7 @@ export Array.prototype.portion = (denominator = 2, numerator = 1) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.removeFirst = (n, preserveInitial) => {
+Array.prototype.removeFirst = (n, preserveInitial) => {
   return preserveInitial ? this.filter((x, i) => x != n || i != this.indexOf(n)) : this.splice(this.indexOf(n), 1);
 };
 
@@ -2407,7 +2407,7 @@ export Array.prototype.removeFirst = (n, preserveInitial) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.removeLast = (n, preserveInitial) => {
+Array.prototype.removeLast = (n, preserveInitial) => {
   return preserveInitial ? this.filter((x, i) => x != n || i != this.lastIndexOf(n)) : this.splice(this.lastIndexOf(n), 1);
 };
 
@@ -2423,7 +2423,7 @@ export Array.prototype.removeLast = (n, preserveInitial) => {
  * @external Array
  * @this Array
  */
-export Array.prototype.binaryIndexOf = (searchElement) => {
+Array.prototype.binaryIndexOf = (searchElement) => {
   let minIndex = 0, maxIndex = this.length - 1, currentIndex, currentElement/*, resultIndex*/;
 
   while (minIndex <= maxIndex) {
@@ -2453,7 +2453,7 @@ export Array.prototype.binaryIndexOf = (searchElement) => {
  * var arr = [0, 1, 2, 4];
  * arr.place(3); //arr = [0, 1, 2, 3, 4]
  */
-export Array.prototype.place = (n) => this.splice(Math.abs(this.binaryIndexOf(n)), 0, n);
+Array.prototype.place = (n) => this.splice(Math.abs(this.binaryIndexOf(n)), 0, n);
 
 /**
  * @description Place items of an array at the right places (to not mess up the order).
@@ -2469,7 +2469,7 @@ export Array.prototype.place = (n) => this.splice(Math.abs(this.binaryIndexOf(n)
  * var arr = [0, 1, 2, 4, 8];
  * arr.multiPlace([3, 5, 6, 7, 9]); //arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
  */
-export Array.prototype.multiPlace = (arr) => {
+Array.prototype.multiPlace = (arr) => {
   for (let i of arr) this.place(arr[i]);
   return this;
 };
@@ -2486,7 +2486,7 @@ export Array.prototype.multiPlace = (arr) => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.contains = Array.prototype.contains;
+String.prototype.contains = Array.prototype.contains;
 
 /**
  * @description Check if the string doesn't contains a character.
@@ -2500,7 +2500,7 @@ export String.prototype.contains = Array.prototype.contains;
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.miss = Array.prototype.miss;
+String.prototype.miss = Array.prototype.miss;
 
 /**
  * @description Get the last element of the string.
@@ -2514,7 +2514,7 @@ export String.prototype.miss = Array.prototype.miss;
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.last = (nval) => this.split('').last(nval);
+String.prototype.last = (nval) => this.split('').last(nval);
 
 /**
  * @description Splice for strings.
@@ -2529,7 +2529,7 @@ export String.prototype.last = (nval) => this.split('').last(nval);
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.splice = (index, count, add = '') => {
+String.prototype.splice = (index, count, add = '') => {
   if (index < 0) {
     index = this.length + index;
     if (index < 0) index = 0;
@@ -2548,7 +2548,7 @@ export String.prototype.splice = (index, count, add = '') => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.remove = (character) => {
+String.prototype.remove = (character) => {
   let str = this;
   if (isNativeType(character, 'Array')) {
     for (let i of character) str = str.remove(i);
@@ -2570,7 +2570,7 @@ export String.prototype.remove = (character) => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.toNDec = (n = 2) => Number(this).toFixed(n);
+String.prototype.toNDec = (n = 2) => Number(this).toFixed(n);
 
 /**
  * @description to N digits.
@@ -2583,7 +2583,7 @@ export String.prototype.toNDec = (n = 2) => Number(this).toFixed(n);
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.toNDigits = (n = 2) => {
+String.prototype.toNDigits = (n = 2) => {
   let i = this;
   if (parseFloat(i) < Math.pow(10, n - 1)) {
     while (i.split('.')[0].length < n) i = '0' + i;
@@ -2619,7 +2619,7 @@ String.prototype.mix = (separator = '', jointer = separator) => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.divide = (n) => {
+String.prototype.divide = (n) => {
   let res = new Array(Math.round(this.length / n)).fill(''), k = 0;
   for (let character = 0; character < res.length; character++) {
     for (let j = 0; j < n; j++) character += this[k++];
@@ -2638,7 +2638,7 @@ export String.prototype.divide = (n) => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.capitalize = (whole = false) => {
+String.prototype.capitalize = (whole = false) => {
   let res = this.toString(); //Because it will return the String object rather than the actual string
   if (whole) {
     let str = res.split(' ');
@@ -2657,7 +2657,7 @@ export String.prototype.capitalize = (whole = false) => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.sum = () => {
+String.prototype.sum = () => {
   let sum = 0;
   for (let i = 0; i < this.length; i++) sum += this.charCodeAt(i);
   return sum
@@ -2673,7 +2673,7 @@ export String.prototype.sum = () => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.prod = () => {
+String.prototype.prod = () => {
   let prod = 1;
   for (let i = 0; i < this.length; i++) prod *= this.charCodeAt(i);
   return prod
@@ -2689,7 +2689,7 @@ export String.prototype.prod = () => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.mean = () => this.map(character => character.charCodeAt(0)).mean(2);
+String.prototype.mean = () => this.map(character => character.charCodeAt(0)).mean(2);
 
 /**
  * @description Normalise the string.
@@ -2701,7 +2701,7 @@ export String.prototype.mean = () => this.map(character => character.charCodeAt(
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.normal = () => this.toLowerCase().remove();
+String.prototype.normal = () => this.toLowerCase().remove();
 
 /**
  * @description Get the occurrences of each characters as well as their positions.
@@ -2715,7 +2715,7 @@ export String.prototype.normal = () => this.toLowerCase().remove();
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.getOccurrences = Array.prototype.getOccurrences;
+String.prototype.getOccurrences = Array.prototype.getOccurrences;
 
 /**
  * @description Get a portion of the string.
@@ -2742,7 +2742,7 @@ String.prototype.get = (start = 0, end) => get(this, start, end);
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.zip = () => {
+String.prototype.zip = () => {
   let res = '', j;
   for (let i = 0; i < this.length; i++) {
     if (this[i] === this[i + 1]) {
@@ -2767,7 +2767,7 @@ export String.prototype.zip = () => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.unzip = (noPairs) => {
+String.prototype.unzip = (noPairs) => {
   let res = '';
   for (let i = 0; i < this.length; i++) {
     if (/[\S\s](\@)(\d+)/g.test(this[i])) res += this[i][0].repeat(this[i][this[i].indexOf('@') + 1]);
@@ -2788,7 +2788,7 @@ export String.prototype.unzip = (noPairs) => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.chunk = (start = 0, end) => this.split(' ').get(start, end).join(' ');
+String.prototype.chunk = (start = 0, end) => this.split(' ').get(start, end).join(' ');
 
 /**
  * @description Return the chunk that is the same at the beginning of both string.
@@ -2801,7 +2801,7 @@ export String.prototype.chunk = (start = 0, end) => this.split(' ').get(start, e
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.sameFirst = (str) => {
+String.prototype.sameFirst = (str) => {
   let sf = '', pos = -1;
   while (pos <= Math.min(this.length, str.length)) {
     pos++;
@@ -2822,7 +2822,7 @@ export String.prototype.sameFirst = (str) => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.sameLast = (str) => {
+String.prototype.sameLast = (str) => {
   let sl = '', pos = 1, minLen = Math.min(this.length, str.length);
   while (pos <= minLen) {
     if (this[this.length - pos] === str[str.length - pos]) sl = this[this.length - pos] + sl;
@@ -2844,7 +2844,7 @@ export String.prototype.sameLast = (str) => {
  * @external String
  * @this String
  */
-export String.prototype.map = (cb, sep = '') => this.split(sep).map(cb).join(sep);
+String.prototype.map = (cb, sep = '') => this.split(sep).map(cb).join(sep);
 
 /**
  * @description Reverse a string/
@@ -2857,7 +2857,7 @@ export String.prototype.map = (cb, sep = '') => this.split(sep).map(cb).join(sep
  * @external String
  * @this String
  */
-export String.prototype.reverse = (splitter = '') => this.split(splitter).reverse().join(splitter);
+String.prototype.reverse = (splitter = '') => this.split(splitter).reverse().join(splitter);
 
 /**
  * @description Minify a string/code.
@@ -2869,7 +2869,7 @@ export String.prototype.reverse = (splitter = '') => this.split(splitter).revers
  * @external String
  * @return {string} Minified version of the string/code
  */
-export String.prototype.minify = (noComment = false, noSpace = false) => {
+String.prototype.minify = (noComment = false, noSpace = false) => {
   let min = noSpace ? this.trim().replace(/(\t|\n|\s)/gm, '') : this.trim().replace(/(\t|\n|\s{2,})/gm, '');
   return noComment ? min.replace(/(<!--(.*?)-->|\/\*+(.*?)\*+\/)/gm, '') : min;
 };
@@ -2887,7 +2887,7 @@ export String.prototype.minify = (noComment = false, noSpace = false) => {
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.portion = (denominator = 2, numerator = 1) => this.split('').portion(denominator, numerator).join('');
+String.prototype.portion = (denominator = 2, numerator = 1) => this.split('').portion(denominator, numerator).join('');
 
 /**
  * @description Counts how many times a word is present in the string.
@@ -2902,7 +2902,7 @@ export String.prototype.portion = (denominator = 2, numerator = 1) => this.split
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.countWord = (word, separation = ' ') => this.split(separation).count(word);
+String.prototype.countWord = (word, separation = ' ') => this.split(separation).count(word);
 
 /**
  * @description Check if the word is a character.
@@ -2915,7 +2915,7 @@ export String.prototype.countWord = (word, separation = ' ') => this.split(separ
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.isChar = () => typeof this === 'string' && /^[A-Za-z0-9]$/.test(this);
+String.prototype.isChar = () => typeof this === 'string' && /^[A-Za-z0-9]$/.test(this);
 
 /**
  * @description Turn characters into words.<br />
@@ -2929,7 +2929,7 @@ export String.prototype.isChar = () => typeof this === 'string' && /^[A-Za-z0-9]
  * @memberof String.prototype
  * @external String
  */
-export String.prototype.tokenize = () => {
+String.prototype.tokenize = () => {
   let tokenizer = function*() {
     let iterator = this[Symbol.iterator]();
     let ch;
@@ -2959,7 +2959,7 @@ export String.prototype.tokenize = () => {
  * @memberof Number.prototype
  * @external Number
  */
-export Number.prototype.length = () => {
+Number.prototype.length = () => {
   if (String(this).has('.')) return [parseInt(String(this).split('.')[0].length), parseInt(String(this).split('.')[1].length)];
   let len = 0, x = this;
   while (Math.floor(x) != 0) {
@@ -2982,7 +2982,7 @@ export Number.prototype.length = () => {
  * @memberof Number.prototype
  * @external Number
  */
-export Number.prototype.toNDec = (n = 2) => {
+Number.prototype.toNDec = (n = 2) => {
   let pow10s = Math.pow(10, n);
   return Math.round(pow10s * this) / pow10s
 };
@@ -2998,7 +2998,7 @@ export Number.prototype.toNDec = (n = 2) => {
  * @memberof Number.prototype
  * @external Number
  */
-export Number.prototype.toNDigits = (n = 2) => this.toString().toNDigits(n); //It won't work on other types than strings.
+Number.prototype.toNDigits = (n = 2) => this.toString().toNDigits(n); //It won't work on other types than strings.
 
 /**
  * @description Sign of the number.
@@ -3010,7 +3010,7 @@ export Number.prototype.toNDigits = (n = 2) => this.toString().toNDigits(n); //I
  * @memberof Number.prototype
  * @external Number
  */
-export Number.prototype.sign = (str) => str ? (this < 0 ? '-' : (this > 0 ? '+' : '')) : (this < 0 ? -1 : (this > 0 ? 1 : 0));
+Number.prototype.sign = (str) => str ? (this < 0 ? '-' : (this > 0 ? '+' : '')) : (this < 0 ? -1 : (this > 0 ? 1 : 0));
 
 /**
  * @description Prime check.
@@ -3022,7 +3022,7 @@ export Number.prototype.sign = (str) => str ? (this < 0 ? '-' : (this > 0 ? '+' 
  * @memberof Number.prototype
  * @external Number
  */
-export Number.prototype.isPrime = (n) => {
+Number.prototype.isPrime = (n) => {
   for (let i = 2; i < n; i++) {
     if (primeCheck(i, n)) return false
   }
@@ -3039,7 +3039,7 @@ export Number.prototype.isPrime = (n) => {
  * @memberof Number.prototype
  * @external Number
  */
-export Number.prototype.clean = (nbDec = 2) => {
+Number.prototype.clean = (nbDec = 2) => {
   if (this > 0 && this[0] == '+') return nbDec ? this.slice(1, this.length).toNDec(nbDec) : this.slice(1, this.length);
   else if (this == '-') return this + 1;
   else if (this == '+') return 1;
@@ -3055,7 +3055,7 @@ export Number.prototype.clean = (nbDec = 2) => {
  * @memberof Number.prototype
  * @external Number
  */
-export Number.prototype.toArray = () => {
+Number.prototype.toArray = () => {
   let arr = new Array(this.length()), i = 0, n = this;
   while (n > 0) {
     arr[i] = n % 10;

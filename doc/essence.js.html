@@ -133,6 +133,20 @@ window.onload = () => loadTime = new Date().getTime();
 window.onpageshow = () => displayTime = new Date().getTime();
 
 /**
+ * @description Exence's equivalent of jQuery's $(document).ready()
+ * @param {Function} cb Callback used whenever the document is ready
+ * @public
+ * @since 1.0
+ */
+export let ready = (cb) => new Promise(resolve => {
+  let domLoadHandler = resolve(cb &amp;&amp; cb()), states = ['complete', 'interactive'];
+  states.contains(document.readyState) ? wait(domLoadHandler) : document.addEventListener('DOMContentLoaded', domLoadHandler);
+});
+/*
+export let docReady = (cb) => $e('body').on('DOMContentLoaded', cb);
+ */
+
+/**
  * @description Get the information about the key pressed
  * @param {*} keyStroke Keystroke
  * @param {boolean} [toLowerCase=false] To lower case
@@ -223,11 +237,9 @@ export let values = (obj) => Object.values(obj);
 export let entries = (obj) => Object.entries(obj);
 
 /**
- * @description Element
- * @param {string} selector A CSS selector
+ * @description Element.
  * @this Element
- * @returns {Element} Element object
- * @constructor
+ * @class
  * @public
  * @since 1.0
  * @throws {InvalidParamError} Invalid parameter
@@ -275,6 +287,9 @@ export let entries = (obj) => Object.entries(obj);
  * @property {function()} Element.moveCSS Move the inline-CSS into the current stylesheet
  */
 export class Element {
+  /**
+   * @param {string} selector A CSS selector
+   */
   constructor(selector) {
     if (/^([#.*_-`~&amp;]\W*|\S|undefined|null|)$/.test(selector)) throw new InvalidParamError(`Element cannot accept the selector '${selector}' as its invalid.`); //Reject invalid selectors
     if (selector[0] === '#') this.node = document.querySelector(selector) || document.getElementById(selector.slice(1, selector.length)); //Id
@@ -650,7 +665,7 @@ export let exclude = (file, type = 'link') => {
 };
 
 /**
- * @description Counts how many times a character/property/number &lt;code>c&lt;/code> is present in the object
+ * @description Counts how many times a character/property/number &lt;code>c&lt;/code> is present in the object.
  * @param {(string|Bool)} character Character data
  * @this Object
  * @returns {number} Number of occurrences of &lt;code>c&lt;/code> in the object
@@ -818,7 +833,7 @@ Object.prototype.has = (prop) => Object.prototype.hasOwnProperty.call(this, prop
  * c.isEmpty(); //false
  * d.isEmpty(); //true
  */
-Object.prototype.isEmpty = () => !(this).length;
+Object.prototype.isEmpty = () => !(this.length);
 
 /**
  * @description High level inheritance.
@@ -838,7 +853,25 @@ Object.prototype.inherits = (parent) => {
 /**
  * @description Allows to create methods without directly calling the prototype.
  * @param {string} name Name of the method
- * @param {Function} func Function (body of the method)
+ * @param {Function} fn Function (body of the method)
+ * @returns {Object}
+ * @memberof Object.prototype
+ * @external Object
+ * @this Object
+ * @public
+ * @since 1.0
+ * @method
+ * @todo Find a stable way to use it without having this=window (note: the ES5 way on {@link https://stackoverflow.com/questions/6868883/augmenting-types-in-javascript} works)
+ */
+Object.prototype.method = (name, fn) => {
+  this.prototype[name] = fn.apply(this);
+  return this;
+};
+
+/**
+ * @description Allows to create methods without directly calling the prototype.
+ * @param {string} name Name of the method
+ * @param {Function} fn Function (body of the method)
  * @returns {Function}
  * @memberof Function.prototype
  * @external Function
@@ -849,8 +882,8 @@ Object.prototype.inherits = (parent) => {
  * @deprecated
  * @todo Find a stable way to use it without having this=window (note: the ES5 way on {@link https://stackoverflow.com/questions/6868883/augmenting-types-in-javascript} works)
  */
-Function.prototype.method = (name, func) => {
-  this.prototype[name] = func;
+Function.prototype.method = (name, fn) => {
+  this.prototype[name] = fn;
   return this;
 };
 
@@ -2306,7 +2339,7 @@ Array.prototype.uniquePush = (obj) => {
  * @memberof Array.prototype
  * @external Array
  */
-Array.prototype.neighbour = function (y, x) {
+Array.prototype.neighbour = (y, x) => {
   let n = [], seq;
   if (isNativeType(y, 'Array')) {
     x = parseInt(y[1]);
@@ -2641,7 +2674,6 @@ String.prototype.capitalize = (whole = false) => {
     return str.join(' ')
   } else return this.charAt(0).toUpperCase() + this.slice(1);
 };
-
 
 /**
  * @description Ascii sum.
@@ -2996,7 +3028,6 @@ Number.prototype.toNDec = (n = 2) => {
  */
 Number.prototype.toNDigits = (n = 2) => this.toString().toNDigits(n); //It won't work on other types than strings.
 
-
 /**
  * @description Sign of the number.
  * @param {boolean} str Symbols string representation ?
@@ -3008,7 +3039,6 @@ Number.prototype.toNDigits = (n = 2) => this.toString().toNDigits(n); //It won't
  * @external Number
  */
 Number.prototype.sign = (str) => str ? (this &lt; 0 ? '-' : (this > 0 ? '+' : '')) : (this &lt; 0 ? -1 : (this > 0 ? 1 : 0));
-
 
 /**
  * @description Prime check.
@@ -3053,7 +3083,7 @@ Number.prototype.clean = (nbDec = 2) => {
  * @memberof Number.prototype
  * @external Number
  */
-Number.prototype.toArr = () => {
+Number.prototype.toArray = () => {
   let arr = new Array(this.length()), i = 0, n = this;
   while (n > 0) {
     arr[i] = n % 10;
@@ -3777,13 +3807,13 @@ export let asyncTime = (cb, params, format) => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dom.checkBrowser.html">checkBrowser</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-dsa-Edge.html">Edge</a></li><li><a href="module-dsa-LinkedList.html">LinkedList</a></li><li><a href="module-dsa-Node.html">Node</a></li><li><a href="module-dsa-Vertex.html">Vertex</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#$t">$t</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#BrowserDetect">BrowserDetect</a></li><li><a href="global.html#Buffer">Buffer</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#DocTemplate">DocTemplate</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dom.checkBrowser.html">checkBrowser</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-dsa.TreeNode.html">TreeNode</a></li><li><a href="module-dsa-Archive.html">Archive</a></li><li><a href="module-dsa-Edge.html">Edge</a></li><li><a href="module-dsa-LinkedList.html">LinkedList</a></li><li><a href="module-dsa-Node.html">Node</a></li><li><a href="module-dsa-NTreeNode.html">NTreeNode</a></li><li><a href="module-dsa-Queue.html">Queue</a></li><li><a href="module-dsa-SortedSet.html">SortedSet</a></li><li><a href="module-dsa-Stack.html">Stack</a></li><li><a href="module-dsa-StackArray.html">StackArray</a></li><li><a href="module-dsa-StackList.html">StackList</a></li><li><a href="module-dsa-Vertex.html">Vertex</a></li><li><a href="module-dsa-virtualHistory.html">virtualHistory</a></li><li><a href="module-files.$Data.html">$Data</a></li><li><a href="module-files.Spider.html">Spider</a></li><li><a href="module-maths-Equation.html">Equation</a></li><li><a href="module-misc.Item.html">Item</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#$t">$t</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#BrowserDetect">BrowserDetect</a></li><li><a href="global.html#Buffer">Buffer</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#DocTemplate">DocTemplate</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#ready">ready</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 12:34:15 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Feb 27 2017 13:23:53 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

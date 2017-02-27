@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Edge</title>
+    <title>JSDoc: Class: NTreeNode</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Edge</h1>
+    <h1 class="page-title">Class: NTreeNode</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>Edge</h2>
+        <h2>NTreeNode</h2>
         
     
 </header>
@@ -40,16 +40,16 @@
 
     
 
-    <h4 class="name" id="Edge"><span class="type-signature"></span>new Edge<span class="signature">(start<span class="signature-attributes">opt, nullable</span>, end<span class="signature-attributes">opt, nullable</span>, len<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="NTreeNode"><span class="type-signature"></span>new NTreeNode<span class="signature">(pl, ch<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
-    <p class="summary">Edge that connects two Vertices.</p>
+    <p class="summary">N-ary tree node.</p>
     
 
 
 
 <div class="description">
-    Edge that connects two Vertices.
+    N-ary tree node.
 </div>
 
 
@@ -59,7 +59,7 @@
 
 
     <h5>This:</h5>
-    <ul><li>Edge</li></ul>
+    <ul><li>NTreeNode</li></ul>
 
 
 
@@ -92,13 +92,13 @@
 
         <tr>
             
-                <td class="name"><code>start</code></td>
+                <td class="name"><code>pl</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Vertex</span>
+<span class="param-type">*</span>
 
 
             
@@ -106,90 +106,6 @@
 
             
                 <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">Starting vertex/node</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>end</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Vertex</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">Ending vertex/node</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>len</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
                 
 
                 
@@ -206,7 +122,46 @@
                 </td>
             
 
-            <td class="description last">Length of the edge.</td>
+            <td class="description last">Payload</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ch</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;TreeNode></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    []
+                
+                </td>
+            
+
+            <td class="description last">Child</td>
         </tr>
 
     
@@ -232,8 +187,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -246,98 +199,53 @@
 
         <tr>
             
-                <td class="name"><code>Edge.startNode</code></td>
+                <td class="name"><code>NTreeNode.child</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Vertex</span>
+<span class="param-type">Array.&lt;NTreeNode></span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-                </td>
-            
 
             
 
-            <td class="description last">Starting node/vertex of the edge</td>
+            <td class="description last">Child</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Edge.endNode</code></td>
+                <td class="name"><code>NTreeNode.payload</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Vertex</span>
+<span class="param-type">NumberLike</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-                </td>
-            
 
             
 
-            <td class="description last">Ending node/vertex of the edge</td>
+            <td class="description last">Payload</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Edge.length</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Length of the edge</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Edge.toString</code></td>
+                <td class="name"><code>NTreeNode.add</code></td>
             
 
             <td class="type">
@@ -350,23 +258,17 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">String representation of the edge</td>
+            <td class="description last">Child adder</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Edge.draw</code></td>
+                <td class="name"><code>NTreeNode.remove</code></td>
             
 
             <td class="type">
@@ -379,23 +281,17 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">Draw the edge</td>
+            <td class="description last">Child remove</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Edge.getSurroundingEdges</code></td>
+                <td class="name"><code>NTreeNode.traverse</code></td>
             
 
             <td class="type">
@@ -408,23 +304,17 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">Get all the surrounding edges</td>
+            <td class="description last">Tree traversal</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Edge.getNeighbours</code></td>
+                <td class="name"><code>NTreeNode.printInOrder</code></td>
             
 
             <td class="type">
@@ -437,16 +327,516 @@
             </td>
 
             
-                <td class="attributes">
-                
 
+            
+
+            <td class="description last">Console in-order printing</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.printPreOrder</code></td>
+            
+
+            <td class="type">
+            
                 
-                </td>
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
             
 
             
 
-            <td class="description last">Get the neighbour edges</td>
+            <td class="description last">Console pre-order printing</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.printPostOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Console post-order printing</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.printInOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Console in-order printing</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.inOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Window in-order printing</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.preOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Window pre-order printing</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.postOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Window post-order printing</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.getOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">??-order getter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.isLeaf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Leaf check</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.find</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Look for a tree-node</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.dfs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Depth First Search</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.bfs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Breath First Search</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.sum</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Sum of the payloads</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.min</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Smallest payload</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.max</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Biggest payload</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.nbOfBranches</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Branches counter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.avg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Average of the payloads</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.printBFS</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Print in the BFS order</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.toString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">String representation</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.toArray</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array representation</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.getChild</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Child getter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.see</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">See the tree for that particular node</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NTreeNode.count</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Count the number of times there's a particular payload</td>
         </tr>
 
     
@@ -488,12 +878,19 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dsa.js.html">dsa.js</a>, <a href="dsa.js.html#line869">line 869</a>
+        <a href="dsa.js.html">dsa.js</a>, <a href="dsa.js.html#line1167">line 1167</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:dsa~TreeNode</li>
+        </ul>
+    </dd>
     
 
     

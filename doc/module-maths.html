@@ -42,7 +42,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Rational numbers (&#8474; = {-&infin;, ..., -1.0[...]01, -1, 0, 1, 1.0[...]01, ..., +&infin;})</div>
+            <div class="description">Natural numbers (&natural; = {0, 1, 2, ..., +&infin;})</div>
         
 
         
@@ -94,7 +94,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line277">line 277</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line188">line 188</a>
     </li></ul></dd>
     
 
@@ -102,6 +102,13 @@
 
     
 
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Find a way to get N.value to be correctly updated when calling N.next() and make a Number set factory</li>
+        </ul>
+    </dd>
     
 </dl>
 
@@ -244,7 +251,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line188">line 188</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line277">line 277</a>
     </li></ul></dd>
     
 
@@ -252,13 +259,6 @@
 
     
 
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>Find a way to get N.value to be correctly updated when calling N.next() and make a Number set factory</li>
-        </ul>
-    </dd>
     
 </dl>
 
@@ -285,6 +285,13 @@
 
     
 
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-maths-Equation.html">Equation</a></dt>
+            <dd>Single parametric equation.</dd>
+        </dl>
     
 
      
@@ -439,7 +446,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3001">line 3001</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3015">line 3015</a>
     </li></ul></dd>
     
 
@@ -460,12 +467,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">unsigned 8-bit integer (2<sup>8</sup>-1).</p>
+<p class="summary">16-bit integer (2<sup>15</sup>-1).</p>
 
 
 
 <div class="description">
-    unsigned 8-bit integer (2<sup>8</sup>-1)
+    16-bit integer (2<sup>15</sup>-1)
 </div>
 
 
@@ -516,7 +523,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line40">line 40</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line58">line 58</a>
     </li></ul></dd>
     
 
@@ -526,7 +533,91 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_CHAR8</li>
+            <li>module:maths~MIN_INT16</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
+
+
+<p class="summary">double (64-bit).</p>
+
+
+
+<div class="description">
+    double (64-bit)
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line122">line 122</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:maths~MIN_DOUBLE</li>
         </ul>
     </dd>
     
@@ -630,12 +721,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">double (64-bit).</p>
+<p class="summary">32-bit integer (2<sup>31</sup>-1).</p>
 
 
 
 <div class="description">
-    double (64-bit)
+    32-bit integer (2<sup>31</sup>-1)
 </div>
 
 
@@ -686,7 +777,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line122">line 122</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line76">line 76</a>
     </li></ul></dd>
     
 
@@ -696,175 +787,9 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MIN_DOUBLE</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
+            <li>module:maths~MIN_INT32</li>
         
-            
-<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
-
-
-<p class="summary">16-bit integer (2<sup>15</sup>-1).</p>
-
-
-
-<div class="description">
-    16-bit integer (2<sup>15</sup>-1)
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line58">line 58</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>module:maths~MIN_INT16</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
-
-
-<p class="summary">float (32-bit).</p>
-
-
-
-<div class="description">
-    float (32-bit)
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line104">line 104</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>module:maths~MIN_FLOAT</li>
+            <li>module:maths~MAX_UINT16</li>
         </ul>
     </dd>
     
@@ -966,12 +891,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">32-bit integer (2<sup>31</sup>-1).</p>
+<p class="summary">unsigned 8-bit integer (2<sup>8</sup>-1).</p>
 
 
 
 <div class="description">
-    32-bit integer (2<sup>31</sup>-1)
+    unsigned 8-bit integer (2<sup>8</sup>-1)
 </div>
 
 
@@ -1022,7 +947,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line76">line 76</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -1032,9 +957,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MIN_INT32</li>
-        
-            <li>module:maths~MAX_UINT16</li>
+            <li>module:maths~MAX_CHAR8</li>
         </ul>
     </dd>
     
@@ -1049,15 +972,15 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 
         
             
-<h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">16-bit integer (-2<sup>15</sup>).</p>
+<p class="summary">float (32-bit).</p>
 
 
 
 <div class="description">
-    16-bit integer (-2<sup>15</sup>)
+    float (32-bit)
 </div>
 
 
@@ -1108,7 +1031,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line49">line 49</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line104">line 104</a>
     </li></ul></dd>
     
 
@@ -1118,7 +1041,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_INT16</li>
+            <li>module:maths~MIN_FLOAT</li>
         </ul>
     </dd>
     
@@ -1220,12 +1143,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">double (64-bit).</p>
+<p class="summary">16-bit integer (-2<sup>15</sup>).</p>
 
 
 
 <div class="description">
-    double (64-bit)
+    16-bit integer (-2<sup>15</sup>)
 </div>
 
 
@@ -1276,7 +1199,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line113">line 113</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -1286,7 +1209,91 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_DOUBLE</li>
+            <li>module:maths~MAX_INT16</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
+
+
+<p class="summary">32-bit integer (-2<sup>31</sup>).</p>
+
+
+
+<div class="description">
+    32-bit integer (-2<sup>31</sup>)
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:maths~MAX_INT32</li>
         </ul>
     </dd>
     
@@ -1388,12 +1395,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">32-bit integer (-2<sup>31</sup>).</p>
+<p class="summary">double (64-bit).</p>
 
 
 
 <div class="description">
-    32-bit integer (-2<sup>31</sup>)
+    double (64-bit)
 </div>
 
 
@@ -1444,7 +1451,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line67">line 67</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line113">line 113</a>
     </li></ul></dd>
     
 
@@ -1454,95 +1461,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_INT32</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~Number"><span class="type-signature">(inner, constant) </span>Number<span class="type-signature"> :number</span></h4>
-
-
-<p class="summary">of decimals a 128-bit number's mantissa have.</p>
-
-
-
-<div class="description">
-    of decimals a 128-bit number's mantissa have.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line164">line 164</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>module:maths~DECIMALS16</li>
-        
-            <li>module:maths~DECIMALS32</li>
-        
-            <li>module:maths~DECIMALS64</li>
+            <li>module:maths~MAX_DOUBLE</li>
         </ul>
     </dd>
     
@@ -2170,7 +2089,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2985">line 2985</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2999">line 2999</a>
     </li></ul></dd>
     
 
@@ -2459,7 +2378,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2741">line 2741</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2755">line 2755</a>
     </li></ul></dd>
     
 
@@ -2710,7 +2629,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2892">line 2892</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2906">line 2906</a>
     </li></ul></dd>
     
 
@@ -3579,7 +3498,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3195">line 3195</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3211">line 3211</a>
     </li></ul></dd>
     
 
@@ -4183,7 +4102,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2723">line 2723</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2737">line 2737</a>
     </li></ul></dd>
     
 
@@ -4341,7 +4260,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3062">line 3062</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3076">line 3076</a>
     </li></ul></dd>
     
 
@@ -4645,7 +4564,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3043">line 3043</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3057">line 3057</a>
     </li></ul></dd>
     
 
@@ -4910,7 +4829,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3021">line 3021</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3035">line 3035</a>
     </li></ul></dd>
     
 
@@ -6162,7 +6081,7 @@ It will give all the elements of the first array which isn't in any of the other
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2692">line 2692</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2706">line 2706</a>
     </li></ul></dd>
     
 
@@ -6739,7 +6658,7 @@ It will give all the elements of the first array which isn't in any of the other
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3296">line 3296</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3312">line 3312</a>
     </li></ul></dd>
     
 
@@ -9165,7 +9084,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2848">line 2848</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2862">line 2862</a>
     </li></ul></dd>
     
 
@@ -9325,7 +9244,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3124">line 3124</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3138">line 3138</a>
     </li></ul></dd>
     
 
@@ -9634,7 +9553,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3102">line 3102</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3116">line 3116</a>
     </li></ul></dd>
     
 
@@ -9904,7 +9823,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3077">line 3077</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3091">line 3091</a>
     </li></ul></dd>
     
 
@@ -10346,7 +10265,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2880">line 2880</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2894">line 2894</a>
     </li></ul></dd>
     
 
@@ -10686,7 +10605,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2837">line 2837</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2851">line 2851</a>
     </li></ul></dd>
     
 
@@ -11002,7 +10921,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3314">line 3314</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3330">line 3330</a>
     </li></ul></dd>
     
 
@@ -11535,7 +11454,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2920">line 2920</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2934">line 2934</a>
     </li></ul></dd>
     
 
@@ -11723,7 +11642,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2946">line 2946</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2960">line 2960</a>
     </li></ul></dd>
     
 
@@ -11911,7 +11830,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2933">line 2933</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2947">line 2947</a>
     </li></ul></dd>
     
 
@@ -14228,7 +14147,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3147">line 3147</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3161">line 3161</a>
     </li></ul></dd>
     
 
@@ -14599,7 +14518,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3251">line 3251</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3267">line 3267</a>
     </li></ul></dd>
     
 
@@ -14764,7 +14683,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3236">line 3236</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3252">line 3252</a>
     </li></ul></dd>
     
 
@@ -15432,7 +15351,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2861">line 2861</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2875">line 2875</a>
     </li></ul></dd>
     
 
@@ -15653,7 +15572,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2676">line 2676</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2690">line 2690</a>
     </li></ul></dd>
     
 
@@ -16015,7 +15934,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3136">line 3136</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3150">line 3150</a>
     </li></ul></dd>
     
 
@@ -16208,6 +16127,199 @@ It will give all the common elements among the arrays.
         
 <div class="param-desc">
     Primeness
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".isSuperset"><span class="type-signature">(static) </span>isSuperset<span class="signature">(set, subset)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+    <p class="summary">Check if a set is a superset of another.</p>
+    
+
+
+
+<div class="description">
+    Check if a set is a superset of another.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>set</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Set</span>
+|
+
+<span class="param-type">SortedSet</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Set</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Set</span>
+|
+
+<span class="param-type">SortedSet</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">(Sub)set</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2663">line 2663</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Superset state
 </div>
 
 
@@ -17140,7 +17252,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2826">line 2826</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2840">line 2840</a>
     </li></ul></dd>
     
 
@@ -18566,7 +18678,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2972">line 2972</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2986">line 2986</a>
     </li></ul></dd>
     
 
@@ -19863,7 +19975,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2763">line 2763</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2777">line 2777</a>
     </li></ul></dd>
     
 
@@ -20047,7 +20159,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2907">line 2907</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2921">line 2921</a>
     </li></ul></dd>
     
 
@@ -23362,7 +23474,7 @@ Source: Three.js
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2957">line 2957</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2971">line 2971</a>
     </li></ul></dd>
     
 
@@ -23731,7 +23843,7 @@ Source: Three.js
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3326">line 3326</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3342">line 3342</a>
     </li></ul></dd>
     
 
@@ -23894,7 +24006,7 @@ Source: Three.js
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3277">line 3277</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3293">line 3293</a>
     </li></ul></dd>
     
 
@@ -25224,7 +25336,7 @@ It will give all the elements that aren't shared by all arrays i.e. unique to ea
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2708">line 2708</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2722">line 2722</a>
     </li></ul></dd>
     
 
@@ -25428,7 +25540,7 @@ It will give all the elements that aren't shared by all arrays i.e. unique to ea
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3267">line 3267</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3283">line 3283</a>
     </li></ul></dd>
     
 
@@ -28018,7 +28130,7 @@ Reference/help: <a href="http://www.endmemo.com/sconvert/centiMetrepixel.php">ht
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3211">line 3211</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3227">line 3227</a>
     </li></ul></dd>
     
 
@@ -28232,7 +28344,7 @@ It will give a single array with unique values of all the elemenets of all array
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2664">line 2664</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2678">line 2678</a>
     </li></ul></dd>
     
 
@@ -28803,6 +28915,187 @@ It will give a single array with unique values of all the elemenets of all array
 
     
 
+    <h4 class="name" id=".xor"><span class="type-signature">(static) </span>xor<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+    <p class="summary">E<u>x</u>clusive <u>or</u>.</p>
+    
+
+
+
+<div class="description">
+    E<u>x</u>clusive <u>or</u>.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>a</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Expression a</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>b</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Expression b</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line316">line 316</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a xor b
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id=".Xor"><span class="type-signature">(static) </span>Xor<span class="signature">(a, b, cr<span class="signature-attributes">opt, nullable</span>, toArr<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array|boolean}</span></h4>
 
     
@@ -29039,7 +29332,7 @@ It will give a single array with unique values of all the elemenets of all array
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2785">line 2785</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2799">line 2799</a>
     </li></ul></dd>
     
 
@@ -29080,187 +29373,6 @@ It will give a single array with unique values of all the elemenets of all array
 <span class="param-type">Array</span>
 |
 
-<span class="param-type">boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".xor"><span class="type-signature">(static) </span>xor<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-
-    
-    <p class="summary">E<u>x</u>clusive <u>or</u>.</p>
-    
-
-
-
-<div class="description">
-    E<u>x</u>clusive <u>or</u>.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>a</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Expression a</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Expression b</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line316">line 316</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    a xor b
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
 <span class="param-type">boolean</span>
 
 
@@ -29357,7 +29469,7 @@ It will give a single array with unique values of all the elemenets of all array
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line277">line 277</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line188">line 188</a>
     </li></ul></dd>
     
 
@@ -29365,6 +29477,13 @@ It will give a single array with unique values of all the elemenets of all array
 
     
 
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Find a way to get N.value to be correctly updated when calling N.next() and make a Number set factory</li>
+        </ul>
+    </dd>
     
 </dl>
 
@@ -29507,7 +29626,7 @@ It will give a single array with unique values of all the elemenets of all array
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line188">line 188</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line277">line 277</a>
     </li></ul></dd>
     
 
@@ -29515,13 +29634,6 @@ It will give a single array with unique values of all the elemenets of all array
 
     
 
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>Find a way to get N.value to be correctly updated when calling N.next() and make a Number set factory</li>
-        </ul>
-    </dd>
     
 </dl>
 
@@ -29548,6 +29660,13 @@ It will give a single array with unique values of all the elemenets of all array
 
     
 
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-maths-Equation.html">Equation</a></dt>
+            <dd>Single parametric equation.</dd>
+        </dl>
     
 
      
@@ -29702,7 +29821,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3001">line 3001</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3015">line 3015</a>
     </li></ul></dd>
     
 
@@ -29723,12 +29842,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">unsigned 8-bit integer (2<sup>8</sup>-1).</p>
+<p class="summary">16-bit integer (2<sup>15</sup>-1).</p>
 
 
 
 <div class="description">
-    unsigned 8-bit integer (2<sup>8</sup>-1)
+    16-bit integer (2<sup>15</sup>-1)
 </div>
 
 
@@ -29779,7 +29898,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line40">line 40</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line58">line 58</a>
     </li></ul></dd>
     
 
@@ -29789,7 +29908,91 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_CHAR8</li>
+            <li>module:maths~MIN_INT16</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
+
+
+<p class="summary">double (64-bit).</p>
+
+
+
+<div class="description">
+    double (64-bit)
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line122">line 122</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:maths~MIN_DOUBLE</li>
         </ul>
     </dd>
     
@@ -29893,12 +30096,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">double (64-bit).</p>
+<p class="summary">32-bit integer (2<sup>31</sup>-1).</p>
 
 
 
 <div class="description">
-    double (64-bit)
+    32-bit integer (2<sup>31</sup>-1)
 </div>
 
 
@@ -29949,7 +30152,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line122">line 122</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line76">line 76</a>
     </li></ul></dd>
     
 
@@ -29959,175 +30162,9 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MIN_DOUBLE</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
+            <li>module:maths~MIN_INT32</li>
         
-            
-<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
-
-
-<p class="summary">16-bit integer (2<sup>15</sup>-1).</p>
-
-
-
-<div class="description">
-    16-bit integer (2<sup>15</sup>-1)
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line58">line 58</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>module:maths~MIN_INT16</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
-
-
-<p class="summary">float (32-bit).</p>
-
-
-
-<div class="description">
-    float (32-bit)
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line104">line 104</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>module:maths~MIN_FLOAT</li>
+            <li>module:maths~MAX_UINT16</li>
         </ul>
     </dd>
     
@@ -30229,12 +30266,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">32-bit integer (2<sup>31</sup>-1).</p>
+<p class="summary">unsigned 8-bit integer (2<sup>8</sup>-1).</p>
 
 
 
 <div class="description">
-    32-bit integer (2<sup>31</sup>-1)
+    unsigned 8-bit integer (2<sup>8</sup>-1)
 </div>
 
 
@@ -30285,7 +30322,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line76">line 76</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -30295,9 +30332,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MIN_INT32</li>
-        
-            <li>module:maths~MAX_UINT16</li>
+            <li>module:maths~MAX_CHAR8</li>
         </ul>
     </dd>
     
@@ -30312,15 +30347,15 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 
         
             
-<h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">16-bit integer (-2<sup>15</sup>).</p>
+<p class="summary">float (32-bit).</p>
 
 
 
 <div class="description">
-    16-bit integer (-2<sup>15</sup>)
+    float (32-bit)
 </div>
 
 
@@ -30371,7 +30406,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line49">line 49</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line104">line 104</a>
     </li></ul></dd>
     
 
@@ -30381,7 +30416,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_INT16</li>
+            <li>module:maths~MIN_FLOAT</li>
         </ul>
     </dd>
     
@@ -30483,12 +30518,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">double (64-bit).</p>
+<p class="summary">16-bit integer (-2<sup>15</sup>).</p>
 
 
 
 <div class="description">
-    double (64-bit)
+    16-bit integer (-2<sup>15</sup>)
 </div>
 
 
@@ -30539,7 +30574,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line113">line 113</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -30549,7 +30584,91 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_DOUBLE</li>
+            <li>module:maths~MAX_INT16</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
+
+
+<p class="summary">32-bit integer (-2<sup>31</sup>).</p>
+
+
+
+<div class="description">
+    32-bit integer (-2<sup>31</sup>)
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:maths~MAX_INT32</li>
         </ul>
     </dd>
     
@@ -30651,12 +30770,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">32-bit integer (-2<sup>31</sup>).</p>
+<p class="summary">double (64-bit).</p>
 
 
 
 <div class="description">
-    32-bit integer (-2<sup>31</sup>)
+    double (64-bit)
 </div>
 
 
@@ -30707,7 +30826,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line67">line 67</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line113">line 113</a>
     </li></ul></dd>
     
 
@@ -30717,95 +30836,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_INT32</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~Number"><span class="type-signature">(inner, constant) </span>Number<span class="type-signature"> :number</span></h4>
-
-
-<p class="summary">of decimals a 128-bit number's mantissa have.</p>
-
-
-
-<div class="description">
-    of decimals a 128-bit number's mantissa have.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line164">line 164</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>module:maths~DECIMALS16</li>
-        
-            <li>module:maths~DECIMALS32</li>
-        
-            <li>module:maths~DECIMALS64</li>
+            <li>module:maths~MAX_DOUBLE</li>
         </ul>
     </dd>
     
@@ -31433,7 +31464,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2985">line 2985</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2999">line 2999</a>
     </li></ul></dd>
     
 
@@ -31722,7 +31753,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2741">line 2741</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2755">line 2755</a>
     </li></ul></dd>
     
 
@@ -31973,7 +32004,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2892">line 2892</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2906">line 2906</a>
     </li></ul></dd>
     
 
@@ -32842,7 +32873,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3195">line 3195</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3211">line 3211</a>
     </li></ul></dd>
     
 
@@ -33446,7 +33477,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2723">line 2723</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2737">line 2737</a>
     </li></ul></dd>
     
 
@@ -33604,7 +33635,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3062">line 3062</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3076">line 3076</a>
     </li></ul></dd>
     
 
@@ -33908,7 +33939,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3043">line 3043</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3057">line 3057</a>
     </li></ul></dd>
     
 
@@ -34173,7 +34204,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3021">line 3021</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3035">line 3035</a>
     </li></ul></dd>
     
 
@@ -35425,7 +35456,7 @@ It will give all the elements of the first array which isn't in any of the other
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2692">line 2692</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2706">line 2706</a>
     </li></ul></dd>
     
 
@@ -36002,7 +36033,7 @@ It will give all the elements of the first array which isn't in any of the other
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3296">line 3296</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3312">line 3312</a>
     </li></ul></dd>
     
 
@@ -38428,7 +38459,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2848">line 2848</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2862">line 2862</a>
     </li></ul></dd>
     
 
@@ -38588,7 +38619,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3124">line 3124</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3138">line 3138</a>
     </li></ul></dd>
     
 
@@ -38897,7 +38928,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3102">line 3102</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3116">line 3116</a>
     </li></ul></dd>
     
 
@@ -39167,7 +39198,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3077">line 3077</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3091">line 3091</a>
     </li></ul></dd>
     
 
@@ -39609,7 +39640,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2880">line 2880</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2894">line 2894</a>
     </li></ul></dd>
     
 
@@ -39949,7 +39980,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2837">line 2837</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2851">line 2851</a>
     </li></ul></dd>
     
 
@@ -40265,7 +40296,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3314">line 3314</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3330">line 3330</a>
     </li></ul></dd>
     
 
@@ -40798,7 +40829,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2920">line 2920</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2934">line 2934</a>
     </li></ul></dd>
     
 
@@ -40986,7 +41017,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2946">line 2946</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2960">line 2960</a>
     </li></ul></dd>
     
 
@@ -41174,7 +41205,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2933">line 2933</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2947">line 2947</a>
     </li></ul></dd>
     
 
@@ -43491,7 +43522,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3147">line 3147</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3161">line 3161</a>
     </li></ul></dd>
     
 
@@ -43862,7 +43893,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3251">line 3251</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3267">line 3267</a>
     </li></ul></dd>
     
 
@@ -44027,7 +44058,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3236">line 3236</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3252">line 3252</a>
     </li></ul></dd>
     
 
@@ -44695,7 +44726,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2861">line 2861</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2875">line 2875</a>
     </li></ul></dd>
     
 
@@ -44916,7 +44947,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2676">line 2676</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2690">line 2690</a>
     </li></ul></dd>
     
 
@@ -45278,7 +45309,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3136">line 3136</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3150">line 3150</a>
     </li></ul></dd>
     
 
@@ -45471,6 +45502,199 @@ It will give all the common elements among the arrays.
         
 <div class="param-desc">
     Primeness
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".isSuperset"><span class="type-signature">(static) </span>isSuperset<span class="signature">(set, subset)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+    <p class="summary">Check if a set is a superset of another.</p>
+    
+
+
+
+<div class="description">
+    Check if a set is a superset of another.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>set</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Set</span>
+|
+
+<span class="param-type">SortedSet</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Set</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Set</span>
+|
+
+<span class="param-type">SortedSet</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">(Sub)set</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2663">line 2663</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Superset state
 </div>
 
 
@@ -46403,7 +46627,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2826">line 2826</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2840">line 2840</a>
     </li></ul></dd>
     
 
@@ -47829,7 +48053,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2972">line 2972</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2986">line 2986</a>
     </li></ul></dd>
     
 
@@ -49126,7 +49350,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2763">line 2763</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2777">line 2777</a>
     </li></ul></dd>
     
 
@@ -49310,7 +49534,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2907">line 2907</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2921">line 2921</a>
     </li></ul></dd>
     
 
@@ -52625,7 +52849,7 @@ Source: Three.js
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2957">line 2957</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2971">line 2971</a>
     </li></ul></dd>
     
 
@@ -52994,7 +53218,7 @@ Source: Three.js
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3326">line 3326</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3342">line 3342</a>
     </li></ul></dd>
     
 
@@ -53157,7 +53381,7 @@ Source: Three.js
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3277">line 3277</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3293">line 3293</a>
     </li></ul></dd>
     
 
@@ -54487,7 +54711,7 @@ It will give all the elements that aren't shared by all arrays i.e. unique to ea
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2708">line 2708</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2722">line 2722</a>
     </li></ul></dd>
     
 
@@ -54691,7 +54915,7 @@ It will give all the elements that aren't shared by all arrays i.e. unique to ea
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3267">line 3267</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3283">line 3283</a>
     </li></ul></dd>
     
 
@@ -57281,7 +57505,7 @@ Reference/help: <a href="http://www.endmemo.com/sconvert/centiMetrepixel.php">ht
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3211">line 3211</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3227">line 3227</a>
     </li></ul></dd>
     
 
@@ -57495,7 +57719,7 @@ It will give a single array with unique values of all the elemenets of all array
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2664">line 2664</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2678">line 2678</a>
     </li></ul></dd>
     
 
@@ -58066,6 +58290,187 @@ It will give a single array with unique values of all the elemenets of all array
 
     
 
+    <h4 class="name" id=".xor"><span class="type-signature">(static) </span>xor<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+    <p class="summary">E<u>x</u>clusive <u>or</u>.</p>
+    
+
+
+
+<div class="description">
+    E<u>x</u>clusive <u>or</u>.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>a</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Expression a</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>b</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Expression b</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line316">line 316</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a xor b
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id=".Xor"><span class="type-signature">(static) </span>Xor<span class="signature">(a, b, cr<span class="signature-attributes">opt, nullable</span>, toArr<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array|boolean}</span></h4>
 
     
@@ -58302,7 +58707,7 @@ It will give a single array with unique values of all the elemenets of all array
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2785">line 2785</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2799">line 2799</a>
     </li></ul></dd>
     
 
@@ -58343,187 +58748,6 @@ It will give a single array with unique values of all the elemenets of all array
 <span class="param-type">Array</span>
 |
 
-<span class="param-type">boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".xor"><span class="type-signature">(static) </span>xor<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-
-    
-    <p class="summary">E<u>x</u>clusive <u>or</u>.</p>
-    
-
-
-
-<div class="description">
-    E<u>x</u>clusive <u>or</u>.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>a</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Expression a</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Expression b</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line316">line 316</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    a xor b
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
 <span class="param-type">boolean</span>
 
 
@@ -58568,7 +58792,7 @@ It will give a single array with unique values of all the elemenets of all array
     <div class="container-overview">
     
         
-            <div class="description">Natural numbers (&natural; = {0, 1, 2, ..., +&infin;})</div>
+            <div class="description">Rational numbers (&#8474; = {-&infin;, ..., -1.0[...]01, -1, 0, 1, 1.0[...]01, ..., +&infin;})</div>
         
 
         
@@ -58620,7 +58844,7 @@ It will give a single array with unique values of all the elemenets of all array
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line277">line 277</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line188">line 188</a>
     </li></ul></dd>
     
 
@@ -58628,6 +58852,13 @@ It will give a single array with unique values of all the elemenets of all array
 
     
 
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Find a way to get N.value to be correctly updated when calling N.next() and make a Number set factory</li>
+        </ul>
+    </dd>
     
 </dl>
 
@@ -58770,7 +59001,7 @@ It will give a single array with unique values of all the elemenets of all array
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line188">line 188</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line277">line 277</a>
     </li></ul></dd>
     
 
@@ -58778,13 +59009,6 @@ It will give a single array with unique values of all the elemenets of all array
 
     
 
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>Find a way to get N.value to be correctly updated when calling N.next() and make a Number set factory</li>
-        </ul>
-    </dd>
     
 </dl>
 
@@ -58811,6 +59035,13 @@ It will give a single array with unique values of all the elemenets of all array
 
     
 
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-maths-Equation.html">Equation</a></dt>
+            <dd>Single parametric equation.</dd>
+        </dl>
     
 
      
@@ -58965,7 +59196,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3001">line 3001</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3015">line 3015</a>
     </li></ul></dd>
     
 
@@ -58986,12 +59217,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">unsigned 8-bit integer (2<sup>8</sup>-1).</p>
+<p class="summary">16-bit integer (2<sup>15</sup>-1).</p>
 
 
 
 <div class="description">
-    unsigned 8-bit integer (2<sup>8</sup>-1)
+    16-bit integer (2<sup>15</sup>-1)
 </div>
 
 
@@ -59042,7 +59273,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line40">line 40</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line58">line 58</a>
     </li></ul></dd>
     
 
@@ -59052,7 +59283,91 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_CHAR8</li>
+            <li>module:maths~MIN_INT16</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
+
+
+<p class="summary">double (64-bit).</p>
+
+
+
+<div class="description">
+    double (64-bit)
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line122">line 122</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:maths~MIN_DOUBLE</li>
         </ul>
     </dd>
     
@@ -59156,12 +59471,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">double (64-bit).</p>
+<p class="summary">32-bit integer (2<sup>31</sup>-1).</p>
 
 
 
 <div class="description">
-    double (64-bit)
+    32-bit integer (2<sup>31</sup>-1)
 </div>
 
 
@@ -59212,7 +59527,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line122">line 122</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line76">line 76</a>
     </li></ul></dd>
     
 
@@ -59222,175 +59537,9 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MIN_DOUBLE</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
+            <li>module:maths~MIN_INT32</li>
         
-            
-<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
-
-
-<p class="summary">16-bit integer (2<sup>15</sup>-1).</p>
-
-
-
-<div class="description">
-    16-bit integer (2<sup>15</sup>-1)
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line58">line 58</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>module:maths~MIN_INT16</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
-
-
-<p class="summary">float (32-bit).</p>
-
-
-
-<div class="description">
-    float (32-bit)
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line104">line 104</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>module:maths~MIN_FLOAT</li>
+            <li>module:maths~MAX_UINT16</li>
         </ul>
     </dd>
     
@@ -59492,12 +59641,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">32-bit integer (2<sup>31</sup>-1).</p>
+<p class="summary">unsigned 8-bit integer (2<sup>8</sup>-1).</p>
 
 
 
 <div class="description">
-    32-bit integer (2<sup>31</sup>-1)
+    unsigned 8-bit integer (2<sup>8</sup>-1)
 </div>
 
 
@@ -59548,7 +59697,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line76">line 76</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -59558,9 +59707,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MIN_INT32</li>
-        
-            <li>module:maths~MAX_UINT16</li>
+            <li>module:maths~MAX_CHAR8</li>
         </ul>
     </dd>
     
@@ -59575,15 +59722,15 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 
         
             
-<h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
+<h4 class="name" id="~Highest"><span class="type-signature">(inner, constant) </span>Highest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">16-bit integer (-2<sup>15</sup>).</p>
+<p class="summary">float (32-bit).</p>
 
 
 
 <div class="description">
-    16-bit integer (-2<sup>15</sup>)
+    float (32-bit)
 </div>
 
 
@@ -59634,7 +59781,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line49">line 49</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line104">line 104</a>
     </li></ul></dd>
     
 
@@ -59644,7 +59791,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_INT16</li>
+            <li>module:maths~MIN_FLOAT</li>
         </ul>
     </dd>
     
@@ -59746,12 +59893,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">double (64-bit).</p>
+<p class="summary">16-bit integer (-2<sup>15</sup>).</p>
 
 
 
 <div class="description">
-    double (64-bit)
+    16-bit integer (-2<sup>15</sup>)
 </div>
 
 
@@ -59802,7 +59949,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line113">line 113</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -59812,7 +59959,91 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_DOUBLE</li>
+            <li>module:maths~MAX_INT16</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
+
+
+<p class="summary">32-bit integer (-2<sup>31</sup>).</p>
+
+
+
+<div class="description">
+    32-bit integer (-2<sup>31</sup>)
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:maths~MAX_INT32</li>
         </ul>
     </dd>
     
@@ -59914,12 +60145,12 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
 <h4 class="name" id="~Lowest"><span class="type-signature">(inner, constant) </span>Lowest<span class="type-signature"> :number</span></h4>
 
 
-<p class="summary">32-bit integer (-2<sup>31</sup>).</p>
+<p class="summary">double (64-bit).</p>
 
 
 
 <div class="description">
-    32-bit integer (-2<sup>31</sup>)
+    double (64-bit)
 </div>
 
 
@@ -59970,7 +60201,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line67">line 67</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line113">line 113</a>
     </li></ul></dd>
     
 
@@ -59980,95 +60211,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>module:maths~MAX_INT32</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~Number"><span class="type-signature">(inner, constant) </span>Number<span class="type-signature"> :number</span></h4>
-
-
-<p class="summary">of decimals a 128-bit number's mantissa have.</p>
-
-
-
-<div class="description">
-    of decimals a 128-bit number's mantissa have.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line164">line 164</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>module:maths~DECIMALS16</li>
-        
-            <li>module:maths~DECIMALS32</li>
-        
-            <li>module:maths~DECIMALS64</li>
+            <li>module:maths~MAX_DOUBLE</li>
         </ul>
     </dd>
     
@@ -60696,7 +60839,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2985">line 2985</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2999">line 2999</a>
     </li></ul></dd>
     
 
@@ -60985,7 +61128,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2741">line 2741</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2755">line 2755</a>
     </li></ul></dd>
     
 
@@ -61236,7 +61379,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2892">line 2892</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2906">line 2906</a>
     </li></ul></dd>
     
 
@@ -62105,7 +62248,7 @@ Source: <a href="http://www.2ality.com/2015/03/es6-generators.html">http://www.2
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3195">line 3195</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3211">line 3211</a>
     </li></ul></dd>
     
 
@@ -62709,7 +62852,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2723">line 2723</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2737">line 2737</a>
     </li></ul></dd>
     
 
@@ -62867,7 +63010,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3062">line 3062</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3076">line 3076</a>
     </li></ul></dd>
     
 
@@ -63171,7 +63314,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3043">line 3043</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3057">line 3057</a>
     </li></ul></dd>
     
 
@@ -63436,7 +63579,7 @@ Adapted from <a href="http://stackoverflow.com/questions/1095650/how-can-i-effic
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3021">line 3021</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3035">line 3035</a>
     </li></ul></dd>
     
 
@@ -64688,7 +64831,7 @@ It will give all the elements of the first array which isn't in any of the other
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2692">line 2692</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2706">line 2706</a>
     </li></ul></dd>
     
 
@@ -65265,7 +65408,7 @@ It will give all the elements of the first array which isn't in any of the other
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3296">line 3296</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3312">line 3312</a>
     </li></ul></dd>
     
 
@@ -67691,7 +67834,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2848">line 2848</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2862">line 2862</a>
     </li></ul></dd>
     
 
@@ -67851,7 +67994,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3124">line 3124</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3138">line 3138</a>
     </li></ul></dd>
     
 
@@ -68160,7 +68303,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3102">line 3102</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3116">line 3116</a>
     </li></ul></dd>
     
 
@@ -68430,7 +68573,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3077">line 3077</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3091">line 3091</a>
     </li></ul></dd>
     
 
@@ -68872,7 +69015,7 @@ ci = confidenceInterval([5.7, 6.63, 6.57, 7.7, 7.51], .75);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2880">line 2880</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2894">line 2894</a>
     </li></ul></dd>
     
 
@@ -69212,7 +69355,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2837">line 2837</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2851">line 2851</a>
     </li></ul></dd>
     
 
@@ -69528,7 +69671,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3314">line 3314</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3330">line 3330</a>
     </li></ul></dd>
     
 
@@ -70061,7 +70204,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2920">line 2920</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2934">line 2934</a>
     </li></ul></dd>
     
 
@@ -70249,7 +70392,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2946">line 2946</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2960">line 2960</a>
     </li></ul></dd>
     
 
@@ -70437,7 +70580,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2933">line 2933</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2947">line 2947</a>
     </li></ul></dd>
     
 
@@ -72754,7 +72897,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3147">line 3147</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3161">line 3161</a>
     </li></ul></dd>
     
 
@@ -73125,7 +73268,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3251">line 3251</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3267">line 3267</a>
     </li></ul></dd>
     
 
@@ -73290,7 +73433,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3236">line 3236</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3252">line 3252</a>
     </li></ul></dd>
     
 
@@ -73958,7 +74101,7 @@ Inspired by <a href="https://Github.com/duereg/js-algorithms/blob/master/lib/alg
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2861">line 2861</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2875">line 2875</a>
     </li></ul></dd>
     
 
@@ -74179,7 +74322,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2676">line 2676</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2690">line 2690</a>
     </li></ul></dd>
     
 
@@ -74541,7 +74684,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3136">line 3136</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3150">line 3150</a>
     </li></ul></dd>
     
 
@@ -74734,6 +74877,199 @@ It will give all the common elements among the arrays.
         
 <div class="param-desc">
     Primeness
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".isSuperset"><span class="type-signature">(static) </span>isSuperset<span class="signature">(set, subset)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+    <p class="summary">Check if a set is a superset of another.</p>
+    
+
+
+
+<div class="description">
+    Check if a set is a superset of another.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>set</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Set</span>
+|
+
+<span class="param-type">SortedSet</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Set</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Set</span>
+|
+
+<span class="param-type">SortedSet</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">(Sub)set</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2663">line 2663</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Superset state
 </div>
 
 
@@ -75666,7 +76002,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2826">line 2826</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2840">line 2840</a>
     </li></ul></dd>
     
 
@@ -77092,7 +77428,7 @@ It will give all the common elements among the arrays.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2972">line 2972</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2986">line 2986</a>
     </li></ul></dd>
     
 
@@ -78389,7 +78725,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2763">line 2763</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2777">line 2777</a>
     </li></ul></dd>
     
 
@@ -78573,7 +78909,7 @@ Source: <a href="http://stackoverflow.com/questions/1095650/how-can-i-efficientl
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2907">line 2907</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2921">line 2921</a>
     </li></ul></dd>
     
 
@@ -81888,7 +82224,7 @@ Source: Three.js
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2957">line 2957</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2971">line 2971</a>
     </li></ul></dd>
     
 
@@ -82257,7 +82593,7 @@ Source: Three.js
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3326">line 3326</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3342">line 3342</a>
     </li></ul></dd>
     
 
@@ -82420,7 +82756,7 @@ Source: Three.js
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3277">line 3277</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3293">line 3293</a>
     </li></ul></dd>
     
 
@@ -83750,7 +84086,7 @@ It will give all the elements that aren't shared by all arrays i.e. unique to ea
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2708">line 2708</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2722">line 2722</a>
     </li></ul></dd>
     
 
@@ -83954,7 +84290,7 @@ It will give all the elements that aren't shared by all arrays i.e. unique to ea
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3267">line 3267</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3283">line 3283</a>
     </li></ul></dd>
     
 
@@ -86544,7 +86880,7 @@ Reference/help: <a href="http://www.endmemo.com/sconvert/centiMetrepixel.php">ht
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3211">line 3211</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line3227">line 3227</a>
     </li></ul></dd>
     
 
@@ -86758,7 +87094,7 @@ It will give a single array with unique values of all the elemenets of all array
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2664">line 2664</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2678">line 2678</a>
     </li></ul></dd>
     
 
@@ -87329,6 +87665,187 @@ It will give a single array with unique values of all the elemenets of all array
 
     
 
+    <h4 class="name" id=".xor"><span class="type-signature">(static) </span>xor<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+    <p class="summary">E<u>x</u>clusive <u>or</u>.</p>
+    
+
+
+
+<div class="description">
+    E<u>x</u>clusive <u>or</u>.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>a</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Expression a</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>b</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Expression b</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line316">line 316</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a xor b
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id=".Xor"><span class="type-signature">(static) </span>Xor<span class="signature">(a, b, cr<span class="signature-attributes">opt, nullable</span>, toArr<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array|boolean}</span></h4>
 
     
@@ -87565,7 +88082,7 @@ It will give a single array with unique values of all the elemenets of all array
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2785">line 2785</a>
+        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line2799">line 2799</a>
     </li></ul></dd>
     
 
@@ -87617,187 +88134,6 @@ It will give a single array with unique values of all the elemenets of all array
 
 
         
-            
-
-    
-
-    <h4 class="name" id=".xor"><span class="type-signature">(static) </span>xor<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-
-    
-    <p class="summary">E<u>x</u>clusive <u>or</u>.</p>
-    
-
-
-
-<div class="description">
-    E<u>x</u>clusive <u>or</u>.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>a</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Expression a</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>b</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Expression b</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="maths.js.html">maths.js</a>, <a href="maths.js.html#line316">line 316</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    a xor b
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
     
 
     
@@ -87813,13 +88149,13 @@ It will give a single array with unique values of all the elemenets of all array
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dom.checkBrowser.html">checkBrowser</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-dsa-Edge.html">Edge</a></li><li><a href="module-dsa-LinkedList.html">LinkedList</a></li><li><a href="module-dsa-Node.html">Node</a></li><li><a href="module-dsa-Vertex.html">Vertex</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#$t">$t</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#BrowserDetect">BrowserDetect</a></li><li><a href="global.html#Buffer">Buffer</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#DocTemplate">DocTemplate</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dom.checkBrowser.html">checkBrowser</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-dsa.TreeNode.html">TreeNode</a></li><li><a href="module-dsa-Archive.html">Archive</a></li><li><a href="module-dsa-Edge.html">Edge</a></li><li><a href="module-dsa-LinkedList.html">LinkedList</a></li><li><a href="module-dsa-Node.html">Node</a></li><li><a href="module-dsa-NTreeNode.html">NTreeNode</a></li><li><a href="module-dsa-Queue.html">Queue</a></li><li><a href="module-dsa-SortedSet.html">SortedSet</a></li><li><a href="module-dsa-Stack.html">Stack</a></li><li><a href="module-dsa-StackArray.html">StackArray</a></li><li><a href="module-dsa-StackList.html">StackList</a></li><li><a href="module-dsa-Vertex.html">Vertex</a></li><li><a href="module-dsa-virtualHistory.html">virtualHistory</a></li><li><a href="module-files.$Data.html">$Data</a></li><li><a href="module-files.Spider.html">Spider</a></li><li><a href="module-maths-Equation.html">Equation</a></li><li><a href="module-misc.Item.html">Item</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#$t">$t</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#BrowserDetect">BrowserDetect</a></li><li><a href="global.html#Buffer">Buffer</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#DocTemplate">DocTemplate</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#ready">ready</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 12:34:15 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Feb 27 2017 13:23:54 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

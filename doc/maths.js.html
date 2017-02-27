@@ -192,7 +192,7 @@ export const DECIMALS64 = 52;
 /**
  * @const {number} Number of decimals a 128-bit number's mantissa have.
  * @type {number}
- * @public
+ * @publicc
  * @since 1.0
  * @see module:maths~DECIMALS16
  * @see module:maths~DECIMALS32
@@ -221,7 +221,7 @@ export const NaturalNum = function*() {
  * @since 1.0
  * @todo Find a way to get N.value to be correctly updated when calling N.next() and make a Number set factory
  */
-export const N = (function () {
+export const N = (() => {
   let gen = NaturalNum();
   let value = gen.next().value;
   let reset = () => {
@@ -1105,7 +1105,7 @@ export let isPrime = (x) => primeN(range(1, 1, x)).contains(x);
  * @function
  */
 export let primeN = (arr) => {
-  let res = arr.sort();
+  let res = arr.sort((a, b) => a - b);
   for (let i = 0; i &lt; arr.length; i++) {
     if (arr[i] % 2 === 0 &amp;&amp; arr[i] != 2) res[i] = 'x';
     for (let j = 0; j &lt; i; j++) {
@@ -2680,6 +2680,20 @@ export let vector2PointForm = (r) => {
 };
 
 /**
+ * @description Check if a set is a superset of another.
+ * @param {(Array|Set|SortedSet)} set Set
+ * @param {(Array|Set|SortedSet)} subset (Sub)set
+ * @returns {boolean} Superset state
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let isSuperset = (set, subset) => {
+  for (let item of subset) if (!(set.contains(item) || set.has(item))) return false;
+  return true;
+};
+
+/**
  * @description Union (&amp;Union;).&lt;br />
  * It will give a single array with unique values of all the elemenets of all arrays.
  * @param {Array[]} arrays Array of arrays to unit
@@ -2689,7 +2703,7 @@ export let vector2PointForm = (r) => {
  * @since 1.0
  * @function
  */
-export let union = (arrays, toSort = false) => toSort ? rmDuplicates(arrays[0].concat(...arrays.get(1))).sort() : rmDuplicates(arrays[0].concat(...arrays.get(1)));
+export let union = (arrays, toSort = false) => toSort ? rmDuplicates(arrays[0].concat(...arrays.get(1))).sort((a, b) => a - b) : rmDuplicates(arrays[0].concat(...arrays.get(1)));
 
 /**
  * @description Intersection (&amp;Intersection;).&lt;br />
@@ -2704,7 +2718,7 @@ export let union = (arrays, toSort = false) => toSort ? rmDuplicates(arrays[0].c
 export let intersection = (arrays, toSort = false) => {
   let first = rmDuplicates(arrays[0]), rest = arrays.get(1).map(arr => rmDuplicates(arr));
   let inter = first.filter(item => rest.some(arr => arr.contains(item)));
-  return toSort ? inter.sort() : inter;
+  return toSort ? inter.sort((a, b) => a - b) : inter;
 };
 
 /**
@@ -2720,7 +2734,7 @@ export let intersection = (arrays, toSort = false) => {
 export let complement = (arrays, toSort = false) => {
   let first = rmDuplicates(arrays[0]), rest = rmDuplicates(arrays.get(1).linearise());
   let compl = first.filter(item => rest.miss(item));
-  return toSort ? compl.sort() : compl;
+  return toSort ? compl.sort((a, b) => a - b) : compl;
 };
 
 /**
@@ -2736,7 +2750,7 @@ export let complement = (arrays, toSort = false) => {
 export let symDif = (arrays, toSort = false) => {
   let array = arrays.linearise();
   let sd = isTypedArray(array, 'Number') ? array.unique().sanitise('Number') : array.unique();
-  return toSort ? sd.sort() : sd;
+  return toSort ? sd.sort((a, b) => a - b) : sd;
 };
 
 /**
@@ -3180,9 +3194,8 @@ export let getClosest = (x, opt) => {
 
 /**
  * @description Single parametric equation.
- * @param {string} [formula='y=x'] Formula
- * @returns {Equation} Equation
  * @this {Equation}
+ * @public
  * @since 1.0
  * @property {string} Equation.formula Formula
  * @property {string} Equation.leftSide LHS
@@ -3192,6 +3205,9 @@ export let getClosest = (x, opt) => {
  * @class
  */
 class Equation {
+  /**
+   * @param {string} [formula='y=x'] Formula
+   */
   constructor(formula = 'y=x') {
     this.formula = formula.normal();
     [this.leftSide, this.rightSide] = this.formula.split('=');
@@ -3382,13 +3398,13 @@ export let revPolishCalc = (exp) => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dom.checkBrowser.html">checkBrowser</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-dsa-Edge.html">Edge</a></li><li><a href="module-dsa-LinkedList.html">LinkedList</a></li><li><a href="module-dsa-Node.html">Node</a></li><li><a href="module-dsa-Vertex.html">Vertex</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#$t">$t</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#BrowserDetect">BrowserDetect</a></li><li><a href="global.html#Buffer">Buffer</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#DocTemplate">DocTemplate</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-maths.html">maths</a></li></ul><h3>Externals</h3><ul><li><a href="Array_external_Array.html">Array</a></li><li><a href="external-String.html">String</a></li><li><a href="Function_external_Function.html">Function</a></li><li><a href="Number_external_Number.html">Number</a></li><li><a href="Object_external_Object.html">Object</a></li><li><a href="String_external_String.html">String</a></li></ul><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="module-dom.checkBrowser.html">checkBrowser</a></li><li><a href="module-dsa.Coroutine.html">Coroutine</a></li><li><a href="module-dsa.TreeNode.html">TreeNode</a></li><li><a href="module-dsa-Archive.html">Archive</a></li><li><a href="module-dsa-Edge.html">Edge</a></li><li><a href="module-dsa-LinkedList.html">LinkedList</a></li><li><a href="module-dsa-Node.html">Node</a></li><li><a href="module-dsa-NTreeNode.html">NTreeNode</a></li><li><a href="module-dsa-Queue.html">Queue</a></li><li><a href="module-dsa-SortedSet.html">SortedSet</a></li><li><a href="module-dsa-Stack.html">Stack</a></li><li><a href="module-dsa-StackArray.html">StackArray</a></li><li><a href="module-dsa-StackList.html">StackList</a></li><li><a href="module-dsa-Vertex.html">Vertex</a></li><li><a href="module-dsa-virtualHistory.html">virtualHistory</a></li><li><a href="module-files.$Data.html">$Data</a></li><li><a href="module-files.Spider.html">Spider</a></li><li><a href="module-maths-Equation.html">Equation</a></li><li><a href="module-misc.Item.html">Item</a></li><li><a href="module-qtest.InvalidExpressionError.html">InvalidExpressionError</a></li><li><a href="module-qtest.InvalidParamError.html">InvalidParamError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#$e">$e</a></li><li><a href="global.html#$f">$f</a></li><li><a href="global.html#$n">$n</a></li><li><a href="global.html#$t">$t</a></li><li><a href="global.html#asyncTime">asyncTime</a></li><li><a href="global.html#bin2char">bin2char</a></li><li><a href="global.html#BrowserDetect">BrowserDetect</a></li><li><a href="global.html#Buffer">Buffer</a></li><li><a href="global.html#char2bin">char2bin</a></li><li><a href="global.html#char2hex">char2hex</a></li><li><a href="global.html#Copy">Copy</a></li><li><a href="global.html#date2num">date2num</a></li><li><a href="global.html#date2s">date2s</a></li><li><a href="global.html#date2txt">date2txt</a></li><li><a href="global.html#dateDiff">dateDiff</a></li><li><a href="global.html#dateTime">dateTime</a></li><li><a href="global.html#dayOfWeek">dayOfWeek</a></li><li><a href="global.html#displayTime">displayTime</a></li><li><a href="global.html#DocTemplate">DocTemplate</a></li><li><a href="global.html#entries">entries</a></li><li><a href="global.html#exclude">exclude</a></li><li><a href="global.html#exist">exist</a></li><li><a href="global.html#getArrayType">getArrayType</a></li><li><a href="global.html#getCustomType">getCustomType</a></li><li><a href="global.html#getDate">getDate</a></li><li><a href="global.html#getKey">getKey</a></li><li><a href="global.html#getNativeType">getNativeType</a></li><li><a href="global.html#getTime">getTime</a></li><li><a href="global.html#getTimestamp">getTimestamp</a></li><li><a href="global.html#getType">getType</a></li><li><a href="global.html#hex2char">hex2char</a></li><li><a href="global.html#include">include</a></li><li><a href="global.html#includeOnce">includeOnce</a></li><li><a href="global.html#is2dArray">is2dArray</a></li><li><a href="global.html#isCustomType">isCustomType</a></li><li><a href="global.html#isNativeType">isNativeType</a></li><li><a href="global.html#isNon">isNon</a></li><li><a href="global.html#isType">isType</a></li><li><a href="global.html#isTypedArray">isTypedArray</a></li><li><a href="global.html#keys">keys</a></li><li><a href="global.html#keyTable">keyTable</a></li><li><a href="global.html#loadTime">loadTime</a></li><li><a href="global.html#lookfor">lookfor</a></li><li><a href="global.html#num2date">num2date</a></li><li><a href="global.html#ready">ready</a></li><li><a href="global.html#s2date">s2date</a></li><li><a href="global.html#say">say</a></li><li><a href="global.html#time">time</a></li><li><a href="global.html#toSameLength">toSameLength</a></li><li><a href="global.html#txt2date">txt2date</a></li><li><a href="global.html#txt2num">txt2num</a></li><li><a href="global.html#UnitTest">UnitTest</a></li><li><a href="global.html#values">values</a></li><li><a href="global.html#wait">wait</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Jan 27 2017 12:34:15 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Feb 27 2017 13:23:53 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

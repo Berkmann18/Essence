@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Node</title>
+    <title>JSDoc: Class: TreeNode</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Node</h1>
+    <h1 class="page-title">Class: TreeNode</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2>Node</h2>
+        <h2>TreeNode</h2>
         
     
 </header>
@@ -40,16 +40,16 @@
 
     
 
-    <h4 class="name" id="Node"><span class="type-signature"></span>new Node<span class="signature">(pl<span class="signature-attributes">opt</span>, nx<span class="signature-attributes">opt</span>, pv<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="TreeNode"><span class="type-signature"></span>new TreeNode<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
-    <p class="summary">Node.</p>
+    <p class="summary">Binary tree node.</p>
     
 
 
 
 <div class="description">
-    Node.
+    Binary tree node.
 </div>
 
 
@@ -59,155 +59,8 @@
 
 
     <h5>This:</h5>
-    <ul><li>Node</li></ul>
+    <ul><li>TreeNode</li></ul>
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>pl</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    1
-                
-                </td>
-            
-
-            <td class="description last">Payload</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>nx</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Node</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">Next node</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>pv</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Node</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    null
-                
-                </td>
-            
-
-            <td class="description last">Previous node</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -240,7 +93,53 @@
 
         <tr>
             
-                <td class="name"><code>Node.payload</code></td>
+                <td class="name"><code>TreeNode.left</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">TreeNode</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Left child</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.right</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">TreeNode</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Right child</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.payload</code></td>
             
 
             <td class="type">
@@ -263,30 +162,7 @@
 
         <tr>
             
-                <td class="name"><code>Node.next</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Node</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Next node</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Node.traverse</code></td>
+                <td class="name"><code>TreeNode.add</code></td>
             
 
             <td class="type">
@@ -302,14 +178,14 @@
 
             
 
-            <td class="description last">Node traversal</td>
+            <td class="description last">Child adder</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Node.print</code></td>
+                <td class="name"><code>TreeNode.addLeft</code></td>
             
 
             <td class="type">
@@ -325,14 +201,14 @@
 
             
 
-            <td class="description last">Node printer</td>
+            <td class="description last">Left child adder</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Node.printList</code></td>
+                <td class="name"><code>TreeNode.addRight</code></td>
             
 
             <td class="type">
@@ -348,14 +224,14 @@
 
             
 
-            <td class="description last">Node list printer</td>
+            <td class="description last">Right child adder</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Node.last</code></td>
+                <td class="name"><code>TreeNode.traverse</code></td>
             
 
             <td class="type">
@@ -371,14 +247,14 @@
 
             
 
-            <td class="description last">Get the last node</td>
+            <td class="description last">Tree traversal</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Node.append</code></td>
+                <td class="name"><code>TreeNode.printInOrder</code></td>
             
 
             <td class="type">
@@ -394,14 +270,14 @@
 
             
 
-            <td class="description last">Append the list with a new node</td>
+            <td class="description last">Console in-order printing</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Node.remove</code></td>
+                <td class="name"><code>TreeNode.printPreOrder</code></td>
             
 
             <td class="type">
@@ -417,14 +293,14 @@
 
             
 
-            <td class="description last">Node remover</td>
+            <td class="description last">Console pre-order printing</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Node.reverse</code></td>
+                <td class="name"><code>TreeNode.printPostOrder</code></td>
             
 
             <td class="type">
@@ -440,14 +316,14 @@
 
             
 
-            <td class="description last">List reversal</td>
+            <td class="description last">Console post-order printing</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Node.find</code></td>
+                <td class="name"><code>TreeNode.printInOrder</code></td>
             
 
             <td class="type">
@@ -463,14 +339,14 @@
 
             
 
-            <td class="description last">Look for a node</td>
+            <td class="description last">Console in-order printing</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Node.equals</code></td>
+                <td class="name"><code>TreeNode.inOrder</code></td>
             
 
             <td class="type">
@@ -486,14 +362,359 @@
 
             
 
-            <td class="description last">Node comparator</td>
+            <td class="description last">Window in-order printing</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>Node.toString</code></td>
+                <td class="name"><code>TreeNode.preOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Window pre-order printing</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.postOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Window post-order printing</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.getInOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">In-order getter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.getPreOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pre-order getter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.getPostOrder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Post-order getter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.isLeaf</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Leaf check</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.find</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Look for a tree-node</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.dfs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Depth First Search</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.bfs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Breath First Search</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.sum</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Sum of the payloads</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.min</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Smallest payload</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.max</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Biggest payload</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.nbOfBranches</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Branches counter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.avg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Average of the payloads</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.printBFS</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Print in the BFS order</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.toString</code></td>
             
 
             <td class="type">
@@ -510,6 +731,52 @@
             
 
             <td class="description last">String representation</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.toArray</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array representation</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>TreeNode.count</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Count the number of times there's a particular payload</td>
         </tr>
 
     
@@ -551,7 +818,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dsa.js.html">dsa.js</a>, <a href="dsa.js.html#line663">line 663</a>
+        <a href="dsa.js.html">dsa.js</a>, <a href="dsa.js.html#line940">line 940</a>
     </li></ul></dd>
     
 
