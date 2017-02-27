@@ -650,7 +650,7 @@ export let exclude = (file, type = 'link') => {
  * @memberof Object.prototype
  * @external Object
  */
-export Object.prototype.count = (character) => Array.from(this).filter(x => x === character).length;
+Object.prototype.count = (character) => Array.from(this).filter(x => x === character).length;
 
 /**
  * @description Get all the positions of a character/property/number c.

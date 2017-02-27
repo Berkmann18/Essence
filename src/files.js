@@ -260,7 +260,7 @@ export class Spider {
   };
 
   //noinspection JSUnusedGlobalSymbols
-  getCoverage = function (withSymbols, crossOrigin) {
+  getCoverage(withSymbols, crossOrigin) {
     return this.getFreq(withSymbols, crossOrigin).sum().toNDec(2);
   };
 

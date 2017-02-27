@@ -14,10 +14,10 @@ import {
   say,
   lookfor,
   isType
-} from "./essence";
-import {InvalidParamError, InvalidExpressionError} from "./qtest";
-import {Pt, Stack} from "./dsa";
-import {rmDuplicates, RegExpify, asciiTable} from "./misc";
+} from './essence';
+import {InvalidParamError, InvalidExpressionError} from './qtest';
+import {Pt, Stack} from './dsa';
+import {rmDuplicates, RegExpify, asciiTable} from './misc';
 
 //Constants
 /**
@@ -174,7 +174,7 @@ export const DECIMALS64 = 52;
 /**
  * @const {number} Number of decimals a 128-bit number's mantissa have.
  * @type {number}
- * @public
+ * @publicc
  * @since 1.0
  * @see module:maths~DECIMALS16
  * @see module:maths~DECIMALS32
@@ -604,7 +604,7 @@ export let dec2min = (dec) => (30 * dec) / 50;
 export let toSec = (i) => {
   if (i == parseFloat(i)) return parseFloat(i); //Seconds stay seconds
   let withH = i.count(':') === 2;
-  if (!esseisNativeType(i, 'String')) i += '';
+  if (!isNativeType(i, 'String')) i += '';
   if (i.length >= 4 && i.indexOf(':') === 1) return toSec('0' + i); //So times without the leading 0 or simply with a 1-digit first section could be read properly
 
   let time = i.split(':'), m, s;

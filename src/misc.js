@@ -277,3 +277,84 @@ export class Item  { //An item like the ones that can be bought/sold/traded/used
     return str.substring(0, str.length - 2)
   };
 }
+
+/**
+ * @description Letter pair array.
+ * @param {string} [first='a'] First letter
+ * @param {string} [last='z'] Last letter
+ * @returns {Array} Letter pair array
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let letterArray = (first='a', last='z') => {
+  let f = first.charCodeAt(0), l = last.charCodeAt(0), arr = [];
+  for (let firstLetter = f; firstLetter <= l; firstLetter++) {
+    for (let secondLetter = f; secondLetter <= l; secondLetter++) {
+      if (firstLetter != secondLetter) arr.push(String.fromCharCode(firstLetter) + String.fromCharCode(secondLetter));
+    }
+  }
+  return arr
+};
+
+/**
+ * @description Remove the consecutive duplicated values in an array.
+ * @param {Array} arr Array
+ * @returns {Array} Filtered array
+ * @see module:misc~rmDuplicates
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let rmConsecDuplicates = (arr) => {
+  let out = [];
+  let j = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (i === 0 || !arr[i].equals(arr[i - 1])) out[j++] = arr[i];
+  }
+  j = 0;
+  for (let i = 0; i < arr.length - 1; i++) { //Double enforced check
+    if (!arr[i].equals(arr[i + 1])) out[j++] = arr[i];
+  }
+  return out
+};
+
+/**
+ * @description Remove the duplicates of an array.
+ * @param {Array|string} arr Array
+ * @returns {Array|string} Filtered array
+ * @see module:misc~rmConsecDuplicates
+ * @public
+ * @since 1.0
+ * @function
+ * @throws {TypeError} arr isn't iterable
+ * @example
+ * rmDuplicates('hello world !'); //'helo wrd!'
+ * rmDuplicates([4, 10, 1, 9, 10, 10, 10, 3, 4, 2]); //[4, 10, 1, 9, 3, 2]
+ */
+export let rmDuplicates = (arr) => {
+  if (!arr.isIterable()) throw new TypeError('It\'s not possible to remove duplicates of a non iterable object.');
+  let uniques = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (!uniques.contains(arr[i])) uniques.push(arr[i]);
+  }
+  return isType(arr, 'Array') ? uniques : uniques.join('');
+};
+
+/**
+ * @description Remove the Unique values of an array (keep the ones that are initially duplicated).
+ * @param {Array|string} arr Array
+ * @returns {Array|string} Filtered array
+ * @see module:Misc~rmDuplicates
+ * @since 1.1
+ * @func
+ * @throws {TypeError} arr isn't iterable
+ * @example
+ * rmUniques("hello world !"); //"lo "
+ * rmUniques([4, 10, 1, 9, 10, 10, 10, 3, 4, 2]); //[10, 4]
+ */
+export let rmUniques = (arr) => {
+  if (!arr.isIterable()) throw new TypeError('It\'s not possible to remove uniques of a non iterable object.');
+  let duplicates = rmDuplicates(arr.filter(item => arr.count(item) > 1));
+  return isType(arr, 'Array') ? duplicates : duplicates.join('');
+};

@@ -4,7 +4,7 @@
  * @requires module:essence
  * @since 1.0
  */
-import {isNativeType, getNativeType, getCustomType} from './essence';
+import {isNativeType, getNativeType, getCustomType, isType} from './essence';
 
 //Object.prototype
 /**
@@ -225,9 +225,7 @@ export let inheritsFrom = (fn, parentClassOrObj) => {
  * @returns {Array} Array after the operation
  * @public
  * @since 1.0
- * @method
- * @memberof Array.prototype
- * @external Array
+ * @function
  */
 export let remove = (arr, character, preserveInitial) => {
   if (preserveInitial) {
@@ -237,4 +235,20 @@ export let remove = (arr, character, preserveInitial) => {
     for (let i of pos) arr.splice(i, 1);
     return arr;
   }
+};
+
+/**
+ * @description String representation of an object.
+ * @param {*} obj Object
+ * @returns {string} String representation
+ * @public
+ * @since 1.0
+ * @function
+ */
+export let toString = (obj) => {
+  let str = '';
+  for (let p in obj) {
+    if (obj.has(p) && p != 'toString' && !isType(p, 'Function')) str += `${p}=${obj[p]}, `;
+  }
+  return str.substring(0, str.length - 2)
 };
