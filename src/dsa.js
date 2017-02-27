@@ -4,13 +4,12 @@
  * @requires module:essence
  * @since 1.0
  */
-import {END_OF_SEQUENCE} from "./data";
-import {isNon, isNativeType, say, isType, entries, keys, isCustomType, lookfor} from "./essence";
-import {range, euclidianDist, manhattanDist, conv, Equation, complement} from "./maths";
-import {Buffer, println} from "./dom";
-import {rmDuplicates, RegExpify} from "./misc";
-import {InvalidParamError} from "./qtest";
-import {getFilename} from "./files";
+import {END_OF_SEQUENCE}  from './data';
+import {isNon, isNativeType, say, isType, entries, keys, isCustomType, lookfor} from './essence';
+import {range, euclidianDist, manhattanDist, conv} from './maths';
+import {Buffer, println} from './dom';
+import {rmDuplicates, RegExpify} from './misc';
+import {InvalidParamError} from './qtest';
 
 //Data structures
 /**
@@ -620,7 +619,7 @@ export const logItems = Coroutine(function*() {
  * @property {function(this:LinkedList): string} LinkedList.next.show Show the linked list
  * @property {function(): string} LinkedList.toString String representation
  */
-export class LinkedList {
+class LinkedList {
   /**
    * @param {*} [pl=1] Payload
    * @param {(LinkedList|{payload: number, next: null})} [nx={payload: 1, next: ?LinkedList}] Next
@@ -661,7 +660,7 @@ export class LinkedList {
  * @property {function(Node): boolean} Node.equals Node comparator
  * @property {function(): string} Node.toString String representation
  */
-export class Node {
+class Node {
   /**
    * @param {*} [pl=1] Payload
    * @param {Node} [nx] Next node
@@ -756,7 +755,7 @@ export class Node {
  * @property {function(Vertex): number} Vertex.distanceFrom Distance from this vertex to another
  * @property {function(): Vertex} Vertex.getNearestVertex Get the nearest connected vertex
  */
-export class Vertex {
+class Vertex {
   /**
    * @param {number} [g=0] Current total cost
    * @param {number} [h=0] Current total heuristic
@@ -867,7 +866,7 @@ export class Vertex {
  * @property {function(): Edge[]} Edge.getSurroundingEdges Get all the surrounding edges
  * @property {function(): Edge[]} Edge.getNeighbours Get the neighbour edges
  */
-export class Edge {
+class Edge {
   /**
    * @param {?Vertex} [start=null] Starting vertex/node
    * @param {?Vertex} [end=null] Ending vertex/node
@@ -1165,7 +1164,7 @@ export class TreeNode {
  * @property {function(string, boolean): ?string} NTreeNode.see See the tree for that particular node
  * @property {function(*): number} NTreeNode.count Count the number of times there's a particular payload
  */
-export class NTreeNode extends TreeNode {
+class NTreeNode extends TreeNode {
   /**
    * @param {*} pl Payload
    * @param {TreeNode[]} [ch=[]] Child
@@ -1357,7 +1356,7 @@ export let traverseTree = (node, symbol='--', start='|', indent=0) => {
  * @property {function(): Iterator} SortedSet.keys Keys of the set
  * @property {function(*): boolean} SortedSet.has Check if the set has an item
  */
-export class SortedSet {
+class SortedSet {
   /**
    * @param {Array} arr Array
    */
@@ -1422,7 +1421,7 @@ export class SortedSet {
  * @property {function(): number} Stack.size Size
  * @property {function(): string} Stack.toString String representation
  */
-export class Stack {
+class Stack {
   /**
    * @param {Array|*} [arr] Array
    * @param {?number} [lim=null] Limit
@@ -1495,7 +1494,7 @@ export class Stack {
  * @property {function(): string} StackArray.toString String representation
  * @see module:dsa~Stack
  */
-export class StackArray {
+class StackArray {
   /**
    * @param {number} sz Array size
    */
@@ -1578,7 +1577,7 @@ export class StackArray {
  * @property {function(): string} StackList.toString String representation
  * @see module:dsa~Stack
  */
-export class StackList {
+class StackList {
   /**
    * @param {Array|*} [arr] Array or payloads
    */
@@ -1660,7 +1659,7 @@ export class StackList {
  * @property {function(): number} Queue.size Size
  * @property {function(): string} Queue.toString String representation
  */
-export class Queue {
+class Queue {
   constructor(arr, lim=null) {
     this.value = isType(lim, 'Number') ? new Array(lim) : [];
     this.limit = lim;
@@ -1731,7 +1730,7 @@ export class Queue {
  * @property {function(): number} QueueArray.size Size
  * @property {function(): string} QueueArray.toString String representation
  */
-export class QueueArray {
+class QueueArray {
   /**
    * @param {Array|*} [arr=[]] Array or element
    */
@@ -1819,7 +1818,7 @@ export class QueueArray {
  * @property {function(*)} QueueList.remove Node removal
  * @property {function(number, *)} QueueList.insertAt Positional node insertion
  */
-export class QueueList {
+class QueueList {
   constructor() {
     this.front = new Node(null);
     this.back = new Node(null);
@@ -1956,7 +1955,7 @@ export let reconPath = (cameFrom, current) => {
  * @todo Do it !
  */
 export let IDAstar = () => {
-  //...
+
 };
 
 /**
@@ -1967,7 +1966,7 @@ export let IDAstar = () => {
  * @since 1.0
  * @function
  */
-export let alphabetSort = (x) => {
+export alphabetSort = (x) => {
   if (!x.isIterable()) throw new TypeError('alphabetSort cannot sort non iterable objects');
   if (isType(x, 'String')) return x.split('').sort((a, b) => a - b).join('');
 
@@ -2062,7 +2061,7 @@ export let search = (arr, target) => {
  * @property {Function} Archive.updateDict Update the dictionary
  * @property {function(): Str} Archive.getResult Get the result
  */
-export class Archive {
+class Archive {
   /**
    * @param {string} [name='Archive'] Name of the archive
    * @param {string} [data=''] Data to compress
@@ -2121,7 +2120,7 @@ export class Archive {
  * @property {function(): string} virtualHistory.getStates List the states
  * @property {*} virtualHistory.isStateDefault Check if the current state is the default one
  */
-export class virtualHistory {
+class virtualHistory {
   /**
    * @param {*} elm Element
    */
@@ -2202,514 +2201,3 @@ export let occurrenceList = (list) => {
   for (let i = 0; i < nums.length; i++) res[chars[i]] = nums[i];
   return res;
 };
-
-/**
- * @description Mathematical stream.
- * @this {Stream}
- * @class
- * @public
- * @since 1.0
- * @property {number} Stream.start Initial value
- * @property {string} Stream.formula Formula
- * @property {number[]} Stream.data Data
- * @property {Function} Stream.next Add an other value to the data
- * @property {function(): string} Stream.toString String representation
- */
-export class Stream {
-  /**
-   * @param {number} [initVal=0] Initial value
-   * @param {string} [formula='x+1'] Formula
-   * @param {number} [nbVals] Number of values
-   */
-  constructor(initVal=0, formula='x+1', nbVals=0) {
-    this.start = initVal;
-    this.formula = formula;
-    this.data = [this.start];
-    if (nbVals) {
-      for (let i = 1; i < nbVals; i++) this.next();
-    }
-  }
-  *next() {
-    for (let i = this.start; ; i++) {
-      let newVal = eval(this.formula.multiReplace([
-        [/x/g, this.data.last()], [/x0/g, this.start],
-        [/pi/ig, Math.PI], [/e/ig, Math.E], [/sqrt(2)/ig, Math.SQRT2],
-        [/(pow|max|min)\((.*?),(| )(.*?)\)/, 'Math.$1($2, $3)'],
-        [/(sqrt|cbrt|cos|sin|tan|acos|asin|cosh|sinh|tanh|acosh|asinh|atanh|exp|abs)\((.*?)\)/, 'Math.$1($2)'],
-        [/(ln|log|nthroot|clampTop|clampBottom)\((.*?),(| )(.*?)\)/, '$1($2, $3)'],
-        [/(clamp)\((.*?),(?:| )(.*?),(?:| )(.*?)\)/, '$1($2, $3, $4)']
-      ]));
-      this.data.push(newVal);
-      yield newVal;
-    }
-  };
-
-  toString() {
-    return `Stream(start=${this.start}, formula=${this.formula}, data=${this.data.toStr(true)})`;
-  };
-}
-
-/**
- * @description Stream with multiple variables.
- * @this {MultiStream}
- * @class
- * @public
- * @since 1.0
- * @property {number} MultiStream.start Initial value
- * @property {string} MultiStream.formula Formula
- * @property {number[]} MultiStream.results Results
- * @property {number[]} MultiStream.data Data
- * @property {Function} MultiStream.next Add an other value to the data
- * @property {function(): string} MultiStream.toString String representation
- * @property {function(NumberLike): number} MultiStream.compute Compute a value by turning an expression into a number
- */
-export class MultiStream {
-  /**
-   * @param {number} [initVal=0] Initial value
-   * @param {string} [formula='x+1'] Formula
-   * @param {number} [nbVals] Number of values
-   */
-  constructor(initVal=0, formula='x+1', nbVals=0) {
-    this.start = initVal;
-    this.formula = formula;
-    this.data = [this.start];
-    this.results = [this.compute(this.start)];
-    if (nbVals) {
-      for (let i = 1; i < nbVals; i++) this.next();
-    }
-  }
-
-  /**
-   * @todo Use PEG.js to solve the issue encoutered in Essence 1.1 ?
-   */
-  *next() {
-    this.data.push(this.data.last().map(x => x + 1));
-    this.results.push(this.compute(this.data.last()));
-  };
-
-  /**
-   * @todo Fix the failures on Math.$1($2, $3) happening on the first occurrence
-   * @param data
-   * @returns {Object}
-   */
-  compute(data) {
-    return eval(this.formula.multiReplace([
-      [/x/g, data[0]], [/x0/g, this.start[0]],
-      [/y/g, data[1]], [/y0/g, this.start[1]],
-      [/z/g, data[2]], [/z0/g, this.start[2]],
-      [/pi/ig, Math.PI], [/e/ig, Math.E], [/sqrt(2)/ig, Math.SQRT2],
-      [/(pow|max|min)\((.*?),(| )(.*?)\)/, 'Math.$1($2, $3)'],
-      [/(sqrt|cbrt|cos|sin|tan|acos|asin|cosh|sinh|tanh|acosh|asinh|atanh|exp|abs|e\^)\((.*?)\)/, 'Math.$1($2)'],
-      [/(ln|log|nthroot|clampTop|clampBottom)\((.*?),(| )(.*?)\)/, '$1($2, $3)'],
-      [/(clamp)\((.*?),(| )(.*?),(| )(.*?)\)/, '$1($2, $3, $4)']
-    ]))
-  };
-
-  toString() {
-    return `MultiStream(start=${this.start.toStr(true)}, formula=${this.formula}, data=${this.data.toStr(true)}, results=${this.results.toStr(true)})`;
-  };
-}
-
-/**
- * @description Numerical N-dimensional graph.
- * @this {Graph}
- * @class
- * @public
- * @since 1.0
- * @property {string[]} Graph.labels Labels
- * @property {string} Graph.name Name
- * @property {number[]} Graph.dimension Dimension
- * @property {Equation} Graph.equation Name
- * @property {number[]} Graph.data Data
- * @property {function(): string} Graph.toString String representation
- */
-export class Graph {
-  /**
-   * @param {string} formula Formula
-   * @param {string[]} [lbls=['x', 'y']] Axis labels
-   * @param {number[]} [dims=[50, 50]] Dimensions
-   * @param {string} [name='Graph'] Name
-   * @param {number} [precision=.1] Precision
-   */
-  constructor(formula, lbls=['x', 'y'], dims=[50, 50], name='Graph', precision=.1) {
-    this.labels = lbls;
-    this.name = name;
-    this.dimension = dims;
-    this.equation = new Equation(formula); //y=...
-    // this.stream = new Stream(0, this.formula.split("=")[1], this.dimension[0]);
-    this.data = precision ? range(0, precision, this.dimension[0], (Number(precision)).length()[1]) : range(this.dimension[0]);
-    for (let item of this.data) item = [item, this.equation.compute({x: item})];
-  }
-
-  toString() {
-    return `Graph(name=${this.name}, labels=${this.labels.toStr(true)}, dimension=${this.dimension}, this.equation=${this.equation.toString()}, data=${this.data})`;
-  };
-}
-
-/**
- * @description Generate an array with all permutations of <code>data</code> in a 1x(<code>data</code>.length!) array.
- * @param {Str} data Data
- * @return {Array} Permutations
- * @public
- * @since 1.0
- * @function
- * @todo To improve ?
- */
-export let Perm = (data) => {
-  let _p = x => data[0] + x;
-  if (data.length <= 1) return data;
-  else if (data.length === 2) return [data, [...data].reverse()];
-  else if (data.length === 3) return Perm(get(data, 1)).map(_p).append(Perm(get(data, -1)).map(x => data.last() + x)).append(Perm(data.remove(data[1])).map(x => data[1] + x));
-  else {
-    let perm = Perm(get(data, 1)).map(_p);
-    for (let i = 1; i < data.length; i++) perm.append(Perm(data.remove()).map(_p));
-    return rmDuplicates(perm);
-  }
-};
-
-/**
- * @description Get the combinations of the <code>n*<code>set</code>.
- * @param {number} n Length of each terms
- * @param {string[]} set Set of words
- * @return {Str} Combinations
- * @public
- * @since 1.0
- * @function
- * @todo Make it work right (3*\[a, b, c\] -> \[aaa, aab, aac, ..., ccc\])
- */
-export let Comb = (n, set) => {
-  let res = new Array(n * factorial(set.length)), p = Perm(set.join('')), lIdx = set.lastIndex();
-  for (let i = 0; i < set.length * 2; i += 2) {
-    if (i > lIdx + 1) break;
-    //noinspection JSUnresolvedFunction
-    set.splice(i + 1, set.binaryIndexOf(set[i]), set[i].repeat(n));
-  }
-  p.append(complement([set, p]));
-  //console.log(res.length, p, `\nset=${set}`);
-
-  return alphabetSort(p).filter(x => x.length === n);
-};
-
-/**
- * @description Event-trace table
- * @class
- * @this {EventTable}
- * @public
- * @since 1.0
- * @property {string} EventTable.name Name
- * @property {string[]} EventTable.sources Sources
- * @property {Array[]} EventTable.table Event table
- * @property {function(number, number)} EventTable.make Make the table
- * @property {function(string, string)} EventTable.fill Fill in the table
- * @property {function(): Array[]} EventTable.getCleanTable Get a clean empty-cell-less table
- * @property {function(Date): string} EventTable.lookAt Look at what happened at a particular time
- */
-export class EventTable {
-  /**
-   * @param {string} [name='Event table'] Name
-   * @param {string[]} [srcs=[getFilename(true)]] Sources
-   */
-  constructor(name='Event table', srcs=getFilename(true)) {
-    this.name = name;
-    this.source = srcs;
-    this.table = [['Source', 'Event', 'Timestamp']];
-  }
-
-  add(evt={source: getFilename(true), event, timestamp: (new Date()).getTime()}) {
-    this.table.push([evt.source, evt.event, evt.timestamp]);
-    this.sources.uniquePush(evt.source);
-  };
-
-  make(nb=1e3, space=1) {
-    let ts = (new Date()).getTime();
-    for (let i = 0; i < nb; i += space) this.add({timestamp: ts + i});
-  };
-
-  fill(src, desc) {
-    let ts = (new Date()).getTime();
-    let pos = lookfor(ts, this.table);
-    if (pos === -1 && ts > this.table.last()[2]) this.add({source: src, event: desc, timestamp: ts});
-    else this.table[pos[0]] = [src, desc];
-  };
-
-  static getCleanTable() {
-    let table = [];
-    for (let row of table) {
-      if (!isNon(row[1])) table.push(row);
-    }
-    return table;
-  };
-
-  lookAt(ts=(new Date()).getTime()) {
-    let pos = lookfor(ts, this.table)[0];
-    return `'${this.table[pos][1]}' at ${this.table[pos][0]}`;
-  };
-}
-
-/**
- * @description DOM Analyser.
- * @private
- * @since 1.0
- * @type {{nameOf, kidsOf, printOrder}}
- * @module
- */
-let DOMA = (() => {
-  let nameOfTag = tag => tag.localName || tag.tagName.toLowerCase();
-
-  let kidsOfTag = tag => Array.from(tag.children);
-
-  let printOrder = (elm, t='', s='&nbsp;&nbsp;', d=0, sym='|-') => {
-    for (let child of elm) child.postOrder(t + s, s, d + 1, sym);
-    println(t + sym + elm + s + ` (depth=${d})`);
-  };
-
-  return {
-    nameOf: nameOfTag,
-    kidsOf: kidsOfTag,
-    printOrder: printOrder
-  };
-})();
-
-/**
- * @description DOM tree.
- * @returns {NTreeNode} Tree representing the DOM structure of the current web page
- * @function
- * @public
- * @since 1.0
- * @see module:dsa~DomStructure
- * @TODO Fix the repeated node issue (apparent in getOrder(), see()
- */
-export let DomTree = () => {
-  let current = document.children[0], stepIn = tag => {
-    //if (debugging) say(`Stepping in %c${DOMA.nameOf(tag)}%c`, 'info', 'color: #00f', 'color: #000');
-    return DOMA.kidsOf(tag).isEmpty() ? new NTreeNode(DOMA.nameOf(tag)) : new NTreeNode(DOMA.nameOf(tag), DOMA.kidsOf(tag).map(child => {
-      return DOMA.kidsOf(child).isEmpty() ? new NTreeNode(DOMA.nameOf(child)) : stepIn(child);
-    }));
-  };
-
-  return stepIn(current);
-};
-
-/**
- * @description DOM structure (represented as an object).
- * @returns {{}} DOM object structure
- * @function
- * @public
- * @since 1.0
- * @see module:dsa~DomGraph
- */
-export let DomStructure = () => {
-  let dom = {}, current = document.children[0], stepIn = (tag, parent={}) => {
-    parent[DOMA.nameOf(tag)] = {};
-    DOMA.kidsOf(tag).map(child => {
-      parent[DOMA.nameOf(tag)][DOMA.nameOf(child)] = {};
-      if (!DOMA.kidsOf(child).isEmpty()) DOMA.kidsOf(child).map(subChild => parent[DOMA.nameOf(tag)][DOMA.nameOf(child)] = stepIn(subChild, parent[DOMA.nameOf(tag)][DOMA.nameOf(child)]));
-    });
-    return parent;
-  };
-
-  return stepIn(current, dom);
-};
-
-/**
- * @description Textual version of DomStructure.<br />
- * <strong>Note:</strong> This isn't as reliably true as the DomGraph's textual representation.
- * @returns {string} Textual representation of the DOM structure.
- * @public
- * @function
- * @since 1.0
- * @see module:dsa~DomGraph
- */
-export let DomList = () => {
-  let res = '', s = '  ', space = '', dom = {}, current = document.children[0], stepIn = (tag, parent={}, spacing='', depth=0) => {
-    parent[DOMA.nameOf(tag)] = {};
-    res += `${spacing}|-${DOMA.nameOf(tag)}   (d=${depth})\n`;
-    DOMA.kidsOf(tag).map(child => {
-      parent[DOMA.nameOf(tag)][DOMA.nameOf(child)] = {};
-      res += `${spacing}${s.repeat(depth)}|-${DOMA.nameOf(child)}   (d=${(depth + 1)})\n`;
-      if (!DOMA.kidsOf(child).isEmpty()) DOMA.kidsOf(child).map(subChild => parent[DOMA.nameOf(tag)][DOMA.nameOf(child)] = stepIn(subChild, parent[DOMA.nameOf(tag)][DOMA.nameOf(child)], space + s + s, depth + 2))
-    });
-    return parent;
-  };
-  stepIn(current, dom);
-  return res;
-};
-
-/**
- * @description Give a tree representation of an object.
- * @param {Object} obj Object
- * @param {string} [space='&nbsp;&nbsp;'] Space before the displayed branch
- * @param {string} [symbol='|-'] Symbol to denote a branch
- * @param {boolean} [forDOM=false] DOM representation.
- * @returns {string} Tree
- * @public
- * @function
- * @since 1.0
- * @TODO Fix the child listing being on the first child-branch and leaving the rest empty
- */
-export let object2tree = (obj, space='&nbsp;&nbsp;', symbol='|-', forDOM=false) => {
-  if (!forDOM && (!space || space=='&nbsp;&nbsp;')) space = '\t';
-
-  let treeOf = obj => space + symbol + keys(obj) + (forDOM ? '<br />' : '\n');
-  let tree = treeOf(obj);
-  console.log('tree', tree);
-  for (let elm of obj) tree += /*treeOf(obj[elm]); */object2tree(elm, space + space, symbol, forDOM);
-  return tree;
-};
-
-/**
- * @description Kruskal's algorithm, it selects a minimum length edge of all possible edges which
- * connect two different disjoint <strong>M</strong>inimum <strong>S</strong>panning <strong>T</strong>ree components.
- * <br />Adapted from Wikipedia.
- * @param {Node} root Root vertex of the tree
- * @returns {Edge[]} MST
- * @public
- * @since 1.0
- * @function
- * @todo Revisit it
- */
-export let Kruskal = (root) => {
-  let forest = [], edges = root.edges[0].getSurroundingEdges();
-
-  while (edges.length > 0 /*& forest.notYetSpanning()*/) {
-    let edgeLen = edge => edge.length, edgeNodes = edge => [edge.startNode, edge.endNode];
-    let edge = edges.filter(edge => { //Get the smallest edge
-      return edge.length === edges.map(edgeLen).min()
-    }).map(edgeLen)[0];
-    let otherEdgesStart = edge.startNode.edges.remove(this, true), otherEdgesEnd = edge.endNode.edges.remove(this, true);
-    //let otherVerticesStart = otherEdgesStart.map(edgeNodes).linearise(), otherVerticesEnd = otherEdgesEnd.map(edgeNodes).linearise();
-    let otherVertices = rmDuplicates(otherEdgesStart.concat(otherVerticesEnd)).filter(vertex => {
-      return !vertex.startNode.equals(vertex.endNode) && (!vertex.startNode.equals(edge.startNode)
-        || !vertex.endNode.equals(edge.startNode) || vertex.startNode.equals(edge.endNode)
-        || !vertex.endNode.equals(edge.endNode));
-    });
-    if (edge.startNode != edge.endNode && otherVertices.length > 0) forest.push(edge);
-  }
-
-  return forest;
-};
-
-/**
- * @summary Dijkstra's algorithm.
- * @description Algorithm that constructs a <strong>S</strong>hortest <strong>P</strong>ath <strong>T</strong>ree starting from some source node.
- * @param {Vertex} root Root vertex of the tree
- * @param {Vertex[]} [graph=root.getNetwork()] Graph
- * @returns {{number[], Vertex[]}} SPT
- * @public
- * @since 1.0
- * @function
- */
-export let Dijkstra = (root, graph=root.getNetwork()) => {
-  let unvisitedVertices = [], dist = {}, prev = {};
-
-  for (let i = 0; i < graph.length; i++) {
-    let vertex = graph[i];
-    dist[vertex] = Infinity;
-    prev[vertex] = undefined;
-    unvisitedVertices.push(vertex);
-  }
-  dist[root] = 0; //Root/root distance
-
-  while (unvisitedVertices.length > 0) {
-    let current = unvisitedVertices.filter(vertex => {
-      return unvisitedVertices.filter(vertex => dist[vertex] === unvisitedVertices.map(vertex => dist[vertex]).min()).has(vertex);
-    })[0];
-    unvisitedVertices.remove(current);
-    let neighbours = current.getConnectedVertices();
-    for (let ngb of neighbours) {
-      if (unvisitedVertices.has(ngb)) {
-        let altPath = dist[current] + current.distanceFrom(ngb);
-        if (altPath < dist[ngb]) { //Shorter path to ngb found
-          dist[ngb] = altPath;
-          prev[ngb] = current;
-        }
-      }
-    }
-  }
-
-  return {dist, prev};
-};
-
-/**
- * @summary Prim's algorithm.
- * @description Algorithm that constructs a <strong>M</strong>inimum <strong>S</strong>panning <strong>T</strong>ree for the graph.
- * @param {Node} root Root vertex of the tree
- * @returns {Vertex[]} MST
- * @public
- * @since 1.0
- * @function
- */
-export let Prim = (root) => {
-  let tree = [root], current = root;
-  while (tree.miss(current.getNearestVertex())) {
-    current = current.getNearestVertex();
-    tree.push(current);
-  }
-  return tree
-};
-
-/**
- * @description Sort a table/matrix following the column specified.<br />
- * It's a bit like SORT table BY col (ASC|DESC); in SQL.
- * @param {Array[][]} matrix Table/matrix to sort
- * @param {number} [colIndex=0] Index of the column where the sorting is decided.
- * @param {?(undefined|String|boolean)} [order='asc'] Sorting order (asc/des)
- * @returns {Array[][]} Sorted table/matrix
- * @public
- * @since 1.0
- * @function
- * @throws {InvalidParamError} Wrong order
- */
-export let TableSort = (matrix, colIndex=0, order='asc') => {
-  let table = [...matrix], sort = (arr, order, left, right) => {
-    if (!left && !right) {
-      left = 0;
-      right = arr.lastIndex();
-    }
-    let i;
-    if (arr.length > 1) {
-      let pivot = arr[Math.floor((right + left) / 2)][colIndex], j = right;
-      i = left;
-      if (!order || order === 'asc') {
-        while (i <= j) {
-          while(arr[i][colIndex] < pivot) i++;
-          while(arr[j][colIndex] > pivot) j--;
-          if (i <= j) {
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-            i++;
-            j--;
-          }
-        }
-      } else if (order === 'des') {
-        while (i >= j) {
-          while(arr[i][colIndex] > pivot) i++;
-          while(arr[j][colIndex] < pivot) j--;
-          if (i >= j) {
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-            i++;
-            j--;
-          }
-        }
-      } else throw new InvalidParamError('Order can either be "asc"|"des"||false to make it work');
-
-      if (left < i - 1) sort(arr, left, i - 1, order);
-      if (i < right) sort(arr, i, right, order);
-    }
-    return arr
-  };
-  return sort(table, order);
-};
-
-/**
- * @description Sort a table in an ascending order following the column specified.<br />
- * It's a bit like SORT table BY col ASC; in SQL.
- * @param {Array[][]} table Table to sort
- * @param {number} [colIndex=0] Index of the column where the sorting is decided.
- * @param {?(undefined|String|boolean)} [order='asc'] Sorting order
- * @returns {Array[][]} Sorted table
- * @public
- * @since 1.0
- * @function
- */
-export let sortNamedTable = (table, colIndex=0, order='asc') => [table[0]].concat(TableSort(get(table, 1), colIndex, order));
-

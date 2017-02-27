@@ -200,7 +200,7 @@ export let noobTest = (fx, param) => {
  */
 export let test = (fx, ...args) => {
   try {
-    isType(fx, 'String') ? eval(fx) :fn(...args);
+    essence.isType(fx, 'String') ? eval(fx) : fx(...args);
   } catch (e) {
     handleError(`${e}\n`, getFilename(true), getLineNum(true));
   }

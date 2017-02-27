@@ -4,17 +4,7 @@
  * @requires module:essence
  * @since 1.0
  */
-import {
-  isNativeType,
-  getTime,
-  mkArray,
-  isNon,
-  isTypedArray,
-  toSameLength,
-  say,
-  lookfor,
-  isType
-} from './essence';
+import {isNativeType, getTime, mkArray, isNon, isTypedArray, toSameLength, say, lookfor, isType} from './essence';
 import {InvalidParamError, InvalidExpressionError} from './qtest';
 import {Pt, Stack} from './dsa';
 import {rmDuplicates, RegExpify, asciiTable} from './misc';
@@ -604,7 +594,7 @@ export let dec2min = (dec) => (30 * dec) / 50;
 export let toSec = (i) => {
   if (i == parseFloat(i)) return parseFloat(i); //Seconds stay seconds
   let withH = i.count(':') === 2;
-  if (!isNativeType(i, 'String')) i += '';
+  if (!esseisNativeType(i, 'String')) i += '';
   if (i.length >= 4 && i.indexOf(':') === 1) return toSec('0' + i); //So times without the leading 0 or simply with a 1-digit first section could be read properly
 
   let time = i.split(':'), m, s;
@@ -2671,7 +2661,7 @@ export let vector2PointForm = (r) => {
  * @function
  */
 export let isSuperset = (set, subset) => {
-  for (let item of subset) if (set.miss(item) && !set.has(item)) return false;
+  for (let item of subset) if (!(set.contains(item) || set.has(item))) return false;
   return true;
 };
 
@@ -3186,7 +3176,7 @@ export let getClosest = (x, opt) => {
  * @property {function(): string} Equation.toString String representation
  * @class
  */
-export class Equation {
+class Equation {
   /**
    * @param {string} [formula='y=x'] Formula
    */

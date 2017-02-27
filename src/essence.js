@@ -14,7 +14,7 @@
  */
 import {END_OF_SEQUENCE, MONTHS, DAYS, DAY_IN_SEC, MONTH_IN_DAY} from './data';
 import {clrToArr, addCSSRule, negateColour} from './ui';
-import {asciiTable, camelCaseTo, name2Type, rmDuplicates} from './misc';
+import {asciiTable, camelCaseTo, name2type, rmDuplicates} from './misc';
 import {randTo, sumPow2, mixedRange, nthroot, range, conv} from './maths';
 import {get, getNextItem} from './dsa';
 import {gatherScripts, gatherStylesheets, cssPath} from './dom';
@@ -739,7 +739,7 @@ export Object.prototype.equals = (obj) => this.toString() === obj.toString() || 
  * @example
  * 'Hello world !'.multiReplace([[/[A-Za-z]/g, '1'], [/(\s|\!)/, '0']]); //'1111101111100'
  */
-export Object.prototype.multiReplace = (rules) => {
+Object.prototype.multiReplace = (rules) => {
   let res = this.replace(rules[0][0], rules[0][1]);
   for (let i = 1; i < rules.length; i++) res = res.replace(rules[i][0], rules[i][1]);
   return res
@@ -1223,7 +1223,7 @@ export Array.prototype.debug = () => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.getOccurrences = (simplified = false) => {
+Array.prototype.getOccurrences = (simplified = false) => {
   let arr = rmDuplicates(this), res = [];
   for (let cell of arr) res.push(`${cell}: ${this.count(cell)} {${this.positions(cell).toStr(true)}}`);
   if (simplified) {
@@ -1478,7 +1478,7 @@ export Array.prototype.maxAvg = (n = this.length - 1, nbDec = 2) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.letiance = (nbDec = 2) => (sumPow2(this, nbDec) / this.length - Math.pow(this.mean(nbDec), 2)).toNDec(nbDec);
+Array.prototype.letiance = (nbDec = 2) => (sumPow2(this, nbDec) / this.length - Math.pow(this.mean(nbDec), 2)).toNDec(nbDec);
 
 /**
  * @description Standard deviation.
@@ -1623,7 +1623,7 @@ export Array.prototype.iqr = (nbDec = 2) => this.quartile(3, nbDec) - this.quart
  * @external Array
  * @see module:dsa~get
  */
-export Array.prototype.get = (start = 0, end) => get(this, start, end);
+Array.prototype.get = (start = 0, end) => get(this, start, end);
 
 /**
  * @description Clean the array by removing undesirable items.
@@ -1864,7 +1864,7 @@ export Array.prototype.divide = (n) => {
  * @external Array
  * @todo Add the support for 4x4+ matrices
  */
-export Array.prototype.getAdjoint = () => {
+Array.prototype.getAdjoint = () => {
   let m = this.translate(), res = mkArray(this.length, 2, Math.EPSILON);
   //+-+
   //-+-
@@ -2036,7 +2036,7 @@ export Array.prototype.inv = () => this.isInvertible() ? this.dotProd(1 / this.d
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.mix = () => {
+Array.prototype.mix = () => {
   let randPos = mixedRange(0, 1, this.length - 1, true), res = [];
   for (let i of this) res[i] = this[randPos[i]];
   return res
@@ -2126,7 +2126,7 @@ export Array.prototype.to1d = (jointer) => {
  * @memberof Array.prototype
  * @external Array
  */
-export Array.prototype.toNd = (n = 2) => {
+Array.prototype.toNd = (n = 2) => {
   let size = nthroot(this.length, n, 0), res = [], k = 0; //Size of the size^n
   for (let i = 0; i < size; i++) {
     res[i] = [];
@@ -2602,7 +2602,7 @@ export String.prototype.toNDigits = (n = 2) => {
  * @public
  * @since 1.0
  */
-export String.prototype.mix = (separator = '', jointer = separator) => {
+String.prototype.mix = (separator = '', jointer = separator) => {
   let randPos = mixedRange(0, 1, this.length - 1), iStr = this.split(separator), fStr = [];
   for (let i = 0; i < this.length; i++) fStr[i] = iStr[randPos[i]];
   return fStr.join(jointer)
@@ -2730,7 +2730,7 @@ export String.prototype.getOccurrences = Array.prototype.getOccurrences;
  * @external String
  * @see module:dsa~get
  */
-export String.prototype.get = (start = 0, end) => get(this, start, end);
+String.prototype.get = (start = 0, end) => get(this, start, end);
 
 /**
  * @description Zip/compress the string.

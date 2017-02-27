@@ -174,7 +174,7 @@ export let noobTest = (fn, param) => {
  */
 export let test = (fx, ...args) => {
   try {
-    isType(fx, 'String') ? eval(fx) :fn(...args);
+    isType(fx, 'String') ? eval(fx) : fx(...args);
   } catch (e) {
     handleError(`${e}\n`, getFilename(true), getLineNum(true));
   }
