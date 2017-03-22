@@ -5,6 +5,8 @@
  * @since 1.0
  */
 import {say, date2num, getDate, isType} from './essence';
+import {log, conv} from './maths';
+import {POST} from './ajax';
 
 /**
  * @description Process centre/manager.
@@ -203,7 +205,7 @@ export class Person {
     this.quote = quote;
   }
 
-  toString() { //Weirdly showing "getName" which isn't the case of toLocaleString()
+  toString() { //Weirdly showing 'getName' which isn't the case of toLocaleString()
     let str = 'Person(';
     for (let p in this) {
       if (this.has(p) && p != 'toString') str += `${p}=${this[p]}, `;
@@ -225,7 +227,7 @@ export class Person {
   };
 
   getFullName() {
-    return `${this.firstName} ${this.secondName} ${this.nickname != '' ? `"${this.nickname}"` : ' '} ${this.lastName}`;
+    return `${this.firstName} ${this.secondName} ${this.nickname != '' ? `'${this.nickname}'` : ' '} ${this.lastName}`;
   };
 }
 
@@ -350,7 +352,7 @@ export let rmDuplicates = (arr) => {
  * @func
  * @throws {TypeError} arr isn't iterable
  * @example
- * rmUniques("hello world !"); //"lo "
+ * rmUniques('hello world !'); //'lo '
  * rmUniques([4, 10, 1, 9, 10, 10, 10, 3, 4, 2]); //[10, 4]
  */
 export let rmUniques = (arr) => {
@@ -358,3 +360,361 @@ export let rmUniques = (arr) => {
   let duplicates = rmDuplicates(arr.filter(item => arr.count(item) > 1));
   return isType(arr, 'Array') ? duplicates : duplicates.join('');
 };
+
+/**
+ * @description Base64.<br />
+ * Source: somewhere
+ * @type {{PADCHAR: string, ALPHA: string, getbyte64: base64.getbyte64, decode: base64.decode, getbyte: base64.getbyte, encode: base64.encode}}
+ * @global
+ * @this base64
+ * @since 1.0
+ * @property {string} base64.PADCHAR PAD character
+ * @property {string} base64.ALPHA Alphabet
+ * @property {function(string, number): number} base64.getbyte64 b64 byte getter
+ * @property {function(string): string} base64.decoder Base64 decoder
+ * @property {function(string, number): string} base64.getbyte Byte getter
+ * @property {function(string): string} base64.encoder Base64 encoder
+ */
+export let base64 = {
+  /**
+   * @readonly
+   * @instance
+   */
+  PADCHAR: '=',
+  /**
+   * @readonly
+   * @instance
+   */
+  ALPHA: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
+  /**
+   * @throws Invalid character error: DOM Exception 5
+   * @param {String} s String to use
+   * @param {number} [i=0] Index
+   * @returns {number}
+   * @throws String State
+   */
+  getbyte64(s, i) {
+    /* "This is oddly fast, except on Chrome/V8.
+     Minimal or no improvement in performance by using an
+     object with properties mapping chars to value (eg. 'A': 0)" */
+    i = base64.ALPHA.indexOf(s.charAt(i || 0));
+    if (i === -1) throw 'Cannot decode base64';
+    return i
+  },
+  /**
+   * @throws Cannot decode base64
+   * @param {String} s String to decode
+   * @returns {String} Decoded base64 code
+   * @throws String State
+   */
+  decode(s) {
+    s += '';
+    let pads, i, b10;
+    let imax = s.length;
+    if (imax === 0) return s;
+    else if (imax % 4 != 0) throw 'Cannot decode base64';
+
+    pads = 0;
+    if (s.charAt(imax - 1) === this.PADCHAR) {
+      pads = 1;
+      if (s.charAt(imax - 2) === this.PADCHAR) pads = 2;
+      //Either way, we want to ignore this last block
+      imax -= 4;
+    }
+
+    let x = [];
+    for (i = 0; i < imax; i += 4) {
+      b10 = (this.getbyte64(s, i) << 18) | (this.getbyte64(s, i + 1) << 12) | (this.getbyte64(s, i + 2) << 6) | this.getbyte64(s, i + 3);
+      x.push(String.fromCharCode(b10 >> 16, (b10 >> 8) & 0xff, b10 & 0xff));
+    }
+
+    switch (pads) {
+      case 1:
+        b10 = (this.getbyte64(s, i) << 18) | (this.getbyte64(s, i + 1) << 12) | (this.getbyte64(s, i + 2) << 6);
+        x.push(String.fromCharCode(b10 >> 16, (b10 >> 8) & 0xff));
+        break;
+      case 2:
+        b10 = (this.getbyte64(s, i) << 18) | (this.getbyte64(s, i + 1) << 12);
+        x.push(String.fromCharCode(b10 >> 16));
+        break;
+    }
+    return x.join('')
+  },
+  /**
+   * @throws Invalid character error: DOM Exception 5
+   * @param {String} s String to use
+   * @param {number} [i=0] Index
+   * @returns {Number}
+   * @throws String State
+   */
+  getbyte(s, i) {
+    let x = s.charCodeAt(i || 0);
+    if (x > 255) throw 'INVALID_CHARACTER_ERR: DOM Exception 5';
+    return x
+  },
+  /**
+   * @throws {SyntaxError} Only one argument needed
+   * @param {string} s String to encode
+   * @returns {String} Encoded result
+   */
+  encode(s) {
+    if (arguments.length != 1) throw new SyntaxError('Only one argument please !');
+
+    let i, b10, x = [];
+    s += '';
+    let imax = s.length - s.length % 3;
+
+    if (s.length === 0) return s;
+    for (i = 0; i < imax; i += 3) {
+      b10 = (this.getbyte(s, i) << 16) || (this.getbyte(s, i + 1) << 8) || this.getbyte(s, i + 2);
+      x.push(this.ALPHA.charAt(b10 >> 18));
+      x.push(this.ALPHA.charAt((b10 >> 12) & 0x3F));
+      x.push(this.ALPHA.charAt((b10 >> 6) & 0x3f));
+      x.push(this.ALPHA.charAt(b10 & 0x3f));
+    }
+    switch (s.length - imax) {
+      case 1:
+        b10 = this.getbyte(s, i) << 16;
+        x.push(this.ALPHA.charAt(b10 >> 18) + this.ALPHA.charAt((b10 >> 12) & 0x3F) + this.PADCHAR.repeat(2));
+        break;
+      case 2:
+        b10 = (this.getbyte(s, i) << 16) || (this.getbyte(s, i + 1) << 8);
+        x.push(this.ALPHA.charAt(b10 >> 18) + this.ALPHA.charAt((b10 >> 12) & 0x3F) + this.ALPHA.charAt((b10 >> 6) & 0x3f) + this.PADCHAR);
+        break;
+    }
+    return x.join('')
+  }
+};
+
+/**
+ * @description Virtual Web Machine
+ * @param {string} [name='Machine_5'] Name of the VWM
+ * @param {number} [ver=5] Version of the VWM
+ * @param {number} [cpy=1024] Capacity of the VWM (in bits).
+ * @param {string} [type=''] Type of the memory used
+ * @class
+ * @this {Machine}
+ * @returns {Machine} VWM
+ * @see module:misc~Memory
+ * @since 1.0
+ * @property {number} Machine.capacity Capacity (in bits)
+ * @property {number} Machine.version Version (1-6)
+ * @property {string} Machine.name Name
+ * @property {function(number, number, string): number} Machine.operation Operation calculator
+ * @property {function(string): string} Machine.inv Data inverter
+ * @property {Memory} Machine.memory Memory
+ * @property {function(*, string)} Machine.send Data sender
+ * @property {function(Str): *} Machine.parse Machine code into a human readable code
+ * @property {function(*): Str} Machine.unparse Human readable code into a machine code
+ * @property {function(*)} Machine.store Data storer
+ * @property {Function} Machine.show Data log
+ * @property {function(): string} Machine.specs Machine specifications
+ * @property {function(): string} Machine.toString String representation
+ * @property {function(*, number): NumberLike} Machine.conv Data converter
+ */
+class Machine {
+  constructor(name, ver=5, cpy=1024, type='') {
+    //ver (basis) := 1: binary, 2: ternary, 3: octal, 4: decimal, 5: hexadecimal, 6: base 36
+    this.capacity = cpy; //pow(2, 10) bits = 128B
+    this.version = ver;
+    this.name = name || `Machine_${this.version}`;
+    switch (this.version) {
+      case 1: this.base = 2; break;
+      case 2: this.base = 3; break;
+      case 3: this.base = 8; break;
+      case 4: this.base = 10; break;
+      case 5: this.base = 16; break;
+      case 6: this.base = 36; break;
+      default: this.base = 16; break;
+    }
+
+    this.memory = new Memory(this.capacity, type, this.name);
+  }
+
+
+  operation(a, b, op) {
+    switch (op.normal()) {
+      case '+': return a + b;
+      case '-': return a - b;
+      case '*': return a * b;
+      case '/': return a / b;
+      case '%': return a % b;
+      case '>>': return a >> b;
+      case '<<': return a << b;
+      case '>>>': return a >>> b;
+      case '>': return a > b;
+      case '<': return a < b;
+      case '|': return a | b;
+      case '&': return a & b;
+      case '^': return a ^ b;
+      case '=': return a === b;
+      case '!=': return a != b;
+      case '>=': return a >= b;
+      case '<=': return a <= b;
+      case '||': return a || b;
+      case '&&': return a && b;
+      case 'e': return a * Math.pow(10, b);
+      case 'e^': case 'exp':
+      return [Math.exp(a), Math.exp(b)];
+      case 'log': return log(a, b);
+      case '++': return [a++, b++];
+      case '--': return [a--, b--];
+      case '+=': return a += b;
+      case '-=': return a -= b;
+      case '*=': return a *= b;
+      case '/=': return a /= b;
+      case '%=': return a %= b;
+      case '.=': return a.concat(b);
+      default: return a + '' + b;
+    }
+  };
+
+  inv(data) {
+    if (!isType(data, 'String')) data += '';
+    for (let i = 0; i < data.length; i++) data[i] = parseInt(this.base) - 1 - parseFloat(data[i]);
+    return data
+  };
+
+  send(msg, to) {
+    POST(to, `msg=${this.parse(msg)}`);
+  };
+
+  parse(data) { //Turn the machine string into a human readable one
+    if (!isType(data, 'Array')) data = this.base === 2 ? data.divide(8) : data.divide(2);
+    let res = '', deconvs = [];
+    for (let i = 0; i < data.length; i++) {
+      deconvs[i] = conv(data[i], this.base);
+      res += String.fromCharCode(conv(data[i], this.base));
+    }
+    say(deconvs);
+    return JSON.parse(res); //prone to errors when this.base != 16
+  };
+
+  unparse(data, noArr) { //Turn the data into a machine readable string
+    let nd = JSON.stringify(data), res = '', codes = [];
+    for (let i = 0; i < nd.length; i++) {
+      codes[i] = nd.charCodeAt(i);
+      res += this.base === 2 ? conv(nd.charCodeAt(i).toNDigits(), 10, this.base) : conv(nd.charCodeAt(i), 10, this.base);
+    }
+    //say(`'${data}'='${code}'`, 'info');
+    return noArr ? res : (this.base === 2 ? res.divide(8) : res.divide(2));
+  };
+
+  store(data) {
+    this.memory.add(this.unparse(data));
+    this.memory.save();
+  };
+
+  show() {
+    for (let i = 0; i < this.memory.slots.length; i++) say(this.memory.slots[i]);
+  };
+
+  specs() { //Specifications about the machine
+    return `Name: ${this.name}\nCapacity: ${this.capacity} bits\nMemory: \n${this.memory.toString()}`
+  };
+
+  toString() {
+    return `Machine(${this.specs()})`;
+  };
+
+  conv(data, base=36) {
+    return conv(data, base, this.base);
+  };
+}
+
+/**
+ * @description Stack memory.
+ * @param {number} [cpy=1024] Capacity (in bits).
+ * @param {string} [type='session'] Memory type
+ * @param {NumberLike|boolean} [prefix] Prefix
+ * @returns {Memory} Memory
+ * @this {Memory}
+ * @class
+ * @since 1.0
+ * @property {number} Memory.capacity Capacity
+ * @property {Array} Memory.slots Memory slots
+ * @property {string} Memory.type Type (local/session)
+ * @property {string} Memory.name Name
+ * @property {number} Memory.free Index of the first free slot
+ * @property {Function} Machine.save Save the memory
+ * @property {function(*)} Machine.remove Data removal
+ * @property {function(*): number} Machine.getLocation Data location getter
+ * @property {Function} Machine.clear Data reset
+ * @property {function(*)} Machine.add Data adder (without saving it)
+ * @property {Function} Machine.print Print/log the data
+ * @property {Function} Machine.pop Pop the last row of data
+ * @property {function(): string} Machine.toString String representation
+ */
+class Memory {
+  constructor(cpy=1024, type='local', prefix) {
+    this.capacity = cpy;
+    this.slots = new Array(this.capacity);
+    this.type = type;
+    this.name = prefix ? `${prefix}_${this.type}M${log(this.capacity)}` : `${this.type}M${log(this.capacity)}`;
+    this.free = 0;
+  }
+
+  save() {
+    for (let i = 0; i < this.slots.length; i++) {
+      (this.type === 'local') ? localStorage.setItem(`${this.name}#${i}`, this.slots[i]) : sessionStorage.setItem(`${this.name}#${i}`, this.slots[i]);
+    }
+  };
+
+  remove(data) {
+    this.slots.remove();
+    (this.type === 'local') ? localStorage.setItem(this.getLocation(data), undefined) : sessionStorage.setItem(this.getLocation(data), undefined);
+  };
+
+  getLocation(data) { //Get the memory location of a data
+    if (this.type === 'local') {
+      for (let i in localStorage) {
+        if (localStorage.has(i) && localStorage[i] === JSON.stringify(data)) return i
+      }
+    } else {
+      for (let i in sessionStorage) {
+        if (sessionStorage.has(i) && sessionStorage[i] === JSON.stringify(data)) return i
+      }
+    }
+    return -1
+  };
+
+  clear() {
+    this.slots = new Array(this.capacity);
+    this.free = 0;
+    if (this.type === 'local') {
+      for (let i in localStorage) {
+        if (localStorage.has(i) && i.has(this.name)) localStorage.removeItem(i);
+      }
+    } else {
+      for (let i in sessionStorage) {
+        if (sessionStorage.has(i) && i.has(this.name)) sessionStorage.removeItem(i);
+      }
+    }
+  };
+
+  add(data) {
+    this.slots[this.free++] = JSON.stringify(data);
+  };
+
+  print() {
+    say(`${this.name}'s slots: `, 'info');
+    for (let i = 0; i < this.slots.length; i++) {
+      try {
+        say(`${i}: ${JSON.parse(this.slots[i])}`)
+      } catch(err) {
+        say(`${i}: `)
+      }
+    }
+  };
+
+  pop() {
+    (this.type === 'local') ? localStorage.removeItem(this.getLocation(this.slots.last())) : sessionStorage.removeItem(this.getLocation(this.slots.last()));
+    this.free--;
+    this.slots.pop();
+  };
+
+  toString() {
+    return `$this.type.capitalize()} memory ${this.name}: ${this.slots.toStr(true)}`
+  };
+}
+
